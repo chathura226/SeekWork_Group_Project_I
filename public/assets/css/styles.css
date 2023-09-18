@@ -28,17 +28,31 @@ similarly for the rows like above two
 } */
 /* end ..........................................................................................*/
 
-:root {
+
+@font-face {
+    font-family: 'URWGeometricRegular'; /* Name of your custom font */
+    src: url('../fonts/URWGeometricRegular.otf'); /* URL to the font file */
+    /* Add additional src lines for other font formats if needed */
+  }
+  
+  :root {
+    --primary-color: #01ef62;
+    --primary-color-low: #31f37e;
+    --primary-color-dark:#1c775e;
+    --secondary-color: #0b222f;
+    --text-color: #0b222f;
+    --text-color-secondary:#959fa3;
+    --text-color-white:#ffffff;
+    --background-color: #f0f0f0;
+    font-family: 'URWGeometricRegular';
     scroll-behavior: smooth;
-    --primary-color: #ffffff;
-    --font-size: 16px;
-    --font-family: 'Gill Sans';
-}
+
+  }
 
 body{
     background-color: #000;
     color:#fff;
-    font-family:'Gill Sans';
+    font-family:'URWGeometricRegular';
     font-size: 16px;
     /* text-align: center; */
 }
