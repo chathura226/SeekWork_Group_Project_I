@@ -1,0 +1,5 @@
+@font-face {
+    font-family: 'OpenSans'; /* Name of your custom font */
+    src: url('../fonts/OpenSans-Regular.ttf'); /* URL to the font file */
+    /* Add additional src lines for other font formats if needed */
+}

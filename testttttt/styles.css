@@ -1,0 +1,15 @@
+
+
+  #grid {
+    display: grid;
+    max-width: 100%;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;  /* two columns with same ratio fraction */
+    overflow: scroll;
+  }
+
+  #grid > * {
+    border: 1px solid;
+    padding: 1rem;
+    min-width: 0px;
+  }
