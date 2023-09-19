@@ -1,6 +1,6 @@
 # SeekWork_Group_Project_I
 
-33 Steps:
+## Steps:
 Clone the repo </br>
 In terminal go inside docker folder </br>
 execute the command "sudo docker-compose up --build" </br>
