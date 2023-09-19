@@ -66,7 +66,7 @@ body{
 
 .tab-form .tab-body {
   position: relative;
-  min-height:fit-content
+  min-height:fit-content;
   /* overflow: hidden; */
 }
  
@@ -122,6 +122,23 @@ body{
   cursor: pointer;
   background:var(--primary-color);
   font-weight: 600;
+}
+
+
+
+.myheader{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+.active-login{
+  flex: 1;
+  padding: 15px;
+  text-align: center;
+  color:var(--text-color);
+  border:1px solid var(--primary-color-dark);
+  color: var(--text-color);
+  background:var(--primary-color-low);
 }
 
 /* ................................................................................................... */
@@ -183,11 +200,11 @@ body{
     margin: 8px 0 14px 0;
   }
   
-  .forgot a,.signup a {
+  /* .forgot a,.signup a {
     color: rgba(243, 244, 246, 1);
     text-decoration: none;
     font-size: 14px;
-  }
+  } */
   
   .forgot a:hover, .signup a:hover {
     text-decoration: underline rgba(167, 139, 250, 1);

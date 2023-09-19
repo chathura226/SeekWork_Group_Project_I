@@ -9,7 +9,7 @@
     <div class="alert alert-danger text-center"><?=message('',true)?></div>
 <?php endif;?>
 <!-- <main class="wrapper"> -->
-<div class="tab-form c-s-6 c-e-8">
+<div class="tab-form c-s-6 c-e-8 row-10">
     <div class="tab-header">
         <div class="<? if(!empty($errors['form_id'])){if($errors['form_id']==='student') {echo 'active';}else echo '';}else echo 'active'; ?>">As a Student</div>
         <div class="<? if(!empty($errors['form_id'])){if($errors['form_id']==='company') {echo 'active';} else echo '';}else echo ''; ?>">As a company</div>
@@ -60,7 +60,7 @@
                 <div class="form-input">
                     <label>Contact Number</label>
                     <!-- <input type="tel" name="contactNo" placeholder="Enter your contact number 012-345-6789" required> -->
-                    <input value="<?= set_value('contactNo')?>" class="<?= !empty($errors['contactNo']) ? 'error-border' : '' ?>" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"  name="contactNo" id="contactNo" placeholder="Enter your contact number 012-345-6789">
+                    <input value="<?= set_value('contactNo')?>" class="<?= !empty($errors['contactNo']) ? 'error-border' : '' ?>" type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}"  name="contactNo" id="contactNo" placeholder="Enter your contact number 012-345-6789">
                     <?php if(!empty($errors['contactNo'])):?>
                     <div class="text-error"><small><?=$errors['contactNo']?></small></div>
                     <?php endif;?>
@@ -143,7 +143,7 @@
                 <div class="form-input">
                     <label>Contact Number</label>
                     <!-- <input type="tel" name="contactNo" placeholder="Enter your contact number 012-345-6789" required> -->
-                    <input value="<?= set_value('contactNo')?>" class="<?= !empty($errors['contactNo']) ? 'error-border' : '' ?>" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"  name="contactNo" id="contactNo" placeholder="Enter your contact number 012-345-6789">
+                    <input value="<?= set_value('contactNo')?>" class="<?= !empty($errors['contactNo']) ? 'error-border' : '' ?>" type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}"  name="contactNo" id="contactNo" placeholder="Enter your contact number 012-345-6789">
                     <?php if(!empty($errors['contactNo'])):?>
                     <div class="text-error"><small><?=$errors['contactNo']?></small></div>
                     <?php endif;?>

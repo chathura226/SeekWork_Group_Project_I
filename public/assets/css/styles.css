@@ -50,8 +50,8 @@ similarly for the rows like above two
   }
 
 body{
-    background-color: #000;
-    color:#fff;
+    background-color: var(--background-color);
+    color:var(--text-color);
     font-family:'URWGeometricRegular';
     font-size: 16px;
     /* text-align: center; */
@@ -91,6 +91,21 @@ body{
     margin-bottom: 10px; /* Change to your desired margin */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Change to your desired box shadow */
 }
+
+
+.alert-success{
+    background-color: #198754; /* Change to your desired background color */
+    color: #fff; /* Change to your desired text color */
+    border: 1px solid #198754; /* Change to your desired border style and color */
+    border-radius: 5px; /* Change to your desired border radius */
+    padding: 15px; /* Change to your desired padding */
+    font-size: 16px; /* Change to your desired font size */
+    margin-bottom: 10px; /* Change to your desired margin */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Change to your desired box shadow */
+}
+
+
+
 /* for mobile */
 #main-wrapper{
     display: grid;
@@ -122,7 +137,6 @@ body{
         max-width: 1440px;
         margin:0 auto;
         grid-template-areas:
-        "header header header header header header header header header header header header "
         "main main main main main main main main main main main main "
         "main main main main main main main main main main main main "
         "main main main main main main main main main main main main "
@@ -481,62 +495,10 @@ footer{
 }
 
 
-
-.navbar{
-    display: flex;
-    flex-direction: row;
+.justify-around{
     justify-content: space-around;
 }
 
-
-
-.dropdown {
-    position: relative;
-    align-self:center;
+.align-items-center{
+    align-items: center;
 }
-
-.dropbtn {
-    background-color: #000000;
-    color: white;
-    padding: 16px;
-    font-size: var(--font-size);
-    font-family: var(--font-family);
-    border: none;
-    cursor: pointer;
-  }
-  .dropbtn a{
-    text-decoration: none;
-    color: white;
-  }
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #000000;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    
-}
-
-.dropdown-content a {
-    color: rgb(255, 255, 255);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    
-  }
-  
-  .dropdown-content a:hover {background-color: #3d3c3c}
-
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  .dropdown:hover .dropbtn {
-    background-color: #3d3c3c;
-  }
-  .dropbtn:hover{
-    background-color: #3d3c3c;
-  }
-
-  

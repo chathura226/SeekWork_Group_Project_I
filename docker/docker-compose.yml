@@ -1,14 +1,19 @@
 version: '3' #docker version
 services:
   www:
-    build: . #use docker file
+    build: 
+      context: ./www
+      dockerfile: Dockerfile
     volumes: 
       - "../:/var/www/html" #sync and map project dir with container web dir
     ports: 
       - 80:80
       - 443:443 #for ssl traffics
   db:
-    image: mysql:latest
+    # image: mysql:latest
+    build: 
+      context: ./db
+      dockerfile: Dockerfile
     environment:
       - MYSQL_DATABASE=SeekWorkDB
       - MYSQL_USER=admin
@@ -16,6 +21,7 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=1 # equivalent to True
     volumes:
       - "../db:/docker-entrypoint-initdb.d" #sync persistent sql files with continer
+    # command: bash -c chmod -R 777 /docker-entrypoint-initdb.d/
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:

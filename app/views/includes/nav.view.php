@@ -1,3 +1,53 @@
+<link href="<?=ROOT?>/assets/css/nav.styles.css" rel="stylesheet">
+
+<header class="" >
+
+<nav class="myNav">
+        <!-- <a href="<?=ROOT?>">
+            <img src="../public/assets/images/logo.png" alt="SekkWork">
+        </a> -->
+        <div class="left-menu">
+            <a href="<?=ROOT?>/home">
+                <div class="my-button">
+                    <button class="button">Home</button>
+                </div>
+            </a>
+            <a href="<?=ROOT?>/about">
+                <div class="my-button">
+                    <button class="button">About Us</button>
+                </div>
+            </a>
+            <div class="my-drop-button">
+                <button class="drop-button">Categories &nbsp; ▼</button>
+                <div class="dropdown-content">
+                <a id="top" href="#">Designing</a>
+                <a id="middle" href="#">Web Development</a>
+                <a id="bottom" href="#">Programming</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-menu">
+            <svg height="1em" viewBox="0 0 512 512">
+                <style>svg{fill:#ffffff; padding-right: 10px;}</style><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+            </svg>
+            <div class="search">
+                <input type="text" name="text" placeholder="Search" class="search-input">
+            </div>
+            <p>&nbsp;&nbsp;</p>
+            <p>&nbsp;&nbsp;</p>
+           
+            <?php if(!Auth::logged_in()):?>
+                <a href="<?=ROOT?>/signup"><div class="my-button"><button class="button">Sign up</button></div></a>
+                <a href="<?=ROOT?>/login"><button class="login-button"><span>Login</span></button></a>
+            <?php else:?>
+                <div class="profile-name">Hi, <?=Auth::getfirstName()?></div>
+                <a href="<?=ROOT?>/logout"><button class="login-button"><span>Logout</span></button></a>
+            <?php endif;?>
+        </div>
+    </nav>
+</header>
+    
 <!-- checkbox is to to show grid lines -->
 <input type="checkbox" id="gridlines"/>
 
@@ -8,39 +58,3 @@
     <p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
 </div>
 
-
-<header >
-<nav class="wrapper">
-    <div class="column-3">
-        <a href="<?=ROOT?>">
-        <img src="<?=ROOT?>/assets/images/logo.png" alt="SekkWork">
-        </a>
-    </div>
-    <div class="navbar c-s-8 c-e-13">
-    <div class="dropdown"><a href="<?=ROOT?>/home"><button class="dropdown dropbtn">Home</button></a></div>
-        <div class="dropdown">
-        <button class="dropbtn">Categories</button>
-            <div class="dropdown-content">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-        </div>
-        </div>
-        <div class="dropdown"><a href="<?=ROOT?>/about"><button class="dropdown dropbtn">About Us</button></a></div>
-        
-
-        <div class="profile-name">Hi, <?=Auth::getfirstName()?></div>
-
-        <?php if(!Auth::logged_in()):?>
-            <div class="dropdown"><a href="<?=ROOT?>/signup"><button class="dropdown dropbtn">Signup</button></a></div>
-            <div class="dropdown"><a href="<?=ROOT?>/login"><button class="radiantButton">Login</button></a></div>
-        <?php else:?>
-            <div class="dropdown"><a href="<?=ROOT?>/logout"><button class="dropdown dropbtn">Logout</button></a></div>
-        <?php endif;?>
-    </div>
-
-    
-    
-</nav>
-</header>
-    

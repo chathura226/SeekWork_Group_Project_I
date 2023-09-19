@@ -11,4 +11,5 @@ RUN a2enmod rewrite
 RUN service apache2 restart
 
 #to give permission to read (otherwise in windows env , site wont work)
-RUN chmod -R +r /var/www
+RUN chmod -R +rx /var/www
+
