@@ -1,3 +1,100 @@
+*{
+    margin: 0;
+    padding: 0 ;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+ /* --------------------------------------side bar--------------------------------------- */
+
+
+.sidebar{
+    position: sticky;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    /* width: 240px; */
+    width: 110px;
+    height: 100vh;
+    padding: 0 1.7rem;
+    color: var(--text-color-white);
+    overflow: hidden;
+    transition: all 0.5s linear;
+    background: var(--secondary-color);
+    animation: initialWidth 5s ease-in-out; /* Animation for initial full width */
+
+}
+
+.sidebar:hover{
+    width: 240px;
+    transition: 0.5s ;
+}
+
+@keyframes initialWidth {
+    0% {
+      width: 241px;
+    }
+    50% {
+        width: 240px;
+      }
+    100% {
+      width: 110px;
+    }
+  }
+  
+.logo{
+    height: 80px;
+    padding: 16px;
+}
+
+.menu{
+    height: 88%;
+    position: relative;
+    list-style: none;
+    padding: 0;
+}
+
+.menu li{
+    padding: 1rem;
+    margin: 8px 0;
+    border-radius: 8px;
+    transition: all 0.5s ease-in-out;
+}
+
+ .menu li:hover,
+ .active{
+    background: var(--primary-color-dark);
+ }
+
+ .menu a{
+    color: var(--text-color-white);
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    /* align-items:center; */
+    align-items:normal;
+    gap: 1.5rem;
+ }
+
+ .svg-icons{
+    flex-shrink: 0;
+    
+ }
+ .menu a span{
+    overflow: hidden;
+ }
+
+ .logout{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+ }
+
+
+ /* --------------------------------------nav bar--------------------------------------- */
 
 header{
     background-color:  var(--secondary-color);
@@ -13,8 +110,8 @@ header{
     color: white;
     display: flex;
     align-items: center;
-    max-width: 1400px;
-    justify-content: space-between;
+    max-width: 100vw;
+    justify-content: flex-end;
 }
 
 
@@ -205,5 +302,13 @@ header{
 .right-menu{
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-end;
 }
+
+.profile-pic img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-left: 10px;
+  }

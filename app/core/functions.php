@@ -38,3 +38,8 @@ function message($msg='',$erase=false){
 
     return false;
 }
+
+//to replace special characters for security reasons
+function esc($str){
+    return nl2br(htmlspecialchars($str)); //nl2br replace new lines by brake tags
+}

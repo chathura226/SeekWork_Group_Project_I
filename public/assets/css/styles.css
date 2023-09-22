@@ -113,7 +113,7 @@ body{
     grid-template-columns: repeat(12,1fr);
     grid-auto-rows: minmax(100px,auto);
     grid-gap: 10px;
-    max-width: 1440px;
+    max-width: 1400px;
     margin:0 auto;
     grid-template-areas:
     "header header header header header header header header header header header header "
@@ -134,7 +134,7 @@ body{
         grid-template-columns: repeat(12,1fr);
         grid-auto-rows: minmax(100px,auto);
         grid-gap: 10px;
-        max-width: 1440px;
+        max-width: 1400px;
         margin:0 auto;
         grid-template-areas:
         "main main main main main main main main main main main main "

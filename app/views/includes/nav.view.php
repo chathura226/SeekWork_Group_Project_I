@@ -41,7 +41,7 @@
                 <a href="<?=ROOT?>/signup"><div class="my-button"><button class="button">Sign up</button></div></a>
                 <a href="<?=ROOT?>/login"><button class="login-button"><span>Login</span></button></a>
             <?php else:?>
-                <div class="profile-name">Hi, <?=Auth::getfirstName()?></div>
+                <div class="profile-name">Hi, <?=ucfirst(Auth::getfirstName())?></div>
                 <a href="<?=ROOT?>/logout"><button class="login-button"><span>Logout</span></button></a>
             <?php endif;?>
         </div>

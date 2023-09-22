@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Sep 18, 2023 at 09:37 AM
+-- Generation Time: Sep 22, 2023 at 02:21 PM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -33,6 +33,13 @@ CREATE TABLE `admin` (
   `lastName` varchar(20) NOT NULL,
   `userID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`adminID`, `firstName`, `lastName`, `userID`) VALUES
+(3, 'chathura', 'lakshan', 11);
 
 -- --------------------------------------------------------
 
@@ -88,6 +95,13 @@ CREATE TABLE `company` (
   `brn` varchar(50) NOT NULL,
   `userID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `company`
+--
+
+INSERT INTO `company` (`companyID`, `companyName`, `firstName`, `lastName`, `address`, `website`, `brn`, `userID`) VALUES
+(1, 'kk', 'aa', 'aa', 'aaa', 'https://www.kk.com', 'aa', 16);
 
 -- --------------------------------------------------------
 
@@ -221,7 +235,11 @@ INSERT INTO `student` (`studentID`, `firstName`, `lastName`, `qualifications`, `
 (3, 'chathura', 'lakshan', 'a', 'a', 'aa', '', 'verification pending', 'aa', 'aa', 11, 1),
 (4, 'aaa', 'bbb', NULL, NULL, '200105702857', 'ccc', 'verified', NULL, NULL, 12, NULL),
 (6, 'aaa', 'bb', NULL, NULL, '660951105v', 'aaa', 'verification pending', NULL, NULL, 14, NULL),
-(7, 'aaa', 'bb', NULL, NULL, '660951145v', 'aaa', 'verification pending', NULL, NULL, 15, NULL);
+(7, 'aaa', 'bb', NULL, NULL, '660951145v', 'aaa', 'verification pending', NULL, NULL, 15, NULL),
+(8, 'chathura', 'lakshan', NULL, NULL, '200105702855', 'skjnwk', 'verification pending', NULL, NULL, 17, NULL),
+(9, 'sajith', 'rajapakse', NULL, NULL, '200012365849', '99 madamulana pallebedda', 'verification pending', NULL, NULL, 18, NULL),
+(10, 'sajith', 'rajapakse', NULL, NULL, '960951105v', '99 madamulana pallebedda', 'verification pending', NULL, NULL, 19, NULL),
+(12, 'chathura', 'lakshan', NULL, NULL, '123456789123', '111', 'verification pending', NULL, NULL, 21, NULL);
 
 -- --------------------------------------------------------
 
@@ -294,11 +312,17 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userID`, `email`, `password`, `contactNo`, `role`, `createdAt`) VALUES
-(11, 'admin@admin.com', '$2y$10$O9fihdAv7ftZ5N5mp.IQwuh1S644VmGJCNcRy0UEObVZ4y67fBv6a', '123', 'student', '2023-09-17 16:11:13'),
+(11, 'admin@admin.com', '$2y$10$O9fihdAv7ftZ5N5mp.IQwuh1S644VmGJCNcRy0UEObVZ4y67fBv6a', '123', 'admin', '2023-09-17 16:11:13'),
 (12, 'aa@k.com', '$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC', '012-345-6789', 'student', '2023-09-18 09:26:48'),
 (13, 'aab@k.com', '$2y$10$Gf0Xxhcwr1SUBXyq.NgMnOdkKcvPAaR5g6yLd0mlsHensoKRcBF0e', '012-345-6789', 'student', '2023-09-18 09:30:21'),
 (14, 'aabj@k.com', '$2y$10$KnHOE3tyqErLsjggmUPas.KZ/UmwyShx.lXYzuqW5bC9MbAFClUdy', '012-345-6789', 'student', '2023-09-18 09:34:29'),
-(15, 'aaabj@k.com', '$2y$10$78iEQp8L2EuONr7yVceNCebUdsYhaS1ICxIBk0fIv.FKGwyBeL4N2', '012-345-6789', 'student', '2023-09-18 09:36:48');
+(15, 'aaabj@k.com', '$2y$10$78iEQp8L2EuONr7yVceNCebUdsYhaS1ICxIBk0fIv.FKGwyBeL4N2', '012-345-6789', 'student', '2023-09-18 09:36:48'),
+(16, 'aaa@kk.com', '$2y$10$P08nvJCK7z0t7dNScXZElO.uQ3MRgx90LbD9UkaZGPWqScqqn93qO', '012-234-4567', 'company', '2023-09-18 10:13:50'),
+(17, '2021cs109@stu.ucsc.cmb.ac.lk', '$2y$10$nt.D/ZdzXfdE/Qcjh/i7TOy/qZX1IsQDiKPy.44J0vMuCeiR2kh/O', '012-345-6789', 'student', '2023-09-18 11:47:26'),
+(18, '2021cs1029@stu.ucsc.cmb.ac.lk', '$2y$10$VZn32bcZ7z4hfDZI8I1me.YjPNp/trCscXwAPXuHe1FLGjEuLx9vC', '0775017409', 'student', '2023-09-19 07:56:38'),
+(19, '2021cs018@stu.ucsc.cmb.ac.lk', '$2y$10$COXY0b5joTnRQWRYJbySQe6/S1B90n3SJTUUWLi7/3GziO0xd0kEq', '1111111111', 'student', '2023-09-19 07:59:14'),
+(20, 'chathur@stu.cmb.ac.lk', '$2y$10$3x.hbxkm3aSouDqcnqsA0uwANVzwx13Eh5vv/ZGRcvzEQh/Q9Pyf.', '0112659897', 'student', '2023-09-19 22:38:37'),
+(21, 'chathura@stu.ucsc.cmb.ac.lk', '$2y$10$k2xZ8oNZAsCvUtTV1wWwPe/pmGjO/QwXHbFL3z6od1JNcXLOTy6da', '0112339220', 'student', '2023-09-21 23:19:29');
 
 --
 -- Indexes for dumped tables
@@ -442,7 +466,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `adminID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `adminID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -466,7 +490,7 @@ ALTER TABLE `certificate-category`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `companyID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `companyID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `company_payment`
@@ -514,7 +538,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `studentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `student_payment`
@@ -538,7 +562,7 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables
