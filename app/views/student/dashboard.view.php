@@ -1,4 +1,4 @@
-<?php $this->view('admin/admin-header',$data) ?>
+<?php $this->view('student/student-header',$data) ?>
 
 <div class="pagetitle column-12">
       <h1>Dashboard</h1>
@@ -18,9 +18,12 @@
 
 
 <div class="msg c-s-6 c-e-8">
+<?php if(Auth::getstatus()==='verification pending'):?>
+  <div class="alert alert-danger text-center">Your account is not yet verified! Please fill the details and upload relavant documents if you haven't!</div>
+  <?php endif;?>
 <?php if(message()):?>
   <div class="alert alert-success text-center"><?=message('',true)?></div>
   <?php endif;?>
 
-  <?php $this->view('admin/admin-footer',$data) ?>
+  <?php $this->view('student/student-footer',$data) ?>
 </div>

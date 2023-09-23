@@ -23,7 +23,14 @@ class Login extends Controller{
 
                     //get details of user from relevant table and ake a combined object to store as session data
                     $userDetails=$user->getFirstCustom($row->role,['userID'=>$row->userID],$row->role."ID");
-                    $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
+
+                    //if user is a student put university details too
+                    if($row->role==='student'){
+                        $universityDetails=$user->getFirstCustom('university',['universityID'=>$userDetails->universityID],"universityID");
+                        $combinedObject1= (object)array_merge((array)$userDetails, (array)$universityDetails);
+                    }
+
+                    $combinedObject = (object)array_merge((array)$row, (array)$combinedObject1);
 
                     
                     //authenticate (this will be a static class)

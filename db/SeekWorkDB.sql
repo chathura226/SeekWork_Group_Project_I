@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Sep 23, 2023 at 04:02 AM
+-- Generation Time: Sep 23, 2023 at 09:08 AM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -233,8 +233,8 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`studentID`, `firstName`, `lastName`, `qualifications`, `description`, `NIC`, `address`, `status`, `verificationDocuments`, `accountNo`, `userID`, `universityID`) VALUES
-(3, 'chathura', 'lakshan', 'a', 'a', 'aa', '', 'verification pending', 'aa', 'aa', 11, 1),
-(4, 'aaa', 'bbb', NULL, NULL, '200105702857', 'ccc', 'verified', NULL, NULL, 12, NULL),
+(3, 'chathura', 'lakshan', 'a', 'a', 'aa', 'ws', 'verification pending', 'aa', 'aa', 11, 1),
+(4, 'aaa', 'bbb', 'qqqq', 'ddd', '200105702857', 'ccc', 'verified', NULL, NULL, 12, 1),
 (6, 'aaa', 'bb', NULL, NULL, '660951105v', 'aaa', 'verification pending', NULL, NULL, 14, NULL),
 (7, 'aaa', 'bb', NULL, NULL, '660951145v', 'aaa', 'verification pending', NULL, NULL, 15, NULL),
 (8, 'chathura', 'lakshan', NULL, NULL, '200105702855', 'skjnwk', 'verification pending', NULL, NULL, 17, NULL),

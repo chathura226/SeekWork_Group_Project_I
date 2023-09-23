@@ -1,4 +1,4 @@
-<?php $this->view('admin/admin-header',$data) ?>
+<?php $this->view('student/student-header',$data) ?>
 <link href="<?=ROOT?>/assets/css/changepassword.styles.css" rel="stylesheet">
 
 
@@ -60,4 +60,4 @@
 </div>
 
 
-<?php $this->view('admin/admin-footer',$data) ?>
+<?php $this->view('student/student-footer',$data) ?>

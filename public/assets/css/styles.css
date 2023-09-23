@@ -56,7 +56,21 @@ body{
     font-size: 16px;
     /* text-align: center; */
 }
+/* ...........................................image upload rendering............................ */
 
+
+.image-container {
+    max-width: 200px;
+    height: auto;
+  }
+  
+  #uploadedImage {
+    max-width: 100%;
+    height: auto;
+    display: none;
+  }
+  
+  
 /* ............................................................................................ */
 
 .text-center{

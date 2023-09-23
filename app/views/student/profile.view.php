@@ -1,4 +1,4 @@
-<?php $this->view('admin/admin-header',$data) ?>
+<?php $this->view('student/student-header',$data) ?>
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/profile.styles.css"/>
 
 <div class="pagetitle column-12">
@@ -25,8 +25,8 @@
       <div class="card__title"><?=ucfirst(Auth::getfirstName())?> <?=ucfirst(Auth::getlastName())?> </div>
       <div class="card__subtitle"><?=ucfirst(Auth::getrole())?> </div>
       <div class="card__wrapper">
-        <a href="<?=ROOT?>/admin/changepassword"><button class="card__btn">Change Password</button></a>
-        <a href="<?=ROOT?>/admin/updateprofile"><button class="card__btn card__btn-solid">Update Profile</button></a>
+        <a href="<?=ROOT?>/student/changepassword"><button class="card__btn">Change Password</button></a>
+        <a href="<?=ROOT?>/student/updateprofile"><button class="card__btn card__btn-solid">Update Profile</button></a>
           
           
       </div>
@@ -42,12 +42,17 @@
       <div>User ID : <?=ucfirst(Auth::getuserID())?></div>
       <div><?=ucfirst(Auth::getrole())?> ID : <?php $funcName='get'.Auth::getrole().'ID'; echo Auth::$funcName()?></div>
       <div>Email Address: <?=Auth::getemail()?></div>
+      <div>University: <?=Auth::getuniversityName()?></div>
+      <div>Status: <?=ucfirst(Auth::getstatus())?></div>
       <div>First Name : <?=ucfirst(Auth::getfirstName())?></div>
       <div>Last Name : <?=ucfirst(Auth::getlastName())?></div>
       <div>Contact Number : <?=ucfirst(Auth::getcontactNo())?></div>
       <div>Address : <?=ucfirst(Auth::getaddress())?></div>
+      <div>NIC : <?=Auth::getNIC()?></div>
+      <div>Description : <?=Auth::getdescription()?></div>
+      <div>Qualifications : <?=Auth::getqualifications()?></div>
       <div>Joined Date : <?=ucfirst(Auth::getcreatedAt())?></div>
 
     </div>
 
-<?php $this->view('admin/admin-footer',$data) ?>
+<?php $this->view('student/student-footer',$data) ?>
