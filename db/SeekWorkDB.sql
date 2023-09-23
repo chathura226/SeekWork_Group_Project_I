@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Sep 23, 2023 at 09:08 AM
+-- Generation Time: Sep 23, 2023 at 10:58 AM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -89,10 +89,12 @@ CREATE TABLE `certificate-category` (
 CREATE TABLE `company` (
   `companyID` int NOT NULL,
   `companyName` varchar(50) NOT NULL,
+  `status` enum('verified','verification pending','banned','') NOT NULL DEFAULT 'verification pending',
   `firstName` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'first name of contact person',
   `lastName` varchar(20) NOT NULL,
   `address` text NOT NULL,
   `website` text,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `brn` varchar(50) NOT NULL,
   `userID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -101,8 +103,10 @@ CREATE TABLE `company` (
 -- Dumping data for table `company`
 --
 
-INSERT INTO `company` (`companyID`, `companyName`, `firstName`, `lastName`, `address`, `website`, `brn`, `userID`) VALUES
-(1, 'kk', 'aa', 'aa', 'aaa', 'https://www.kk.com', 'aa', 16);
+INSERT INTO `company` (`companyID`, `companyName`, `status`, `firstName`, `lastName`, `address`, `website`, `description`, `brn`, `userID`) VALUES
+(1, 'kk', 'verification pending', 'aa', 'aa', 'aaa', 'https://www.kk.com', '', 'aa', 16),
+(2, 'seekwork', 'verification pending', 'chathura', 'lakshan', 'colombo', 'https://www.seekwork.com', 'wwwwwwwwww', '1111111', 22),
+(3, 'seekwork.com', 'verified', 'lakshan', 'chathura', 'colombo', '', NULL, '11111', 24);
 
 -- --------------------------------------------------------
 
@@ -323,7 +327,10 @@ INSERT INTO `user` (`userID`, `email`, `password`, `contactNo`, `role`, `created
 (18, '2021cs1029@stu.ucsc.cmb.ac.lk', '$2y$10$VZn32bcZ7z4hfDZI8I1me.YjPNp/trCscXwAPXuHe1FLGjEuLx9vC', '0775017409', 'student', '2023-09-19 07:56:38'),
 (19, '2021cs018@stu.ucsc.cmb.ac.lk', '$2y$10$COXY0b5joTnRQWRYJbySQe6/S1B90n3SJTUUWLi7/3GziO0xd0kEq', '1111111111', 'student', '2023-09-19 07:59:14'),
 (20, 'chathur@stu.cmb.ac.lk', '$2y$10$3x.hbxkm3aSouDqcnqsA0uwANVzwx13Eh5vv/ZGRcvzEQh/Q9Pyf.', '0112659897', 'student', '2023-09-19 22:38:37'),
-(21, 'chathura@stu.ucsc.cmb.ac.lk', '$2y$10$k2xZ8oNZAsCvUtTV1wWwPe/pmGjO/QwXHbFL3z6od1JNcXLOTy6da', '0112339220', 'student', '2023-09-21 23:19:29');
+(21, 'chathura@stu.ucsc.cmb.ac.lk', '$2y$10$k2xZ8oNZAsCvUtTV1wWwPe/pmGjO/QwXHbFL3z6od1JNcXLOTy6da', '0112339220', 'student', '2023-09-21 23:19:29'),
+(22, 'chathura@seekwork.com', '$2y$10$KPl6CHFI3XpZJiRhj1mbU.p3W3/jUxGLn8hHup94D7WMxI6YijZw.', '0775017409', 'company', '2023-09-23 10:04:25'),
+(23, 'verified@seekwork.com', '$2y$10$KzigzoHAaEXBHKBZGgAnS.K0RgVKNMayfiXeOKIeQ9owegp3lALYi', '0112929330', 'company', '2023-09-23 10:56:59'),
+(24, 'verifiedcompany@seekwork.com', '$2y$10$zzkLQrkDSAopuKUH/PRflOpuJ2ccdKLuW6cuHe5pYiOLEd78IzY5G', '0112929330', 'company', '2023-09-23 10:57:51');
 
 --
 -- Indexes for dumped tables
@@ -491,7 +498,7 @@ ALTER TABLE `certificate-category`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `companyID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `companyID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `company_payment`
@@ -563,7 +570,7 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables

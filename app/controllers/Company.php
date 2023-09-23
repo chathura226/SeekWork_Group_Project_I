@@ -1,16 +1,16 @@
 <?php
 
-//Student class
-class Student extends Controller{
+//Company class
+class Company extends Controller{
 
     public function index(){
         
         if(!Auth::logged_in()){//if not logged in redirect to login page
-            message('Please login to view the student section!');
+            message('Please login to view the company section!');
             redirect('login');
         }
-        if(!Auth::is_student()){///if not a student, redirect to home
-            message('Only students can view student dashboard!');
+        if(!Auth::is_company()){///if not an admin, redirect to home
+            message('Only companies can view company dashboard!');
             redirect('home');
         }
       
@@ -18,20 +18,19 @@ class Student extends Controller{
 
         $data['title'] = "Dashboard";
         
-        $this->view('student/dashboard',$data);
+        $this->view('company/dashboard',$data);
     }
 
     public function profile($id=null){
 
         if(!Auth::logged_in()){//if not logged in redirect to login page
-            message('Please login to view the student section!');
+            message('Please login to view the company section!');
             redirect('login');
         }
-        if(!Auth::is_student()){///if not a student, redirect to home
-            message('Only students can view student dashboard!');
+        if(!Auth::is_company()){///if not an admin, redirect to home
+            message('Only companies can view company dashboard!');
             redirect('home');
         }
-      
       
         //if id is null make it current logged in user id
         $id=$id ?? Auth::getuserID();
@@ -50,7 +49,7 @@ class Student extends Controller{
 
         $data['title'] = "Profile";
         
-        $this->view('student/profile',$data);
+        $this->view('company/profile',$data);
     }
 
 
@@ -58,11 +57,11 @@ class Student extends Controller{
 
     public function changepassword(){
         if(!Auth::logged_in()){//if not logged in redirect to login page
-            message('Please login to view the student section!');
+            message('Please login to view the company section!');
             redirect('login');
         }
-        if(!Auth::is_student()){///if not a student, redirect to home
-            message('Only students can view student dashboard!');
+        if(!Auth::is_company()){///if not an admin, redirect to home
+            message('Only companies can view company dashboard!');
             redirect('home');
         }
       
@@ -75,20 +74,20 @@ class Student extends Controller{
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
             message("Password changed successfully!");
-            redirect('student');
+            redirect('company');
         }
 
 
-        $this->view('student/changepassword',$data);
+        $this->view('company/changepassword',$data);
     }
 
     public function updateprofile(){
         if(!Auth::logged_in()){//if not logged in redirect to login page
-            message('Please login to view the student section!');
+            message('Please login to view the company section!');
             redirect('login');
         }
-        if(!Auth::is_student()){///if not a student, redirect to home
-            message('Only students can view student dashboard!');
+        if(!Auth::is_company()){///if not an admin, redirect to home
+            message('Only companies can view company dashboard!');
             redirect('home');
         }
       
@@ -102,20 +101,20 @@ class Student extends Controller{
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
             message("Profile updated successfully!");
-            redirect('student');
+            redirect('company');
         }
 
 
-        $this->view('student/updateprofile',$data);
+        $this->view('company/updateprofile',$data);
     }
 
     public function verification(){
         if(!Auth::logged_in()){//if not logged in redirect to login page
-            message('Please login to view the student section!');
+            message('Please login to view the company section!');
             redirect('login');
         }
-        if(!Auth::is_student()){///if not a student, redirect to home
-            message('Only students can view student dashboard!');
+        if(!Auth::is_company()){///if not an admin, redirect to home
+            message('Only companies can view company dashboard!');
             redirect('home');
         }
       
@@ -129,11 +128,11 @@ class Student extends Controller{
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
             message("Details submitted successfully!");
-            redirect('student');
+            redirect('company');
         }
 
 
-        $this->view('student/verification',$data);
+        $this->view('company/verification',$data);
     }
 
 }

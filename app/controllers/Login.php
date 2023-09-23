@@ -28,9 +28,8 @@ class Login extends Controller{
                     if($row->role==='student'){
                         $universityDetails=$user->getFirstCustom('university',['universityID'=>$userDetails->universityID],"universityID");
                         $combinedObject1= (object)array_merge((array)$userDetails, (array)$universityDetails);
-                    }
-
-                    $combinedObject = (object)array_merge((array)$row, (array)$combinedObject1);
+                        $combinedObject = (object)array_merge((array)$row, (array)$combinedObject1);
+                    }else $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
 
                     
                     //authenticate (this will be a static class)

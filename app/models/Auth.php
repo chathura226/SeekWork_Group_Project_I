@@ -31,7 +31,6 @@ class Auth{
         return false;
     }
 
-    //not sure abt this.. makingan instance of
     public static function is_admin(){
         if(!empty($_SESSION['USER_DATA'])){
             
@@ -51,6 +50,43 @@ class Auth{
         return false;
     }
 
+    public static function is_student(){
+        if(!empty($_SESSION['USER_DATA'])){
+            
+            //creating an model instance to use database
+            $modelInstance=new Model();
+            //getting from databse admin which match with the userID in session and ordrr 
+            //the data by adminID and select one from that (check getFirstCustom)
+            $row = $modelInstance->getFirstCustom('student',['userID'=>$_SESSION['USER_DATA']->userID],'studentID');
+            
+
+            //if not found, $row will be false
+            if($row){
+               return true;
+            }else return false;
+            
+        }
+        return false;
+    }
+
+    public static function is_company(){
+        if(!empty($_SESSION['USER_DATA'])){
+            
+            //creating an model instance to use database
+            $modelInstance=new Model();
+            //getting from databse admin which match with the userID in session and ordrr 
+            //the data by adminID and select one from that (check getFirstCustom)
+            $row = $modelInstance->getFirstCustom('company',['userID'=>$_SESSION['USER_DATA']->userID],'companyID');
+            
+
+            //if not found, $row will be false
+            if($row){
+               return true;
+            }else return false;
+            
+        }
+        return false;
+    }
     //if we call a function that doesnt exisit in this class, __call with catch that 
     // 1st parameter will be functon name and 2nd argument will be array of values that passed in that function
     public static function __callStatic($funcName,$values){

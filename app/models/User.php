@@ -146,7 +146,7 @@ class User extends Model {
         }
         
 
-        if (isset($data['website'])) {
+        if (!empty($data['website'])) {
             $website = $data['website'];
         
             // Remove leading and trailing spaces from the input
