@@ -1,8 +1,8 @@
 *{
     margin: 0;
     padding: 0 ;
-    border: none;
-    outline: none;
+    /* border: none;
+    outline: none; */
     box-sizing: border-box;
 }
 /* ------------------sidebar and content wrapper------------------ */

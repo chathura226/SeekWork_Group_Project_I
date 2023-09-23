@@ -25,8 +25,10 @@
       <div class="card__title"><?=ucfirst(Auth::getfirstName())?> <?=ucfirst(Auth::getlastName())?> </div>
       <div class="card__subtitle"><?=ucfirst(Auth::getrole())?> </div>
       <div class="card__wrapper">
-          <button class="card__btn">Button</button>
-          <button class="card__btn card__btn-solid">Button</button>
+        <a href="<?=ROOT?>/admin/changepassword"><button class="card__btn">Change Password</button></a>
+        <a href="<?=ROOT?>/admin/updateprofile"><button class="card__btn card__btn-solid">Update Profile</button></a>
+          
+          
       </div>
     </div>
 

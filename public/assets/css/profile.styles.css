@@ -64,8 +64,8 @@
   
   .card__btn {
     margin-top: 15px;
-    width: 76px;
-    height: 31px;
+    width: 125px;
+    height: 45px;
     border: 2px solid var(--main-color);
     border-radius: 4px;
     font-weight: 700;
