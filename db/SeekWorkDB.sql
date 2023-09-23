@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Sep 22, 2023 at 02:21 PM
+-- Generation Time: Sep 23, 2023 at 04:02 AM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -31,6 +31,7 @@ CREATE TABLE `admin` (
   `adminID` int NOT NULL,
   `firstName` varchar(20) NOT NULL,
   `lastName` varchar(20) NOT NULL,
+  `address` text,
   `userID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -38,8 +39,8 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`adminID`, `firstName`, `lastName`, `userID`) VALUES
-(3, 'chathura', 'lakshan', 11);
+INSERT INTO `admin` (`adminID`, `firstName`, `lastName`, `address`, `userID`) VALUES
+(3, 'chathura', 'lakshan', NULL, 11);
 
 -- --------------------------------------------------------
 

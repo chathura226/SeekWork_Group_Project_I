@@ -216,14 +216,54 @@ footer{
     display: grid;
     grid-template-columns: repeat(12,1fr);
     grid-auto-rows: minmax(0,auto);
-    grid-auto-flow: column;
+    /* grid-auto-flow: column; */
     padding: 0px;
 }
 
 .wrapper >*{
     padding: 0px;
 }
+.grid-gap-10{
+    grid-gap: 10px;
+}
+.grid-gap-20{
+    grid-gap: 20px;
+}
+/* -----------------------------------breadcrumbs------------------------- */
 
+
+.breadcrumbs{
+    padding: 10px;
+
+}
+
+
+.breadcrumbs__item{
+    display: inline-block;
+}
+
+.breadcrumbs__item:not(:last-of-type)::after{
+    content: '\203a';
+    /* content: '/'; */
+    /* margin: 0 5px; */
+    color:var(--primary-color-dark);
+}
+
+
+.breadcrumbs__link{
+    text-decoration: none;
+    color: var(--primary-color-dark);
+}
+.breadcrumbs__link:hover{
+    text-decoration: underline;
+    color: var(--secondary-color);
+}
+
+.breadcrumbs__link--active{
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+/* ----------------------------------------------------------------------------- */
 /* column spanning classes */
 .column-1{
     grid-column: span 1;
