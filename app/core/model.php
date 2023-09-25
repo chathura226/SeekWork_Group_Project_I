@@ -70,7 +70,7 @@ class Model extends Database{
 
         //remove the additional '&&' 
         $query=trim($query,"&& ");
-        $query.=" ORDER BY userID DESC LIMIT 1"; //get the first latest record from 
+        $query.=" ORDER BY ".$this->primaryKey." DESC LIMIT 1"; //get the first latest record from 
 
         //we can call query qithout creating new database instance since we inherit 
         // this class from database class

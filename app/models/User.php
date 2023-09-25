@@ -12,7 +12,7 @@ class User extends Model {
         'contactNo',
         'role',
     ];
-
+    protected $primaryKey='userID';
      
     //if all goes well, return true, else false
     public function validate($data){

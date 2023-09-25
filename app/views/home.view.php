@@ -102,7 +102,7 @@
                 <div class="task-disc">
                     <img src="<?=ROOT?>/assets/images/profile1.png">
                     <div class="disc-title">
-                        <h2>Wordpress Website</h2>
+                        <h2>Small fix of logo</h2>
                         <div class="comp">
                             <h4>Seekwork corp.</h4>
                             <div class="rating">
@@ -123,14 +123,18 @@
                         </div>
                     </div>
                     <div class="disc-disc">
-                        this is the discription about the task. we want a website built with wordpress that has the below functionalities
-                        dekjdeld
-                        dlkmede
-                        cd,cnenedendkenkendoekbcjkckw ckwnciwncknwm cknck wkncknlkfnf  knkfeknd kendkkndkend knwodlnw
+                    I am looking for a freelancer who can help me with a small fix on my logo. The specific issue I need addressed is a color adjustment. I have a specific color palette that I would like to use for the adjustment. I do not require any additional design elements to be added to the logo, just a simple adjustment to the existing logo.
+
+Ideal Skills and Experience:
+- Graphic design experience
+- Proficiency in logo design and color adjustment
+- Attention to detail and ability to accurately match colors
+- Strong communication skills to understand and implement the client's specific requirements
                     </div>
                     <div class="price-button">
                         <h2>Rs.3000/=</h2>
-                        <button class="apply">Apply</button>
+                        
+                        <a href="<?=ROOT?>/task/111"><button class="apply">Apply</button></a>
 
                     </div>
                 </div>

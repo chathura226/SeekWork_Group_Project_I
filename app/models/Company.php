@@ -4,6 +4,7 @@
 class Company extends Model {
     protected $table="company";
     public $errors=[];
+    protected $primaryKey='companyID';
 
     //fields that can be updated
     protected $allowedColumns=[

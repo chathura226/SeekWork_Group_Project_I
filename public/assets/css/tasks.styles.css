@@ -89,6 +89,12 @@
     margin-bottom: 2px;
     margin-top: 2px;
 }
+
+.price-button a{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
 .apply {
     margin-right: 0;
     margin-bottom: 0;

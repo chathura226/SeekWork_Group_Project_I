@@ -14,7 +14,8 @@
   <!-- com ponents -->
   <link href="<?=ROOT?>/assets/css/radiantButton.styles.css" rel="stylesheet">
 
-  <title><?=App::$pageName?> - <?=APP_NAME?></title>
+  <!-- <title><?=App::$pageName?> - <?=APP_NAME?></title> -->
+  <title><?=$title?> | <?=APP_NAME?></title>
 
   <!-- Favicons -->
   <link href="<?=ROOT?>/assets/images/favicon.png" rel="icon">

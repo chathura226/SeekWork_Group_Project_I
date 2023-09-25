@@ -146,13 +146,14 @@ body{
         display: grid;
         position: relative;
         grid-template-columns: repeat(12,1fr);
-        grid-auto-rows: minmax(100px,auto);
+        grid-auto-rows: minmax(11vh,auto);
         grid-gap: 10px;
         max-width: 1400px;
         margin:0 auto;
         grid-template-areas:
         "main main main main main main main main main main main main "        
-        "aside aside aside aside aside aside aside aside aside aside aside aside "
+        "main main main main main main main main main main main main "        
+        "main main main main main main main main main main main main "        
         "section section section section section section section section section section section section "
         "footer footer footer footer footer footer footer footer footer footer footer footer ";
     }
