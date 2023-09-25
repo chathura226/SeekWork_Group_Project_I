@@ -58,3 +58,8 @@
     <p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
 </div>
 
+<?php if(message()):?>
+    <div class=" alert alert-success " id="alert">
+        <h3><?=message('',true)?></h3>
+    </div>
+<?php endif;?>

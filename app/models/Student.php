@@ -1,7 +1,7 @@
 <?php
 
 //Student class
-class StudentModel extends Model {
+class Student extends Model {
     protected $table="student";
     protected $primaryKey='studentID';
 

@@ -3,12 +3,10 @@
 <link href="<?=ROOT?>/assets/css/login.styles.css" rel="stylesheet">
 
 <div class="msg c-s-6 c-e-8">
-<?php if(message()):?>
-  <div class="alert alert-success text-center"><?=message('',true)?></div>
-  <?php endif;?>
+
 
   <?php if(!empty($errors['email'])):?>
-  <div class="alert alert-danger text-center"><?=$errors['email']?></div>
+  <div class="alert alert-danger text-center" id="alert"><?=$errors['email']?></div>
   <?php endif;?>
   </div>
 <div class="tab-form c-s-6 c-e-8 row-4">

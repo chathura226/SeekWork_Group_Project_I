@@ -6,7 +6,7 @@
 
 
 <?php if(message()):?>
-    <div class="alert alert-danger text-center"><?=message('',true)?></div>
+    <div class="alert alert-danger text-center" id="alert"><?=message('',true)?></div>
 <?php endif;?>
 <!-- <main class="wrapper"> -->
 <div class="tab-form c-s-6 c-e-8 row-10">

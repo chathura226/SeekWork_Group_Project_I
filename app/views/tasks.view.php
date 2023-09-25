@@ -3,9 +3,13 @@
 
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/tasks.styles.css">
 
-<?php if(message()):?>
-    <div class="alert alert-danger text-center"><?=message('',true)?></div>
-<?php endif;?>
+
+
+
+  <?php if(!empty($errors['email'])):?>
+  <div class="alert alert-danger text-center" id="alert"><?=$errors['email']?></div>
+  <?php endif;?>
+
 
 
 <div class="task-wrapper column-12">

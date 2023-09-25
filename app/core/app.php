@@ -9,6 +9,7 @@ class App
     public static $pageName='_404';//to put in header to get as title for the page
 
     function __construct(){
+        
         $urlarr=$this->getUrl();
         $filename = "../app/controllers/".ucfirst($urlarr[0]).".php"; //path to the controller and capitalize first letter
         if(file_exists($filename)){
@@ -33,6 +34,7 @@ class App
                 unset($urlarr[1]);
         }}
         // show($urlarr);
+        // die;
         $urlarr=array_values($urlarr);//cleaning up, createing new array with indexes from 0
         // show($urlarr);
         call_user_func_array([$mycontroller,$this->method],$urlarr);

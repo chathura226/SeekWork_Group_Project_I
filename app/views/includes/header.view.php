@@ -7,7 +7,7 @@
 
   <!-- main stylesheet -->
   <link href="<?=ROOT?>/assets/css/styles.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="<?=ROOT?>/assets/css/alerts.styles.css">
   <!-- fonts -->
   <link rel="stylesheet" type="text/css" href="<?=ROOT?>/assets/css/custom-fonts.css">
 
@@ -22,3 +22,4 @@
 </head>
 
 <body>
+  

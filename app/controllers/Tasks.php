@@ -62,12 +62,21 @@ class Tasks extends Controller{
             message('Only students can apply for tasks!');
             redirect('home');
         }
-      
+        
         if(empty($id)){
             redirect('tasks');
         }else{
 
+            //if a post request--------------------------------------------------------------------------
+            //should implement the validation and procedure
+            if($_SERVER['REQUEST_METHOD']=="POST"){
+            
+            message("Proposal Submitted Successfully!");
+            redirect('tasks');
+            }
 
+
+            //if not a post request-------------------------------------------------------------------------
             $task=new Task();
             $row = $task->getFirstCustom('task',['taskID'=>$id],'taskID');//get task details corresponding to the tadsk id
 

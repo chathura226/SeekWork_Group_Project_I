@@ -1,18 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('editProfileForm');
+    const alertOverlay = document.getElementById('alertOverlay');
+    const alertMessage = document.getElementById('alertMessage');
+    const showAlertButton = document.getElementById('showAlert');
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const fullName = document.getElementById('fullName').value;
-        const email = document.getElementById('email').value;
-        const profilePicture = document.getElementById('profilePicture').files[0];
-
-        // You can handle the form data here, such as sending it to a server.
-
-        // For demonstration purposes, we'll log the data to the console.
-        console.log('Full Name:', fullName);
-        console.log('Email:', email);
-        console.log('Profile Picture:', profilePicture);
+    showAlertButton.addEventListener('click', function() {
+        // Show the overlay and alert message
+        alertOverlay.style.display = 'flex';
+        
+        // Set a timer to hide the alert after 3 seconds (adjust as needed)
+        setTimeout(function() {
+            alertOverlay.style.display = 'none';
+        }, 3000); // 3000 milliseconds (3 seconds)
     });
 });

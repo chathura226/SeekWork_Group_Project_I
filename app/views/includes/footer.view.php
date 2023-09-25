@@ -71,6 +71,7 @@
 </footer>
 
 
+<script src="<?=ROOT?>/assets/js/alert.js"></script>
 
 </body>
 </html>

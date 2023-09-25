@@ -3,10 +3,6 @@
 
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/eachtask.styles.css">
 
-<?php if(message()):?>
-    <div class="alert alert-danger text-center"><?=message('',true)?></div>
-<?php endif;?>
-
 <div class="pagetitle column-12">
       <h1><?=$task->title?></h1>
       <nav>
@@ -80,7 +76,7 @@
     <div class="price-button c-s-8 c-e-13">
 
                         <h1>Rs.<?=$task->value?>/=</h1>
-                        <a href="<?=ROOT?>/tasks/<?=$task->taskID?>"><button class="apply">Apply</button></a>
+                        <a href="<?=ROOT?>/tasks/apply/<?=$task->taskID?>"><button class="apply">Apply</button></a>
                         
                     </div>
     <div class="comp-details c-s-8 c-e-13">

@@ -21,9 +21,6 @@
 <?php if(Auth::getstatus()==='verification pending'):?>
   <div class="alert alert-danger text-center">Your account is not yet verified! Please fill the details and upload relavant documents if you haven't!</div>
   <?php endif;?>
-<?php if(message()):?>
-  <div class="alert alert-success text-center"><?=message('',true)?></div>
-  <?php endif;?>
 
   <?php $this->view('company/company-footer',$data) ?>
 </div>

@@ -96,14 +96,14 @@ body{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 .alert-danger {
-    background-color: #dc3545; /* Change to your desired background color */
-    color: #fff; /* Change to your desired text color */
-    border: 1px solid #dc3545; /* Change to your desired border style and color */
-    border-radius: 5px; /* Change to your desired border radius */
-    padding: 15px; /* Change to your desired padding */
-    font-size: 16px; /* Change to your desired font size */
-    margin-bottom: 10px; /* Change to your desired margin */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Change to your desired box shadow */
+    background-color: #dc3545; 
+    color: #fff; 
+    border: 1px solid #dc3545; 
+    border-radius: 5px; 
+    padding: 15px; 
+    font-size: 16px; 
+    margin-bottom: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
 }
 
 
@@ -556,3 +556,4 @@ footer{
 .align-items-center{
     align-items: center;
 }
+

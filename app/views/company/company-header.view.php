@@ -7,6 +7,7 @@
 
   <!-- main stylesheet -->
   <link href="<?=ROOT?>/assets/css/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="<?=ROOT?>/assets/css/alerts.styles.css">
 
   <!-- fonts -->
   <link rel="stylesheet" type="text/css" href="<?=ROOT?>/assets/css/custom-fonts.css">
@@ -146,3 +147,8 @@
 
     <div class="content-wrapper wrapper grid-gap-20">
 
+    <?php if(message()):?>
+    <div class=" alert alert-success " id="alert">
+        <h3><?=message('',true)?></h3>
+    </div>
+    <?php endif;?>

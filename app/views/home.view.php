@@ -3,9 +3,7 @@
 
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/tasks.styles.css">
 
-<?php if(message()):?>
-    <div class="alert alert-danger text-center"><?=message('',true)?></div>
-<?php endif;?>
+
 
 
 
