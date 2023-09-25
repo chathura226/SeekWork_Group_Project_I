@@ -62,7 +62,6 @@ class Tasks extends Controller{
             message('Only students can apply for tasks!');
             redirect('home');
         }
-        
         if(empty($id)){
             redirect('tasks');
         }else{

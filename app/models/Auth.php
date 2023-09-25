@@ -59,7 +59,6 @@ class Auth{
             //the data by adminID and select one from that (check getFirstCustom)
             $row = $modelInstance->getFirstCustom('student',['userID'=>$_SESSION['USER_DATA']->userID],'studentID');
             
-
             //if not found, $row will be false
             if($row){
                return true;

@@ -13,6 +13,13 @@
   transform: translate(-50%, -50%);
   z-index: 999 ;
 }
+.alert::after{
+  content: "\26A0";
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute; /* Position the ::after content absolutely */
+  right: 10px;
+}
 /* 
 
 .alert {
