@@ -9,7 +9,10 @@
   <div class="alert alert-danger text-center" id="alert"><?=$errors['email']?></div>
   <?php endif;?>
   </div>
-<div class="tab-form c-s-6 c-e-8 row-4">
+
+  <div class="form-wrap column-12">
+
+<div class="tab-form row-4">
   
   <div class="myheader">
       <div class="active-login"><h2>Login</h2></div>
@@ -50,6 +53,7 @@
       
   </div>
   
+  </div>
 </div>
 
 

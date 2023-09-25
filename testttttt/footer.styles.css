@@ -13,14 +13,7 @@
 ul{
   list-style: none;
 }
-
-
 footer{
-  margin-top: 50px;
-  position: relative;
-  bottom: 0;
-  left: 0;
-  width: 100%;
   background-color: var(--secondary-color);
   color: var(--text-color-secondary);
   padding: 70px 0;

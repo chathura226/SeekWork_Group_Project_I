@@ -129,15 +129,7 @@ body{
     grid-gap: 10px;
     max-width: 1400px;
     margin:0 auto;
-    grid-template-areas:
-    "header header header header header header header header header header header header "
-    "main main main main main main main main main main main main "
-    "main main main main main main main main main main main main "
-    "main main main main main main main main main main main main "
-    "aside aside aside aside aside aside aside aside aside aside aside aside "
-    "section section section section section section section section section section section section "
-    "footer footer footer footer footer footer footer footer footer footer footer footer ";
-}
+   }
 
 
 /* for desktop */
@@ -146,19 +138,12 @@ body{
         display: grid;
         position: relative;
         grid-template-columns: repeat(12,1fr);
-        grid-auto-rows: minmax(11vh,auto);
+        grid-auto-rows: minmax(20px,auto);
         grid-gap: 10px;
         max-width: 1400px;
         margin:0 auto;
-        grid-template-areas:
-        "main main main main main main main main main main main main "        
-        "main main main main main main main main main main main main "        
-        "main main main main main main main main main main main main "        
-        "section section section section section section section section section section section section "
-        "footer footer footer footer footer footer footer footer footer footer footer footer ";
     }
 }
-
 
 /* '>' select only the direct elements under content and * will select all elemtns
 therefore '>*' means all direct elements under content */

@@ -1,7 +1,7 @@
 
 <?php $this->view('includes/header',$data) ?>
 <?php $this->view('includes/nav',$data) ?>
-<link href="<?=ROOT?>/assets/css/login.styles.css" rel="stylesheet">
+<link href="<?=ROOT?>/assets/css/signup.styles.css" rel="stylesheet">
 
 
 
@@ -9,7 +9,8 @@
     <div class="alert alert-danger text-center" id="alert"><?=message('',true)?></div>
 <?php endif;?>
 <!-- <main class="wrapper"> -->
-<div class="tab-form c-s-6 c-e-8 row-10">
+<div class="form-wrap column-12">
+<div class="tab-form row-10">
     <div class="tab-header">
         <div class="<? if(!empty($errors['form_id'])){if($errors['form_id']==='student') {echo 'active';}else echo '';}else echo 'active'; ?>">As a Student</div>
         <div class="<? if(!empty($errors['form_id'])){if($errors['form_id']==='company') {echo 'active';} else echo '';}else echo ''; ?>">As a company</div>
@@ -186,6 +187,7 @@
         
     </div>
     
+    </div>
 </div>
                 <!-- </main> -->
 

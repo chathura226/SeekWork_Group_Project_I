@@ -22,8 +22,9 @@
       </nav>
 </div><!-- End Page Title -->
 
+<div class="form-wrap column-12">
 
-<div class="tab-form c-s-6 c-e-8 row-4">
+<div class="tab-form row-4">
   <div class="myheader">
       <div class="active-login"><h2>Update Profile Details</h2></div>
   </div>
@@ -104,7 +105,7 @@
   </div>
   
 </div>
-
+</div>
 
 <script src="<?=ROOT?>/assets/js/main.js"></script>
 

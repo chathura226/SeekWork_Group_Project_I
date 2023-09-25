@@ -2,7 +2,7 @@
 <link href="<?=ROOT?>/assets/css/changepassword.styles.css" rel="stylesheet">
 
 
-<div class="pagetitle column-12">
+<div class="pagetitle column-12 row-1">
       <h1>Change Password</h1>
       <nav>
 
@@ -24,8 +24,8 @@
 </div><!-- End Page Title -->
 
 
-
-<div class="tab-form c-s-6 c-e-8 row-4">
+<div class="form-wrap column-12">
+<div class="tab-form row-4">
   
   <div class="myheader">
       <div class="active-login"><h2>Change Password</h2></div>
@@ -57,6 +57,7 @@
       
   </div>
   
+</div>
 </div>
 
 

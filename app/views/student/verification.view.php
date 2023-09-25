@@ -21,8 +21,8 @@
       </nav>
 </div><!-- End Page Title -->
 
-
-<div class="tab-form c-s-6 c-e-8 row-4">
+<div class="form-wrap column-12">
+<div class="tab-form row-4">
 <div class="alert alert-danger text-center" id="alert">Your account is not yet verified! Please fill the details and upload relavant documents!</div>
   <div class="myheader">
       <div class="active-login"><h2>Profile Details and Verification Documents</h2></div>
@@ -69,6 +69,7 @@
       
   </div>
   
+  </div>
 </div>
 
 <script src="<?=ROOT?>/assets/js/main.js"></script>

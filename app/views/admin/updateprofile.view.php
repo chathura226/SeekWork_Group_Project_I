@@ -1,5 +1,5 @@
 <?php $this->view('admin/admin-header',$data) ?>
-<link href="<?=ROOT?>/assets/css/updateprofile.styles.css" rel="stylesheet">
+<link href="<?=ROOT?>/assets/css/adminupdateprofile.styles.css" rel="stylesheet">
 
 <div class="pagetitle column-12">
       <h1>Update Profile</h1>
@@ -22,8 +22,9 @@
       </nav>
 </div><!-- End Page Title -->
 
+<div class="form-wrap column-12">
 
-<div class="tab-form c-s-6 c-e-8 row-4">
+<div class="tab-form row-4">
   <div class="myheader">
       <div class="active-login"><h2>Update Profile Details</h2></div>
   </div>
@@ -69,6 +70,7 @@
   
 </div>
 
+</div>
 
 <script src="<?=ROOT?>/assets/js/main.js"></script>
 
