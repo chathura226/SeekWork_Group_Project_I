@@ -21,7 +21,7 @@
       </nav>
 </div><!-- End Page Title -->
 
-<div class="form-wrap column-12">
+<div class="form-wrap column-12 row-5">
 <div class="tab-form  row-4">
 <div class="alert alert-danger text-center" >Your account is not yet verified! Please fill the details and upload relavant documents!</div>
   <div class="myheader">

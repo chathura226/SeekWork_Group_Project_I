@@ -135,4 +135,46 @@ class Company extends Controller{
         $this->view('company/verification',$data);
     }
 
+
+    public function tasks($id=null){
+
+        if(empty($id)){
+
+            
+            $task=new Task();
+            $row=$task->where(['companyID'=>Auth::getcompanyID()]);
+            
+            $data['title'] = "Tasks";
+
+            $data['tasks']=$row;
+            
+    
+            $this->view('company/tasks',$data);
+    
+        }else{
+    
+            $task=new Task();
+            $row = $task->getFirstCustom('task',['taskID'=>$id],'taskID');//get task details corresponding to the tadsk id
+            
+            if(!empty($row)){
+                if($row->companyID===Auth::getcompanyID()){
+                    
+                    $data['task']=$row;
+                    $data['title'] = $row->title;
+        
+                    $this->view('company/task',$data);
+                }else{
+                    $data['error']="Unauthorized!";
+
+                    redirect('company/tasks');
+                }
+            }else{
+                $data['error']="Error fetching data!";
+
+                redirect('company/tasks');
+            }
+    
+    
+        }
+    }
 }

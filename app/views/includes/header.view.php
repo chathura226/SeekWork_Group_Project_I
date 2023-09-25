@@ -18,7 +18,8 @@
   <title><?=$title?> | <?=APP_NAME?></title>
 
   <!-- Favicons -->
-  <link href="<?=ROOT?>/assets/images/favicon.png" rel="icon">
+  <link href="<?=ROOT?>/assets/images/favicon.ico" rel="icon">
+
 </head>
 
 <body>

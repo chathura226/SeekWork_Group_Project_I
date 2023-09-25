@@ -2,8 +2,6 @@
 
 
 .form-wrap {
-  position: relative;
-  bottom: 35%;
   display: flex;
   justify-content: center;
 }
@@ -42,7 +40,7 @@
 
 .tab-form .tab-body {
   position: relative;
-  height: 150px ;
+  height: 600px ;
   /* min-height:fit-content; */
   /* overflow: hidden; */
 }
