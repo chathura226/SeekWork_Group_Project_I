@@ -76,9 +76,11 @@
     <div class="price-button c-s-8 c-e-13">
 
                         <h1>Rs.<?=$task->value?>/=</h1>
+                        <a href="<?=ROOT?>/company/assign/<?=$task->taskID?>"><button class="apply">Assign Task</button></a>
+                        &nbsp &nbsp
                         <a href="<?=ROOT?>/company/modify/<?=$task->taskID?>"><button class="apply">Modify Task</button></a>
                         &nbsp &nbsp
-                        <a href="<?=ROOT?>/company/assign/<?=$task->taskID?>"><button class="apply">Assign Task</button></a>
+                        <a ><button id="deleteButton" class="apply">Delete Task</button></a>
                     </div>
     <div class="comp-details c-s-8 c-e-13">
         <h2>About the company</h2>
@@ -114,6 +116,43 @@
 
 
 
+<script >
+    const deleteButton = document.getElementById("deleteButton");
 
+    deleteButton.addEventListener("click", function () {
+        const confirmDelete = confirm("Are you sure you want to delete?");
+
+        if (confirmDelete) {
+            const action = "delete"; // Define the action here
+            // Send the action to the current URL
+            sendActionToCurrentURL(action);
+        } else {
+            alert("Deletion canceled!");
+        }
+    });
+
+    function sendActionToCurrentURL(action) {
+        // Create a form dynamically
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "<?=ROOT?>/company/delete/<?=$task->taskID?>"; // Use the current URL
+        form.style.display = "none"; // Hide the form
+
+        // Create an input element for the action parameter
+        const actionInput = document.createElement("input");
+        actionInput.type = "hidden";
+        actionInput.name = "action";
+        actionInput.value = action;
+
+        // Append the input element to the form
+        form.appendChild(actionInput);
+
+        // Append the form to the document body
+        document.body.appendChild(form);
+
+        // Submit the form
+        form.submit();
+    }
+</script>
 
 <?php $this->view('company/company-footer',$data) ?>

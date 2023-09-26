@@ -214,8 +214,9 @@ class Company extends Controller{
 
         $category=new Category();
         $row=$category->getAll();
-        $data['title'] = "Post Task";
         $data['categories'] = $row;
+
+        $data['title'] = "Post Task";
         
         $this->view('company/post',$data);
            
@@ -240,16 +241,35 @@ class Company extends Controller{
             redirect('company/tasks');
     
         }else{
-    
+            
+            //if the method is post->update task
+            if($_SERVER['REQUEST_METHOD']=="POST"){
+                
+                $task=new Task();
+                $_POST['status']='active';
+                $_POST['companyID']=Auth::getcompanyID();
+                if(empty($_POST['deadline']))unset($_POST['deadline']);
+                
+                $task->update($_POST,$id);
+
+                message('Task Updated Successfully!');
+                redirect('company/tasks/'.$id);
+            }
+
+
             $task=new Task();
             $row = $task->getFirstCustom('task',['taskID'=>$id],'taskID');//get task details corresponding to the tadsk id
             
             if(!empty($row)){
                 if($row->companyID===Auth::getcompanyID()){
                     
+                    $category=new Category();
+                    $row2=$category->getAll();
+                    $data['categories'] = $row2;
+                    
                     $data['task']=$row;
                     $data['title'] = "Modify - ".$row->title;
-        
+                    
                     $this->view('company/modify',$data);
                 }else{
 
@@ -264,5 +284,37 @@ class Company extends Controller{
     
     
         }
+    }
+
+    public function delete($id=null){
+        
+            if($_SERVER['REQUEST_METHOD']=="POST"){
+
+                if(!Auth::logged_in()){//if not logged in redirect to login page
+                    message('Please login to view the company section!');
+                    redirect('login');
+                }
+                if(!Auth::is_company()){///if not an admin, redirect to home
+                    message('Only companies can view company dashboard!');
+                    redirect('home');
+                }
+
+                if(!empty($id)){
+                    $task=new Task();
+                    $row=$task->first(['taskID'=>$id]);
+                    if(!empty($row)){
+                        if($row->companyID===Auth::getcompanyID()){
+                            $task->delete($id);
+                            message('Task Deleted Successfully!');
+                            redirect('company/tasks');
+                        }
+                        message('Unauthorized !');
+                        redirect('company/tasks');
+                    }
+                    message('Error Fetching!');
+                    redirect('company/tasks');
+                }
+            }
+
     }
 }
