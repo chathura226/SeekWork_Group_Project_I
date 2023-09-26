@@ -1,13 +1,10 @@
-<?php $this->view('includes/header',$data) ?>
-<?php $this->view('includes/nav',$data) ?>
+<?php $this->view('student/student-header',$data) ?>
 
 <link href="<?=ROOT?>/assets/css/apply.styles.css" rel="stylesheet">
 
 
-
-
 <div class="pagetitle column-12">
-      <h1>Apply for '<?=$task->title?>'</h1>
+      <h1>Modify Proposal for <?=$task->title?></h1>
       <nav>
 
         <ul class="breadcrumbs">
@@ -15,23 +12,25 @@
             <a href="<?=ROOT?>" class="breadcrumbs__link">Home</a>
           </li>
           <li class="breadcrumbs__item">
-            <a href="<?=ROOT?>/tasks" class="breadcrumbs__link">Tasks</a>
+            <a href="<?=ROOT?>/<?=Auth::getrole()?>" class="breadcrumbs__link">Dashboard</a>
           </li>
           <li class="breadcrumbs__item">
-            <a href="<?=ROOT?>/tasks/<?=$task->taskID?>" class="breadcrumbs__link"><?=$task->title?></a>
+            <a href="<?=ROOT?>/student/proposals" class="breadcrumbs__link">Proposals</a>
           </li>
           <li class="breadcrumbs__item">
-            <a href="" class="breadcrumbs__link breadcrumbs__link--active">Apply</a>
+            <a href="<?=ROOT?>/student/proposals/<?=$proposal->proposalID?>" class="breadcrumbs__link">View Proposal</a>
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="" class="breadcrumbs__link breadcrumbs__link--active">Modify Proposal</a>
           </li>
         </ul>
       </nav>
 </div><!-- End Page Title -->
 
 
-
 <div class="tab-form c-s-3 c-e-11 row-4">
   <div class="myheader">
-      <div class="active-login"><h2>Proposal</h2></div>
+      <div class="active-login"><h2>Modify Proposal</h2></div>
   </div>
   <div class="tab-body">
       <div class="active1">
@@ -82,7 +81,7 @@
 
                 <div class="form-input">
                   <label>Proposal Description</label>
-                  <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Enter your proposal"></textarea>
+                  <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Enter your proposal"><?=$proposal->description?></textarea>
                     <br>
                   <!-- <input   class="" type="text" name="description" id="description" placeholder="Enter a description about you">               -->
               </div>
@@ -103,7 +102,7 @@
                   <input   value="Rs.<?=ucfirst($task->value)?>/=" type="text" name="value" id="value" placeholder="Enter the biddig value" disabled>              
                   <small>Since the task is Fixed Price, You can't change the value</small>
                   <?php else:?>
-                  <input   value="" type="number" name="proposeAmount" id="proposeAmount" placeholder="Enter the biddig value" >              
+                  <input   value="<?=$proposal->proposeAmount?>" type="number" name="proposeAmount" id="proposeAmount" placeholder="Enter the biddig value" >              
                     <?php endif;?>
 
                 </div>
@@ -125,4 +124,4 @@
 
 
 
-<?php $this->view("includes/footer",$data);
+<?php $this->view('student/student-footer',$data) ?>

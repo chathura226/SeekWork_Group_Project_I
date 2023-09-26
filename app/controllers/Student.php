@@ -136,4 +136,98 @@ class Student extends Controller{
         $this->view('student/verification',$data);
     }
 
+    public function proposals($id=null){
+        
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the student section!');
+            redirect('login');
+        }
+        if(!Auth::is_student()){///if not a student, redirect to home
+            message('Only students can view student dashboard!');
+            redirect('home');
+        }
+
+        if(empty($id)){
+            $proposal=new Proposal();
+            $proposals=$proposal->getAll();
+            
+            $task=new Task();
+            for ($i = 0; $i < count($proposals); $i++) {
+                $proposals[$i]->task=$task->first(['taskID'=> $proposals[$i]->taskID]);
+            }
+    
+    
+            $data['title'] = "Proposals";
+            $data['proposals']=$proposals;
+            
+            $this->view('student/proposals',$data);
+        }else{
+            $proposal=new Proposal();
+            $row=$proposal->first(['proposalID'=>$id]);
+            if(!empty($row)){
+                $data['proposal']=$row;
+
+
+                $task=new Task();
+                $data['task']=$task->first(['taskID'=>$row->taskID]);
+                if(!empty($data['task'])){
+                    $company=new Company();
+                    $data['company']=$company->first(['companyID'=>$data['task']->companyID]);
+                    if(!empty($data['company'])){
+
+                        $data['title'] = "Proposal - ".$data['task']->title;
+                        $this->view('student/proposal',$data);
+                        return;
+
+                    }
+
+                } 
+            }
+            message('Error fetching data!');
+            redirect('student/proposals');
+
+        }
+    }
+
+    //modify proposals
+    public function modify($id=null){
+        
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the student section!');
+            redirect('login');
+        }
+        if(!Auth::is_student()){///if not a student, redirect to home
+            message('Only students can view student dashboard!');
+            redirect('home');
+        }
+
+        if(empty($id)){
+            message('Select a proposal to modify!');
+            redirect('student/proposals');
+        }else{
+            $proposal=new Proposal();
+            $row=$proposal->first(['proposalID'=>$id]);
+            if(!empty($row)){
+                $data['proposal']=$row;
+
+
+                $task=new Task();
+                $data['task']=$task->first(['taskID'=>$row->taskID]);
+                if(!empty($data['task'])){
+                    $company=new Company();
+                    $data['company']=$company->first(['companyID'=>$data['task']->companyID]);
+                    if(!empty($data['company'])){
+
+                        $data['title'] = "Modify Proposal";
+                        $this->view('student/modify',$data);
+                        return;
+                    }
+
+                } 
+            }
+            message('Error fetching data!');
+            redirect('student/proposals');
+
+        }
+    }
 }

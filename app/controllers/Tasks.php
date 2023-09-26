@@ -69,9 +69,18 @@ class Tasks extends Controller{
             //if a post request--------------------------------------------------------------------------
             //should implement the validation and procedure
             if($_SERVER['REQUEST_METHOD']=="POST"){
-            
-            message("Proposal Submitted Successfully!");
-            redirect('tasks');
+                
+                //appending student id to post array
+                $_POST['studentID']=Auth::getstudentID();
+                if(empty($_POST['documents']))unset($_POST['documents']);
+
+                $proposal=new Proposal();
+                $proposal->insert($_POST);
+                // show($_POST);
+                // die;
+                    
+                message("Proposal Submitted Successfully!");
+                redirect('tasks');
             }
 
 

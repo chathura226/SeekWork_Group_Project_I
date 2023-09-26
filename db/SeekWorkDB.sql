@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Sep 26, 2023 at 03:58 AM
+-- Generation Time: Sep 26, 2023 at 07:47 AM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -195,14 +195,23 @@ CREATE TABLE `payment` (
 --
 
 CREATE TABLE `proposal` (
-  `porposalID` int NOT NULL,
+  `proposalID` int NOT NULL,
   `description` text NOT NULL,
-  `documents` text NOT NULL,
+  `documents` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `proposeAmount` double DEFAULT NULL,
   `submissionDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `taskID` int NOT NULL,
   `studentID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `proposal`
+--
+
+INSERT INTO `proposal` (`proposalID`, `description`, `documents`, `proposeAmount`, `submissionDate`, `taskID`, `studentID`) VALUES
+(1, 'wkjhownl', NULL, NULL, '2023-09-26 06:37:49', 2, 12),
+(2, 'ffwew', NULL, NULL, '2023-09-26 07:35:47', 2, 12),
+(3, 'dede', NULL, 2, '2023-09-26 07:44:40', 6, 12);
 
 -- --------------------------------------------------------
 
@@ -295,8 +304,7 @@ INSERT INTO `task` (`taskID`, `title`, `taskType`, `description`, `deadline`, `v
 (2, 'Create a website', 'fixed Price', 'I am looking for an experienced web developer to create a website for me. Specifically, I need a blogging website, with specific design and functionality requirements. The website should be built on WordPress, with PHP and HTML as the core programming language. I already have web content and images ready to go for the new website, so the main scope of work is on the design and development side.\r\n\r\nThe design should be modern and sleek, with clean lines and fonts, as well as including all necessary components of a blog such as comment sections, tags and a SEO-friendly structure. On the development side, I am looking for a custom coding and development job. This includes incorporating necessary plug-ins for a usable and engaging user experience, designing and integrating attractive forms, and making sure the website works across multiple browsers and devices.\r\n\r\nExperience in web design and WordPress development are a must for this job. Additionally, it would be great if the candidate had expertise in SEO and has done any e-commerce projects in the past. Timely completion of the project is also important.', NULL, 10000, 'active', 3, NULL, 2),
 (3, 'Animation For Stream\r\n', 'fixed Price', 'Hello, I am looking for a talented animator who can create a specific introduction animation for my stream. The type of animation I need is 3D, and I have specific elements that I would like included in the animation. My goal is to create something visually stunning and memorable that can draw viewers in and make them stick around. ( I have the full idea ready, and clips to be used inside of the animation, the animation being between 3-5 minutes long ) If you have the skills and the creativity to create something that will be noticed, please reach out to me.', NULL, 15000, 'active', 2, NULL, 3),
 (4, 'task 1', 'fixed Price', 'aaa', '2023-09-16', 1000, 'active', 2, NULL, 2),
-(5, 'task 2', 'fixed Price', '1', NULL, 1111, 'active', 2, NULL, 1),
-(6, 'task 3', 'fixed Price', 's22', '2023-09-30', 222, 'active', 2, NULL, 3);
+(6, 'task 3', 'auction', 's22', '2023-09-30', 222, 'active', 2, NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -434,7 +442,7 @@ ALTER TABLE `payment`
 -- Indexes for table `proposal`
 --
 ALTER TABLE `proposal`
-  ADD PRIMARY KEY (`porposalID`),
+  ADD PRIMARY KEY (`proposalID`),
   ADD KEY `task-proposal` (`taskID`),
   ADD KEY `student-proposal` (`studentID`);
 
@@ -554,7 +562,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `proposal`
 --
 ALTER TABLE `proposal`
-  MODIFY `porposalID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `proposalID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `review`
@@ -578,7 +586,7 @@ ALTER TABLE `student_payment`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `taskID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `taskID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `university`
