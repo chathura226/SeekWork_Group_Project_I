@@ -33,7 +33,7 @@ class Model extends Database{
 
     //to check and get from databse 'where' as arry of objects
     public function where($data){
-
+        
         $keys=array_keys($data);
 
         $query="SELECT * FROM ".$this->table." WHERE ";
@@ -57,6 +57,17 @@ class Model extends Database{
 
     }
 
+    //get all rows 
+    public function getAll(){
+        
+        $query="SELECT * FROM ".$this->table;
+
+        $res=$this->query($query);
+
+        if(is_array($res)){
+            return $res;
+        }else return false;
+    }
     //to check and get first record that find from databse (returns 1 object)
     public function first($data){
 

@@ -214,7 +214,8 @@ footer{
     display: grid;
     grid-template-columns: repeat(12,1fr);
     grid-auto-rows: minmax(auto,100px);
-    /* grid-auto-flow: column; */
+    grid-auto-flow: row;
+
     padding: 0px;
 }
 

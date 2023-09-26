@@ -138,6 +138,15 @@ class Company extends Controller{
 
     public function tasks($id=null){
 
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the company section!');
+            redirect('login');
+        }
+        if(!Auth::is_company()){///if not an admin, redirect to home
+            message('Only companies can view company dashboard!');
+            redirect('home');
+        }
+
         if(empty($id)){
 
             
@@ -164,13 +173,92 @@ class Company extends Controller{
         
                     $this->view('company/task',$data);
                 }else{
-                    $data['error']="Unauthorized!";
-
+                    message('Unauthorized');
                     redirect('company/tasks');
                 }
             }else{
-                $data['error']="Error fetching data!";
 
+                message('Error fetching data!');
+                redirect('company/tasks');
+            }
+    
+    
+        }
+    }
+
+
+    public function post(){
+
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the company section!');
+            redirect('login');
+        }
+        if(!Auth::is_company()){///if not an admin, redirect to home
+            message('Only companies can view company dashboard!');
+            redirect('home');
+        }
+
+        //if the method is post->creatre task
+        if($_SERVER['REQUEST_METHOD']=="POST"){
+            
+            $task=new Task();
+            $_POST['status']='active';
+            $_POST['companyID']=Auth::getcompanyID();
+            if(empty($_POST['deadline']))unset($_POST['deadline']);
+
+            $task->insert($_POST);
+
+            message('Task Posted Successfully!');
+            redirect('company/tasks');
+        }
+
+        $category=new Category();
+        $row=$category->getAll();
+        $data['title'] = "Post Task";
+        $data['categories'] = $row;
+        
+        $this->view('company/post',$data);
+           
+    
+    }
+    
+
+
+    public function modify($id=null){
+
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the company section!');
+            redirect('login');
+        }
+        if(!Auth::is_company()){///if not an admin, redirect to home
+            message('Only companies can view company dashboard!');
+            redirect('home');
+        }
+        
+        if(empty($id)){
+            message('Choose a task to modify!');
+            redirect('company/tasks');
+    
+        }else{
+    
+            $task=new Task();
+            $row = $task->getFirstCustom('task',['taskID'=>$id],'taskID');//get task details corresponding to the tadsk id
+            
+            if(!empty($row)){
+                if($row->companyID===Auth::getcompanyID()){
+                    
+                    $data['task']=$row;
+                    $data['title'] = "Modify - ".$row->title;
+        
+                    $this->view('company/modify',$data);
+                }else{
+
+                    message('Unauthorized');
+                    redirect('company/tasks');
+                }
+            }else{
+
+                message('Error fetching data!');
                 redirect('company/tasks');
             }
     

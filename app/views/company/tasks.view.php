@@ -18,7 +18,7 @@
         </ul>
       </nav>
 </div>
-
+<div class="mytasks-wrapper column-12">
 <?php foreach($tasks as $task):?>
 <div class="mytask-tasks">
   <h2><?=ucfirst($task->title)?></h2>
@@ -37,5 +37,5 @@
 </div>
 <?php endforeach;?>
 
-
+</div>
 <?php $this->view('company/company-footer',$data) ?>

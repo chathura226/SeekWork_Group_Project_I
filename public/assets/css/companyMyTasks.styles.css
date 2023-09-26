@@ -1,3 +1,13 @@
+.mytasks-wrapper{
+  padding: 20px;
+  margin: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+.pagetitle{
+  height: 100px;
+}
 .mytask-tasks{
     grid-column: 2/12;
     background-color: white;
@@ -10,6 +20,7 @@
     border-radius: 10px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
     align-content: space-between;
+    margin: 10px;
 
 }
 .mytask-tasks a{
