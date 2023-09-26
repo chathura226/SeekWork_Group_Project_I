@@ -134,4 +134,97 @@ class Moderator extends Controller{
 
         $this->view('moderator/updateprofile',$data);
     }
+
+    public function university($action=null,$id=null){
+
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the moderator section!');
+            redirect('login');
+        }
+        if(!Auth::is_moderator()){///if not an moderator, redirect to home
+            message('Only moderators can view moderator dashboard!');
+            redirect('home');
+        }
+
+        if(!empty($action)){
+            if($action==="post"){//for new uni
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                        
+                    $university=new University();
+                    $university->insert($_POST);
+
+                    message('University Added Successfully!');
+                    redirect('moderator/university');
+                }
+                $data['title'] = "New University";
+                $this->view('moderator/post-university',$data);
+                return;
+            
+            }else if($action==='modify'){//to update
+                if(!empty($id)){
+                    if($_SERVER['REQUEST_METHOD']=="POST"){
+
+                        $university=new University();
+                        $university->update($_POST,$id);
+
+                        message('University Modified Successfully!');
+                        redirect('moderator/university');
+                    }
+                    $university=new University();
+                    $row=$university->first(['universityID'=>$id]);
+                    if(!empty($row)){
+                        $data['university']=$row;
+                        $data['title'] = "Modify - ".$row->universityName;
+                        $this->view('moderator/modify-university',$data);
+                        return;
+                    }
+                    message('Error fetching data!');
+                    redirect('moderator/university');
+                }else{
+                    message('Choose a university to modify!');
+                    redirect('moderator/university');
+                }
+            }else if($action==='delete'){//to delete
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+    
+                    if(!empty($id)){
+                        $university=new University();
+                        $row=$university->first(['universityID'=>$id]);
+                        if(!empty($row)){
+                            $university->delete($id);
+                            message('University Deleted Successfully!');
+                            redirect('moderator/university');
+                        }
+                        message('Error Fetching!');
+                        redirect('moderator/university');
+                    }else{
+                        message('Choose a university to delete!');
+                        redirect('moderator/university');
+                    }
+                }
+                redirect('moderator/university');
+
+            }
+        }
+        
+        $university=new University();
+        $universities=$university->getAll();
+        if(empty($universities)){
+            message('No universities in the database!');
+            redirect('moderator');
+        }
+
+        $student=new Student();
+        for ($i = 0; $i < count($universities); $i++) {
+            $countUsers=$student->where(['universityID'=>$universities[$i]->universityID]);
+            if(!empty($countUsers))$universities[$i]->userCount=count($countUsers);
+            else $universities[$i]->userCount=0;
+            
+        }
+
+        $data['universities']=$universities;
+        $data['title'] = "Universities";
+        
+        $this->view('moderator/university',$data);
+    }
 }

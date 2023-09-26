@@ -539,7 +539,15 @@ footer{
     justify-content: space-around;
 }
 
+.justify-between{
+    justify-content: space-between;
+}
+
+
 .align-items-center{
     align-items: center;
 }
 
+.margin-5{
+    margin: 5px;
+}

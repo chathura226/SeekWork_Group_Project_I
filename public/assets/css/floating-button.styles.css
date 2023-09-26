@@ -1,0 +1,86 @@
+.floating-button {
+    position: fixed;
+    top: 80px; /* Adjust this value to change the button's vertical position */
+    right: 20px; /* Adjust this value to change the button's horizontal position */
+    z-index: 9999; /* Ensure the button is on top of other content */
+    background-color: #34974d;
+    border-radius: 5%;
+    /* width: 150px;
+    height: 80px; */
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* padding: 5px;*/
+    display: flex;
+    flex-wrap: wrap; 
+}
+
+.floating-button button {
+    font-size: 15px !important;
+
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+.buttonadd {
+    position: relative;
+    width: 220px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid #34974d;
+    background-color: #3aa856;
+    justify-content: flex-start;
+  }
+  
+  .buttonadd, .button__icon, .button__text {
+    transition: all 0.3s;
+  }
+  
+  .buttonadd .button__text {
+    transform: translateX(30px);
+    color: #fff;
+    font-weight: 600;
+  }
+  
+  .buttonadd .button__icon {
+    position: absolute;
+    transform: translateX(170px);
+    height: 100%;
+    width: 39px;
+    background-color: #34974d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .buttonadd .svg {
+    width: 30px;
+    stroke: #fff;
+  }
+  
+  .buttonadd:hover {
+    background: #34974d;
+  }
+  
+  .buttonadd:hover .button__text {
+    color: transparent;
+  }
+  
+  .buttonadd:hover .button__icon {
+    width: 148px;
+    transform: translateX(0);
+  }
+  
+  .buttonadd:active .button__icon {
+    background-color: #2e8644;
+  }
+  
+  .buttonadd:active {
+    border: 1px solid #2e8644;
+  }
