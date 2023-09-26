@@ -153,6 +153,10 @@ class Company extends Controller{
             $task=new Task();
             $row=$task->where(['companyID'=>Auth::getcompanyID()]);
             
+            if(empty($row)){
+                message('You have no tasks posted!');
+                redirect('company');
+            }
             $data['title'] = "Tasks";
 
             $data['tasks']=$row;

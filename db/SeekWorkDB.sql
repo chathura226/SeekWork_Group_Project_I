@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Sep 26, 2023 at 07:47 AM
+-- Generation Time: Sep 26, 2023 at 09:51 AM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -40,7 +40,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`adminID`, `firstName`, `lastName`, `address`, `userID`) VALUES
-(3, 'chathura', 'lakshan', NULL, 11);
+(3, 'chathura', 'lakshan', NULL, 11),
+(4, 'Seekwork', 'Admin', 'No.5 Seekwork rd.', 25);
 
 -- --------------------------------------------------------
 
@@ -115,7 +116,8 @@ CREATE TABLE `company` (
 INSERT INTO `company` (`companyID`, `companyName`, `status`, `firstName`, `lastName`, `address`, `website`, `description`, `brn`, `userID`) VALUES
 (1, 'kk', 'verification pending', 'aa', 'aa', 'aaa', 'https://www.kk.com', '', 'aa', 16),
 (2, 'seekwork', 'verification pending', 'chathura', 'lakshan', 'colombo', 'https://www.seekwork.com', 'wwwwwwwwww', '1111111', 22),
-(3, 'seekwork.com', 'verified', 'lakshan', 'chathura', 'colombo', '', NULL, '11111', 24);
+(3, 'seekwork.com', 'verified', 'lakshan', 'chathura', 'colombo', '', NULL, '11111', 24),
+(4, 'Seekwork Company', 'verification pending', 'Seekwork', 'Company', 'No.5 Seekwork rd.', '', NULL, '1111111111', 27);
 
 -- --------------------------------------------------------
 
@@ -158,6 +160,13 @@ CREATE TABLE `moderator` (
   `address` varchar(100) NOT NULL,
   `userID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `moderator`
+--
+
+INSERT INTO `moderator` (`moderatorID`, `firstName`, `lastName`, `address`, `userID`) VALUES
+(1, 'Seekwork', 'Moderator', 'No.5 Seekwork rd.', 28);
 
 -- --------------------------------------------------------
 
@@ -209,9 +218,8 @@ CREATE TABLE `proposal` (
 --
 
 INSERT INTO `proposal` (`proposalID`, `description`, `documents`, `proposeAmount`, `submissionDate`, `taskID`, `studentID`) VALUES
-(1, 'wkjhownl', NULL, NULL, '2023-09-26 06:37:49', 2, 12),
-(2, 'ffwew', NULL, NULL, '2023-09-26 07:35:47', 2, 12),
-(3, 'dede', NULL, 2, '2023-09-26 07:44:40', 6, 12);
+(2, 'ffwewcdcdc', NULL, NULL, '2023-09-26 07:35:47', 2, 12),
+(3, 'dede', NULL, 2, '2023-09-26 07:44:40', 6, 10);
 
 -- --------------------------------------------------------
 
@@ -261,7 +269,8 @@ INSERT INTO `student` (`studentID`, `firstName`, `lastName`, `qualifications`, `
 (8, 'chathura', 'lakshan', NULL, NULL, '200105702855', 'skjnwk', 'verification pending', NULL, NULL, 17, NULL),
 (9, 'sajith', 'rajapakse', NULL, NULL, '200012365849', '99 madamulana pallebedda', 'verification pending', NULL, NULL, 18, NULL),
 (10, 'sajith', 'rajapakse', NULL, NULL, '960951105v', '99 madamulana pallebedda', 'verification pending', NULL, NULL, 19, NULL),
-(12, 'chathura', 'lakshan', NULL, NULL, '123456789123', '111', 'verification pending', NULL, NULL, 21, NULL);
+(12, 'chathura', 'lakshan', NULL, NULL, '123456789123', '111', 'verification pending', NULL, NULL, 21, NULL),
+(14, 'Seekwork', 'Student', NULL, NULL, '234567890123', 'No.5 Seekwork rd.', 'verification pending', NULL, NULL, 26, NULL);
 
 -- --------------------------------------------------------
 
@@ -358,7 +367,11 @@ INSERT INTO `user` (`userID`, `email`, `password`, `contactNo`, `role`, `created
 (21, 'chathura@stu.ucsc.cmb.ac.lk', '$2y$10$k2xZ8oNZAsCvUtTV1wWwPe/pmGjO/QwXHbFL3z6od1JNcXLOTy6da', '0112339220', 'student', '2023-09-21 23:19:29'),
 (22, 'chathura@seekwork.com', '$2y$10$KPl6CHFI3XpZJiRhj1mbU.p3W3/jUxGLn8hHup94D7WMxI6YijZw.', '0775017409', 'company', '2023-09-23 10:04:25'),
 (23, 'verified@seekwork.com', '$2y$10$KzigzoHAaEXBHKBZGgAnS.K0RgVKNMayfiXeOKIeQ9owegp3lALYi', '0112929330', 'company', '2023-09-23 10:56:59'),
-(24, 'verifiedcompany@seekwork.com', '$2y$10$zzkLQrkDSAopuKUH/PRflOpuJ2ccdKLuW6cuHe5pYiOLEd78IzY5G', '0112929330', 'company', '2023-09-23 10:57:51');
+(24, 'verifiedcompany@seekwork.com', '$2y$10$zzkLQrkDSAopuKUH/PRflOpuJ2ccdKLuW6cuHe5pYiOLEd78IzY5G', '0112929330', 'company', '2023-09-23 10:57:51'),
+(25, 'admin@seekwork.lk', '$2y$10$sMktYFpZDsCZqsv6tT4SnOqYgov68qzGhOYig8LPR6Vo242SH0//G', '0111111111', 'admin', '2023-09-26 09:26:34'),
+(26, 'student@seekwork.lk', '$2y$10$Tiqa1R7u.5V3SH9hR8OyHO3XMBb8KsjqSZsnaPalRY5HMMF81cu1.', '0111111111', 'student', '2023-09-26 09:27:28'),
+(27, 'company@seekwork.lk', '$2y$10$VJc263BalapqYDWI.JTEBOwB3ERWYz2J8vNSVybN4T7tH2kU1w0MO', '0111111111', 'company', '2023-09-26 09:28:43'),
+(28, 'moderator@seekwork.lk', '$2y$10$fHyCVpJQCQOhzd00yCI8ie0LG6EXmy1KjjriLo5tzJSSl1aSfeDFq', '0111111111', 'moderator', '2023-09-26 09:29:49');
 
 --
 -- Indexes for dumped tables
@@ -502,7 +515,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `adminID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `adminID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -526,7 +539,7 @@ ALTER TABLE `certificate-category`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `companyID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `companyID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `company_payment`
@@ -544,7 +557,7 @@ ALTER TABLE `dispute`
 -- AUTO_INCREMENT for table `moderator`
 --
 ALTER TABLE `moderator`
-  MODIFY `moderatorID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `moderatorID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `Moderator_Verifies_Company`
@@ -574,7 +587,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `studentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `student_payment`
@@ -598,7 +611,7 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Constraints for dumped tables

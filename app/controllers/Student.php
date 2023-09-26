@@ -150,7 +150,10 @@ class Student extends Controller{
         if(empty($id)){
             $proposal=new Proposal();
             $proposals=$proposal->where(['studentID'=>Auth::getstudentID()]);
-            
+            if(empty($proposals)){
+                message('You have not submitted any proposals!');
+                redirect('student');
+            }
             $task=new Task();
             for ($i = 0; $i < count($proposals); $i++) {
                 $proposals[$i]->task=$task->first(['taskID'=> $proposals[$i]->taskID]);

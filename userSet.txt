@@ -1,0 +1,11 @@
+email: admin@seekwork.lk
+Password: admin
+
+email: moderator@seekwork.lk
+Password: moderator
+
+email: student@seekwork.lk
+Password: student
+
+email: company@seekwork.lk
+Password: company

@@ -50,6 +50,25 @@ class Auth{
         return false;
     }
 
+    public static function is_moderator(){
+        if(!empty($_SESSION['USER_DATA'])){
+            
+            //creating an model instance to use database
+            $modelInstance=new Model();
+            //getting from databse admin which match with the userID in session and ordrr 
+            //the data by adminID and select one from that (check getFirstCustom)
+            $row = $modelInstance->getFirstCustom('moderator',['userID'=>$_SESSION['USER_DATA']->userID],'moderatorID');
+            
+
+            //if not found, $row will be false
+            if($row){
+               return true;
+            }else return false;
+            
+        }
+        return false;
+    }
+
     public static function is_student(){
         if(!empty($_SESSION['USER_DATA'])){
             
