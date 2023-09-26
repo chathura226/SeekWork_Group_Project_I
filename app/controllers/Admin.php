@@ -41,9 +41,10 @@ class Admin extends Controller{
             $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
         }else  $combinedObject=null;
         //pass the combined object to the view
-        $data['row']=$combinedObject;
+        $data['user']=$combinedObject;
 
-
+        // show($combinedObject);
+        // die;
         $data['title'] = "Profile";
         
         $this->view('admin/profile',$data);
@@ -55,26 +56,40 @@ class Admin extends Controller{
 
         if(!Auth::logged_in()){//if not logged in redirect to login page
             message('Please login to view the admin section!');
-            redirect('login');
+            redirect('admin');
         }
         if(!Auth::is_admin()){///if not an admin, redirect to home
             message('Only admins can view admin dashboard!');
             redirect('home');
         }
         
-        //if id is null make it current logged in user id
-        $id=$id ?? Auth::getuserID();
+
 
         $user = new User();
-        $row = $user->first((['userID'=>$id]));//get user details corresponding to the user id
+        $row = $user->getAll();
 
-        if(!empty($row)){
-            //get details of user from relevant table and make a combined object 
-            $userDetails=$user->getFirstCustom($row->role,['userID'=>$row->userID],$row->role."ID");
-            $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
-        }else  $combinedObject=null;
+        if(empty($row)){
+
+            message('Error fetching data');
+            redirect('admin');
+
+            // //get details of user from relevant table and make a combined object 
+            // $userDetails=$user->getFirstCustom($row->role,['userID'=>$row->userID],$row->role."ID");
+            // $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
+        }
+
+        for ($i = 0; $i < count($row); $i++) {
+            $userDetails=$user->getFirstCustom($row[$i]->role,['userID'=>$row[$i]->userID],$row[$i]->role."ID");
+            if(empty($userDetails)){
+                message('Error fetching data '.$row[$i]->userID);
+                redirect('admin');
+            }
+
+            $row[$i] = (object)array_merge((array)$row[$i], (array)$userDetails);
+        }
+
         //pass the combined object to the view
-        $data['row']=$combinedObject;
+        $data['users']=$row;
 
 
         $data['title'] = "Other Users";

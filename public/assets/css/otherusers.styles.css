@@ -4,6 +4,7 @@
     grid-auto-rows: 384px;
     grid-gap: 35px;
     justify-content: center;
+    grid-row: 2/13;
 }
 
 

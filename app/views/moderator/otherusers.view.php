@@ -20,96 +20,21 @@
       </nav>
 </div><!-- End Page Title -->
 <div class="user-wrapper column-12">
+  <?php foreach($users as $user):?>
+
     <div class="card ">
       <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
       <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
-      <div class="card__title"><?=ucfirst(Auth::getfirstName())?> <?=ucfirst(Auth::getlastName())?> </div>
-      <div class="card__subtitle"><?=ucfirst(Auth::getrole())?> </div>
+      <div class="card__title"><?=ucfirst($user->firstName)?> <?=ucfirst($user->lastName)?> </div>
+      <div class="card__subtitle"><?=ucfirst($user->role)?> </div>
       <div class="card__wrapper">
-          <button class="card__btn">Details</button>
+ 
+          <a href="<?=ROOT?>/<?=Auth::getrole()?>/profile/<?=$user->userID?>"> <button class="card__btn">Details</button></a>
           <button class="card__btn card__btn-solid">Disable</button>
       </div>
     </div>
-    <div class="card ">
-      <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
-      <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
-      <div class="card__title"><?=ucfirst(Auth::getfirstName())?> <?=ucfirst(Auth::getlastName())?> </div>
-      <div class="card__subtitle"><?=ucfirst(Auth::getrole())?> </div>
-      <div class="card__wrapper">
-        <button class="card__btn">Details</button>
-          <button class="card__btn card__btn-solid">Disable</button>
-      </div>
-    </div>
-    <div class="card ">
-      <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
-      <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
-      <div class="card__title">Pasindu Ekanayake</div>
-      <div class="card__subtitle"><?=ucfirst(Auth::getrole())?> </div>
-      <div class="card__wrapper">
-          <button class="card__btn">Details</button>
-          <button class="card__btn card__btn-solid">Disable</button>
-      </div>
-    </div>
-    <div class="card ">
-      <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
-      <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
-      <div class="card__title">Lasith Chandupa </div>
-      <div class="card__subtitle"><?=ucfirst(Auth::getrole())?> </div>
-      <div class="card__wrapper">
-          <button class="card__btn">Details</button>
-          <button class="card__btn card__btn-solid">Disable</button>
-      </div>
-    </div>
-    <div class="card ">
-      <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
-      <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
-      <div class="card__title">Ravindu Didulantha</div>
-      <div class="card__subtitle">Moderator</div>
-      <div class="card__wrapper">
-          <button class="card__btn">Details</button>
-          <button class="card__btn card__btn-solid">Disable</button>
-      </div>
-    </div>
-    <div class="card ">
-      <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
-      <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
-      <div class="card__title">Nimal Kamal</div>
-      <div class="card__subtitle"><?=ucfirst(Auth::getrole())?> </div>
-      <div class="card__wrapper">
-          <button class="card__btn">Details</button>
-          <button class="card__btn card__btn-solid">Disable</button>
-      </div>
-    </div>
-    <div class="card ">
-      <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
-      <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
-      <div class="card__title"><?=ucfirst(Auth::getfirstName())?> <?=ucfirst(Auth::getlastName())?> </div>
-      <div class="card__subtitle">Student</div>
-      <div class="card__wrapper">
-          <button class="card__btn">Details</button>
-          <button class="card__btn card__btn-solid">Disable</button>
-      </div>
-    </div>
-    <div class="card ">
-      <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
-      <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
-      <div class="card__title"><?=ucfirst(Auth::getfirstName())?> <?=ucfirst(Auth::getlastName())?> </div>
-      <div class="card__subtitle">Company</div>
-      <div class="card__wrapper">
-          <button class="card__btn">Details</button>
-          <button class="card__btn card__btn-solid">Disable</button>
-      </div>
-    </div>
-    <div class="card ">
-      <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
-      <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
-      <div class="card__title"><?=ucfirst(Auth::getfirstName())?> <?=ucfirst(Auth::getlastName())?> </div>
-      <div class="card__subtitle"><?=ucfirst(Auth::getrole())?> </div>
-      <div class="card__wrapper">
-          <button class="card__btn">Details</button>
-          <button class="card__btn card__btn-solid">Disable</button>
-      </div>
-    </div>
+
+    <?php endforeach;?>
 
     </div>
     

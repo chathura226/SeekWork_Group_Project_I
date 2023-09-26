@@ -1,4 +1,5 @@
 <?php $this->view('moderator/moderator-header',$data) ?>
+
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/profile.styles.css"/>
 
 <div class="pagetitle column-12">
@@ -22,11 +23,11 @@
     <div class="card c-s-1 row-4">
       <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
       <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
-      <div class="card__title"><?=ucfirst(Auth::getfirstName())?> <?=ucfirst(Auth::getlastName())?> </div>
-      <div class="card__subtitle"><?=ucfirst(Auth::getrole())?> </div>
+      <div class="card__title"><?=ucfirst($user->firstName)?> <?=ucfirst($user->lastName)?> </div>
+      <div class="card__subtitle"><?=ucfirst($user->role)?> </div>
       <div class="card__wrapper">
-        <a href="<?=ROOT?>/moderator/changepassword"><button class="card__btn">Change Password</button></a>
-        <a href="<?=ROOT?>/moderator/updateprofile"><button class="card__btn card__btn-solid">Update Profile</button></a>
+        <?php if(Auth::getuserID()===$user->userID):?><a href="<?=ROOT?>/moderator/changepassword"><button class="card__btn">Change Password</button></a><?php endif;?>
+          <?php if(Auth::getuserID()===$user->userID):?><a href="<?=ROOT?>/moderator/updateprofile"><button class="card__btn card__btn-solid">Update Profile</button></a><?php endif;?>
           
           
       </div>
@@ -39,15 +40,18 @@
         </svg>
         <h2>Profile Details</h2>
       </div>
-      <div>User ID : <?=ucfirst(Auth::getuserID())?></div>
-      <div><?=ucfirst(Auth::getrole())?> ID : <?php $funcName='get'.Auth::getrole().'ID'; echo Auth::$funcName()?></div>
-      <div>Email Address: <?=Auth::getemail()?></div>
-      <div>First Name : <?=ucfirst(Auth::getfirstName())?></div>
-      <div>Last Name : <?=ucfirst(Auth::getlastName())?></div>
-      <div>Contact Number : <?=ucfirst(Auth::getcontactNo())?></div>
-      <div>Address : <?=ucfirst(Auth::getaddress())?></div>
-      <div>Joined Date : <?=ucfirst(Auth::getcreatedAt())?></div>
+      <div>User ID : <?=ucfirst($user->userID)?></div>
+      <div><?=ucfirst($user->role)?> ID : <?php $attr=$user->role.'ID'; echo $user->$attr;?></div>
+      <div>Email Address: <?=$user->email?></div>
+      <div>First Name : <?=ucfirst($user->firstName)?></div>
+      <div>Last Name : <?=ucfirst($user->lastName)?></div>
+      <div>Contact Number : <?=$user->contactNo?></div>
+      <div>Address : <?=ucfirst($user->address)?></div>
+      <div>Joined Date : <?=$user->createdAt?></div>
 
     </div>
+
+
+
 
 <?php $this->view('moderator/moderator-footer',$data) ?>
