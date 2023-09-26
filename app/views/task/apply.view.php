@@ -90,7 +90,7 @@
 
                 <div class="form-input">
                   <label>Any Related Document</label>
-                  <input   class="" type="file" name="imageInput" id="imageInput" accept="image/*">    
+                  <input   class="" type="file" name="documents" id="documents" accept="image/*">    
                   <div class="image-container">
                     <img id="uploadedImage" >
                     </div>          

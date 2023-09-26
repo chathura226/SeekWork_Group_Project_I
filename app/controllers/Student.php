@@ -149,7 +149,7 @@ class Student extends Controller{
 
         if(empty($id)){
             $proposal=new Proposal();
-            $proposals=$proposal->getAll();
+            $proposals=$proposal->where(['studentID'=>Auth::getstudentID()]);
             
             $task=new Task();
             for ($i = 0; $i < count($proposals); $i++) {
@@ -205,29 +205,49 @@ class Student extends Controller{
             message('Select a proposal to modify!');
             redirect('student/proposals');
         }else{
-            $proposal=new Proposal();
-            $row=$proposal->first(['proposalID'=>$id]);
-            if(!empty($row)){
-                $data['proposal']=$row;
+
+             //if the method is post->modify proposal
+            if($_SERVER['REQUEST_METHOD']=="POST"){
+                
+                $_POST['studentID']=Auth::getstudentID();
+                if(empty($_POST['documents']))unset($_POST['documents']);
+
+                $proposal=new Proposal();
+                if($proposal->first($id)->studntID!==Auth::getstudentID()){
+                    message('Unauthorized!');
+                    redirect('student/proposals'.$id);
+                }
+                $proposal->update($_POST,$id);
+
+                message('Proposal Updated Successfully!');
+                redirect('student/proposals'.$id);
+
+            }else{
+
+                $proposal=new Proposal();
+                $row=$proposal->first(['proposalID'=>$id]);
+                if(!empty($row)){
+                    $data['proposal']=$row;
 
 
-                $task=new Task();
-                $data['task']=$task->first(['taskID'=>$row->taskID]);
-                if(!empty($data['task'])){
-                    $company=new Company();
-                    $data['company']=$company->first(['companyID'=>$data['task']->companyID]);
-                    if(!empty($data['company'])){
+                    $task=new Task();
+                    $data['task']=$task->first(['taskID'=>$row->taskID]);
+                    if(!empty($data['task'])){
+                        $company=new Company();
+                        $data['company']=$company->first(['companyID'=>$data['task']->companyID]);
+                        if(!empty($data['company'])){
 
-                        $data['title'] = "Modify Proposal";
-                        $this->view('student/modify',$data);
-                        return;
-                    }
+                            $data['title'] = "Modify Proposal";
+                            $this->view('student/modify',$data);
+                            return;
+                        }
 
-                } 
+                    } 
+                }
+                message('Error fetching data!');
+                redirect('student/proposals');
+
             }
-            message('Error fetching data!');
-            redirect('student/proposals');
-
         }
     }
 }
