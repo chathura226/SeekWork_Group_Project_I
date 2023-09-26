@@ -37,7 +37,7 @@ class Student extends Controller{
         $id=$id ?? Auth::getuserID();
 
         $user = new User();
-        $row = $user->first((['userID'=>$id]));//get user details corresponding to the user id
+        $row = $user->first(['userID'=>$id]);//get user details corresponding to the user id
 
         if(!empty($row)){
             //get details of user from relevant table and make a combined object 
@@ -213,14 +213,14 @@ class Student extends Controller{
                 if(empty($_POST['documents']))unset($_POST['documents']);
 
                 $proposal=new Proposal();
-                if($proposal->first($id)->studntID!==Auth::getstudentID()){
+                if($proposal->first(['proposalID'=>$id])->studentID!==Auth::getstudentID()){
                     message('Unauthorized!');
-                    redirect('student/proposals'.$id);
+                    redirect('student/proposals');
                 }
                 $proposal->update($_POST,$id);
 
                 message('Proposal Updated Successfully!');
-                redirect('student/proposals'.$id);
+                redirect('student/proposals');
 
             }else{
 
@@ -250,4 +250,37 @@ class Student extends Controller{
             }
         }
     }
+
+    //delete proposals
+    public function delete($id=null){
+        
+        if($_SERVER['REQUEST_METHOD']=="POST"){
+
+            if(!Auth::logged_in()){//if not logged in redirect to login page
+                message('Please login to view the student section!');
+                redirect('login');
+            }
+            if(!Auth::is_student()){///if not an student, redirect to home
+                message('Only companies can view student dashboard!');
+                redirect('home');
+            }
+
+            if(!empty($id)){
+                $proposal=new Proposal();
+                $row=$proposal->first(['proposalID'=>$id]);
+                if(!empty($row)){
+                    if($row->studentID===Auth::getstudentID()){
+                        $proposal->delete($id);
+                        message('Proposal Deleted Successfully!');
+                        redirect('student/proposals');
+                    }
+                    message('Unauthorized !');
+                    redirect('student/proposals');
+                }
+                message('Error Fetching!');
+                redirect('student/proposals');
+            }
+        }
+
+}
 }

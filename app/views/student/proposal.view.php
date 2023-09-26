@@ -125,7 +125,7 @@
         // Create a form dynamically
         const form = document.createElement("form");
         form.method = "POST";
-        form.action = "<?=ROOT?>/company/delete/<?=$task->taskID?>"; // Use the current URL
+        form.action = "<?=ROOT?>/student/delete/<?=$proposal->proposalID?>"; // Use the current URL
         form.style.display = "none"; // Hide the form
 
         // Create an input element for the action parameter
