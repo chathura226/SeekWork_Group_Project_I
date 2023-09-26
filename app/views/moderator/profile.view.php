@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/profile.styles.css"/>
 
+<?php if(Auth::getuserID()===$user->userID):?>
 <div class="pagetitle column-12">
       <h1>Profile</h1>
       <nav>
@@ -19,6 +20,30 @@
         </ul>
       </nav>
 </div><!-- End Page Title -->
+<?php else:?>
+  <div class="pagetitle column-12">
+      <h1>Profile</h1>
+      <nav>
+
+        <ul class="breadcrumbs">
+          <li class="breadcrumbs__item">
+            <a href="<?=ROOT?>" class="breadcrumbs__link">Home</a>
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="<?=ROOT?>/<?=Auth::getrole()?>" class="breadcrumbs__link">Dashboard</a>
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="<?=ROOT?>/<?=Auth::getrole()?>/otherusers" class="breadcrumbs__link">Other Users</a>
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="" class="breadcrumbs__link breadcrumbs__link--active"><?=ucfirst($user->firstName)." ".ucfirst($user->lastName)?></a>
+          </li>
+        </ul>
+      </nav>
+</div><!-- End Page Title -->
+
+<?php endif;?>
+
 
     <div class="card c-s-1 row-4">
       <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
