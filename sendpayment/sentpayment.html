@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <h1>Payment Submission</h1>
+    <form id="paymentForm">
+        <div>
+            <label for="studentName">Student Name:</label>
+            <input type="text" id="studentName" required>
+        </div>
+        <div>
+            <label for="companyName">Company Name:</label>
+            <input type="text" id="companyName" required>
+        </div>
+        <div>
+            <label for="paymentDate">Payment Date:</label>
+            <input type="date" id="paymentDate" required>
+        </div>
+        <div>
+            <label for="amount">Payment Amount(LKR):</label>
+            <input type="number" id="amount" required>
+        </div>
+        <div>
+            <label for="paymentSlip">Payment Slip:(please add clear .pdf, .jpg or .png)</label>
+            <input type="file" id="paymentSlip" accept=".pdf, .jpg, .png" required>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="message"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
