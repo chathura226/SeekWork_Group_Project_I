@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>receive payment</title>
+</head>
+<body>
+    <h1>Payment Confirmation</h1>
+    <form id="confirmationForm">
+        <div>
+            <label for="paymentReceived">Payment Received:</label>
+            <select id="paymentReceived" name="paymentReceived">
+                <option value=""></option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div>
+            <label for="receivedDate">Received Date:</label>
+            <input type="date" id="receivedDate">
+        </div>
+        <div>
+            <label for="additionalInfo">Additional Information(if needed):</label>
+            <textarea id="additionalInfo"></textarea>
+        </div>
+        <button type="submit">Confirm</button>
+    </form>
+
+    <div id="message"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
