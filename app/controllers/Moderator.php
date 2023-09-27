@@ -41,9 +41,10 @@ class Moderator extends Controller{
             $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
         }else  $combinedObject=null;
         //pass the combined object to the view
-        $data['row']=$combinedObject;
+        $data['user']=$combinedObject;
 
-
+        // show($combinedObject);
+        // die;
         $data['title'] = "Profile";
         
         $this->view('moderator/profile',$data);
@@ -240,5 +241,99 @@ class Moderator extends Controller{
         $data['title'] = "Universities";
         
         $this->view('moderator/university',$data);
+    }
+
+    //category
+    public function category($action=null,$id=null){
+
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the moderator section!');
+            redirect('login');
+        }
+        if(!Auth::is_moderator()){///if not an moderator, redirect to home
+            message('Only moderators can view moderator dashboard!');
+            redirect('home');
+        }
+        
+        if(!empty($action)){
+            if($action==="post"){//for new category
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                        
+                    $category=new Category();
+                    $category->insert($_POST);
+        
+                    message('Category Added Successfully!');
+                    redirect('moderator/category');
+                }
+                $data['title'] = "New Category";
+                $this->view('moderator/post-category',$data);
+                return;
+            
+            }else if($action==='modify'){//to update
+                if(!empty($id)){
+                    if($_SERVER['REQUEST_METHOD']=="POST"){
+        
+                        $category=new Category();
+                        $category->update($_POST,$id);
+        
+                        message('Category Modified Successfully!');
+                        redirect('moderator/category');
+                    }
+                    $category=new Category();
+                    $row=$category->first(['categoryID'=>$id]);
+                    if(!empty($row)){
+                        $data['category']=$row;
+                        $data['title'] = "Modify - ".$row->title;
+                        $this->view('moderator/modify-category',$data);
+                        return;
+                    }
+                    message('Error fetching data!');
+                    redirect('moderator/category');
+                }else{
+                    message('Choose a category to modify!');
+                    redirect('moderator/category');
+                }
+            }else if($action==='delete'){//to delete
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+        
+                    if(!empty($id)){
+                        $category=new Category();
+                        $row=$category->first(['categoryID'=>$id]);
+                        if(!empty($row)){
+                            $category->delete($id);
+                            message('Category Deleted Successfully!');
+                            redirect('moderator/category');
+                        }
+                        message('Error Fetching!');
+                        redirect('moderator/category');
+                    }else{
+                        message('Choose a category to delete!');
+                        redirect('moderator/category');
+                    }
+                }
+                redirect('moderator/category');
+        
+            }
+        }
+        
+        $category=new Category();
+        $categories=$category->getAll();
+        if(empty($categories)){
+            message('No categories in the database!');
+            redirect('moderator');
+        }
+        
+        $task=new Task();
+        for ($i = 0; $i < count($categories); $i++) {
+            $countTasks=$task->where(['categoryID'=>$categories[$i]->categoryID,'status'=>'active']);
+            if(!empty($countTasks))$categories[$i]->taskCount=count($countTasks);
+            else $categories[$i]->taskCount=0;
+            
+        }
+        
+        $data['categories']=$categories;
+        $data['title'] = "Categories";
+        
+        $this->view('moderator/category',$data);
     }
 }
