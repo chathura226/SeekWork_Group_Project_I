@@ -456,6 +456,13 @@ class Company extends Controller{
 
         $review=new Review();
         $row=$review->where(['companyID'=>Auth::getcompanyID(),'reviewType'=>'companyTOstudent']);//get reviews written by this user
+        if(empty($row)){//no review posted by him with the given reviewID is found
+            message('You haven\'t posted any reviews!');
+            $data['title']='Reviews';
+            $data['reviews']=$row;
+            $this->view('company/review',$data);
+            return;
+        }
         $task=new Task();
         $student=new Student();
         for ($i = 0; $i < count($row); $i++) {

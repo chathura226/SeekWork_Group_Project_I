@@ -1,4 +1,5 @@
-<?php $this->view('company/company-header',$data) ?>
+<?php $this->view('student/student-header',$data) ?>
+
 
 <link href="<?=ROOT?>/assets/css/post-task.styles.css" rel="stylesheet">
 <link href="<?=ROOT?>/assets/css/rating.styles.css" rel="stylesheet">
@@ -15,10 +16,10 @@
             <a href="<?=ROOT?>" class="breadcrumbs__link">Home</a>
           </li>
           <li class="breadcrumbs__item">
-            <a href="<?=ROOT?>/company" class="breadcrumbs__link">Dashboard</a>
+            <a href="<?=ROOT?>/student" class="breadcrumbs__link">Dashboard</a>
           </li>
           <li class="breadcrumbs__item">
-            <a href="<?=ROOT?>/company/review" class="breadcrumbs__link">Reviews</a>
+            <a href="<?=ROOT?>/student/review" class="breadcrumbs__link">Reviews</a>
           </li>
           <li class="breadcrumbs__item">
             <a href="" class="breadcrumbs__link breadcrumbs__link--active">Moodify Review for <?=$task->title?></a>
@@ -55,19 +56,18 @@
                 </div>        
                 <div class="form-input">
                     <label>Company Name</label>
-                    <input value="<?=ucfirst(Auth::getcompanyName())?>" class="<?= !empty($errors['companyName']) ? 'error-border' : '' ?>" type="text" name="companyName" id="companyName" placeholder="Enter the name of the company" disabled>
+                    <input value="<?=ucfirst($company->companyName)?>" class="<?= !empty($errors['companyName']) ? 'error-border' : '' ?>" type="text" name="companyName" id="companyName" placeholder="Enter the name of the company" disabled>
                     <?php if(!empty($errors['companyName'])):?>
                     <div class="text-error"><small><?=$errors['companyName']?></small></div>
                     <?php endif;?>
                 </div>
                 <div class="form-input">
                     <label>Student Name</label>
-                    <input value="<?=ucfirst($student->firstName)." ".ucfirst($student->lastName)?>" class="<?= !empty($errors['studentName']) ? 'error-border' : '' ?>" type="text" name="studentName" id="studentName" placeholder="Enter the name of the student" disabled>
+                    <input value="<?=ucfirst(Auth::getfirstName())." ".ucfirst(Auth::getlastName())?>" class="<?= !empty($errors['studentName']) ? 'error-border' : '' ?>" type="text" name="studentName" id="studentName" placeholder="Enter the name of the student" disabled>
                     <?php if(!empty($errors['studentName'])):?>
                     <div class="text-error"><small><?=$errors['studentName']?></small></div>
                     <?php endif;?>
                 </div>
-
                     </br>
                 <h3>Review Details</h3>
                 <hr>
@@ -141,4 +141,4 @@
   console.log('New star rating: ' + this.value);
   });
 </script>
-<?php $this->view('company/company-footer',$data) ?>
+<?php $this->view('student/student-footer',$data) ?>

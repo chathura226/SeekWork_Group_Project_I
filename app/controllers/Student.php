@@ -299,35 +299,28 @@ class Student extends Controller{
             redirect('home');
         }
 
-        if(empty($id)){
+        $task=new Task();
 
-            
-            $task=new Task();
-            $row=$task->where(['studentID'=>Auth::getstudentID()]);
-            
-            if(empty($row)){
-                message('You have no tasks assigned!');
-                redirect('student');
-            }
-            $data['title'] = "Tasks";
+        if(!empty($id)){
 
-            $data['tasks']=$row;
-            
-    
-            $this->view('student/tasks',$data);
-    
-        }else{
-    
-            $task=new Task();
-            $row = $task->getFirstCustom('task',['taskID'=>$id],'taskID');//get task details corresponding to the tadsk id
+            $row = $task->first(['taskID'=>$id]);//get task details corresponding to the tadsk id
             
             if(!empty($row)){
-                if($row->studentID===Auth::getstudentID()){
+                if($row->assignedStudentID===Auth::getstudentID()){
                     
                     $data['task']=$row;
+                    $company=new Company();
+                    $user=new User();
+
+                    $compdetails=$company->first(['companyID'=>$row->companyID]);
+                    $userdetails=$user->first(['userID'=>$compdetails->userID]);
+                    $combinedObj=(object)array_merge((array)$compdetails, (array)$userdetails);
+
+                    $data['company']=$combinedObj;
                     $data['title'] = $row->title;
         
                     $this->view('student/task',$data);
+                    return;
                 }else{
                     message('Unauthorized');
                     redirect('student/tasks');
@@ -337,9 +330,180 @@ class Student extends Controller{
                 message('Error fetching data!');
                 redirect('student/tasks');
             }
-    
+           
     
         }
+        $row=$task->where(['assignedStudentID'=>Auth::getstudentID()]);
+            
+        if(empty($row)){
+            message('You have no tasks assigned!');
+            redirect('student');
+        }
+        $data['title'] = "Tasks";
+
+        $data['tasks']=$row;
+        
+
+        $this->view('student/tasks',$data);
+        return;
     }
 
+
+
+    //review
+    public function review($action=null,$id=null){
+
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the student section!');
+            redirect('login');
+        }
+        if(!Auth::is_student()){///if not an admin, redirect to home
+            message('Only students can view student dashboard!');
+            redirect('home');
+        }
+
+        if(!empty($action)){
+
+            if($action==='post'){//there should be the task id with the url
+                if(!empty($id)){
+
+                    $task=new Task();
+                    $row=$task->first(['taskID'=>$id,'assignedStudentID'=>Auth::getstudentID()]);
+
+                    if(empty($row)){//no task posted by him with the given id is found
+                        message('Unauthorized!');
+                        redirect('student/tasks');
+                    }
+
+                    if($row->status!=='closed'){
+                        message('You cannot add the review until the task is finished!');
+                        redirect('student/tasks');
+                    }
+
+
+                    if($_SERVER['REQUEST_METHOD']=="POST"){
+                        
+                        $_POST['studentID']=Auth::getstudentID();
+                        $_POST['companyID']=$row->companyID;
+                        $_POST['taskID']=$id;
+                        $_POST['reviewType']='studentTOcompany';
+
+                        $review=new Review();
+                        $is_review=$review->first(['taskID'=>$id,'reviewType'=>'studentTOcompany']);
+                        if(!empty($is_review)){
+                            message('Failed!  You have a review for this task already!');
+                            redirect('student/review');
+                        }
+                        $review->insert($_POST);
+
+                        message('Review Added Successfully!');
+                        redirect('student/review');
+                    }else{
+
+                        $company=new Company();
+                        $data['company']=$company->first(['companyID'=>$row->companyID]);//send the details of student relevant to the review
+                        $data['task']=$row;
+                        $data['title']='Add a Review';
+                        $this->view('student/post-review',$data);
+                        return;
+                    }
+                }else{
+                    message('Choose a task to add a review!');
+                    redirect('student/tasks');
+                }
+
+            }else if($action==='modify'){//there should be the review id with the url
+                if(!empty($id)){
+
+                    $review=new Review();
+                    $row=$review->first(['reviewID'=>$id,'studentID'=>Auth::getstudentID(),'reviewType'=>'studentTOcompany']);
+                    $task=new Task();
+                    $taskDetails=$task->first(['taskID'=>$row->taskID,'assignedStudentID'=>Auth::getstudentID()]);
+                    if(empty($row)){//no review posted by him with the given reviewID is found
+                        message('Unauthorized!');
+                        redirect('student/review');
+                    }
+
+
+                    if($_SERVER['REQUEST_METHOD']=="POST"){
+
+                        $_POST['studentID']=Auth::getstudentID();
+                        $_POST['companyID']=$taskDetails->companyID;
+                        $_POST['taskID']=$row->taskID;
+                        $_POST['reviewType']='studentTOcompany';
+
+                        $review->update($_POST,$id);
+
+                        message('Review Updated Successfully!');
+                        redirect('student/review');
+                    }else{
+                        $task=new Task();
+                        $taskDetails=$task->first(['taskID'=>$row->taskID,'assignedStudentID'=>Auth::getstudentID()]);
+                        $data['task']=$taskDetails;
+
+                        $company=new Company();
+                        $data['company']=$company->first(['companyID'=>$row->companyID]);
+                       
+                        
+                        $data['review']=$row;
+                        $data['title']='Modify a Review';
+                        $this->view('student/modify-review',$data);
+                        return;
+                    }
+                }else{
+                    message('Choose a review to modify!');
+                    redirect('student/review');
+                }
+
+
+            }else if ($action==='delete') {//there hould be a review ID with the url
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                    
+                    if(!empty($id)){
+                        $review=new Review();
+                        $row=$review->first(['reviewID'=>$id,'studentID'=>Auth::getstudentID(),'reviewType'=>'studentTOcompany']);
+                        //checking whethere theres review with the given id posted by logged in user
+                        if(!empty($row)){
+                            $review->delete($id);
+                            message('Review Deleted Successfully!');
+                            redirect('student/review');
+                        }else{
+                            message('Unauthorized!');
+                            redirect('student/review');
+                        }
+                    }else{
+                        message('Choose a review to delete!');
+                        redirect('student/review');
+                    }
+                }
+                redirect('student/review');
+            }
+        }
+
+
+
+
+        $review=new Review();
+        $row=$review->where(['studentID'=>Auth::getstudentID(),'reviewType'=>'studentTOcompany']);//get reviews written by this user
+        if(empty($row)){//no review posted by him with the given reviewID is found
+            message('You haven\'t posted any reviews!');
+            $data['title']='Reviews';
+            $data['reviews']=$row;
+            $this->view('student/review',$data);
+            return;
+        }
+        $task=new Task();
+        $company=new Company();
+        for ($i = 0; $i < count($row); $i++) {
+            $row[$i]->task=$task->first(['taskID'=>$row[$i]->taskID]);
+            $row[$i]->company=$company->first(['companyID'=>$row[$i]->companyID]);
+        }
+
+        $data['title']='Reviews';
+        $data['reviews']=$row;
+        $this->view('student/review',$data);
+
+
+        
+    }
 }

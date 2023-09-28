@@ -1,4 +1,4 @@
-<?php $this->view('company/company-header',$data) ?>
+<?php $this->view('student/student-header',$data) ?>
 
 <link href="<?=ROOT?>/assets/css/post-task.styles.css" rel="stylesheet">
 <link href="<?=ROOT?>/assets/css/rating.styles.css" rel="stylesheet">
@@ -7,7 +7,7 @@
 
 
 <div class="pagetitle column-12">
-      <h1>Modify a Review</h1>
+      <h1>Post a New Review</h1>
       <nav>
 
         <ul class="breadcrumbs">
@@ -15,13 +15,16 @@
             <a href="<?=ROOT?>" class="breadcrumbs__link">Home</a>
           </li>
           <li class="breadcrumbs__item">
-            <a href="<?=ROOT?>/company" class="breadcrumbs__link">Dashboard</a>
+            <a href="<?=ROOT?>/student" class="breadcrumbs__link">Dashboard</a>
           </li>
           <li class="breadcrumbs__item">
-            <a href="<?=ROOT?>/company/review" class="breadcrumbs__link">Reviews</a>
+            <a href="<?=ROOT?>/student/tasks" class="breadcrumbs__link">Tasks</a>
           </li>
           <li class="breadcrumbs__item">
-            <a href="" class="breadcrumbs__link breadcrumbs__link--active">Moodify Review for <?=$task->title?></a>
+            <a href="<?=ROOT?>/student/tasks/<?=$task->taskID?>" class="breadcrumbs__link"><?=$task->title?></a>
+          </li>
+          <li class="breadcrumbs__item">
+            <a href="" class="breadcrumbs__link breadcrumbs__link--active">Add a Review</a>
           </li>
         </ul>
       </nav>
@@ -31,7 +34,7 @@
 
 <div class="tab-form">
   <div class="myheader">
-      <div class="active-login"><h2>Modify Review</h2></div>
+      <div class="active-login"><h2>New Review</h2></div>
   </div>
   <div class="tab-body">
       <div class="active1">
@@ -55,14 +58,14 @@
                 </div>        
                 <div class="form-input">
                     <label>Company Name</label>
-                    <input value="<?=ucfirst(Auth::getcompanyName())?>" class="<?= !empty($errors['companyName']) ? 'error-border' : '' ?>" type="text" name="companyName" id="companyName" placeholder="Enter the name of the company" disabled>
+                    <input value="<?=ucfirst($company->companyName)?>" class="<?= !empty($errors['companyName']) ? 'error-border' : '' ?>" type="text" name="companyName" id="companyName" placeholder="Enter the name of the company" disabled>
                     <?php if(!empty($errors['companyName'])):?>
                     <div class="text-error"><small><?=$errors['companyName']?></small></div>
                     <?php endif;?>
                 </div>
                 <div class="form-input">
                     <label>Student Name</label>
-                    <input value="<?=ucfirst($student->firstName)." ".ucfirst($student->lastName)?>" class="<?= !empty($errors['studentName']) ? 'error-border' : '' ?>" type="text" name="studentName" id="studentName" placeholder="Enter the name of the student" disabled>
+                    <input value="<?=ucfirst(Auth::getfirstName())." ".ucfirst(Auth::getlastName())?>" class="<?= !empty($errors['studentName']) ? 'error-border' : '' ?>" type="text" name="studentName" id="studentName" placeholder="Enter the name of the student" disabled>
                     <?php if(!empty($errors['studentName'])):?>
                     <div class="text-error"><small><?=$errors['studentName']?></small></div>
                     <?php endif;?>
@@ -73,7 +76,7 @@
                 <hr>
                 <div class="form-input">
                     <label>Review Title</label>
-                    <input value="<?=ucfirst($review->reviewTitle)?>" class="<?= !empty($errors['reviewTitle']) ? 'error-border' : '' ?>" type="text" name="reviewTitle" id="reviewTitle" placeholder="Enter a title for the review" required>
+                    <input value="" class="<?= !empty($errors['reviewTitle']) ? 'error-border' : '' ?>" type="text" name="reviewTitle" id="reviewTitle" placeholder="Enter a title for the review" required>
                     <?php if(!empty($errors['reviewTitle'])):?>
                     <div class="text-error"><small><?=$errors['reviewTitle']?></small></div>
                     <?php endif;?>
@@ -83,29 +86,29 @@
                   </div>
                   <div class="rating font-size-50px">
                     <label>
-                      <input type="radio" name="nStars" value="1" <?php if($review->nStars===1) echo "checked";?>/>
+                      <input type="radio" name="nStars" value="1" required/>
                       <span class="icon">★</span>
                     </label>
                     <label>
-                      <input type="radio" name="nStars" value="2" <?php if($review->nStars===2) echo "checked";?>/>
+                      <input type="radio" name="nStars" value="2" />
                       <span class="icon">★</span>
                       <span class="icon">★</span>
                     </label>
                     <label>
-                      <input type="radio" name="nStars" value="3" <?php if($review->nStars===3) echo "checked";?>/>
+                      <input type="radio" name="nStars" value="3" />
                       <span class="icon">★</span>
                       <span class="icon">★</span>
                       <span class="icon">★</span>   
                     </label>
                     <label>
-                      <input type="radio" name="nStars" value="4" <?php if($review->nStars===4) echo "checked";?>/>
+                      <input type="radio" name="nStars" value="4" />
                       <span class="icon">★</span>
                       <span class="icon">★</span>
                       <span class="icon">★</span>
                       <span class="icon">★</span>
                     </label>
                     <label>
-                      <input type="radio" name="stars" value="5" <?php if($review->nStars===5) echo "checked";?>/>
+                      <input type="radio" name="stars" value="5" />
                       <span class="icon">★</span>
                       <span class="icon">★</span>
                       <span class="icon">★</span>
@@ -116,7 +119,7 @@
 
                 <div class="form-input">
                   <label>Review Description</label>
-                  <textarea rows = "10" cols = "45" id="reviewDescription" name = "reviewDescription" placeholder="Enter your review"><?=ucfirst($review->reviewDescription)?></textarea>
+                  <textarea rows = "10" cols = "45" id="reviewDescription" name = "reviewDescription" placeholder="Enter your review"></textarea>
                     <br>
                 </div>
 
@@ -125,7 +128,7 @@
 
 
               <div class="form-input">
-                  <button>Modify the Review</button>
+                  <button>Post the Review</button>
               </div>
           </form>
       </div>
@@ -141,4 +144,5 @@
   console.log('New star rating: ' + this.value);
   });
 </script>
-<?php $this->view('company/company-footer',$data) ?>
+
+<?php $this->view('student/student-footer',$data) ?>

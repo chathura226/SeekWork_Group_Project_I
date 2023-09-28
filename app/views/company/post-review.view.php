@@ -45,8 +45,8 @@
                 <div class="form-input">
                     <label>Task Title</label>
                     <input value="<?=ucfirst($task->title)?>" class="<?= !empty($errors['title']) ? 'error-border' : '' ?>" type="text" name="title" id="title" placeholder="Enter the title of the task" disabled>
-                    <?php if(!empty($errors['companyName'])):?>
-                    <div class="text-error"><small><?=$errors['companyName']?></small></div>
+                    <?php if(!empty($errors['title'])):?>
+                    <div class="text-error"><small><?=$errors['title']?></small></div>
                     <?php endif;?>
                 </div>  
                 <div class="form-input">
@@ -86,7 +86,7 @@
                   </div>
                   <div class="rating font-size-50px">
                     <label>
-                      <input type="radio" name="nStars" value="1" />
+                      <input type="radio" name="nStars" value="1" required/>
                       <span class="icon">★</span>
                     </label>
                     <label>
