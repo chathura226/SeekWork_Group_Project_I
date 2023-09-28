@@ -1,5 +1,5 @@
 .floating-button {
-    position: fixed;
+    position: absolute;
     top: 80px; /* Adjust this value to change the button's vertical position */
     right: 20px; /* Adjust this value to change the button's horizontal position */
     z-index: 9999; /* Ensure the button is on top of other content */

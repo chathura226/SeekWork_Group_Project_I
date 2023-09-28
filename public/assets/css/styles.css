@@ -551,3 +551,11 @@ footer{
 .margin-5{
     margin: 5px;
 }
+
+.height-50{
+    height: 50px;
+}
+
+.width-160{
+    width: 160px !important;
+}

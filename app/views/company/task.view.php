@@ -81,6 +81,13 @@
                         <a href="<?=ROOT?>/company/modify/<?=$task->taskID?>"><button class="apply">Modify Task</button></a>
                         &nbsp &nbsp
                         <a ><button id="deleteButton" class="apply">Delete Task</button></a>
+                        
+                        <?php if($task->status==='closed'):?>
+                            &nbsp &nbsp
+                            <a href="<?=ROOT?>/company/review/post/<?=$task->taskID?>"><button class="apply height-50 width-160">Add a Review</button></a>
+                            &nbsp &nbsp
+
+                        <?php endif;?>
                     </div>
     <div class="comp-details c-s-8 c-e-13">
         <h2>About the company</h2>

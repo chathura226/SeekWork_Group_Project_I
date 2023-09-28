@@ -1,0 +1,183 @@
+.deletebttn{
+  height:42.19px ;
+}
+.myreviews-wrapper{
+  padding: 20px;
+  margin: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+.pagetitle{
+  height: 100px;
+}
+
+.myreview-review-bttns{
+  grid-column: 2/12;
+  background-color: white;
+  padding: 15px;
+  height: fit-content;
+  display: flex;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  justify-content: space-between;
+  margin: 10px;
+}
+
+.myreview-review{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+
+
+}
+.myreview-review a{
+    text-decoration: none;
+    cursor: pointer;
+}
+.myreview-review-bttns a{
+  text-decoration: none;
+  cursor: pointer;
+}
+.myreview-review .review-disc{
+  max-width: 300px;
+  word-wrap: break-word;
+
+}
+.details-button {
+    --hover-color: var(--secondary-color);;
+    --arrow-width: 10px;
+    --arrow-stroke: 2px;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 20px;
+    color: var(--secondary-color);
+    padding: 1em 1.8em;
+    background: var(--primary-color);
+    display: flex;
+    transition: 0.2s background;
+    align-items: center;
+    gap: 0.6em;
+    font-weight: bold;
+    max-width: 150px;
+  }
+  
+  .details-button .arrow-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .details-button .arrow {
+    margin-top: 1px;
+    width: var(--arrow-width);
+    background: var(--primary-color);
+    height: var(--arrow-stroke);
+    position: relative;
+    transition: 0.2s;
+  }
+  
+  .details-button .arrow::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    border: solid white;
+    border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+    display: inline-block;
+    top: -3px;
+    right: 3px;
+    transition: 0.2s;
+    padding: 3px;
+    transform: rotate(-45deg);
+  }
+  
+  .details-button:hover {
+    background-color: var(--hover-color);
+    color: white;
+  }
+  
+  .details-button:hover .arrow {
+    background: white;
+  }
+  
+  .details-button:hover .arrow:before {
+    right: 0;
+  }
+
+
+  .rating {
+    /* display: inline-block; */
+    position: relative;
+    /* height: 50px;
+    line-height: 50px; */
+    /* font-size: 50px; */
+  }
+  
+  .rating label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    cursor: pointer;
+  }
+  
+  .rating label:last-child {
+    position: static;
+  }
+  
+  .rating label:nth-child(1) {
+    z-index: 5;
+  }
+  
+  .rating label:nth-child(2) {
+    z-index: 4;
+  }
+  
+  .rating label:nth-child(3) {
+    z-index: 3;
+  }
+  
+  .rating label:nth-child(4) {
+    z-index: 2;
+  }
+  
+  .rating label:nth-child(5) {
+    z-index: 1;
+  }
+  
+  .rating label input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+  
+  .rating label .icon {
+    float: left;
+    color: transparent;
+  }
+  
+  .rating label:last-child .icon {
+    color: #000;
+  }
+  
+  .rating input:checked ~ .icon{
+    color: rgb(255, 123, 0);
+  }
+  
+  .rating label input:focus:not(:checked) ~ .icon:last-child {
+    color: #000;
+    text-shadow: 0 0 5px rgb(255, 123, 0);
+  }
+
+  .font-size-50px{
+    font-size: 50px !important;
+  }
+
+
+  .nstars{
+    display: flex;
+    align-items: center;
+  }

@@ -25,6 +25,13 @@
                 <a id="bottom" href="#">Programming</a>
                 </div>
             </div>
+            <?php if(Auth::logged_in()):?>
+            <a href="<?=ROOT?>/<?=Auth::getrole()?>">
+                <div class="my-button">
+                    <button class="button">Dashboard</button>
+                </div>
+            </a>
+            <?php endif;?>
         </div>
 
         <div class="right-menu">

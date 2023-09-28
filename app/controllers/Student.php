@@ -285,5 +285,61 @@ class Student extends Controller{
             }
         }
 
-}
+    }
+
+
+    public function tasks($id=null){
+
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the student section!');
+            redirect('login');
+        }
+        if(!Auth::is_student()){///if not an admin, redirect to home
+            message('Only students can view student dashboard!');
+            redirect('home');
+        }
+
+        if(empty($id)){
+
+            
+            $task=new Task();
+            $row=$task->where(['studentID'=>Auth::getstudentID()]);
+            
+            if(empty($row)){
+                message('You have no tasks assigned!');
+                redirect('student');
+            }
+            $data['title'] = "Tasks";
+
+            $data['tasks']=$row;
+            
+    
+            $this->view('student/tasks',$data);
+    
+        }else{
+    
+            $task=new Task();
+            $row = $task->getFirstCustom('task',['taskID'=>$id],'taskID');//get task details corresponding to the tadsk id
+            
+            if(!empty($row)){
+                if($row->studentID===Auth::getstudentID()){
+                    
+                    $data['task']=$row;
+                    $data['title'] = $row->title;
+        
+                    $this->view('student/task',$data);
+                }else{
+                    message('Unauthorized');
+                    redirect('student/tasks');
+                }
+            }else{
+
+                message('Error fetching data!');
+                redirect('student/tasks');
+            }
+    
+    
+        }
+    }
+
 }
