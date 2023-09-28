@@ -19,7 +19,7 @@
 
 <div class="msg c-s-6 c-e-8">
 <?php if(Auth::getstatus()==='verification pending'):?>
-  <div class="alert alert-danger text-center" id="alert">Your account is not yet verified! Please fill the details and upload relavant documents if you haven't!</div>
+  <div class="alert alert-danger text-center" id="alert">Your account is not yet verified! Please proceed to verification!</div>
   <?php endif;?>
 
 
