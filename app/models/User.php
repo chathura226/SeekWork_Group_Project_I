@@ -7,10 +7,12 @@ class User extends Model {
 
     //fields that can be updated
     protected $allowedColumns=[
+        'userID',
         'email', 
         'password', 
         'contactNo',
         'role',
+        'status',
     ];
     protected $primaryKey='userID';
      
