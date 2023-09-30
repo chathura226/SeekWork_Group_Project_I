@@ -136,7 +136,7 @@ class Company extends Controller{
     }
 
 
-    public function tasks($id=null){
+    public function tasks($id=null,$action=null,$id2=null){
 
         if(!Auth::logged_in()){//if not logged in redirect to login page
             message('Please login to view the company section!');
@@ -165,11 +165,77 @@ class Company extends Controller{
             $this->view('company/tasks',$data);
     
         }else{
-    
+
             $task=new Task();
             $row = $task->getFirstCustom('task',['taskID'=>$id],'taskID');//get task details corresponding to the tadsk id
             
+
             if(!empty($row)){
+                if($row->companyID!==Auth::getcompanyID()){
+                    message('Unauthorized! Task is not yours');
+                    redirect('company/tasks');
+                }
+                if(!empty($action)){
+                    if($action==='view-proposals'){//view all proposals relavant to given task id
+                        $proposal=new Proposal();
+                        $proposals=$proposal->where(['taskID'=>$id]);
+                        $data['title'] = "Proposals";
+                        $data['task']=$row;
+                        $data['proposals']=$proposals;
+                        $this->view('company/proposals',$data);
+                        return;
+
+                    }else if($action==='proposal'){//view proposals relavant to given proposal id that given for the task
+                        if(!empty($id2)){
+                            $proposalInst=new Proposal();
+                            $proposal=$proposalInst->first(['proposalID'=>$id2]);
+                            if(!empty($proposal)){
+                                $studentInst=new Student();
+                                $student=$studentInst->first(['studentID'=>$proposal->studentID]);
+                                $universityInst=new University();
+                                $university=$universityInst->first(['universityID'=>$student->universityID]);
+                                $data['title'] = "Proposals";
+                                $data['task']=$row;
+                                $data['student']=$student;
+                                $data['university']=$university;
+                                $data['proposal']=$proposal;
+                                $this->view('company/proposal',$data);
+                                return;
+                            }
+                            message('Invalid Proposal ID!');
+                            redirect('company/tasks/'.$id.'/view-proposals');
+                            return;
+                        }
+                    }else if($action==='assign'){
+                        //in here id 2 will be proposal id
+                        if(empty($id2)){
+                            message('Select a Proposal to assign!');
+                            redirect('company/tasks/'.$id.'/view-proposals');
+                        }
+
+                        $proposalInst=new Proposal();
+                        $proposal=$proposalInst->first(['proposalID'=>$id2]);
+
+                        if(!empty($proposal)){
+                            if($proposal->taskID==$id){//proposal is relevant to the same task
+                                
+                                $task->update(['assignedStudentID'=>$proposal->studentID],$row->taskID);
+
+                                message('Student assigned successfully!');
+                                redirect('company/tasks/'.$id);
+                            }
+                        }
+
+                    }
+                    
+                    message('Invalid Action!');
+                    redirect('company');
+                    return;
+                }
+        
+            
+            
+            
                 if($row->companyID===Auth::getcompanyID()){
                     
                     $data['task']=$row;
@@ -188,6 +254,57 @@ class Company extends Controller{
     
     
         }
+    }
+
+    //to check others profiles
+    public function viewstudents($id=null){
+
+
+
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the company section!');
+            redirect('login');
+        }
+        if(!Auth::is_company()){///if not an admin, redirect to home
+            message('Only companies can view company dashboard!');
+            redirect('home');
+        }
+      
+      
+
+
+
+        if(!empty($id)){
+
+            $studentInst = new Student();
+            $student = $studentInst->first((['studentID'=>$id]));//get user details corresponding to the user id
+            
+ 
+
+            if(!empty($student)){
+                $userInst = new User();
+                $user = $userInst->first((['userID'=>$student->userID]));
+                $universityInst = new University();
+                $university = $universityInst->first((['universityID'=>$student->universityID]));
+
+                //get details of user from relevant table and make a combined object 
+                $combinedObject = (object)array_merge((array)$student, (array)$user);
+                $combinedObject2 = (object)array_merge((array)$combinedObject, (array)$university);
+            
+                //pass the combined object to the view
+                $data['user']=$combinedObject2;
+                // show($combinedObject2);
+                // die;
+
+                $data['title'] = "Other User Profiles";
+                
+                $this->view('company/otherProfile',$data);
+                return;
+            }
+        }
+        
+        message('Invalid User ID!');
+        redirect('company');
     }
 
     //post tasks

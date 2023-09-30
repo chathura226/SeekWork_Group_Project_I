@@ -71,12 +71,13 @@
             Task Type : Fixed Price</br>
         </div>
         
+        
     </div>
     </div>
     <div class="price-button c-s-8 c-e-13">
 
                         <h1>Rs.<?=$task->value?>/=</h1>
-                        <a href="<?=ROOT?>/company/assign/<?=$task->taskID?>"><button class="apply">Assign Task</button></a>
+                        <a href="<?=ROOT?>/company/tasks/<?=$task->taskID?>/view-proposals"><button class="apply">View Proposals</button></a>
                         &nbsp &nbsp
                         <a href="<?=ROOT?>/company/modify/<?=$task->taskID?>"><button class="apply">Modify Task</button></a>
                         &nbsp &nbsp
