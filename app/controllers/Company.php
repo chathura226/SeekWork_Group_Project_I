@@ -219,10 +219,10 @@ class Company extends Controller{
                         if(!empty($proposal)){
                             if($proposal->taskID==$id){//proposal is relevant to the same task
                                 
-                                $task->update(['assignedStudentID'=>$proposal->studentID],$row->taskID);
+                                $task->update(['acceptedProposalID'=>$id2,'assignedStudentID'=>$proposal->studentID],$row->taskID);
 
                                 message('Student assigned successfully!');
-                                redirect('company/tasks/'.$id);
+                                redirect('company/inprogress/'.$id);
                             }
                         }
 

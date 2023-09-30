@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Sep 29, 2023 at 02:36 AM
+-- Generation Time: Sep 30, 2023 at 11:41 AM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -219,8 +219,8 @@ CREATE TABLE `proposal` (
 --
 
 INSERT INTO `proposal` (`proposalID`, `description`, `documents`, `proposeAmount`, `submissionDate`, `taskID`, `studentID`) VALUES
-(2, 'ffwewcdcdc', NULL, NULL, '2023-09-26 07:35:47', 2, 12),
-(3, 'dede', NULL, 2, '2023-09-26 07:44:40', 6, 10);
+(2, 'ffwewcdcdc', NULL, NULL, '2023-09-26 07:35:47', 9, 10),
+(3, 'dede', NULL, 2, '2023-09-26 07:44:40', 9, 14);
 
 -- --------------------------------------------------------
 
@@ -280,7 +280,7 @@ INSERT INTO `student` (`studentID`, `firstName`, `lastName`, `qualifications`, `
 (9, 'sajith', 'rajapakse', NULL, NULL, '200012365849', '99 madamulana pallebedda', 'verification pending', NULL, NULL, 18, NULL),
 (10, 'sajith', 'rajapakse', NULL, NULL, '960951105v', '99 madamulana pallebedda', 'verification pending', NULL, NULL, 19, NULL),
 (12, 'chathura', 'lakshan', NULL, NULL, '123456789123', '111', 'verification pending', NULL, NULL, 21, NULL),
-(14, 'Seekwork', 'Student', NULL, NULL, '234567890123', 'No.5 Seekwork rd.', 'verification pending', NULL, NULL, 26, NULL);
+(14, 'Seekwork', 'Student', NULL, NULL, '234567890123', 'No.5 Seekwork rd.', 'verification pending', NULL, NULL, 26, 1);
 
 -- --------------------------------------------------------
 
@@ -311,6 +311,7 @@ CREATE TABLE `task` (
   `status` enum('active','closed','inProgress') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `companyID` int NOT NULL,
   `assignedStudentID` int DEFAULT NULL,
+  `acceptedProposalID` int DEFAULT NULL,
   `categoryID` int NOT NULL,
   `finishedDate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -319,13 +320,13 @@ CREATE TABLE `task` (
 -- Dumping data for table `task`
 --
 
-INSERT INTO `task` (`taskID`, `title`, `taskType`, `description`, `deadline`, `value`, `status`, `companyID`, `assignedStudentID`, `categoryID`, `finishedDate`) VALUES
-(1, 'Design a Logo', 'fixed Price', 'I am starting a new enterprise and I am in need of a logo design.\r\nThe compony deals in Medical Devices and the logo needs to reflect that in a subtle way not in a way where there is a stethoscope in the logo. Name of company is \"MEDYCO LIFE BIOTECH\"\r\n\r\nIdeal skills and experience:\r\n- Experience in logo design\r\n- Creativity and ability to come up with unique and visually appealing designs\r\n- Proficiency in graphic design software\r\n- Strong attention to detail\r\n- Ability to understand and incorporate the vision and branding of a new enterprise', '2023-09-09', 5000, 'active', 2, NULL, 1, NULL),
-(2, 'Create a website', 'fixed Price', 'I am looking for an experienced web developer to create a website for me. Specifically, I need a blogging website, with specific design and functionality requirements. The website should be built on WordPress, with PHP and HTML as the core programming language. I already have web content and images ready to go for the new website, so the main scope of work is on the design and development side.\r\n\r\nThe design should be modern and sleek, with clean lines and fonts, as well as including all necessary components of a blog such as comment sections, tags and a SEO-friendly structure. On the development side, I am looking for a custom coding and development job. This includes incorporating necessary plug-ins for a usable and engaging user experience, designing and integrating attractive forms, and making sure the website works across multiple browsers and devices.\r\n\r\nExperience in web design and WordPress development are a must for this job. Additionally, it would be great if the candidate had expertise in SEO and has done any e-commerce projects in the past. Timely completion of the project is also important.', NULL, 10000, 'active', 3, NULL, 2, NULL),
-(3, 'Animation For Stream\r\n', 'fixed Price', 'Hello, I am looking for a talented animator who can create a specific introduction animation for my stream. The type of animation I need is 3D, and I have specific elements that I would like included in the animation. My goal is to create something visually stunning and memorable that can draw viewers in and make them stick around. ( I have the full idea ready, and clips to be used inside of the animation, the animation being between 3-5 minutes long ) If you have the skills and the creativity to create something that will be noticed, please reach out to me.', NULL, 15000, 'active', 2, NULL, 3, NULL),
-(4, 'task 1', 'fixed Price', 'aaa', '2023-09-16', 1000, 'active', 2, NULL, 2, NULL),
-(6, 'task 3', 'auction', 's22', '2023-09-30', 222, 'active', 2, NULL, 3, NULL),
-(9, 'test task', 'fixed Price', 'swsw', NULL, 22, 'closed', 4, 9, 3, '2023-09-29');
+INSERT INTO `task` (`taskID`, `title`, `taskType`, `description`, `deadline`, `value`, `status`, `companyID`, `assignedStudentID`, `acceptedProposalID`, `categoryID`, `finishedDate`) VALUES
+(1, 'Design a Logo', 'fixed Price', 'I am starting a new enterprise and I am in need of a logo design.\r\nThe compony deals in Medical Devices and the logo needs to reflect that in a subtle way not in a way where there is a stethoscope in the logo. Name of company is \"MEDYCO LIFE BIOTECH\"\r\n\r\nIdeal skills and experience:\r\n- Experience in logo design\r\n- Creativity and ability to come up with unique and visually appealing designs\r\n- Proficiency in graphic design software\r\n- Strong attention to detail\r\n- Ability to understand and incorporate the vision and branding of a new enterprise', '2023-09-09', 5000, 'active', 2, NULL, NULL, 1, NULL),
+(2, 'Create a website', 'fixed Price', 'I am looking for an experienced web developer to create a website for me. Specifically, I need a blogging website, with specific design and functionality requirements. The website should be built on WordPress, with PHP and HTML as the core programming language. I already have web content and images ready to go for the new website, so the main scope of work is on the design and development side.\r\n\r\nThe design should be modern and sleek, with clean lines and fonts, as well as including all necessary components of a blog such as comment sections, tags and a SEO-friendly structure. On the development side, I am looking for a custom coding and development job. This includes incorporating necessary plug-ins for a usable and engaging user experience, designing and integrating attractive forms, and making sure the website works across multiple browsers and devices.\r\n\r\nExperience in web design and WordPress development are a must for this job. Additionally, it would be great if the candidate had expertise in SEO and has done any e-commerce projects in the past. Timely completion of the project is also important.', NULL, 10000, 'active', 3, NULL, NULL, 2, NULL),
+(3, 'Animation For Stream\r\n', 'fixed Price', 'Hello, I am looking for a talented animator who can create a specific introduction animation for my stream. The type of animation I need is 3D, and I have specific elements that I would like included in the animation. My goal is to create something visually stunning and memorable that can draw viewers in and make them stick around. ( I have the full idea ready, and clips to be used inside of the animation, the animation being between 3-5 minutes long ) If you have the skills and the creativity to create something that will be noticed, please reach out to me.', NULL, 15000, 'active', 2, NULL, NULL, 3, NULL),
+(4, 'task 1', 'fixed Price', 'aaa', '2023-09-16', 1000, 'active', 2, NULL, NULL, 2, NULL),
+(6, 'task 3', 'auction', 's22', '2023-09-30', 222, 'active', 2, NULL, NULL, 3, NULL),
+(9, 'test task', 'fixed Price', 'swsw', NULL, 22, 'active', 4, 10, 2, 3, '2023-09-29');
 
 -- --------------------------------------------------------
 

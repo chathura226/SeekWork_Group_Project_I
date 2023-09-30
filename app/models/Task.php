@@ -20,6 +20,7 @@ class Task extends Model {
         'companyID',
         'assignedStudentID',
         'categoryID',
+        'acceptedProposalID',  
         'finishedDate',     
     ];
 
