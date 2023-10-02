@@ -21,6 +21,8 @@ class Company extends Controller{
         $this->view('company/dashboard',$data);
     }
 
+
+    
     public function profile($id=null){
 
         if(!Auth::logged_in()){//if not logged in redirect to login page
@@ -176,7 +178,28 @@ class Company extends Controller{
                     redirect('company/tasks');
                 }
                 if(!empty($action)){
-                    if($action==='view-proposals'){//view all proposals relavant to given task id
+                    if($action==='pendingassignments'){//view all proposals relavant to given task id
+                        $assignmentInst=new Assignment();
+                        $assignments=$assignmentInst->where(['taskID'=>$id]);
+
+                        if(empty($assignments)){
+                            message('No Invitations sent!');
+                            redirect('company/tasks/'.$id);
+                        }
+
+                        $studentInst=new Student();
+                        $proposalInst=new Proposal();
+                        for ($i = 0; $i < count($assignments); $i++) {
+                            $proposal=$proposalInst->first(['proposalID'=>$assignments[$i]->proposalID]);
+                            $assignments[$i]->student=$studentInst->first(['studentID'=>$proposal->studentID]);
+                        }
+                        $data['title'] = "Pending Assignment Invitations";
+                        $data['assignments']=$assignments;
+                        $data['task']=$row;
+                        $this->view('company/pendingassignments',$data);
+                        return;
+
+                    }else if($action==='view-proposals'){//view all proposals relavant to given task id
                         $proposal=new Proposal();
                         $proposals=$proposal->where(['taskID'=>$id]);
                         $data['title'] = "Proposals";
@@ -218,11 +241,15 @@ class Company extends Controller{
 
                         if(!empty($proposal)){
                             if($proposal->taskID==$id){//proposal is relevant to the same task
-                                
-                                $task->update(['acceptedProposalID'=>$id2,'assignedStudentID'=>$proposal->studentID],$row->taskID);
 
-                                message('Student assigned successfully!');
-                                redirect('company/inprogress/'.$id);
+                                //id2 is proposal id
+
+                                $assignment=new Assignment();
+                                $assignment->insert(['proposalID'=>$id2,'taskID'=>$id]);
+                                // $task->update(['acceptedProposalID'=>$id2,'assignedStudentID'=>$proposal->studentID],$row->taskID);
+
+                                message('Invitation for the task sent successfully!');
+                                redirect('company/pendingassignments');
                             }
                         }
 
@@ -592,4 +619,27 @@ class Company extends Controller{
         $this->view('company/review',$data);
     
     }
+
+    public function inprogress(){
+        
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the company section!');
+            redirect('login');
+        }
+        if(!Auth::is_company()){///if not an admin, redirect to home
+            message('Only companies can view company dashboard!');
+            redirect('home');
+        }
+      
+
+
+        $data['title'] = "Tasks in-progress";
+        $tasksInst=new Task();
+        $tasks=$tasksInst->where(['status'=>'inProgress']);
+
+        $data['tasks']=$tasks;
+        $this->view('company/tasks-inprogress',$data);
+    }
+
+
 }

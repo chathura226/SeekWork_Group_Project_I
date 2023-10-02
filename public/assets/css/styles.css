@@ -556,6 +556,10 @@ footer{
     height: 50px;
 }
 
+.height-150{
+    height: 150px !important;
+}
+
 .width-160{
     width: 160px !important;
 }

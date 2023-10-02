@@ -19,8 +19,8 @@ class Task extends Model {
         'status',
         'companyID',
         'assignedStudentID',
+        'assignmentID',
         'categoryID',
-        'acceptedProposalID',  
         'finishedDate',     
     ];
 
