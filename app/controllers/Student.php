@@ -519,7 +519,31 @@ class Student extends Controller{
 
 
         if(!empty($action)){
-            
+            if($action==='accept'){
+
+                if(!empty($id)){
+                    $assignmentInst=new Assignment();
+                    $assignment=$assignmentInst->first(['assignmentID'=>$id]);
+                    if(!empty($assignment)){
+                        $proposalInst=new Proposal();
+                        $proposal=$proposalInst->first(['proposalID'=>$assignment->proposalID]);
+
+                        $taskInst=new Task();
+                        $taskInst->update(['assignmentID'=>$assignment->assignmentID,'assignedStudentID'=>$proposal->studentID],$assignment->taskID);
+                        $currentDateTime = date('Y-m-d H:i:s');
+                        $assignmentInst->update(['status'=>'accepted','replyDate'=>$currentDateTime],$assignment->assignmentID);
+
+                        message('Invitation Accepted Successfully!');
+                        redirect('student/inprogress');
+
+                    }
+                }
+
+            }else if($action==='decline'){
+
+
+
+            }
         }
 
 
