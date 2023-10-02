@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Oct 02, 2023 at 07:03 AM
+-- Generation Time: Oct 02, 2023 at 11:38 AM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -241,7 +241,7 @@ CREATE TABLE `proposal` (
 --
 
 INSERT INTO `proposal` (`proposalID`, `description`, `documents`, `proposeAmount`, `submissionDate`, `taskID`, `studentID`) VALUES
-(2, 'ffwewcdcdc', NULL, NULL, '2023-09-26 07:35:47', 9, 10),
+(2, 'ffwewcdcdc', NULL, NULL, '2023-09-26 07:35:47', 9, 14),
 (3, 'dede', NULL, 2, '2023-09-26 07:44:40', 9, 14);
 
 -- --------------------------------------------------------

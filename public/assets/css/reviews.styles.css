@@ -1,5 +1,13 @@
+.bigbttn{
+  margin: 5px;
+}
 .deletebttn{
   height:42.19px ;
+}
+.bttn-wrapper-new{
+  height: inherit;
+  display: flex;
+  flex-wrap: wrap;
 }
 .myreviews-wrapper{
   padding: 20px;

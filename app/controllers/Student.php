@@ -506,4 +506,49 @@ class Student extends Controller{
 
         
     }
+
+    public function pendinginvites($action=null,$id=null){
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the student section!');
+            redirect('login');
+        }
+        if(!Auth::is_student()){///if not an admin, redirect to home
+            message('Only students can view student dashboard!');
+            redirect('home');
+        }
+
+
+        if(!empty($action)){
+            
+        }
+
+
+        //all invitations
+        $proposalInst=new Proposal();
+        $proposals=$proposalInst->where(['studentID'=>Auth::getstudentID()]);//all of his proposals
+        if(empty($proposals)){
+            message('You have not submitted any proposals thus there are no invitaions!');
+            redirect('student');
+        }
+
+        $assignmentInst=new Assignment();
+        $taskInst=new Task();
+        $companyInst=new Company();
+        $assignments = array();
+        for ($i = 0; $i < count($proposals); $i++) {
+            $assignment=$assignmentInst->first(['proposalID'=>$proposals[$i]->proposalID]);//getting assignment wiht the specific proposal id
+
+            if(!empty($assignment)){
+                $assignment->proposal=$proposals[$i];
+                $assignment->task=$taskInst->first(['taskID'=>$proposals[$i]->taskID]);
+                $assignment->company=$companyInst->first(['companyID'=>$assignment->task->companyID]);
+                $assignments[]=$assignment;
+                
+            }
+        }
+        $data['title']='Pending Invitations';
+        $data['assignments']=$assignments;
+        $this->view('student/pendinginvites',$data);
+
+    }
 }
