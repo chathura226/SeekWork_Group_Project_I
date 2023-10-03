@@ -264,7 +264,8 @@ class Company extends Controller{
             
             
                 if($row->companyID===Auth::getcompanyID()){
-                    
+                    $assignmentInst=new Assignment();
+                    $data['assignments']=$assignmentInst->where(['taskID'=>$id]);
                     $data['task']=$row;
                     $data['title'] = $row->title;
         
