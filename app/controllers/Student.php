@@ -520,27 +520,43 @@ class Student extends Controller{
 
         if(!empty($action)){
             if($action==='accept'){
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                    if(!empty($id)){
+                        $assignmentInst=new Assignment();
+                        $assignment=$assignmentInst->first(['assignmentID'=>$id]);
+                        if(!empty($assignment)){
+                            $proposalInst=new Proposal();
+                            $proposal=$proposalInst->first(['proposalID'=>$assignment->proposalID]);
 
-                if(!empty($id)){
-                    $assignmentInst=new Assignment();
-                    $assignment=$assignmentInst->first(['assignmentID'=>$id]);
-                    if(!empty($assignment)){
-                        $proposalInst=new Proposal();
-                        $proposal=$proposalInst->first(['proposalID'=>$assignment->proposalID]);
+                            $taskInst=new Task();
+                            $taskInst->update(['assignmentID'=>$assignment->assignmentID,'assignedStudentID'=>$proposal->studentID],$assignment->taskID);
+                            $currentDateTime = date('Y-m-d H:i:s');
+                            $assignmentInst->update(['status'=>'accepted','replyDate'=>$currentDateTime],$assignment->assignmentID);
 
-                        $taskInst=new Task();
-                        $taskInst->update(['assignmentID'=>$assignment->assignmentID,'assignedStudentID'=>$proposal->studentID],$assignment->taskID);
-                        $currentDateTime = date('Y-m-d H:i:s');
-                        $assignmentInst->update(['status'=>'accepted','replyDate'=>$currentDateTime],$assignment->assignmentID);
+                            message('Invitation Accepted Successfully!');
+                            redirect('student/inprogress');
 
-                        message('Invitation Accepted Successfully!');
-                        redirect('student/inprogress');
-
+                        }
                     }
                 }
 
             }else if($action==='decline'){
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                    if(!empty($id)){
+                        $assignmentInst=new Assignment();
+                        $assignment=$assignmentInst->first(['assignmentID'=>$id]);
+                        if(!empty($assignment)){
+                            
 
+                            $currentDateTime = date('Y-m-d H:i:s');
+                            $assignmentInst->update(['status'=>'declined','replyDate'=>$currentDateTime],$assignment->assignmentID);
+
+                            message('Invitation Declined Successfully!');
+                            redirect('student/pendinginvites');
+
+                        }
+                    }
+                }
 
 
             }
@@ -563,10 +579,12 @@ class Student extends Controller{
             $assignment=$assignmentInst->first(['proposalID'=>$proposals[$i]->proposalID]);//getting assignment wiht the specific proposal id
 
             if(!empty($assignment)){
-                $assignment->proposal=$proposals[$i];
-                $assignment->task=$taskInst->first(['taskID'=>$proposals[$i]->taskID]);
-                $assignment->company=$companyInst->first(['companyID'=>$assignment->task->companyID]);
-                $assignments[]=$assignment;
+                if($assignment->status==='pending'){//only ending assignments are sent
+                    $assignment->proposal=$proposals[$i];
+                    $assignment->task=$taskInst->first(['taskID'=>$proposals[$i]->taskID]);
+                    $assignment->company=$companyInst->first(['companyID'=>$assignment->task->companyID]);
+                    $assignments[]=$assignment;
+                }
                 
             }
         }
