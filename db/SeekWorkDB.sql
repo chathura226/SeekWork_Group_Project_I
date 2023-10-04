@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Oct 02, 2023 at 11:38 AM
+-- Generation Time: Oct 04, 2023 at 07:37 AM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -63,7 +63,7 @@ CREATE TABLE `assignment` (
 --
 
 INSERT INTO `assignment` (`assignmentID`, `status`, `taskID`, `proposalID`, `replyDate`, `createdAt`) VALUES
-(13, 'pending', 9, 2, NULL, '2023-10-02 06:58:38');
+(13, 'accepted', 9, 2, '2023-10-04 07:13:37', '2023-10-02 06:58:38');
 
 -- --------------------------------------------------------
 
@@ -320,6 +320,21 @@ CREATE TABLE `student_payment` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `submission`
+--
+
+CREATE TABLE `submission` (
+  `submissionID` int NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `documents` text NOT NULL,
+  `status` enum('pendingReview','accepted','rejected') NOT NULL DEFAULT 'pendingReview',
+  `studentID` int NOT NULL,
+  `taskID` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `task`
 --
 
@@ -348,7 +363,7 @@ INSERT INTO `task` (`taskID`, `title`, `taskType`, `description`, `deadline`, `v
 (3, 'Animation For Stream\r\n', 'fixed Price', 'Hello, I am looking for a talented animator who can create a specific introduction animation for my stream. The type of animation I need is 3D, and I have specific elements that I would like included in the animation. My goal is to create something visually stunning and memorable that can draw viewers in and make them stick around. ( I have the full idea ready, and clips to be used inside of the animation, the animation being between 3-5 minutes long ) If you have the skills and the creativity to create something that will be noticed, please reach out to me.', NULL, 15000, 'active', 2, NULL, NULL, 3, NULL),
 (4, 'task 1', 'fixed Price', 'aaa', '2023-09-16', 1000, 'active', 2, NULL, NULL, 2, NULL),
 (6, 'task 3', 'auction', 's22', '2023-09-30', 222, 'active', 2, NULL, NULL, 3, NULL),
-(9, 'test task', 'fixed Price', 'swsw', NULL, 22, 'active', 4, 10, NULL, 3, '2023-09-29'),
+(9, 'test task', 'fixed Price', 'swsw', NULL, 22, 'active', 4, 14, 13, 3, '2023-09-29'),
 (10, 'new test task', 'auction', 'swksnwsw', NULL, 2222, 'active', 4, NULL, NULL, 2, NULL);
 
 -- --------------------------------------------------------
@@ -529,6 +544,14 @@ ALTER TABLE `student_payment`
   ADD KEY `stu-pay` (`studentID`);
 
 --
+-- Indexes for table `submission`
+--
+ALTER TABLE `submission`
+  ADD PRIMARY KEY (`submissionID`),
+  ADD KEY `student-submission` (`studentID`),
+  ADD KEY `task-submission` (`taskID`);
+
+--
 -- Indexes for table `task`
 --
 ALTER TABLE `task`
@@ -646,6 +669,12 @@ ALTER TABLE `student_payment`
   MODIFY `student_payment_ID` int NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `submission`
+--
+ALTER TABLE `submission`
+  MODIFY `submissionID` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
@@ -760,6 +789,13 @@ ALTER TABLE `student`
 ALTER TABLE `student_payment`
   ADD CONSTRAINT `pay` FOREIGN KEY (`paymentID`) REFERENCES `payment` (`paymentID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `stu-pay` FOREIGN KEY (`studentID`) REFERENCES `student` (`studentID`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `submission`
+--
+ALTER TABLE `submission`
+  ADD CONSTRAINT `student-submission` FOREIGN KEY (`studentID`) REFERENCES `student` (`studentID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `task-submission` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `task`

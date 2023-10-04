@@ -77,7 +77,7 @@
 
                         <h1>Rs.<?=$task->value?>/=</h1>
                         
-                        <a href=""><button class="apply">Submissions</button></a>
+                        <a href="<?=ROOT?>/student/tasks/<?=$task->taskID?>/submissions"><button class="apply">Submissions</button></a>
                         &nbsp &nbsp
                         
                         <?php if($task->status==='closed'):?>

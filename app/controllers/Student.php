@@ -288,7 +288,7 @@ class Student extends Controller{
     }
 
 
-    public function tasks($id=null){
+    public function tasks($id=null,$action=null){
 
         if(!Auth::logged_in()){//if not logged in redirect to login page
             message('Please login to view the student section!');
@@ -308,6 +308,19 @@ class Student extends Controller{
             if(!empty($row)){
                 if($row->assignedStudentID===Auth::getstudentID()){
                     
+                    if(!empty($action)){
+                        if($action==='submissions'){
+
+                            $submissionInst=new Submission();
+                            $submissions=$submissionInst->where(['taskID'=>$id]);
+
+                            $data['submissions']=$submissions;
+                            $data['title']="Submissions";
+
+                            $this->view('student/submissions',$data);
+                            return;
+                        }
+                    }
                     $data['task']=$row;
                     $company=new Company();
                     $user=new User();
@@ -534,7 +547,7 @@ class Student extends Controller{
                             $assignmentInst->update(['status'=>'accepted','replyDate'=>$currentDateTime],$assignment->assignmentID);
 
                             message('Invitation Accepted Successfully!');
-                            redirect('student/inprogress');
+                            redirect('student/tasks');//redirect to my tasks
 
                         }
                     }
