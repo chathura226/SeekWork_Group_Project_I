@@ -43,3 +43,20 @@ function message($msg='',$erase=false){
 function esc($str){
     return nl2br(htmlspecialchars($str)); //nl2br replace new lines by brake tags
 }
+
+
+//for sorting array of objects by a given property
+function sortArrayOfObjects($array,$property,$isAscending =1) {
+    // Custom comparison function
+    $compare = function($a, $b) use ($property, $isAscending) {
+        if ($a->{$property} == $b->{$property}) {
+            return 0;
+        }
+        return ($isAscending ? ($a->{$property} < $b->{$property}) : ($a->{$property} > $b->{$property})) ? -1 : 1;
+    };
+
+    // Use usort to sort the array
+    usort($array, $compare);
+
+    return $array;
+}

@@ -313,8 +313,9 @@ class Student extends Controller{
 
                             $submissionInst=new Submission();
                             $submissions=$submissionInst->where(['taskID'=>$id]);
-
+                            if(!empty($submissions)) $submissions=sortArrayOfObjects($submissions,"createdAt",1); //sort according to date before sending
                             $data['submissions']=$submissions;
+                            $data['task']=$row;
                             $data['title']="Submissions";
 
                             $this->view('student/submissions',$data);
