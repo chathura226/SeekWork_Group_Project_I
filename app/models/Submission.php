@@ -1,5 +1,3 @@
-
-
 <?php
 
 //Submission class
@@ -14,6 +12,8 @@ class Submission extends Model {
         'createdAt',
         'documents',
         'status',
+        'note',
+        'comments',
         'studentID',
         'taskID',	
     ];

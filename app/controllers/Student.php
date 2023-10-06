@@ -320,6 +320,24 @@ class Student extends Controller{
 
                             $this->view('student/submissions',$data);
                             return;
+                        }else if($action==='addsubmission'){
+
+                            if($_SERVER['REQUEST_METHOD']=="POST"){//when get a post req for add submision
+
+                                $submissionInst=new Submission();
+                                $_POST['studentID']=Auth::getstudentID();
+                                $_POST['taskID']=$id;
+                                $submissionInst->insert($_POST);//implement the things needed for storing documents
+
+                                message('Submission Posted Successfully!');
+                                redirect('student/tasks/'.$id.'/submissions');
+                            }
+
+                            $data['task']=$row;
+
+                            $data['title']="New Submission";
+                            $this->view('student/post-submission',$data);
+                            return;
                         }
                     }
                     $data['task']=$row;

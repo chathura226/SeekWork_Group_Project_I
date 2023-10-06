@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Oct 05, 2023 at 05:39 AM
+-- Generation Time: Oct 06, 2023 at 01:48 AM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -328,6 +328,8 @@ CREATE TABLE `submission` (
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `documents` text NOT NULL,
   `status` enum('pendingReview','accepted','rejected') NOT NULL DEFAULT 'pendingReview',
+  `note` text COMMENT 'note by student abt submission',
+  `comments` text COMMENT 'comment by company ',
   `studentID` int NOT NULL,
   `taskID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -336,9 +338,11 @@ CREATE TABLE `submission` (
 -- Dumping data for table `submission`
 --
 
-INSERT INTO `submission` (`submissionID`, `createdAt`, `documents`, `status`, `studentID`, `taskID`) VALUES
-(1, '2023-10-05 05:37:02', 'wswsw', 'pendingReview', 14, 9),
-(2, '2023-10-05 05:37:42', '2222', 'pendingReview', 14, 9);
+INSERT INTO `submission` (`submissionID`, `createdAt`, `documents`, `status`, `note`, `comments`, `studentID`, `taskID`) VALUES
+(1, '2023-10-05 05:37:02', 'wswsw', 'pendingReview', NULL, NULL, 14, 9),
+(2, '2023-10-05 05:37:42', '2222', 'pendingReview', NULL, NULL, 14, 9),
+(3, '2023-10-06 01:46:16', '', 'pendingReview', 'boom', NULL, 14, 9),
+(4, '2023-10-06 01:46:56', '', 'pendingReview', 'boom', NULL, 14, 9);
 
 -- --------------------------------------------------------
 
@@ -680,7 +684,7 @@ ALTER TABLE `student_payment`
 -- AUTO_INCREMENT for table `submission`
 --
 ALTER TABLE `submission`
-  MODIFY `submissionID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `submissionID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `task`

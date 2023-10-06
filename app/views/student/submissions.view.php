@@ -56,7 +56,7 @@
 <?php else: echo "<h2> You have no submissions!</h2>"; endif;?>
 </div>
 
-<a href="<?=ROOT?>/student/tasks/<?=$task->taskID?>/submissions/post">
+<a href="<?=ROOT?>/student/tasks/<?=$task->taskID?>/addsubmission/">
     <div class="floating-button">
         <button type="button" class="buttonadd">
         <span class="button__text">New Submission</span>
