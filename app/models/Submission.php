@@ -14,6 +14,7 @@ class Submission extends Model {
         'status',
         'note',
         'comments',
+        'reviewedDate',
         'studentID',
         'taskID',	
     ];

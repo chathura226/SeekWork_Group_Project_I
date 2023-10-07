@@ -288,7 +288,7 @@ class Student extends Controller{
     }
 
 
-    public function tasks($id=null,$action=null){
+    public function tasks($id=null,$action=null,$id2=null){
 
         if(!Auth::logged_in()){//if not logged in redirect to login page
             message('Please login to view the student section!');
@@ -310,6 +310,25 @@ class Student extends Controller{
                     
                     if(!empty($action)){
                         if($action==='submissions'){
+
+                            //$id2=submission id
+                            if(!empty($id2)){//if theres an id after submissions => view each submission
+                                $submissionInst=new Submission();
+                                $submission=$submissionInst->first(['submissionID'=>$id2,'taskID'=>$id]);//task id also used, so subission releavatn to someone else cannot be taken
+
+                                if(empty($submission) ){
+
+                                    message('Invalid Submission ID or Submission is not yours!');
+                                    redirect('student/tasks/'.$id.'/submissions');
+                                }
+                                
+                                $data['submission']=$submission;
+                                $data['task']=$row;
+                                $data['title']="Submission Details";
+
+                                $this->view('student/submission',$data);
+                                return;
+                            }
 
                             $submissionInst=new Submission();
                             $submissions=$submissionInst->where(['taskID'=>$id]);

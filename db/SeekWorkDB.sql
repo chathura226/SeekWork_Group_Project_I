@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Oct 06, 2023 at 01:48 AM
+-- Generation Time: Oct 07, 2023 at 02:40 AM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -329,6 +329,7 @@ CREATE TABLE `submission` (
   `documents` text NOT NULL,
   `status` enum('pendingReview','accepted','rejected') NOT NULL DEFAULT 'pendingReview',
   `note` text COMMENT 'note by student abt submission',
+  `reviewedDate` datetime DEFAULT NULL,
   `comments` text COMMENT 'comment by company ',
   `studentID` int NOT NULL,
   `taskID` int NOT NULL
@@ -338,11 +339,11 @@ CREATE TABLE `submission` (
 -- Dumping data for table `submission`
 --
 
-INSERT INTO `submission` (`submissionID`, `createdAt`, `documents`, `status`, `note`, `comments`, `studentID`, `taskID`) VALUES
-(1, '2023-10-05 05:37:02', 'wswsw', 'pendingReview', NULL, NULL, 14, 9),
-(2, '2023-10-05 05:37:42', '2222', 'pendingReview', NULL, NULL, 14, 9),
-(3, '2023-10-06 01:46:16', '', 'pendingReview', 'boom', NULL, 14, 9),
-(4, '2023-10-06 01:46:56', '', 'pendingReview', 'boom', NULL, 14, 9);
+INSERT INTO `submission` (`submissionID`, `createdAt`, `documents`, `status`, `note`, `reviewedDate`, `comments`, `studentID`, `taskID`) VALUES
+(1, '2023-10-05 05:37:02', 'wswsw', 'pendingReview', NULL, NULL, NULL, 14, 9),
+(2, '2023-10-05 05:37:42', '2222', 'pendingReview', NULL, NULL, NULL, 14, 9),
+(3, '2023-10-06 01:46:16', '', 'pendingReview', 'boom', NULL, NULL, 14, 9),
+(4, '2023-10-06 01:46:56', '', 'pendingReview', 'boom', NULL, NULL, 14, 9);
 
 -- --------------------------------------------------------
 
