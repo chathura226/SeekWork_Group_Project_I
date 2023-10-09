@@ -288,7 +288,7 @@ class Student extends Controller{
     }
 
 
-    public function tasks($id=null,$action=null,$id2=null){
+    public function tasks($id=null,$action=null,$id2=null,$action2=null){
 
         if(!Auth::logged_in()){//if not logged in redirect to login page
             message('Please login to view the student section!');
@@ -322,6 +322,35 @@ class Student extends Controller{
                                     redirect('student/tasks/'.$id.'/submissions');
                                 }
                                 
+
+                                if(!empty($action2)){
+                                    if($action2==='delete'){//submission deletion
+                                        if($_SERVER['REQUEST_METHOD']=="POST"){
+                                            if($submission->status==='pendingReview'){//only submissions pending can be deleted
+                                                $submissionInst->delete($id2);
+                                                message('Submission deleted successfully!');
+                                                redirect('student/tasks/'.$id.'/submissions');
+                                            }else{
+                                                message('You cannot delete a accepted or rejected submission!');
+                                                redirect('student/tasks/'.$id.'/submissions');
+                                            }
+                                        }
+                                        redirect('student/tasks/'.$id.'/submissions/'.$id2);  
+                                    }else if($action2==='modify'){//submission modify
+
+
+
+
+
+
+
+
+
+
+
+                                    }
+                                }
+
                                 $data['submission']=$submission;
                                 $data['task']=$row;
                                 $data['title']="Submission Details";
