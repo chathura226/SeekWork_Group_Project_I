@@ -339,12 +339,23 @@ class Student extends Controller{
                                     }else if($action2==='modify'){//submission modify
 
 
+                                        if($_SERVER['REQUEST_METHOD']=="POST"){//when get a post req for modify submision
 
-
-
-
-
-
+                                            $_POST['studentID']=Auth::getstudentID();
+                                            $_POST['taskID']=$id;
+                                            $submissionInst->update($_POST,$id2);//implement the things needed for storing documents
+            
+                                            message('Submission modified Successfully!');
+                                            redirect('student/tasks/'.$id.'/submissions/'.$id2);
+                                        }
+            
+                                        //implement the things needed for storing documents
+                                        $data['task']=$row;
+                                        $data['submission']=$submission;
+                                        
+                                        $data['title']="Modify Submission";
+                                        $this->view('student/modify-submission',$data);
+                                        return;
 
 
 
