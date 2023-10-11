@@ -149,4 +149,34 @@ class Admin extends Controller{
 
         $this->view('admin/updateprofile',$data);
     }
+
+
+    public function managemoderators($action=null,$id=null){
+        
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the admin section!');
+            redirect('login');
+        }
+        if(!Auth::is_admin()){///if not an admin, redirect to home
+            message('Only admins can view admin dashboard!');
+            redirect('home');
+        }
+
+        $userInst=new User();
+        $moderatorInst=new Moderator();
+        $moderators=$userInst->where(['role'=>'moderator']);
+
+        for ($i = 0; $i < count($moderators); $i++) {
+            $moderatorDetails=$moderatorInst->first(['userID'=>$moderators[$i]->userID]);
+
+            $moderators[$i] = (object)array_merge((array)$moderators[$i], (array)$moderatorDetails);
+        }
+        $data['moderators']=$moderators;
+
+        $data['title'] = "Manage Moderators";
+        
+        $this->view('admin/view-moderators',$data);
+    }
+
+    
 }
