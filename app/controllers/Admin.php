@@ -162,6 +162,24 @@ class Admin extends Controller{
             redirect('home');
         }
 
+        if(!empty($action)){
+            if($action==='post'){//add new moderator
+
+                $data['title'] = "New Moderator";
+
+                $data['errors']=[]; 
+                $user=new User();
+
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                    
+
+                    //add validations
+                }
+
+                $this->view('admin/post-moderators',$data);
+                return;
+            }
+        }
         $userInst=new User();
         $moderatorInst=new Moderator();
         $moderators=$userInst->where(['role'=>'moderator']);
