@@ -73,7 +73,7 @@ class Admin extends Controller{
             message('Error fetching data');
             redirect('admin');
 
-            // //get details of user from relevant table and make a combined object 
+            // //get details of uvalidateModeratorser from relevant table and make a combined object 
             // $userDetails=$user->getFirstCustom($row->role,['userID'=>$row->userID],$row->role."ID");
             // $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
         }
@@ -171,11 +171,30 @@ class Admin extends Controller{
                 $user=new User();
 
                 if($_SERVER['REQUEST_METHOD']=="POST"){
-                    
+                    if($user->validateModerator($_POST)){
 
-                    //add validations
+                        $_POST['password']=password_hash($_POST['password'],PASSWORD_DEFAULT);
+                        $_POST['role']="moderator";
+                        $user->insert($_POST);
+                        
+                        //at this point user is added to the user table. now we can get userID from it 
+                        // and put inside the _POST so that it can be added to company dtabase
+                        //note that email is unique, so only one user can exist
+                        $row=$user->first([
+                            'email'=>$_POST['email'],
+                        ]);
+                        $_POST['userID']=$row->userID;
+    
+                        $moderatorInst= new Moderator();
+                        $moderatorInst->insert($_POST);//default value for verification status is set to 'pending' from the database
+    
+                        message("Moderator account creation successful!");
+                        redirect('admin/managemoderators');
+        
+                    }
                 }
-
+                $data['errors']=$user->errors;
+                
                 $this->view('admin/post-moderators',$data);
                 return;
             }

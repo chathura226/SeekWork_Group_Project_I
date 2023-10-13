@@ -38,7 +38,7 @@
 
 .tab-form .tab-body {
   position: relative;
-  height: 500px ;
+  /* height: 500px ; */
   /* min-height:fit-content; */
   /* overflow: hidden; */
 }
@@ -57,7 +57,7 @@
   top:0px;
   opacity: 1;
   transition: opacity 300ms ease-in-out 0ms;
-  background:red;
+  background:white;
 
 }
 

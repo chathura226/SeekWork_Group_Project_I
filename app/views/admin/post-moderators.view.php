@@ -24,13 +24,7 @@
 </div><!-- End Page Title -->
 
 
-<div class="msg c-s-6 c-e-8">
 
-
-  <?php if(!empty($errors['email'])):?>
-  <div class="alert alert-danger text-center" id="alert"><?=$errors['email']?></div>
-  <?php endif;?>
-  </div>
 
   <div class="form-wrap column-12">
 
