@@ -215,5 +215,68 @@ class Admin extends Controller{
         $this->view('admin/view-moderators',$data);
     }
 
+    public function manageadmins($action=null,$id=null){
+        
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the admin section!');
+            redirect('login');
+        }
+        if(!Auth::is_admin()){///if not an admin, redirect to home
+            message('Only admins can view admin dashboard!');
+            redirect('home');
+        }
+
+        if(!empty($action)){
+            if($action==='post'){//add new moderator
+
+                $data['title'] = "New Admin";
+
+                $data['errors']=[]; 
+                $user=new User();
+
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                    if($user->validateAdmin($_POST)){
+
+                        $_POST['password']=password_hash($_POST['password'],PASSWORD_DEFAULT);
+                        $_POST['role']="admin";
+                        $user->insert($_POST);
+                        
+                        //at this point user is added to the user table. now we can get userID from it 
+                        // and put inside the _POST so that it can be added to company dtabase
+                        //note that email is unique, so only one user can exist
+                        $row=$user->first([
+                            'email'=>$_POST['email'],
+                        ]);
+                        $_POST['userID']=$row->userID;
+    
+                        $adminInst= new AdminModel();
+                        $adminInst->insert($_POST);//default value for verification status is set to 'pending' from the database
+    
+                        message("Admin account creation successful!");
+                        redirect('admin/manageadmins');
+        
+                    }
+                }
+                $data['errors']=$user->errors;
+                
+                $this->view('admin/post-admins',$data);
+                return;
+            }
+        }
+        $userInst=new User();
+        $adminInst=new AdminModel();
+        $admins=$userInst->where(['role'=>'admin']);
+
+        for ($i = 0; $i < count($admins); $i++) {
+            $adminDetails=$adminInst->first(['userID'=>$admins[$i]->userID]);
+
+            $admins[$i] = (object)array_merge((array)$admins[$i], (array)$adminDetails);
+        }
+        $data['admins']=$admins;
+
+        $data['title'] = "Manage Admins";
+        
+        $this->view('admin/view-admins',$data);
+    }
     
 }

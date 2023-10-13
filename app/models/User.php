@@ -207,4 +207,45 @@ class User extends Model {
         
         return false;
     }
+
+
+
+    public function validateAdmin($data){
+        $this->errors=[];
+        //check email
+        $query="select * from user where email=:email limit 1";
+        
+        if(!filter_var($data['email'],FILTER_VALIDATE_EMAIL)){
+            $this->errors['email']="The email is not valid!";
+        }else if($this->where(['email'=>$data['email']])){
+            $this->errors['email']="Email already exists!";
+
+        }
+        if(empty($data['firstName'])){
+            $this->errors['firstName']="First Name is required!";
+        }
+        if(empty($data['lastName'])){
+            $this->errors['lastName']="Last Name is required!";
+        }
+        if(empty($data['address'])){
+            $this->errors['address']="Address is required!";
+        }
+        if(empty($data['contactNo'])){
+            $this->errors['contactNo']="A mobile number is required!";
+        }
+        if(empty($data['password'])){
+            $this->errors['password']="A password is required!";
+        }
+        if($data['password'] !== $data['rePassword']){
+            $this->errors['rePassword']="Passwords do not match!";
+        }
+        
+
+        // print_r($this->errors);
+        if(empty($this->errors)){
+            return true;
+        }
+        
+        return false;
+    }
 }
