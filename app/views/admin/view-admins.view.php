@@ -29,7 +29,7 @@
 
 <div class="user-wrapper column-12">
   <?php foreach($admins as $admin):?>
-
+    <?php if($admin->adminID!=Auth::getadminID()):?>
     <div class="card ">
       <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
       <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
@@ -37,11 +37,13 @@
       <div class="card__subtitle"><?=ucfirst($admin->role)?> </div>
       <div class="card__wrapper">
           <a href="<?=ROOT?>/<?=Auth::getrole()?>/profile/<?=$admin->userID?>"> <button class="card__btn">Details</button></a>
-          <button class="card__btn card__btn-solid">Disable</button>
+          <?=($admin->status==='active')?
+          '<button data-id='.$admin->adminID.' class="card__btn card__btn-solid disableBtn">Disable</button>'
+          :'<button data-id='.$admin->adminID.' class="card__btn card__btn-solid enableBtn">Enable</button>'?>
       </div>
     </div>
-
-    <?php endforeach;?>
+      
+    <?php endif; endforeach;?>
 
     </div>
     
@@ -58,6 +60,76 @@
         </button>
     </div>
 </a>
+
+
+
+<script >
+    // Get all disble buttons
+const disableBtns = document.querySelectorAll('.card__btn.card__btn-solid.disableBtn');
+console.log(disableBtns)
+const enableBtns = document.querySelectorAll('.card__btn.card__btn-solid.enableBtn');
+console.log(enableBtns)
+
+// Attach a click event listener to each button
+disableBtns.forEach(button => {
+    button.addEventListener('click', function(event) {
+        // Get the data-id attribute value
+        const itemId = event.currentTarget.getAttribute('data-id');
+        const confirmDisable = confirm("Are you sure you want to disbale the user?");
+
+        if (confirmDisable) {
+            const action = "disable"; // Define the action here
+            // Send the action to the current URL
+            sendActionToCurrentURL(action,itemId);
+        } else {
+            alert("Canceled!");
+        }
+    });
+});
+
+
+enableBtns.forEach(button => {
+    button.addEventListener('click', function(event) {
+        // Get the data-id attribute value
+        const itemId = event.currentTarget.getAttribute('data-id');
+        const confirmEnable = confirm("Are you sure you want to enable the user?");
+
+        if (confirmEnable) {
+            const action = "enable"; // Define the action here
+            // Send the action to the current URL
+            sendActionToCurrentURL(action,itemId);
+        } else {
+            alert("Canceled!");
+        }
+    });
+});
+
+
+function sendActionToCurrentURL(action,id) {
+        // Create a form dynamically
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = `<?=ROOT?>/admin/manageadmins/${action}/${id}`; // Use the current URL
+        form.style.display = "none"; // Hide the form
+
+        // Create an input element for the action parameter
+        const actionInput = document.createElement("input");
+        actionInput.type = "hidden";
+        actionInput.name = "action";
+        actionInput.value = action;
+
+        // Append the input element to the form
+        form.appendChild(actionInput);
+
+        // Append the form to the document body
+        document.body.appendChild(form);
+
+        // Submit the form
+        form.submit();
+        console.log(form.action);
+        
+    }
+</script>
 
 
 

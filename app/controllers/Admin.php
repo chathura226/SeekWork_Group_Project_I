@@ -261,6 +261,47 @@ class Admin extends Controller{
                 
                 $this->view('admin/post-admins',$data);
                 return;
+
+
+            }else if($action==='disable'){//disable admin user
+
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                
+                    if(!empty($id)){//admin id of diabling user   
+                        //get corresponding user id
+                        $adminInst= new AdminModel();
+                        $admin=$adminInst->first(['adminID'=>$id]);
+                        if(empty($admin)){
+                            message('No user with given adminID found');
+                            redirect('admin/manageadmins');
+                        }
+                        
+                        $user=new User();
+                        $user->update(['status'=>'deactivated'],$admin->userID);
+                        message('Deactivation Successful!');
+                    }
+                }
+                redirect('admin/manageadmins');
+
+            }else if($action==='enable'){//enable admin user
+
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                
+                    if(!empty($id)){//admin id of diabling user   
+                        //get corresponding user id
+                        $adminInst= new AdminModel();
+                        $admin=$adminInst->first(['adminID'=>$id]);
+                        if(empty($admin)){
+                            message('No user with given adminID found');
+                            redirect('admin/manageadmins');
+                        }
+                        
+                        $user=new User();
+                        $user->update(['status'=>'active'],$admin->userID);
+                        message('Activation Successful!');
+                    }
+                }
+                redirect('admin/manageadmins');
             }
         }
         $userInst=new User();
