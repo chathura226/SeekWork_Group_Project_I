@@ -197,6 +197,45 @@ class Admin extends Controller{
                 
                 $this->view('admin/post-moderators',$data);
                 return;
+            }else if($action==='disable'){//disable admin user
+
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                
+                    if(!empty($id)){//admin id of diabling user   
+                        //get corresponding user id
+                        $moderatorInst= new Moderator();
+                        $moderator=$moderatorInst->first(['moderatorID'=>$id]);
+                        if(empty($moderator)){
+                            message('No user with given moderatorID found');
+                            redirect('admin/managemoderators');
+                        }
+                        
+                        $user=new User();
+                        $user->update(['status'=>'deactivated'],$moderator->userID);
+                        message('Deactivation Successful!');
+                    }
+                }
+                redirect('admin/managemoderators');
+
+            }else if($action==='enable'){//enable admin user
+
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                
+                    if(!empty($id)){//admin id of diabling user   
+                        //get corresponding user id
+                        $moderatorInst= new Moderator();
+                        $moderator=$moderatorInst->first(['moderatorID'=>$id]);
+                        if(empty($moderator)){
+                            message('No user with given moderatorID found');
+                            redirect('admin/managemoderators');
+                        }
+                        
+                        $user=new User();
+                        $user->update(['status'=>'active'],$moderator->userID);
+                        message('Activation Successful!');
+                    }
+                }
+                redirect('admin/managemoderators');
             }
         }
         $userInst=new User();
