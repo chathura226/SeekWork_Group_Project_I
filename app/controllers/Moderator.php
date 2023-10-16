@@ -52,7 +52,7 @@ class Moderator extends Controller{
 
 
     //implement this to show all users and specific user if the id is passeed with url
-    public function otherusers($id=null){
+    public function otherusers($action=null,$id=null){
 
         if(!Auth::logged_in()){//if not logged in redirect to login page
             message('Please login to view the moderator section!');
@@ -64,7 +64,45 @@ class Moderator extends Controller{
         }
         
 
+        if(!empty($action)){
+            if($action==='disable'){
+                
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                
+                    if(!empty($id)){//userid
 
+                        $userInst= new User();
+                        $user=$userInst->first(['userID'=>$id]);
+                        if(empty($user)){
+                            message('No user with given ID found');
+                            redirect('moderator/otherusers');
+                        }
+                        
+                        $userInst->update(['status'=>'deactivated'],$user->userID);
+                        message('Deactivation Successful!');
+                    }
+                }
+                redirect('moderator/otherusers');
+            }else if($action==='enable'){
+
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                
+                    if(!empty($id)){//userid
+
+                        $userInst= new User();
+                        $user=$userInst->first(['userID'=>$id]);
+                        if(empty($user)){
+                            message('No user with given ID found');
+                            redirect('moderator/otherusers');
+                        }
+                        
+                        $userInst->update(['status'=>'active'],$user->userID);
+                        message('Activation Successful!');
+                    }
+                }
+                redirect('moderator/otherusers');
+            }
+        }
         $user = new User();
         $row = $user->getAll();
 
@@ -84,13 +122,20 @@ class Moderator extends Controller{
                 message('Error fetching data '.$row[$i]->userID);
                 redirect('moderator');
             }
-
+            if($row[$i]->role==='student'){//removing 'status' key from the result because user table also have a status field
+                $userDetails->studentStatus=$userDetails->status;
+                unset($userDetails->status);
+            }
+            if($row[$i]->role==='company'){//removing 'status' key from the result because user table also have a status field
+                $userDetails->companyStatus=$userDetails->status;
+                unset($userDetails->status);
+            }
             $row[$i] = (object)array_merge((array)$row[$i], (array)$userDetails);
         }
 
         //pass the combined object to the view
         $data['users']=$row;
-
+        
 
         $data['title'] = "Other Users";
         

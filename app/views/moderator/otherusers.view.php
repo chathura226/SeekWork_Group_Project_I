@@ -30,7 +30,11 @@
       <div class="card__wrapper">
  
           <a href="<?=ROOT?>/<?=Auth::getrole()?>/profile/<?=$user->userID?>"> <button class="card__btn">Details</button></a>
-          <button class="card__btn card__btn-solid">Disable</button>
+          <?php if($user->role!=='admin' && $user->role!=='moderator'):?>
+          <?=($user->status==='active')?
+          '<button data-id='.$user->userID.' class="card__btn card__btn-solid disableBtn">Disable</button>'
+          :'<button data-id='.$user->userID.' class="card__btn card__btn-solid enableBtn">Enable</button>'?>
+          <?php endif;?>
       </div>
     </div>
 
@@ -38,5 +42,73 @@
 
     </div>
     
+
+    <script >
+    // Get all disble buttons
+const disableBtns = document.querySelectorAll('.card__btn.card__btn-solid.disableBtn');
+console.log(disableBtns)
+const enableBtns = document.querySelectorAll('.card__btn.card__btn-solid.enableBtn');
+console.log(enableBtns)
+
+// Attach a click event listener to each button
+disableBtns.forEach(button => {
+    button.addEventListener('click', function(event) {
+        // Get the data-id attribute value
+        const itemId = event.currentTarget.getAttribute('data-id');
+        const confirmDisable = confirm("Are you sure you want to disbale the user?");
+
+        if (confirmDisable) {
+            const action = "disable"; // Define the action here
+            // Send the action to the current URL
+            sendActionToCurrentURL(action,itemId);
+        } else {
+            alert("Canceled!");
+        }
+    });
+});
+
+
+enableBtns.forEach(button => {
+    button.addEventListener('click', function(event) {
+        // Get the data-id attribute value
+        const itemId = event.currentTarget.getAttribute('data-id');
+        const confirmEnable = confirm("Are you sure you want to enable the user?");
+
+        if (confirmEnable) {
+            const action = "enable"; // Define the action here
+            // Send the action to the current URL
+            sendActionToCurrentURL(action,itemId);
+        } else {
+            alert("Canceled!");
+        }
+    });
+});
+
+
+function sendActionToCurrentURL(action,id) {
+        // Create a form dynamically
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = `<?=ROOT?>/moderator/otherusers/${action}/${id}`; 
+        form.style.display = "none"; // Hide the form
+
+        // Create an input element for the action parameter
+        const actionInput = document.createElement("input");
+        actionInput.type = "hidden";
+        actionInput.name = "action";
+        actionInput.value = action;
+
+        // Append the input element to the form
+        form.appendChild(actionInput);
+
+        // Append the form to the document body
+        document.body.appendChild(form);
+
+        // Submit the form
+        form.submit();
+        console.log(form.action);
+        
+    }
+</script>
 
 <?php $this->view('moderator/moderator-footer',$data) ?>
