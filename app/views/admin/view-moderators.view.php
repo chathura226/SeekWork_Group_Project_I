@@ -34,7 +34,7 @@
       <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
       <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
       <div class="card__title"><?=ucfirst($moderator->firstName)?> <?=ucfirst($moderator->lastName)?> </div>
-      <div class="card__subtitle"><?=ucfirst($moderator->role)?> </div>
+      <div class="card__subtitle"><?=ucfirst($moderator->role)?> <small><?=($moderator->status==='active')?'&#x1F7E2;':'&#x1F534;'?></small></div>
       <div class="card__wrapper">
           <a href="<?=ROOT?>/<?=Auth::getrole()?>/profile/<?=$moderator->userID?>"> <button class="card__btn">Details</button></a>
           <?=($moderator->status==='active')?

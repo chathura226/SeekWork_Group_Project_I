@@ -26,13 +26,13 @@
       <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
       <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
       <div class="card__title"><?=ucfirst($user->firstName)?> <?=ucfirst($user->lastName)?> </div>
-      <div class="card__subtitle"><?=ucfirst($user->role)?> </div>
+      <div class="card__subtitle"><?=ucfirst($user->role)?> <small><?=($user->status==='active')?'&#x1F7E2;':'&#x1F534;'?></small></div>
       <div class="card__wrapper">
  
           <a href="<?=ROOT?>/<?=Auth::getrole()?>/profile/<?=$user->userID?>"> <button class="card__btn">Details</button></a>
           <?php if($user->role!=='admin' && $user->role!=='moderator'):?>
           <?=($user->status==='active')?
-          '<button data-id='.$user->userID.' class="card__btn card__btn-solid disableBtn">Disable</button>'
+          '<button data-id='.$user->userID.' class="card__btn card__btn-solid disableBtn" >Disable</button>'
           :'<button data-id='.$user->userID.' class="card__btn card__btn-solid enableBtn">Enable</button>'?>
           <?php endif;?>
       </div>
@@ -41,7 +41,7 @@
     <?php endforeach;?>
 
     </div>
-    
+    <button data-id='.$user->userID.' class="card__btn card__btn-solid disableBtn" style="fill:red" >Disable</button>
 
     <script >
     // Get all disble buttons
