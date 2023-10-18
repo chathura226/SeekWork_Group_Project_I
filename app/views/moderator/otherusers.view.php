@@ -41,7 +41,6 @@
     <?php endforeach;?>
 
     </div>
-    <button data-id='.$user->userID.' class="card__btn card__btn-solid disableBtn" style="fill:red" >Disable</button>
 
     <script >
     // Get all disble buttons

@@ -224,7 +224,7 @@ Ideal Skills and Experience:
                 </div>
             </div>
             
-
+            
 
             <div class="post-container"></div>
             <div class="post-container"></div>
@@ -236,7 +236,6 @@ Ideal Skills and Experience:
 
 
         </div>
-
 
 
 
