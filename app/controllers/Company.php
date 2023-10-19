@@ -21,7 +21,7 @@ class Company extends Controller{
         $this->view('company/dashboard',$data);
     }
 
-    public function chats(){
+    public function chats($id=null){
         
         if(!Auth::logged_in()){//if not logged in redirect to login page
             message('Please login to view the company section!');
@@ -32,6 +32,20 @@ class Company extends Controller{
             redirect('home');
         }
       
+        if(!empty($id)){//req a particular chat
+            //implement chat connection with db
+
+
+
+
+
+            
+            $data['title'] = "Chat";
+        
+            $this->view('company/chat',$data);
+
+            return;
+        }
 
 
         $data['title'] = "Chats";

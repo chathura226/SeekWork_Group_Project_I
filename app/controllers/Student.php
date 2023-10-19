@@ -620,7 +620,7 @@ class Student extends Controller{
                             $proposal=$proposalInst->first(['proposalID'=>$assignment->proposalID]);
 
                             $taskInst=new Task();
-                            $taskInst->update(['assignmentID'=>$assignment->assignmentID,'assignedStudentID'=>$proposal->studentID],$assignment->taskID);
+                            $taskInst->update(['assignmentID'=>$assignment->assignmentID,'assignedStudentID'=>$proposal->studentID,'status'=>'inProgress'],$assignment->taskID);
                             $currentDateTime = date('Y-m-d H:i:s');
                             $assignmentInst->update(['status'=>'accepted','replyDate'=>$currentDateTime],$assignment->assignmentID);
 
