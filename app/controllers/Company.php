@@ -21,6 +21,23 @@ class Company extends Controller{
         $this->view('company/dashboard',$data);
     }
 
+    public function chats(){
+        
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the company section!');
+            redirect('login');
+        }
+        if(!Auth::is_company()){///if not an admin, redirect to home
+            message('Only companies can view company dashboard!');
+            redirect('home');
+        }
+      
+
+
+        $data['title'] = "Chats";
+        
+        $this->view('company/chats',$data);
+    }
 
     
     public function profile($id=null){
