@@ -21,6 +21,8 @@ class Student extends Controller{
         $this->view('student/dashboard',$data);
     }
 
+
+
     public function profile($id=null){
 
         if(!Auth::logged_in()){//if not logged in redirect to login page
@@ -684,4 +686,38 @@ class Student extends Controller{
         $this->view('student/pendinginvites',$data);
 
     }
+
+
+    public function chats($id=null){
+        
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the student section!');
+            redirect('login');
+        }
+        if(!Auth::is_student()){///if not an admin, redirect to home
+            message('Only students can view student dashboard!');
+            redirect('home');
+        }
+      
+        if(!empty($id)){//req a particular chat
+            //implement chat connection with db
+
+
+
+
+
+            
+            $data['title'] = "Chat";
+        
+            $this->view('student/chat',$data);
+
+            return;
+        }
+
+
+        $data['title'] = "Chats";
+        
+        $this->view('student/chats',$data);
+    }
+
 }
