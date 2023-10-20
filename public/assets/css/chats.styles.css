@@ -1,4 +1,17 @@
+/* //for chat list........................ */
+.chat-and-img{
+    display: flex;
+    justify-content: space-between;
+}
+.chat-and-img img{
+    margin-right:10px ;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
 
+
+/* for individual chats///////////........................ */
 .chatbox-container{
     display: flex;
     justify-content: center;

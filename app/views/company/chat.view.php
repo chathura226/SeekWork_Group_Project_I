@@ -29,7 +29,7 @@
       <div class="client">
         <img src="<?=ROOT?>/assets/images/profile1.png" alt="logo" />
         <div class="client-info">
-          <h2>Thanos</h2>
+          <h2>Chathura Lakshan</h2>
           <p>online</p>
         </div>
       </div>
