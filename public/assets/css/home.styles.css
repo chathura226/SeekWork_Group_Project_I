@@ -1,0 +1,25 @@
+
+.home-content {
+    padding: 20px;
+}
+
+.image-container {
+    position: relative;
+    text-align: center;
+    transition: opacity 0.5s; /* Transition on opacity property */
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Initial state */
+.image-container img {
+    opacity: 1;
+}
+
+/* Transitioned state */
+.image-container.scrolled img {
+    opacity: 0.5;
+}
