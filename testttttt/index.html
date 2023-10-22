@@ -1,75 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Scroll Transition</title>
-    <style>
-      body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<style>
+    *,*:after,*:before{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+body{
+	font-family: arial;
+	font-size: 16px;
+	margin: 0;
+	background: #fff;
+	color: #000;
 }
 
-header {
-    text-align: center;
-    padding: 20px;
-    background-color: #333;
-    color: #fff;
+.wrapper_outer{
+	height: 100vh;
+	overflow: hidden;
+}
+.wrapper{
+	height: 100%;
+	overflow-x: hidden;
+
+	perspective: 1px;
 }
 
-.content {
-    padding: 20px;
+.parallax_section{
+	box-sizing: border-box;
+	min-height: 100vh;
+	padding: 10vh 10vh;
+	position: relative;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+
+	overflow: hidden;
+
+	transform-style: preserve-3d;
+}
+.parallax_bg{
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background-size: cover;
+	background-position: center center;
+	z-index: -1;
+	min-height: 100%; 
+
+	transform: translate3d(0,0,-1px) scale(2);
+}
+h2{
+	color: #fff;
+	margin: 0 0 10px;
+	font-size: 120px;
+	text-shadow: 2px 2px 2px rgba(0,0,0,0.4);
+	text-align: center;
+	text-transform: uppercase;
 }
 
-.image-container {
-    position: relative;
-    text-align: center;
-    transition: opacity 0.5s; /* Transition on opacity property */
-}
 
-.image-container img {
-    max-width: 100%;
-    height: auto;
-}
 
-/* Initial state */
-.image-container img {
-    opacity: 1;
-}
 
-/* Transitioned state */
-.image-container.scrolled img {
-    opacity: 0.5;
-}
-
-    </style>
+</style>
 </head>
 <body>
-    <header>
-        <h1>My Home Page</h1>
-    </header>
-    <section class="content">
-        <div class="image-container">
-            <img src="logo.png" alt="Your Image">
-        </div>
-        <p>Some content here</p>
-    </section>
+<div class="wrapper_outer">
+	<div class="wrapper">
+
+		<section class="parallax_section">
+			<div class="parallax_bg" style="background-image: url(https://images.unsplash.com/photo-1610482650877-a580984185a0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80);"></div>
+			<h2>CSS3 <br> Parallax Effect</h2>
+		</section>
+		<section class="parallax_section">
+			<div class="parallax_bg" style="background-image: url(https://images.unsplash.com/photo-1595589981216-2efa123658f7?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1500&q=80);"></div>
+			<h2>Creative <br> Parallax Effect</h2>
+		</section>	
+
+	</div>
+</div>
+
+
+
 </body>
-<script>
-  window.addEventListener('scroll', function() {
-    const imageContainer = document.querySelector('.image-container');
-    const imagePosition = imageContainer.getBoundingClientRect().top;
-
-    if (imagePosition < window.innerHeight / 2) {
-        imageContainer.classList.add('scrolled');
-    } else {
-        imageContainer.classList.remove('scrolled');
-    }
-});
-
-</script>
 </html>
