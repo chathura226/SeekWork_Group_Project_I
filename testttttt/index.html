@@ -1,95 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
-<title>Home</title>
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<style>
-    *,*:after,*:before{
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	box-sizing: border-box;
-}
-body{
-	font-family: arial;
-	font-size: 16px;
-	margin: 0;
-	background: #fff;
-	color: #000;
-}
-
-.wrapper_outer{
-	height: 100vh;
-	overflow: hidden;
-}
-.wrapper{
-	height: 100%;
-	overflow-x: hidden;
-
-	perspective: 1px;
-}
-
-.parallax_section{
-	box-sizing: border-box;
-	min-height: 100vh;
-	padding: 10vh 10vh;
-	position: relative;
-	width: 100vw;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	z-index: 1;
-
-	overflow: hidden;
-
-	transform-style: preserve-3d;
-}
-.parallax_bg{
-	position: absolute;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	background-size: cover;
-	background-position: center center;
-	z-index: -1;
-	min-height: 100%; 
-
-	transform: translate3d(0,0,-1px) scale(2);
-}
-h2{
-	color: #fff;
-	margin: 0 0 10px;
-	font-size: 120px;
-	text-shadow: 2px 2px 2px rgba(0,0,0,0.4);
-	text-align: center;
-	text-transform: uppercase;
-}
-
-
-
-
-</style>
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-<div class="wrapper_outer">
-	<div class="wrapper">
+	<header>
+		<a href="#" class="logo">Logo</a>
+		<ul>
+			<li><a href="#" class="active">Home</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Work</a></li>
+			<li><a href="#">Contact</a></li>
 
-		<section class="parallax_section">
-			<div class="parallax_bg" style="background-image: url(https://images.unsplash.com/photo-1610482650877-a580984185a0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80);"></div>
-			<h2>CSS3 <br> Parallax Effect</h2>
-		</section>
-		<section class="parallax_section">
-			<div class="parallax_bg" style="background-image: url(https://images.unsplash.com/photo-1595589981216-2efa123658f7?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1500&q=80);"></div>
-			<h2>Creative <br> Parallax Effect</h2>
-		</section>	
+		</ul>
+	</header>
 
+	<section>
+		<img src="stars.png" alt="stars" id="stars">
+		<img src="moon.png" alt="moon" id="moon">
+		<img src="mountains_behind.png" alt="mountains_behind" id="mountains_behind">
+		<h2 id="text">Moon Light</h2>
+		<a href="#" id="btn">Explore</a>
+		<img src="mountains_front.png" alt="mountains_front" id="mountains_front">
+
+	</section>
+
+	<div class="sec" id="sec">
+		<h2>Parallax Scrolling effects</h2>
+		 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			<br><br>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			<br><br>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			<br><br>
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			<br><br>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			<br><br>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel laudantium obcaecati i
+			ste facere dolore rem. Quaerat ad fuga modi quo quis? Dolores quod odit aliquam sit maxime, reiciendis modi dicta.
+			<br><br>
+		</p>
 	</div>
-</div>
 
-
-
+	<script>
+		let stars=document.getElementById("stars");
+		let moon=document.getElementById("moon");
+		let mountains_behind=document.getElementById("mountains_behind");
+		let mountains_front=document.getElementById("mountains_front");
+		let text=document.getElementById("text");
+		let btn=document.getElementById("btn");
+		let header = document.querySelector('header')
+		window.addEventListener('scroll',function(){
+			let value=window.scrollY;
+			stars.style.left=value * 0.5+'px';
+			moon.style.top=value * 1.05 +'px';
+			mountains_behind.style.top=value * 0.5 +'px';
+			mountains_front.style.top=value * 0 +'px';
+			text.style.marginRight=value *4 +'px';
+			text.style.marginTop=value *1.5 +'px';
+			btn.style.marginTop=value *1.5 +'px';
+			header.style.top=value*0.5+'px';
+		})
+	</script>
 </body>
 </html>
