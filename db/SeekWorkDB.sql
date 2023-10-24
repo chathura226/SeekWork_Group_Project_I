@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Oct 07, 2023 at 02:40 AM
+-- Generation Time: Oct 24, 2023 at 10:50 PM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -164,10 +164,12 @@ CREATE TABLE `company_payment` (
 CREATE TABLE `dispute` (
   `disputeID` int NOT NULL,
   `description` text NOT NULL,
-  `status` enum('resolved','pending','invalid') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `status` enum('resolved','pending','invalid') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'pending',
   `type` enum('payment','task') NOT NULL,
+  `initiatedParty` enum('student','company') NOT NULL,
   `taskID` int NOT NULL,
-  `moderatorID` int NOT NULL
+  `moderatorID` int DEFAULT NULL,
+  `moderatorComment` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
