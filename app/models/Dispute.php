@@ -9,7 +9,9 @@ class Dispute extends Model {
     //fields that can be updated
     protected $allowedColumns=[
         'disputeID',
+        'subject',
         'description',
+        'createdAt',
         'status',
         'type',
         'initiatedParty',

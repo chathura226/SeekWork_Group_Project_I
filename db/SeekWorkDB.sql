@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Oct 24, 2023 at 10:50 PM
+-- Generation Time: Oct 24, 2023 at 11:35 PM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -163,7 +163,9 @@ CREATE TABLE `company_payment` (
 
 CREATE TABLE `dispute` (
   `disputeID` int NOT NULL,
+  `subject` varchar(25) NOT NULL,
   `description` text NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` enum('resolved','pending','invalid') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'pending',
   `type` enum('payment','task') NOT NULL,
   `initiatedParty` enum('student','company') NOT NULL,
@@ -171,6 +173,13 @@ CREATE TABLE `dispute` (
   `moderatorID` int DEFAULT NULL,
   `moderatorComment` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `dispute`
+--
+
+INSERT INTO `dispute` (`disputeID`, `subject`, `description`, `createdAt`, `status`, `type`, `initiatedParty`, `taskID`, `moderatorID`, `moderatorComment`) VALUES
+(1, 'first dispute', 'dejdedmedmed enjed', '2023-10-24 23:34:57', 'pending', 'payment', 'company', 10, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -639,7 +648,7 @@ ALTER TABLE `company_payment`
 -- AUTO_INCREMENT for table `dispute`
 --
 ALTER TABLE `dispute`
-  MODIFY `disputeID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `disputeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `moderator`

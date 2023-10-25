@@ -673,5 +673,39 @@ class Company extends Controller{
         $this->view('company/tasks-inprogress',$data);
     }
 
+    public function disputes($action=null,$id=null){
+        
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the company section!');
+            redirect('login');
+        }
+        if(!Auth::is_company()){///if not an admin, redirect to home
+            message('Only companies can view company dashboard!');
+            redirect('home');
+        }
+        
+        //get alll tasks related to the company
+        $taskInst=new Task();
+        $tasks=$taskInst->where(['companyID'=>Auth::getcompanyID()]);
+
+        $disputeInst=new Dispute();
+        $res=[];
+
+        for ($i = 0; $i < count($tasks); $i++){
+            $dispute=$disputeInst->first(['taskID'=>$tasks[$i]->taskID,'initiatedParty'=>'company']);
+            if(!empty($dispute)){
+                $dispute->task=$tasks[$i];
+                $res[]=$dispute;
+            }
+        }
+
+
+
+        $data['disputes']=$res;
+        $data['title'] = "Disputes";
+        
+        $this->view('company/disputes',$data);
+    }
+
 
 }
