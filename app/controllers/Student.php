@@ -720,4 +720,40 @@ class Student extends Controller{
         $this->view('student/chats',$data);
     }
 
+
+    public function disputes($action=null,$id=null){
+        
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the student section!');
+            redirect('login');
+        }
+        if(!Auth::is_student()){///if not an admin, redirect to home
+            message('Only students can view student dashboard!');
+            redirect('home');
+        }
+
+        //get alll tasks related to the company
+        $taskInst=new Task();
+        $tasks=$taskInst->where(['assignedStudentID'=>Auth::getstudentID()]);
+
+        $disputeInst=new Dispute();
+        $res=[];
+
+        for ($i = 0; $i < count($tasks); $i++){
+            $dispute=$disputeInst->first(['taskID'=>$tasks[$i]->taskID,'initiatedParty'=>'student']);
+            if(!empty($dispute)){
+                $dispute->task=$tasks[$i];
+                $res[]=$dispute;
+            }
+        }
+
+
+
+        $data['disputes']=$res;
+        $data['title'] = "Disputes";
+        
+        $this->view('student/disputes',$data);
+    }
+
+
 }
