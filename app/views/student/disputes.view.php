@@ -34,7 +34,7 @@
   
   </div>
 <div class="flex justify-between">
-  <a href="<?=ROOT?>/company/disputes/modify/<?=$dispute->disputeID?>">
+  <a href="<?=ROOT?>/student/disputes/modify/<?=$dispute->disputeID?>">
     <button class="details-button margin-5">
       Modify
       <div class="arrow-wrapper">

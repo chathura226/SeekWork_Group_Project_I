@@ -732,6 +732,17 @@ class Student extends Controller{
             redirect('home');
         }
 
+        if(!empty($action)){
+            if($action==='post'){
+
+                $data['title'] = "New Dispute";
+                
+                $this->view('student/post-disputes',$data);
+                return;
+            }
+
+        }
+
         //get alll tasks related to the company
         $taskInst=new Task();
         $tasks=$taskInst->where(['assignedStudentID'=>Auth::getstudentID()]);
@@ -747,7 +758,7 @@ class Student extends Controller{
             }
         }
 
-
+        
 
         $data['disputes']=$res;
         $data['title'] = "Disputes";

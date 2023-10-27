@@ -54,6 +54,9 @@ body{
     color:var(--text-color);
     font-family:'URWGeometricRegular';
     font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     /* text-align: center; */
 }
 /* ...........................................image upload rendering............................ */
@@ -122,6 +125,8 @@ body{
 
 /* for mobile */
 #main-wrapper{
+  flex: 1;
+    width: 100%;
     display: grid;
     position: relative;
     grid-template-columns: repeat(12,1fr);
