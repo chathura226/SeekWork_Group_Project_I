@@ -26,7 +26,7 @@
       </nav>
 </div><!-- End Page Title -->
 
-<div class="form-wrap column-12">
+<div class="form-wrap column-12 ">
 
 <div class="tab-form">
   <div class="myheader">
@@ -41,7 +41,7 @@
 
                 <div class="form-input">
                     <label>Task Name</label>
-                    <select id="categoryID" name="categoryID" required>
+                    <select id="taskID" name="taskID" required>
                         <option value="" selected disabled>Select the Task</option>
                         <?php foreach($tasks as $task):?>
                             <option value=<?=$task->taskID?>><?=ucfirst($task->title)?></option>

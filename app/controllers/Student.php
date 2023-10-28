@@ -735,6 +735,20 @@ class Student extends Controller{
         if(!empty($action)){
             if($action==='post'){
 
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                    $_POST['status']='pending';
+                    $_POST['intiatedParty']='student';
+
+                    $disputeInst=new Dispute();
+
+                    $disputeInst->insert($_POST);
+
+                    message('Dispute Added Successfully!');
+                    redirect('student/disputes');
+                }
+                $taskInst=new Task();
+                $tasks=$taskInst->where(['assignedStudentID'=>Auth::getstudentID()]);
+                $data['tasks']=$tasks;
                 $data['title'] = "New Dispute";
                 
                 $this->view('student/post-disputes',$data);
@@ -751,14 +765,17 @@ class Student extends Controller{
         $res=[];
 
         for ($i = 0; $i < count($tasks); $i++){
-            $dispute=$disputeInst->first(['taskID'=>$tasks[$i]->taskID,'initiatedParty'=>'student']);
+            $dispute=$disputeInst->where(['taskID'=>$tasks[$i]->taskID,'initiatedParty'=>'student']);
             if(!empty($dispute)){
-                $dispute->task=$tasks[$i];
-                $res[]=$dispute;
+                for ($j = 0; $j < count($dispute); $j++){
+                    $dispute[$j]->task=$tasks[$i];
+                    $res[]=$dispute[$j];
+                }
+
             }
         }
-
-        
+//        show($res);
+//        die;
 
         $data['disputes']=$res;
         $data['title'] = "Disputes";

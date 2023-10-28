@@ -19,6 +19,8 @@ services:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=password # this should live in a env var
       - MYSQL_ALLOW_EMPTY_PASSWORD=1 # equivalent to True
+    ports:
+      - 9999:3306
     volumes:
       - "../db:/docker-entrypoint-initdb.d" #sync persistent sql files with continer
     # command: bash -c chmod -R 777 /docker-entrypoint-initdb.d/
