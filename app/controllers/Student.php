@@ -96,6 +96,8 @@ class Student extends Controller{
       
 
         
+
+
         $data['title'] = "Update Profile";
         
         
@@ -753,6 +755,33 @@ class Student extends Controller{
                 
                 $this->view('student/post-disputes',$data);
                 return;
+            }else if($action==='modify'){
+                if(!empty($id)){
+
+                    if($_SERVER['REQUEST_METHOD']=="POST"){
+                        $_POST['status']='pending';
+                        $_POST['intiatedParty']='student';
+    
+                        $disputeInst=new Dispute();
+    
+                        $disputeInst->update($_POST,$id);
+    
+                        message('Dispute Modified Successfully!');
+                        redirect('student/disputes');
+                    }
+
+                    $taskInst=new Task();
+                    $tasks=$taskInst->where(['assignedStudentID'=>Auth::getstudentID()]);
+                    $data['tasks']=$tasks;
+
+                    $disputeInst=new Dispute();
+                    $dispute=$disputeInst->first(['disputeID'=>$id]);
+                    $data['dispute']=$dispute;
+                    $data['title'] = "Modify Dispute";
+                    
+                    $this->view('student/modify-disputes',$data);
+                    return;
+                }
             }
 
         }
