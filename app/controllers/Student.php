@@ -782,6 +782,22 @@ class Student extends Controller{
                     $this->view('student/modify-disputes',$data);
                     return;
                 }
+            }else if($action==='delete'){
+                if(!empty($id)){
+                    if($_SERVER['REQUEST_METHOD']=="POST"){
+                        $disputeInst=new Dispute();
+                        $dispute=$disputeInst->first(['disputeID'=>$id]);
+
+                        if(!empty($dispute) && $dispute->status!=='resolved'){//only disputes not resolved can be deleted
+                            $disputeInst->delete($id);
+                            message('Dispute deleted successfully!');
+                            redirect('student/disputes');
+                        }else{
+                            message('Error occured while deletion!');
+                            redirect('student/disputes');
+                        }
+                    }
+                }
             }
 
         }
