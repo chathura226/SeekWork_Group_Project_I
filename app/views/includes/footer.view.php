@@ -72,6 +72,7 @@
 </footer>
 
 
+<script src="<?=ROOT?>/assets/js/loader.js"></script>
 <script src="<?=ROOT?>/assets/js/alert.js"></script>
 
 </body>

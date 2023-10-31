@@ -23,4 +23,25 @@
 </head>
 
 <body>
-  
+<link rel="stylesheet" href="<?=ROOT?>/assets/css/loader.styles.css">
+
+<div class="loader-container">
+		<div class="loader">
+			<div class="circle">
+			  <div class="dot"></div>
+			  <div class="outline"></div>
+			</div>
+			<div class="circle">
+			  <div class="dot"></div>
+			  <div class="outline"></div>
+			</div>
+			<div class="circle">
+			  <div class="dot"></div>
+			  <div class="outline"></div>
+			</div>
+			<div class="circle">
+			  <div class="dot"></div>
+			  <div class="outline"></div>
+			</div>
+		  </div>
+	</div>
