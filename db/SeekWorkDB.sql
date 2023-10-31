@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Oct 28, 2023 at 06:28 PM
+-- Generation Time: Oct 31, 2023 at 06:41 AM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -163,7 +163,7 @@ CREATE TABLE `company_payment` (
 
 CREATE TABLE `dispute` (
   `disputeID` int NOT NULL,
-  `subject` varchar(25) NOT NULL,
+  `subject` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `description` text NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` enum('resolved','pending','invalid') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'pending',
@@ -180,8 +180,10 @@ CREATE TABLE `dispute` (
 
 INSERT INTO `dispute` (`disputeID`, `subject`, `description`, `createdAt`, `status`, `type`, `initiatedParty`, `taskID`, `moderatorID`, `moderatorComment`) VALUES
 (1, 'first dispute', 'dejdedmedmed enjed', '2023-10-24 23:34:57', 'pending', 'payment', 'company', 10, NULL, NULL),
-(2, 'sssssssssssssssssss', 'deeddedededw', '2023-10-28 17:16:09', 'pending', 'payment', 'student', 9, NULL, NULL),
-(3, 'fcfr', 'frfr', '2023-10-28 17:23:12', 'pending', 'payment', 'student', 9, NULL, NULL);
+(4, 'Regarding payment on nov 1st', 'Haven\'t got my milestone payment', '2023-10-30 23:38:14', 'pending', 'payment', 'student', 10, NULL, NULL),
+(7, 'dede', 'eddeed', '2023-10-31 00:21:00', 'pending', 'payment', 'student', 9, NULL, NULL),
+(8, 'dede', 'eddeed', '2023-10-31 00:21:23', 'pending', 'payment', 'student', 9, NULL, NULL),
+(10, 'fcr', 'refe', '2023-10-31 06:37:47', 'pending', 'other', 'company', 9, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -388,9 +390,9 @@ INSERT INTO `task` (`taskID`, `title`, `taskType`, `description`, `deadline`, `v
 (2, 'Create a website', 'fixed Price', 'I am looking for an experienced web developer to create a website for me. Specifically, I need a blogging website, with specific design and functionality requirements. The website should be built on WordPress, with PHP and HTML as the core programming language. I already have web content and images ready to go for the new website, so the main scope of work is on the design and development side.\r\n\r\nThe design should be modern and sleek, with clean lines and fonts, as well as including all necessary components of a blog such as comment sections, tags and a SEO-friendly structure. On the development side, I am looking for a custom coding and development job. This includes incorporating necessary plug-ins for a usable and engaging user experience, designing and integrating attractive forms, and making sure the website works across multiple browsers and devices.\r\n\r\nExperience in web design and WordPress development are a must for this job. Additionally, it would be great if the candidate had expertise in SEO and has done any e-commerce projects in the past. Timely completion of the project is also important.', NULL, 10000, 'active', 3, NULL, NULL, 2, NULL),
 (3, 'Animation For Stream\r\n', 'fixed Price', 'Hello, I am looking for a talented animator who can create a specific introduction animation for my stream. The type of animation I need is 3D, and I have specific elements that I would like included in the animation. My goal is to create something visually stunning and memorable that can draw viewers in and make them stick around. ( I have the full idea ready, and clips to be used inside of the animation, the animation being between 3-5 minutes long ) If you have the skills and the creativity to create something that will be noticed, please reach out to me.', NULL, 15000, 'active', 2, NULL, NULL, 3, NULL),
 (4, 'task 1', 'fixed Price', 'aaa', '2023-09-16', 1000, 'active', 2, NULL, NULL, 2, NULL),
-(6, 'task 3', 'auction', 's22', '2023-09-30', 222, 'active', 2, NULL, NULL, 3, NULL),
-(9, 'test task', 'fixed Price', 'swsw', NULL, 22, 'active', 4, 14, 13, 3, '2023-09-29'),
-(10, 'new test task', 'auction', 'swksnwsw', NULL, 2222, 'active', 4, NULL, NULL, 2, NULL);
+(6, 'task 3', 'auction', 's22', '2023-09-30', 222, 'active', 4, NULL, NULL, 3, NULL),
+(9, 'test task', 'fixed Price', 'swsw', NULL, 22, 'inProgress', 4, 14, 13, 3, '2023-09-29'),
+(10, 'new test task', 'auction', 'swksnwsw', NULL, 2222, 'inProgress', 4, 14, NULL, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -437,14 +439,14 @@ INSERT INTO `user` (`userID`, `email`, `password`, `contactNo`, `role`, `created
 (12, 'aa@k.com', '$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC', '012-345-6789', 'student', '2023-09-18 09:26:48', 'active'),
 (14, 'aabj@k.com', '$2y$10$KnHOE3tyqErLsjggmUPas.KZ/UmwyShx.lXYzuqW5bC9MbAFClUdy', '012-345-6789', 'student', '2023-09-18 09:34:29', 'active'),
 (15, 'aaabj@k.com', '$2y$10$78iEQp8L2EuONr7yVceNCebUdsYhaS1ICxIBk0fIv.FKGwyBeL4N2', '012-345-6789', 'student', '2023-09-18 09:36:48', 'active'),
-(16, 'aaa@kk.com', '$2y$10$P08nvJCK7z0t7dNScXZElO.uQ3MRgx90LbD9UkaZGPWqScqqn93qO', '012-234-4567', 'company', '2023-09-18 10:13:50', 'active'),
+(16, 'aaa@kk.com', '$2y$10$P08nvJCK7z0t7dNScXZElO.uQ3MRgx90LbD9UkaZGPWqScqqn93qO', '012-234-4567', 'company', '2023-09-18 10:13:50', 'deactivated'),
 (17, '2021cs109@stu.ucsc.cmb.ac.lk', '$2y$10$nt.D/ZdzXfdE/Qcjh/i7TOy/qZX1IsQDiKPy.44J0vMuCeiR2kh/O', '012-345-6789', 'student', '2023-09-18 11:47:26', 'active'),
 (18, '2021cs1029@stu.ucsc.cmb.ac.lk', '$2y$10$VZn32bcZ7z4hfDZI8I1me.YjPNp/trCscXwAPXuHe1FLGjEuLx9vC', '0775017409', 'student', '2023-09-19 07:56:38', 'active'),
 (19, '2021cs018@stu.ucsc.cmb.ac.lk', '$2y$10$COXY0b5joTnRQWRYJbySQe6/S1B90n3SJTUUWLi7/3GziO0xd0kEq', '1111111111', 'student', '2023-09-19 07:59:14', 'active'),
 (21, 'chathura@stu.ucsc.cmb.ac.lk', '$2y$10$k2xZ8oNZAsCvUtTV1wWwPe/pmGjO/QwXHbFL3z6od1JNcXLOTy6da', '0112339220', 'student', '2023-09-21 23:19:29', 'active'),
 (22, 'chathura@seekwork.com', '$2y$10$KPl6CHFI3XpZJiRhj1mbU.p3W3/jUxGLn8hHup94D7WMxI6YijZw.', '0775017409', 'company', '2023-09-23 10:04:25', 'active'),
 (24, 'verifiedcompany@seekwork.com', '$2y$10$zzkLQrkDSAopuKUH/PRflOpuJ2ccdKLuW6cuHe5pYiOLEd78IzY5G', '0112929330', 'company', '2023-09-23 10:57:51', 'active'),
-(25, 'admin@seekwork.lk', '$2y$10$sMktYFpZDsCZqsv6tT4SnOqYgov68qzGhOYig8LPR6Vo242SH0//G', '0111111111', 'admin', '2023-09-26 09:26:34', 'deactivated'),
+(25, 'admin@seekwork.lk', '$2y$10$sMktYFpZDsCZqsv6tT4SnOqYgov68qzGhOYig8LPR6Vo242SH0//G', '0111111111', 'admin', '2023-09-26 09:26:34', 'active'),
 (26, 'student@seekwork.lk', '$2y$10$Tiqa1R7u.5V3SH9hR8OyHO3XMBb8KsjqSZsnaPalRY5HMMF81cu1.', '0111111111', 'student', '2023-09-26 09:27:28', 'active'),
 (27, 'company@seekwork.lk', '$2y$10$VJc263BalapqYDWI.JTEBOwB3ERWYz2J8vNSVybN4T7tH2kU1w0MO', '0111111111', 'company', '2023-09-26 09:28:43', 'active'),
 (28, 'moderator@seekwork.lk', '$2y$10$fHyCVpJQCQOhzd00yCI8ie0LG6EXmy1KjjriLo5tzJSSl1aSfeDFq', '0111111111', 'moderator', '2023-09-26 09:29:49', 'active');
@@ -650,7 +652,7 @@ ALTER TABLE `company_payment`
 -- AUTO_INCREMENT for table `dispute`
 --
 ALTER TABLE `dispute`
-  MODIFY `disputeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `disputeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `moderator`

@@ -739,7 +739,7 @@ class Student extends Controller{
 
                 if($_SERVER['REQUEST_METHOD']=="POST"){
                     $_POST['status']='pending';
-                    $_POST['intiatedParty']='student';
+                    $_POST['initiatedParty']='student';
 
                     $disputeInst=new Dispute();
 
@@ -760,7 +760,7 @@ class Student extends Controller{
 
                     if($_SERVER['REQUEST_METHOD']=="POST"){
                         $_POST['status']='pending';
-                        $_POST['intiatedParty']='student';
+                        $_POST['initiatedParty']='student';
     
                         $disputeInst=new Dispute();
     
@@ -788,10 +788,18 @@ class Student extends Controller{
                         $disputeInst=new Dispute();
                         $dispute=$disputeInst->first(['disputeID'=>$id]);
 
-                        if(!empty($dispute) && $dispute->status!=='resolved'){//only disputes not resolved can be deleted
-                            $disputeInst->delete($id);
-                            message('Dispute deleted successfully!');
-                            redirect('student/disputes');
+                        if(!empty($dispute) && $dispute->status!=='resolved' && $dispute->initiatedParty==='student'){//only disputes not resolved can be deleted
+                            $taskInst=new Task();
+                            $task=$taskInst->first(['taskID'=>$dispute->taskID]);
+                            if($task->assignedStudentID===Auth::getstudentID()){
+                                
+                                $disputeInst->delete($id);
+                                message('Dispute deleted successfully!');
+                                redirect('student/disputes');
+                            }else{
+                                message('You dont have permission to execute this operation!');
+                                redirect('student/disputes');
+                            }
                         }else{
                             message('Error occured while deletion!');
                             redirect('student/disputes');

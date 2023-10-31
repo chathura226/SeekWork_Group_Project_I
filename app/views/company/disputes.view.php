@@ -73,3 +73,52 @@
 
 <?php $this->view('company/company-footer',$data) ?>
 
+
+
+<script >
+    // Get all delete buttons
+const deleteButtons = document.querySelectorAll('.details-button.margin-5.deletebttn');
+console.log(deleteButtons)
+// Attach a click event listener to each button
+deleteButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+        // Get the data-id attribute value
+        const itemId = event.currentTarget.getAttribute('data-id');
+        const confirmDelete = confirm("Are you sure you want to delete?");
+
+        if (confirmDelete) {
+            const action = "delete"; // Define the action here
+            // Send the action to the current URL
+            sendActionToCurrentURL(action,itemId);
+        } else {
+            alert("Deletion canceled!");
+        }
+    });
+});
+
+function sendActionToCurrentURL(action,id) {
+        // Create a form dynamically
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = `<?=ROOT?>/company/disputes/delete/${id}`; // Use the current URL
+        form.style.display = "none"; // Hide the form
+
+        // Create an input element for the action parameter
+        const actionInput = document.createElement("input");
+        actionInput.type = "hidden";
+        actionInput.name = "action";
+        actionInput.value = action;
+
+        // Append the input element to the form
+        form.appendChild(actionInput);
+
+        // Append the form to the document body
+        document.body.appendChild(form);
+
+        // Submit the form
+        form.submit();
+        console.log(form.action);
+        
+    }
+</script>
+

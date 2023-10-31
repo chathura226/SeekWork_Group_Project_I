@@ -689,12 +689,13 @@ class Company extends Controller{
 
                 if($_SERVER['REQUEST_METHOD']=="POST"){
                     $_POST['status']='pending';
-                    $_POST['intiatedParty']='company';
+                    $_POST['initiatedParty']='company';
 
                     $disputeInst=new Dispute();
 
                     $disputeInst->insert($_POST);
-
+                    // show($_POST);
+                    // die;
                     message('Dispute Added Successfully!');
                     redirect('company/disputes');
                 }
@@ -710,7 +711,7 @@ class Company extends Controller{
 
                     if($_SERVER['REQUEST_METHOD']=="POST"){
                         $_POST['status']='pending';
-                        $_POST['intiatedParty']='company';
+                        $_POST['initiatedParty']='company';
     
                         $disputeInst=new Dispute();
     
@@ -738,7 +739,7 @@ class Company extends Controller{
                         $disputeInst=new Dispute();
                         $dispute=$disputeInst->first(['disputeID'=>$id]);
                         
-                        if(!empty($dispute) && $dispute->status!=='resolved' && $dispute->intiatedParty==='company'){//only disputes not resolved can be deleted
+                        if(!empty($dispute) && $dispute->status!=='resolved' && $dispute->initiatedParty==='company'){//only disputes not resolved can be deleted
                             $taskInst=new Task();
                             $task=$taskInst->first(['taskID'=>$dispute->taskID]);
                             if($task->companyID===Auth::getcompanyID()){
