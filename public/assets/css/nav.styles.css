@@ -28,13 +28,15 @@ header{
     font-size: 15px;
     font-weight: bold;
     padding: 8px;
-    width: 100px;
+    width: 120px;
     height: fit-content;
     transition: all 0.5s;
     cursor: pointer;
     margin: 15px;
    }
-   
+   .login-button svg{
+    fill: var(--secondary-color);
+   }
    .login-button span {
     cursor: pointer;
     display: inline-block;

@@ -683,7 +683,84 @@ class Company extends Controller{
             message('Only companies can view company dashboard!');
             redirect('home');
         }
-        
+
+        if(!empty($action)){
+            if($action==='post'){
+
+                if($_SERVER['REQUEST_METHOD']=="POST"){
+                    $_POST['status']='pending';
+                    $_POST['intiatedParty']='company';
+
+                    $disputeInst=new Dispute();
+
+                    $disputeInst->insert($_POST);
+
+                    message('Dispute Added Successfully!');
+                    redirect('company/disputes');
+                }
+                $taskInst=new Task();
+                $tasks=$taskInst->where(['companyID'=>Auth::getcompanyID()]);
+                $data['tasks']=$tasks;
+                $data['title'] = "New Dispute";
+                
+                $this->view('company/post-disputes',$data);
+                return;
+            }else if($action==='modify'){
+                if(!empty($id)){
+
+                    if($_SERVER['REQUEST_METHOD']=="POST"){
+                        $_POST['status']='pending';
+                        $_POST['intiatedParty']='company';
+    
+                        $disputeInst=new Dispute();
+    
+                        $disputeInst->update($_POST,$id);
+    
+                        message('Dispute Modified Successfully!');
+                        redirect('company/disputes');
+                    }
+
+                    $taskInst=new Task();
+                    $tasks=$taskInst->where(['companyID'=>Auth::getcompanyID()]);
+                    $data['tasks']=$tasks;
+
+                    $disputeInst=new Dispute();
+                    $dispute=$disputeInst->first(['disputeID'=>$id]);
+                    $data['dispute']=$dispute;
+                    $data['title'] = "Modify Dispute";
+                    
+                    $this->view('company/modify-disputes',$data);
+                    return;
+                }
+            }else if($action==='delete'){
+                if(!empty($id)){
+                    if($_SERVER['REQUEST_METHOD']=="POST"){
+                        $disputeInst=new Dispute();
+                        $dispute=$disputeInst->first(['disputeID'=>$id]);
+                        
+                        if(!empty($dispute) && $dispute->status!=='resolved' && $dispute->intiatedParty==='company'){//only disputes not resolved can be deleted
+                            $taskInst=new Task();
+                            $task=$taskInst->first(['taskID'=>$dispute->taskID]);
+                            if($task->companyID===Auth::getcompanyID()){
+                                
+                                $disputeInst->delete($id);
+                                message('Dispute deleted successfully!');
+                                redirect('company/disputes');
+                            }else{
+                                message('You dont have permission to execute this operation!');
+                                redirect('company/disputes');
+                            }
+
+                        }else{
+                            message('Error occured while deletion!');
+                            redirect('company/disputes');
+                        }
+                    }
+                }
+            }
+
+        }
+
         //get alll tasks related to the company
         $taskInst=new Task();
         $tasks=$taskInst->where(['companyID'=>Auth::getcompanyID()]);
@@ -692,14 +769,17 @@ class Company extends Controller{
         $res=[];
 
         for ($i = 0; $i < count($tasks); $i++){
-            $dispute=$disputeInst->first(['taskID'=>$tasks[$i]->taskID,'initiatedParty'=>'company']);
+            $dispute=$disputeInst->where(['taskID'=>$tasks[$i]->taskID,'initiatedParty'=>'company']);
             if(!empty($dispute)){
-                $dispute->task=$tasks[$i];
-                $res[]=$dispute;
+                for ($j = 0; $j < count($dispute); $j++){
+                    $dispute[$j]->task=$tasks[$i];
+                    $res[]=$dispute[$j];
+                }
+
             }
         }
-
-
+//        show($res);
+//        die;
 
         $data['disputes']=$res;
         $data['title'] = "Disputes";
