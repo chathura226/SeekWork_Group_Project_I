@@ -15,6 +15,7 @@
       grid-template-columns: repeat(12,1fr);
       grid-auto-rows: minmax(100px,auto);
       margin:0 auto;
+      max-width: 1400px;;
      }
   
   
@@ -26,6 +27,8 @@
           grid-template-columns: repeat(12,1fr);
           grid-auto-rows: minmax(20px,auto);
           margin:0 auto;
+      max-width: 1400px;
+
       }
   }
   
@@ -52,7 +55,7 @@ body{
     min-height: 100vh;
     background: linear-gradient(#1b4760,var(--secondary-color));
     background-repeat: no-repeat;
-    height: 120vh;
+    height: 100%;
     overflow-x: hidden;
 }
 

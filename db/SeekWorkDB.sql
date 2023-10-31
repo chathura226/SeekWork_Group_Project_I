@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Oct 31, 2023 at 06:41 AM
+-- Generation Time: Oct 31, 2023 at 02:48 PM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -63,7 +63,8 @@ CREATE TABLE `assignment` (
 --
 
 INSERT INTO `assignment` (`assignmentID`, `status`, `taskID`, `proposalID`, `replyDate`, `createdAt`) VALUES
-(13, 'accepted', 9, 2, '2023-10-04 07:13:37', '2023-10-02 06:58:38');
+(13, 'accepted', 9, 2, '2023-10-04 07:13:37', '2023-10-02 06:58:38'),
+(14, 'accepted', 3, 5, '2023-10-31 13:11:32', '2023-10-31 13:10:32');
 
 -- --------------------------------------------------------
 
@@ -85,8 +86,7 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`categoryID`, `title`, `description`, `tags`) VALUES
 (1, 'Graphic Design', 'Work related to graphic designing ', 'graphic\r\nlogo\r\ndesign'),
 (2, 'Web development', 'Work associated with web development', 'php\r\nhtml\r\ncss\r\n'),
-(3, 'Animation', 'Work associated with animations', 'anime\r\nvideo editing\r\n3d'),
-(5, 'Letter Writing', 'Work Associated with letter writing and typing', 'Assignment,English,Note,Letters,Message');
+(3, 'Animation', 'Work associated with animations', 'anime\r\nvideo editing\r\n3d');
 
 -- --------------------------------------------------------
 
@@ -204,7 +204,8 @@ CREATE TABLE `moderator` (
 --
 
 INSERT INTO `moderator` (`moderatorID`, `firstName`, `lastName`, `address`, `userID`) VALUES
-(1, 'Seekwork', 'Moderator', 'No.5 Seekwork rd.', 28);
+(1, 'Seekwork', 'Moderator', 'No.5 Seekwork rd.', 28),
+(2, 'Pasindu', 'Ekanayake', 'colombo', 31);
 
 -- --------------------------------------------------------
 
@@ -257,7 +258,8 @@ CREATE TABLE `proposal` (
 
 INSERT INTO `proposal` (`proposalID`, `description`, `documents`, `proposeAmount`, `submissionDate`, `taskID`, `studentID`) VALUES
 (2, 'ffwewcdcdc', NULL, NULL, '2023-09-26 07:35:47', 9, 14),
-(3, 'dede', NULL, 2, '2023-09-26 07:44:40', 9, 14);
+(3, 'dede', NULL, 2, '2023-09-26 07:44:40', 9, 14),
+(5, 'proposla', NULL, NULL, '2023-10-31 12:56:37', 3, 14);
 
 -- --------------------------------------------------------
 
@@ -317,7 +319,9 @@ INSERT INTO `student` (`studentID`, `firstName`, `lastName`, `qualifications`, `
 (9, 'sajith', 'rajapakse', NULL, NULL, '200012365849', '99 madamulana pallebedda', 'verification pending', NULL, NULL, 18, NULL),
 (10, 'sajith', 'rajapakse', NULL, NULL, '960951105v', '99 madamulana pallebedda', 'verification pending', NULL, NULL, 19, NULL),
 (12, 'chathura', 'lakshan', NULL, NULL, '123456789123', '111', 'verification pending', NULL, NULL, 21, NULL),
-(14, 'Seekwork', 'Student', NULL, NULL, '234567890123', 'No.5 Seekwork rd.', 'verification pending', NULL, NULL, 26, 1);
+(14, 'Seekwork', 'Student', NULL, NULL, '234567890123', 'No.5 Seekwork rd.', 'verification pending', NULL, NULL, 26, 1),
+(16, 'chathura', 'lakshan', NULL, NULL, '200105702899', 'dkjmwd', 'verification pending', NULL, NULL, 29, NULL),
+(17, 'chathura', 'lakshan', NULL, NULL, '200105702868', 'njasw', 'verification pending', NULL, NULL, 30, NULL);
 
 -- --------------------------------------------------------
 
@@ -358,7 +362,8 @@ INSERT INTO `submission` (`submissionID`, `createdAt`, `documents`, `status`, `n
 (1, '2023-10-05 05:37:02', 'wswsw', 'pendingReview', NULL, NULL, NULL, 14, 9),
 (2, '2023-10-05 05:37:42', '2222', 'pendingReview', NULL, NULL, NULL, 14, 9),
 (3, '2023-10-06 01:46:16', '', 'pendingReview', 'boom', NULL, NULL, 14, 9),
-(4, '2023-10-06 01:46:56', '', 'pendingReview', 'boom', NULL, NULL, 14, 9);
+(4, '2023-10-06 01:46:56', '', 'pendingReview', 'boom', NULL, NULL, 14, 9),
+(5, '2023-10-31 13:12:38', '', 'pendingReview', 'description', NULL, NULL, 14, 3);
 
 -- --------------------------------------------------------
 
@@ -388,7 +393,7 @@ CREATE TABLE `task` (
 INSERT INTO `task` (`taskID`, `title`, `taskType`, `description`, `deadline`, `value`, `status`, `companyID`, `assignedStudentID`, `assignmentID`, `categoryID`, `finishedDate`) VALUES
 (1, 'Design a Logo', 'fixed Price', 'I am starting a new enterprise and I am in need of a logo design.\r\nThe compony deals in Medical Devices and the logo needs to reflect that in a subtle way not in a way where there is a stethoscope in the logo. Name of company is \"MEDYCO LIFE BIOTECH\"\r\n\r\nIdeal skills and experience:\r\n- Experience in logo design\r\n- Creativity and ability to come up with unique and visually appealing designs\r\n- Proficiency in graphic design software\r\n- Strong attention to detail\r\n- Ability to understand and incorporate the vision and branding of a new enterprise', '2023-09-09', 5000, 'active', 2, NULL, NULL, 1, NULL),
 (2, 'Create a website', 'fixed Price', 'I am looking for an experienced web developer to create a website for me. Specifically, I need a blogging website, with specific design and functionality requirements. The website should be built on WordPress, with PHP and HTML as the core programming language. I already have web content and images ready to go for the new website, so the main scope of work is on the design and development side.\r\n\r\nThe design should be modern and sleek, with clean lines and fonts, as well as including all necessary components of a blog such as comment sections, tags and a SEO-friendly structure. On the development side, I am looking for a custom coding and development job. This includes incorporating necessary plug-ins for a usable and engaging user experience, designing and integrating attractive forms, and making sure the website works across multiple browsers and devices.\r\n\r\nExperience in web design and WordPress development are a must for this job. Additionally, it would be great if the candidate had expertise in SEO and has done any e-commerce projects in the past. Timely completion of the project is also important.', NULL, 10000, 'active', 3, NULL, NULL, 2, NULL),
-(3, 'Animation For Stream\r\n', 'fixed Price', 'Hello, I am looking for a talented animator who can create a specific introduction animation for my stream. The type of animation I need is 3D, and I have specific elements that I would like included in the animation. My goal is to create something visually stunning and memorable that can draw viewers in and make them stick around. ( I have the full idea ready, and clips to be used inside of the animation, the animation being between 3-5 minutes long ) If you have the skills and the creativity to create something that will be noticed, please reach out to me.', NULL, 15000, 'active', 2, NULL, NULL, 3, NULL),
+(3, 'Animation For Stream\r\n', 'auction', 'Hello, I am looking for a talented animator who can create a specific introduction animation for my stream. The type of animation I need is 3D, and I have specific elements that I would like included in the animation. My goal is to create something visually stunning and memorable that can draw viewers in and make them stick around. ( I have the full idea ready, and clips to be used inside of the animation, the animation being between 3-5 minutes long ) If you have the skills and the creativity to create something that will be noticed, please reach out to me.', NULL, 15000, 'inProgress', 4, 14, 14, 3, NULL),
 (4, 'task 1', 'fixed Price', 'aaa', '2023-09-16', 1000, 'active', 2, NULL, NULL, 2, NULL),
 (6, 'task 3', 'auction', 's22', '2023-09-30', 222, 'active', 4, NULL, NULL, 3, NULL),
 (9, 'test task', 'fixed Price', 'swsw', NULL, 22, 'inProgress', 4, 14, 13, 3, '2023-09-29'),
@@ -449,7 +454,10 @@ INSERT INTO `user` (`userID`, `email`, `password`, `contactNo`, `role`, `created
 (25, 'admin@seekwork.lk', '$2y$10$sMktYFpZDsCZqsv6tT4SnOqYgov68qzGhOYig8LPR6Vo242SH0//G', '0111111111', 'admin', '2023-09-26 09:26:34', 'active'),
 (26, 'student@seekwork.lk', '$2y$10$Tiqa1R7u.5V3SH9hR8OyHO3XMBb8KsjqSZsnaPalRY5HMMF81cu1.', '0111111111', 'student', '2023-09-26 09:27:28', 'active'),
 (27, 'company@seekwork.lk', '$2y$10$VJc263BalapqYDWI.JTEBOwB3ERWYz2J8vNSVybN4T7tH2kU1w0MO', '0111111111', 'company', '2023-09-26 09:28:43', 'active'),
-(28, 'moderator@seekwork.lk', '$2y$10$fHyCVpJQCQOhzd00yCI8ie0LG6EXmy1KjjriLo5tzJSSl1aSfeDFq', '0111111111', 'moderator', '2023-09-26 09:29:49', 'active');
+(28, 'moderator@seekwork.lk', '$2y$10$fHyCVpJQCQOhzd00yCI8ie0LG6EXmy1KjjriLo5tzJSSl1aSfeDFq', '0111111111', 'moderator', '2023-09-26 09:29:49', 'active'),
+(29, 'kk.dmkde@gmail.com', '$2y$10$ydF9klVGGOmPzg50FR5AHe.1fxbzKUqLjYwsFhn3KwdniTXSwQP/u', '0116259662', 'student', '2023-10-31 10:13:36', 'active'),
+(30, 'chathura@ll.com', '$2y$10$ActHuYVpk5nGfTyq98pf6eWvBY3OCvEvR03UjGGAqqNH.Rto00eD6', '0775017409', 'student', '2023-10-31 12:53:24', 'active'),
+(31, 'pasindu@seekwork.lk', '$2y$10$QED7NOu1nR/5DvUXbDgsN.csptwaf5N48hH6dhDx5EV66cS4JKNpW', '0112939220', 'moderator', '2023-10-31 14:43:38', 'active');
 
 --
 -- Indexes for dumped tables
@@ -616,7 +624,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `assignment`
 --
 ALTER TABLE `assignment`
-  MODIFY `assignmentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `assignmentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -658,7 +666,7 @@ ALTER TABLE `dispute`
 -- AUTO_INCREMENT for table `moderator`
 --
 ALTER TABLE `moderator`
-  MODIFY `moderatorID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `moderatorID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `Moderator_Verifies_Company`
@@ -676,7 +684,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `proposal`
 --
 ALTER TABLE `proposal`
-  MODIFY `proposalID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `proposalID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `review`
@@ -688,7 +696,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `studentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `student_payment`
@@ -700,7 +708,7 @@ ALTER TABLE `student_payment`
 -- AUTO_INCREMENT for table `submission`
 --
 ALTER TABLE `submission`
-  MODIFY `submissionID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `submissionID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `task`
@@ -712,13 +720,13 @@ ALTER TABLE `task`
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-  MODIFY `universityID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `universityID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables

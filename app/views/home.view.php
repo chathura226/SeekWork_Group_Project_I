@@ -36,10 +36,10 @@
 			<br>
 		</p>
 	</div>
-    <div class="sec2 c-s-1 c-e-7 ">
+    <div class="sec2 c-s-1 c-e-8 ">
         <img src="<?=ROOT?>/assets/images/home/smiling.png" >
     </div>
-    <div class="sec2-text c-s-7 c-e-13">
+    <div class="sec2-text c-s-8 c-e-13">
         <h2>The best part?</h2>
         &#x2714; Skill Development <br>
         &#x2714; Portfolio Building <br>

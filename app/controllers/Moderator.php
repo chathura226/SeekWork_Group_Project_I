@@ -209,8 +209,13 @@ class Moderator extends Controller{
         if(!empty($action)){
             if($action==="post"){//for new uni
                 if($_SERVER['REQUEST_METHOD']=="POST"){
-                        
+                    
                     $university=new University();
+                    $isThere=$university->first(['domain'=>$_POST['domain']]);
+                    if(!empty($isThere)){
+                        message('University Domain Already Exists!');
+                        redirect('moderator/university');
+                    }
                     $university->insert($_POST);
 
                     message('University Added Successfully!');
@@ -225,6 +230,11 @@ class Moderator extends Controller{
                     if($_SERVER['REQUEST_METHOD']=="POST"){
 
                         $university=new University();
+                        $isThere=$university->first(['domain'=>$_POST['domain']]);
+                        if(!empty($isThere) && $isThere->universityID!=$id){
+                            message('University Domain Already Exists!');
+                            redirect('moderator/university');
+                        }
                         $university->update($_POST,$id);
 
                         message('University Modified Successfully!');
@@ -251,6 +261,12 @@ class Moderator extends Controller{
                         $university=new University();
                         $row=$university->first(['universityID'=>$id]);
                         if(!empty($row)){
+                            $studentInst=new Student();
+                            $student=$studentInst->first(['universityID'=>$row->universityID]);
+                            If(!empty($student)){
+                                message('Cannot delete the university domain while students are there from that domain!');
+                                redirect('moderator/university');
+                            }
                             $university->delete($id);
                             message('University Deleted Successfully!');
                             redirect('moderator/university');
@@ -345,6 +361,12 @@ class Moderator extends Controller{
                         $category=new Category();
                         $row=$category->first(['categoryID'=>$id]);
                         if(!empty($row)){
+                            $taskInst=new Task();
+                            $tasks=$taskInst->first(['categoryID'=>$row->categoryID]);
+                            if(!empty($tasks)){
+                                message('Category Cannot be Deleted while tasks are there from that category!');
+                                redirect('moderator/category');
+                            }
                             $category->delete($id);
                             message('Category Deleted Successfully!');
                             redirect('moderator/category');
