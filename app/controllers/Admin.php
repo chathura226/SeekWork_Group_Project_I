@@ -117,7 +117,7 @@ class Admin extends Controller{
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
             message("Password changed successfully!");
-            redirect('admin');
+            redirect('admin/profile');
         }
 
 
@@ -143,7 +143,7 @@ class Admin extends Controller{
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
             message("Profile updated successfully!");
-            redirect('admin');
+            redirect('admin/profile');
         }
 
 

@@ -107,7 +107,7 @@ class Company extends Controller{
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
             message("Password changed successfully!");
-            redirect('company');
+            redirect('company/profile');
         }
 
 
@@ -134,7 +134,7 @@ class Company extends Controller{
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
             message("Profile updated successfully!");
-            redirect('company');
+            redirect('company/profile');
         }
 
 

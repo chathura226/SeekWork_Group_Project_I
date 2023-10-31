@@ -21,7 +21,7 @@
                 <img class="post-img" src="<?=ROOT?>/assets/images/cover.jpg">
                     
                 <div class="task-disc">
-                    <img src="<?=ROOT?>/assets/images/profile1.png">
+                    <img src="<?=ROOT?>/assets/images/company.jpg">
                     <div class="disc-title">
                         <h2><?=$task->title?></h2>
                         <div class="comp">

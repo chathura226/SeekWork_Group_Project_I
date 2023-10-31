@@ -77,7 +77,7 @@ class Student extends Controller{
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
             message("Password changed successfully!");
-            redirect('student');
+            redirect('student/profile');
         }
 
 
@@ -106,7 +106,7 @@ class Student extends Controller{
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
             message("Profile updated successfully!");
-            redirect('student');
+            redirect('student/profile');
         }
 
 

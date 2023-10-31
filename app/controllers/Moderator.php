@@ -162,7 +162,7 @@ class Moderator extends Controller{
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
             message("Password changed successfully!");
-            redirect('moderator');
+            redirect('moderator/profile');
         }
 
 
@@ -188,7 +188,7 @@ class Moderator extends Controller{
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
             message("Profile updated successfully!");
-            redirect('moderator');
+            redirect('moderator/profile');
         }
 
 
