@@ -165,7 +165,7 @@ class Student extends Controller{
     
     
             $data['title'] = "Proposals";
-            $data['proposals']=$proposals;
+            $data['proposals']=array_reverse($proposals);
             
             $this->view('student/proposals',$data);
         }else{

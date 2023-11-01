@@ -28,16 +28,7 @@
     <div class="task-details column-7">
     <h2>Proposal Details</h2>
     <div class="task-description">
-        I am starting a new enterprise and I am in need of a logo design. The compony deals in Medical Devices and the logo needs to reflect that in a subtle way not in a way where there is a stethoscope in the logo.</br>
-        Name of company is "MEDYCO LIFE BIOTECH" </br></br>
-        Ideal skills and experience:</br>
-        &nbsp &nbsp &nbsp &nbsp - Experience in logo design </br>
-        &nbsp &nbsp &nbsp &nbsp                               - Creativity and ability to come up with unique and visually appealing designs </br>
-        &nbsp &nbsp &nbsp &nbsp                              - Proficiency in graphic design software </br>
-        &nbsp &nbsp &nbsp &nbsp                              - Strong attention to detail </br>
-        &nbsp &nbsp &nbsp &nbsp                           - Ability to understand and incorporate the vision and branding of a new enterprise </br>
-
-        </br>
+        <?=$proposal->description?>
 
     </div>
     <div class="about-task">

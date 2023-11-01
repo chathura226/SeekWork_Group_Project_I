@@ -696,7 +696,7 @@ class Company extends Controller{
 
         $data['title'] = "Tasks in-progress";
         $tasksInst=new Task();
-        $tasks=$tasksInst->where(['status'=>'inProgress']);
+        $tasks=$tasksInst->where(['companyID'=>Auth::getcompanyID(),'status'=>'inProgress']);
 
         $data['tasks']=$tasks;
         $this->view('company/tasks-inprogress',$data);
