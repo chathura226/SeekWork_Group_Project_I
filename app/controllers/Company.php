@@ -209,7 +209,34 @@ class Company extends Controller{
                     redirect('company/tasks');
                 }
                 if(!empty($action)){
-                    if($action==='pendingassignments'){//view all proposals relavant to given task id
+                    
+                    if($action==='submissions'){
+                        if(!empty($id2)){
+                            $submissionInst=new Submission();
+                            $submission=$submissionInst->first(['submissionID'=>$id2]);
+                            if(empty($submission)){
+                                message('No Submission with this ID!');
+                                redirect('company/tasks/'.$id.'/submissions');
+                            }
+                            $data['title'] = "Submission";
+                            $data['submission']=$submission;
+                            $data['task']=$row;
+                            $this->view('company/submission',$data);
+                            return;
+                        }
+                        $submissionInst=new Submission();
+                        $submissions=$submissionInst->where(['taskID'=>$id]);
+                        if(empty($submissions)){
+                            message('No Submissions Recieved!');
+                            redirect('company/tasks/'.$id);
+                        }
+                        
+                        $data['title'] = "Submissions";
+                        $data['submissions']=$submissions;
+                        $data['task']=$row;
+                        $this->view('company/submissions',$data);
+                        return;
+                    } else if($action==='pendingassignments'){//view all proposals relavant to given task id
                         $assignmentInst=new Assignment();
                         $assignments=$assignmentInst->where(['taskID'=>$id]);
 
@@ -296,7 +323,9 @@ class Company extends Controller{
             
                 if($row->companyID===Auth::getcompanyID()){
                     $assignmentInst=new Assignment();
+                    $submissionInst=new Submission();
                     $data['assignments']=$assignmentInst->where(['taskID'=>$id]);
+                    $data['submissions']=$submissionInst->where(['taskID'=>$id]);
                     $data['task']=$row;
                     $data['title'] = $row->title;
         

@@ -84,6 +84,8 @@
                         <a ><button id="deleteButton" class="apply">Delete Task</button></a>
                         &nbsp &nbsp
                         <?php if(!empty($assignments)):?><a href="<?=ROOT?>/company/tasks/<?=$task->taskID?>/pendingassignments"><button class="apply">Assignment Invites</button></a><?php endif;?>
+                            &nbsp &nbsp
+                        <?php if(!empty($submissions)):?><a href="<?=ROOT?>/company/tasks/<?=$task->taskID?>/submissions"><button class="apply">Submissions</button></a><?php endif;?>
                         
                         <?php if($task->status==='closed'):?>
                             &nbsp &nbsp
