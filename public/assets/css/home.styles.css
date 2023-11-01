@@ -269,12 +269,23 @@ section img#mountains_front{
 }
 
 .sec2-text {
-  font-size: clamp(1rem, 2vw + 0.75rem, 3rem);
+  font-size: clamp(1rem, 2vw + 0.75rem, 2rem);
   display: flex;
   flex-direction: column;
   padding :20px;
   align-items: center;
   justify-content: center;
-  background-color: var(--primary-color-dark);
+  background-color:#0a2c40;
+  color: white;
+}
+
+.sec1-text {
+  font-size: clamp(.5rem, 2vw + 0.75rem, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  padding :20px;
+  align-items: center;
+  justify-content: center;
+  background-color:#0a2c40;
   color: white;
 }

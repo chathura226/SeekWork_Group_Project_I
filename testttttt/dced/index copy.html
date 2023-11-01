@@ -1,198 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <style>
-		.loader-container{
-			display: flex;
-			position: fixed;
-  top: 0;
-  left: 0;
-			width: 100%;
-			height: 100%;
-			justify-content: center;
-			align-items: center;
-			background-color: black;
-			z-index: 99999999;
-		}
-.loader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  --color: hsl(0, 0%, 87%);
-  --animation: 2s ease-in-out infinite;
-}
-
-.loader .circle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 20px;
-  height: 20px;
-  border: solid 2px var(--color);
-  border-radius: 50%;
-  margin: 0 10px;
-  background-color: transparent;
-  animation: circle-keys var(--animation);
-}
-
-.loader .circle .dot {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: var(--color);
-  animation: dot-keys var(--animation);
-}
-
-.loader .circle .outline {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  animation: outline-keys var(--animation);
-}
-
-.circle:nth-child(2) {
-  animation-delay: 0.3s;
-}
-
-.circle:nth-child(3) {
-  animation-delay: 0.6s;
-}
-
-.circle:nth-child(4) {
-  animation-delay: 0.9s;
-}
-
-.circle:nth-child(5) {
-  animation-delay: 1.2s;
-}
-
-.circle:nth-child(2) .dot {
-  animation-delay: 0.3s;
-}
-
-.circle:nth-child(3) .dot {
-  animation-delay: 0.6s;
-}
-
-.circle:nth-child(4) .dot {
-  animation-delay: 0.9s;
-}
-
-.circle:nth-child(5) .dot {
-  animation-delay: 1.2s;
-}
-
-.circle:nth-child(1) .outline {
-  animation-delay: 0.9s;
-}
-
-.circle:nth-child(2) .outline {
-  animation-delay: 1.2s;
-}
-
-.circle:nth-child(3) .outline {
-  animation-delay: 1.5s;
-}
-
-.circle:nth-child(4) .outline {
-  animation-delay: 1.8s;
-}
-
-.circle:nth-child(5) .outline {
-  animation-delay: 2.1s;
-}
-
-@keyframes circle-keys {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  50% {
-    transform: scale(1.5);
-    opacity: 0.5;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes dot-keys {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(0);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes outline-keys {
-  0% {
-    transform: scale(0);
-    outline: solid 20px var(--color);
-    outline-offset: 0;
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(1);
-    outline: solid 0 transparent;
-    outline-offset: 20px;
-    opacity: 0;
-  }
-}
-	</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancing Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-	<div class="loader-container">
-		<div class="loader">
-			<div class="circle">
-			  <div class="dot"></div>
-			  <div class="outline"></div>
-			</div>
-			<div class="circle">
-			  <div class="dot"></div>
-			  <div class="outline"></div>
-			</div>
-			<div class="circle">
-			  <div class="dot"></div>
-			  <div class="outline"></div>
-			</div>
-			<div class="circle">
-			  <div class="dot"></div>
-			  <div class="outline"></div>
-			</div>
-		  </div>
-	</div>
-	
-    <div class="content">
-       vdvfdvfdfvvf
+    <div class="dashboard">
+        <div class="chart">
+            <h2>Number of Projects</h2>
+            <div class="bar-chart" id="project-chart"></div>
+        </div>
+        <div class="chart">
+            <h2>Project Categories</h2>
+            <div class="pie-chart" id="category-chart"></div>
+        </div>
     </div>
+    
+    <script>
+      const projectData = [20, 35, 45, 30, 60];
+const categoryData = {
+    WebDev: 25,
+    Design: 15,
+    Writing: 30,
+    Marketing: 20,
+    Other: 10,
+};
 
-    <script src="script.js"></script>
-</body>
-
-<script>
-	window.addEventListener('load', function () {
-    // Hide the loader when the page has finished loading
-    setTimeout(function () {
-        var loaderContainer = document.querySelector('.loader-container');
-        loaderContainer.style.display = 'none';
-    }, 1000);
+// Bar chart
+const projectChart = document.getElementById('project-chart');
+projectData.forEach((value, index) => {
+    const bar = document.createElement('div');
+    bar.style.height = value + 'px';
+    bar.style.width = '40px';
+    bar.style.background = 'blue';
+    bar.style.marginRight = '10px';
+    projectChart.appendChild(bar);
 });
 
-</script>
+// Pie chart
+const categoryChart = document.getElementById('category-chart');
+let total = Object.values(categoryData).reduce((acc, val) => acc + val, 0);
+for (let category in categoryData) {
+    const slice = document.createElement('div');
+    slice.style.width = (categoryData[category] / total * 200) + 'px';
+    slice.style.height = '200px';
+    slice.style.background = getRandomColor();
+    slice.style.display = 'inline-block';
+    categoryChart.appendChild(slice);
+}
+
+function getRandomColor() {
+    return '#' + Math.floor(Math.random()*16777215).toString(16);
+}
+
+    </script>
+</body>
 </html>

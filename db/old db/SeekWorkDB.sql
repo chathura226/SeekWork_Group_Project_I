@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Sep 17, 2023 at 03:49 PM
+-- Generation Time: Oct 31, 2023 at 02:48 PM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -31,8 +31,40 @@ CREATE TABLE `admin` (
   `adminID` int NOT NULL,
   `firstName` varchar(20) NOT NULL,
   `lastName` varchar(20) NOT NULL,
+  `address` text,
   `userID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`adminID`, `firstName`, `lastName`, `address`, `userID`) VALUES
+(3, 'chathura', 'lakshan', NULL, 11),
+(4, 'Seekwork', 'Admin', 'No.5 Seekwork rd.', 25);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assignment`
+--
+
+CREATE TABLE `assignment` (
+  `assignmentID` int NOT NULL,
+  `status` enum('pending','accepted','declined') NOT NULL DEFAULT 'pending',
+  `taskID` int NOT NULL,
+  `proposalID` int NOT NULL,
+  `replyDate` datetime DEFAULT NULL COMMENT 'accpted or declined date',
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `assignment`
+--
+
+INSERT INTO `assignment` (`assignmentID`, `status`, `taskID`, `proposalID`, `replyDate`, `createdAt`) VALUES
+(13, 'accepted', 9, 2, '2023-10-04 07:13:37', '2023-10-02 06:58:38'),
+(14, 'accepted', 3, 5, '2023-10-31 13:11:32', '2023-10-31 13:10:32');
 
 -- --------------------------------------------------------
 
@@ -46,6 +78,15 @@ CREATE TABLE `category` (
   `description` text NOT NULL,
   `tags` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`categoryID`, `title`, `description`, `tags`) VALUES
+(1, 'Graphic Design', 'Work related to graphic designing ', 'graphic\r\nlogo\r\ndesign'),
+(2, 'Web development', 'Work associated with web development', 'php\r\nhtml\r\ncss\r\n'),
+(3, 'Animation', 'Work associated with animations', 'anime\r\nvideo editing\r\n3d');
 
 -- --------------------------------------------------------
 
@@ -81,13 +122,25 @@ CREATE TABLE `certificate-category` (
 CREATE TABLE `company` (
   `companyID` int NOT NULL,
   `companyName` varchar(50) NOT NULL,
+  `status` enum('verified','verification pending','banned','') NOT NULL DEFAULT 'verification pending',
   `firstName` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'first name of contact person',
   `lastName` varchar(20) NOT NULL,
   `address` text NOT NULL,
   `website` text,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `brn` varchar(50) NOT NULL,
   `userID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `company`
+--
+
+INSERT INTO `company` (`companyID`, `companyName`, `status`, `firstName`, `lastName`, `address`, `website`, `description`, `brn`, `userID`) VALUES
+(1, 'kk', 'verification pending', 'aa', 'aa', 'aaa', 'https://www.kk.com', '', 'aa', 16),
+(2, 'seekwork', 'verification pending', 'chathura', 'lakshan', 'colombo', 'https://www.seekwork.com', 'wwwwwwwwww', '1111111', 22),
+(3, 'seekwork.com', 'verified', 'lakshan', 'chathura', 'colombo', '', NULL, '11111', 24),
+(4, 'Seekwork Company', 'verification pending', 'Seekwork', 'Company', 'No.5 Seekwork rd.', '', NULL, '1111111111', 27);
 
 -- --------------------------------------------------------
 
@@ -110,12 +163,27 @@ CREATE TABLE `company_payment` (
 
 CREATE TABLE `dispute` (
   `disputeID` int NOT NULL,
+  `subject` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `description` text NOT NULL,
-  `status` enum('resolved','pending','invalid') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `type` enum('payment','task') NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` enum('resolved','pending','invalid') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'pending',
+  `type` enum('payment','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `initiatedParty` enum('student','company') NOT NULL,
   `taskID` int NOT NULL,
-  `moderatorID` int NOT NULL
+  `moderatorID` int DEFAULT NULL,
+  `moderatorComment` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `dispute`
+--
+
+INSERT INTO `dispute` (`disputeID`, `subject`, `description`, `createdAt`, `status`, `type`, `initiatedParty`, `taskID`, `moderatorID`, `moderatorComment`) VALUES
+(1, 'first dispute', 'dejdedmedmed enjed', '2023-10-24 23:34:57', 'pending', 'payment', 'company', 10, NULL, NULL),
+(4, 'Regarding payment on nov 1st', 'Haven\'t got my milestone payment', '2023-10-30 23:38:14', 'pending', 'payment', 'student', 10, NULL, NULL),
+(7, 'dede', 'eddeed', '2023-10-31 00:21:00', 'pending', 'payment', 'student', 9, NULL, NULL),
+(8, 'dede', 'eddeed', '2023-10-31 00:21:23', 'pending', 'payment', 'student', 9, NULL, NULL),
+(10, 'fcr', 'refe', '2023-10-31 06:37:47', 'pending', 'other', 'company', 9, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -130,6 +198,14 @@ CREATE TABLE `moderator` (
   `address` varchar(100) NOT NULL,
   `userID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `moderator`
+--
+
+INSERT INTO `moderator` (`moderatorID`, `firstName`, `lastName`, `address`, `userID`) VALUES
+(1, 'Seekwork', 'Moderator', 'No.5 Seekwork rd.', 28),
+(2, 'Pasindu', 'Ekanayake', 'colombo', 31);
 
 -- --------------------------------------------------------
 
@@ -167,14 +243,23 @@ CREATE TABLE `payment` (
 --
 
 CREATE TABLE `proposal` (
-  `porposalID` int NOT NULL,
+  `proposalID` int NOT NULL,
   `description` text NOT NULL,
-  `documents` text NOT NULL,
+  `documents` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `proposeAmount` double DEFAULT NULL,
   `submissionDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `taskID` int NOT NULL,
   `studentID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `proposal`
+--
+
+INSERT INTO `proposal` (`proposalID`, `description`, `documents`, `proposeAmount`, `submissionDate`, `taskID`, `studentID`) VALUES
+(2, 'ffwewcdcdc', NULL, NULL, '2023-09-26 07:35:47', 9, 14),
+(3, 'dede', NULL, 2, '2023-09-26 07:44:40', 9, 14),
+(5, 'proposla', NULL, NULL, '2023-10-31 12:56:37', 3, 14);
 
 -- --------------------------------------------------------
 
@@ -184,13 +269,22 @@ CREATE TABLE `proposal` (
 
 CREATE TABLE `review` (
   `reviewID` int NOT NULL,
+  `reviewTitle` varchar(20) NOT NULL,
   `reviewType` enum('studentTOcompany','companyTOstudent') NOT NULL,
   `studentID` int NOT NULL,
   `companyID` int NOT NULL,
   `taskID` int NOT NULL,
   `nStars` int NOT NULL,
-  `reviewDescription` text
+  `reviewDescription` text,
+  `reviewDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`reviewID`, `reviewTitle`, `reviewType`, `studentID`, `companyID`, `taskID`, `nStars`, `reviewDescription`, `reviewDate`) VALUES
+(2, 'eede', 'companyTOstudent', 9, 4, 9, 3, 'ede', '2023-09-28 03:36:55');
 
 -- --------------------------------------------------------
 
@@ -202,16 +296,32 @@ CREATE TABLE `student` (
   `studentID` int NOT NULL,
   `firstName` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `lastName` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `qualifications` text NOT NULL,
-  `description` text NOT NULL,
+  `qualifications` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `NIC` varchar(13) NOT NULL,
   `address` text NOT NULL,
-  `status` enum('verified','verification pending','banned','') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `verificationDocuments` text NOT NULL,
-  `accountNo` varchar(20) NOT NULL,
+  `status` enum('verified','verification pending','banned','') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'verification pending',
+  `verificationDocuments` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `accountNo` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `userID` int NOT NULL,
-  `universityID` int NOT NULL
+  `universityID` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`studentID`, `firstName`, `lastName`, `qualifications`, `description`, `NIC`, `address`, `status`, `verificationDocuments`, `accountNo`, `userID`, `universityID`) VALUES
+(4, 'aaa', 'bbb', 'qqqq', 'ddd', '200105702857', 'ccc', 'verified', NULL, NULL, 12, 1),
+(6, 'aaa', 'bb', NULL, NULL, '660951105v', 'aaa', 'verification pending', NULL, NULL, 14, NULL),
+(7, 'aaa', 'bb', NULL, NULL, '660951145v', 'aaa', 'verification pending', NULL, NULL, 15, NULL),
+(8, 'chathura', 'lakshan', NULL, NULL, '200105702855', 'skjnwk', 'verification pending', NULL, NULL, 17, NULL),
+(9, 'sajith', 'rajapakse', NULL, NULL, '200012365849', '99 madamulana pallebedda', 'verification pending', NULL, NULL, 18, NULL),
+(10, 'sajith', 'rajapakse', NULL, NULL, '960951105v', '99 madamulana pallebedda', 'verification pending', NULL, NULL, 19, NULL),
+(12, 'chathura', 'lakshan', NULL, NULL, '123456789123', '111', 'verification pending', NULL, NULL, 21, NULL),
+(14, 'Seekwork', 'Student', NULL, NULL, '234567890123', 'No.5 Seekwork rd.', 'verification pending', NULL, NULL, 26, 1),
+(16, 'chathura', 'lakshan', NULL, NULL, '200105702899', 'dkjmwd', 'verification pending', NULL, NULL, 29, NULL),
+(17, 'chathura', 'lakshan', NULL, NULL, '200105702868', 'njasw', 'verification pending', NULL, NULL, 30, NULL);
 
 -- --------------------------------------------------------
 
@@ -229,21 +339,65 @@ CREATE TABLE `student_payment` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `submission`
+--
+
+CREATE TABLE `submission` (
+  `submissionID` int NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `documents` text NOT NULL,
+  `status` enum('pendingReview','accepted','rejected') NOT NULL DEFAULT 'pendingReview',
+  `note` text COMMENT 'note by student abt submission',
+  `reviewedDate` datetime DEFAULT NULL,
+  `comments` text COMMENT 'comment by company ',
+  `studentID` int NOT NULL,
+  `taskID` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `submission`
+--
+
+INSERT INTO `submission` (`submissionID`, `createdAt`, `documents`, `status`, `note`, `reviewedDate`, `comments`, `studentID`, `taskID`) VALUES
+(1, '2023-10-05 05:37:02', 'wswsw', 'pendingReview', NULL, NULL, NULL, 14, 9),
+(2, '2023-10-05 05:37:42', '2222', 'pendingReview', NULL, NULL, NULL, 14, 9),
+(3, '2023-10-06 01:46:16', '', 'pendingReview', 'boom', NULL, NULL, 14, 9),
+(4, '2023-10-06 01:46:56', '', 'pendingReview', 'boom', NULL, NULL, 14, 9),
+(5, '2023-10-31 13:12:38', '', 'pendingReview', 'description', NULL, NULL, 14, 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `task`
 --
 
 CREATE TABLE `task` (
   `taskID` int NOT NULL,
   `title` varchar(100) NOT NULL,
-  `taskType` enum('fixedPrice','auction') NOT NULL,
+  `taskType` enum('fixed Price','auction') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `description` text NOT NULL,
-  `deadline` datetime DEFAULT NULL,
+  `deadline` date DEFAULT NULL,
   `value` double NOT NULL,
-  `status` enum('active','closed','inProgress') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `status` enum('active','closed','inProgress','pendingAssignment') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `companyID` int NOT NULL,
   `assignedStudentID` int DEFAULT NULL,
-  `categoryID` int NOT NULL
+  `assignmentID` int DEFAULT NULL,
+  `categoryID` int NOT NULL,
+  `finishedDate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `task`
+--
+
+INSERT INTO `task` (`taskID`, `title`, `taskType`, `description`, `deadline`, `value`, `status`, `companyID`, `assignedStudentID`, `assignmentID`, `categoryID`, `finishedDate`) VALUES
+(1, 'Design a Logo', 'fixed Price', 'I am starting a new enterprise and I am in need of a logo design.\r\nThe compony deals in Medical Devices and the logo needs to reflect that in a subtle way not in a way where there is a stethoscope in the logo. Name of company is \"MEDYCO LIFE BIOTECH\"\r\n\r\nIdeal skills and experience:\r\n- Experience in logo design\r\n- Creativity and ability to come up with unique and visually appealing designs\r\n- Proficiency in graphic design software\r\n- Strong attention to detail\r\n- Ability to understand and incorporate the vision and branding of a new enterprise', '2023-09-09', 5000, 'active', 2, NULL, NULL, 1, NULL),
+(2, 'Create a website', 'fixed Price', 'I am looking for an experienced web developer to create a website for me. Specifically, I need a blogging website, with specific design and functionality requirements. The website should be built on WordPress, with PHP and HTML as the core programming language. I already have web content and images ready to go for the new website, so the main scope of work is on the design and development side.\r\n\r\nThe design should be modern and sleek, with clean lines and fonts, as well as including all necessary components of a blog such as comment sections, tags and a SEO-friendly structure. On the development side, I am looking for a custom coding and development job. This includes incorporating necessary plug-ins for a usable and engaging user experience, designing and integrating attractive forms, and making sure the website works across multiple browsers and devices.\r\n\r\nExperience in web design and WordPress development are a must for this job. Additionally, it would be great if the candidate had expertise in SEO and has done any e-commerce projects in the past. Timely completion of the project is also important.', NULL, 10000, 'active', 3, NULL, NULL, 2, NULL),
+(3, 'Animation For Stream\r\n', 'auction', 'Hello, I am looking for a talented animator who can create a specific introduction animation for my stream. The type of animation I need is 3D, and I have specific elements that I would like included in the animation. My goal is to create something visually stunning and memorable that can draw viewers in and make them stick around. ( I have the full idea ready, and clips to be used inside of the animation, the animation being between 3-5 minutes long ) If you have the skills and the creativity to create something that will be noticed, please reach out to me.', NULL, 15000, 'inProgress', 4, 14, 14, 3, NULL),
+(4, 'task 1', 'fixed Price', 'aaa', '2023-09-16', 1000, 'active', 2, NULL, NULL, 2, NULL),
+(6, 'task 3', 'auction', 's22', '2023-09-30', 222, 'active', 4, NULL, NULL, 3, NULL),
+(9, 'test task', 'fixed Price', 'swsw', NULL, 22, 'inProgress', 4, 14, 13, 3, '2023-09-29'),
+(10, 'new test task', 'auction', 'swksnwsw', NULL, 2222, 'inProgress', 4, 14, NULL, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -257,6 +411,14 @@ CREATE TABLE `university` (
   `domain` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `university`
+--
+
+INSERT INTO `university` (`universityID`, `universityName`, `domain`) VALUES
+(1, 'UCSC', 'stu.ucsc.cmb.ac.lk'),
+(2, 'UOC', 'stu.uoc.cmb.ac.lk');
+
 -- --------------------------------------------------------
 
 --
@@ -269,8 +431,33 @@ CREATE TABLE `user` (
   `password` varchar(60) NOT NULL,
   `contactNo` varchar(12) NOT NULL,
   `role` varchar(20) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` enum('active','deactivated') NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`userID`, `email`, `password`, `contactNo`, `role`, `createdAt`, `status`) VALUES
+(11, 'admin@admin.com', '$2y$10$O9fihdAv7ftZ5N5mp.IQwuh1S644VmGJCNcRy0UEObVZ4y67fBv6a', '123', 'admin', '2023-09-17 16:11:13', 'active'),
+(12, 'aa@k.com', '$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC', '012-345-6789', 'student', '2023-09-18 09:26:48', 'active'),
+(14, 'aabj@k.com', '$2y$10$KnHOE3tyqErLsjggmUPas.KZ/UmwyShx.lXYzuqW5bC9MbAFClUdy', '012-345-6789', 'student', '2023-09-18 09:34:29', 'active'),
+(15, 'aaabj@k.com', '$2y$10$78iEQp8L2EuONr7yVceNCebUdsYhaS1ICxIBk0fIv.FKGwyBeL4N2', '012-345-6789', 'student', '2023-09-18 09:36:48', 'active'),
+(16, 'aaa@kk.com', '$2y$10$P08nvJCK7z0t7dNScXZElO.uQ3MRgx90LbD9UkaZGPWqScqqn93qO', '012-234-4567', 'company', '2023-09-18 10:13:50', 'deactivated'),
+(17, '2021cs109@stu.ucsc.cmb.ac.lk', '$2y$10$nt.D/ZdzXfdE/Qcjh/i7TOy/qZX1IsQDiKPy.44J0vMuCeiR2kh/O', '012-345-6789', 'student', '2023-09-18 11:47:26', 'active'),
+(18, '2021cs1029@stu.ucsc.cmb.ac.lk', '$2y$10$VZn32bcZ7z4hfDZI8I1me.YjPNp/trCscXwAPXuHe1FLGjEuLx9vC', '0775017409', 'student', '2023-09-19 07:56:38', 'active'),
+(19, '2021cs018@stu.ucsc.cmb.ac.lk', '$2y$10$COXY0b5joTnRQWRYJbySQe6/S1B90n3SJTUUWLi7/3GziO0xd0kEq', '1111111111', 'student', '2023-09-19 07:59:14', 'active'),
+(21, 'chathura@stu.ucsc.cmb.ac.lk', '$2y$10$k2xZ8oNZAsCvUtTV1wWwPe/pmGjO/QwXHbFL3z6od1JNcXLOTy6da', '0112339220', 'student', '2023-09-21 23:19:29', 'active'),
+(22, 'chathura@seekwork.com', '$2y$10$KPl6CHFI3XpZJiRhj1mbU.p3W3/jUxGLn8hHup94D7WMxI6YijZw.', '0775017409', 'company', '2023-09-23 10:04:25', 'active'),
+(24, 'verifiedcompany@seekwork.com', '$2y$10$zzkLQrkDSAopuKUH/PRflOpuJ2ccdKLuW6cuHe5pYiOLEd78IzY5G', '0112929330', 'company', '2023-09-23 10:57:51', 'active'),
+(25, 'admin@seekwork.lk', '$2y$10$sMktYFpZDsCZqsv6tT4SnOqYgov68qzGhOYig8LPR6Vo242SH0//G', '0111111111', 'admin', '2023-09-26 09:26:34', 'active'),
+(26, 'student@seekwork.lk', '$2y$10$Tiqa1R7u.5V3SH9hR8OyHO3XMBb8KsjqSZsnaPalRY5HMMF81cu1.', '0111111111', 'student', '2023-09-26 09:27:28', 'active'),
+(27, 'company@seekwork.lk', '$2y$10$VJc263BalapqYDWI.JTEBOwB3ERWYz2J8vNSVybN4T7tH2kU1w0MO', '0111111111', 'company', '2023-09-26 09:28:43', 'active'),
+(28, 'moderator@seekwork.lk', '$2y$10$fHyCVpJQCQOhzd00yCI8ie0LG6EXmy1KjjriLo5tzJSSl1aSfeDFq', '0111111111', 'moderator', '2023-09-26 09:29:49', 'active'),
+(29, 'kk.dmkde@gmail.com', '$2y$10$ydF9klVGGOmPzg50FR5AHe.1fxbzKUqLjYwsFhn3KwdniTXSwQP/u', '0116259662', 'student', '2023-10-31 10:13:36', 'active'),
+(30, 'chathura@ll.com', '$2y$10$ActHuYVpk5nGfTyq98pf6eWvBY3OCvEvR03UjGGAqqNH.Rto00eD6', '0775017409', 'student', '2023-10-31 12:53:24', 'active'),
+(31, 'pasindu@seekwork.lk', '$2y$10$QED7NOu1nR/5DvUXbDgsN.csptwaf5N48hH6dhDx5EV66cS4JKNpW', '0112939220', 'moderator', '2023-10-31 14:43:38', 'active');
 
 --
 -- Indexes for dumped tables
@@ -282,6 +469,14 @@ CREATE TABLE `user` (
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`adminID`),
   ADD KEY `user-admin` (`userID`);
+
+--
+-- Indexes for table `assignment`
+--
+ALTER TABLE `assignment`
+  ADD PRIMARY KEY (`assignmentID`),
+  ADD UNIQUE KEY `proposalID` (`proposalID`),
+  ADD KEY `task-assignment` (`taskID`);
 
 --
 -- Indexes for table `category`
@@ -354,7 +549,7 @@ ALTER TABLE `payment`
 -- Indexes for table `proposal`
 --
 ALTER TABLE `proposal`
-  ADD PRIMARY KEY (`porposalID`),
+  ADD PRIMARY KEY (`proposalID`),
   ADD KEY `task-proposal` (`taskID`),
   ADD KEY `student-proposal` (`studentID`);
 
@@ -385,13 +580,22 @@ ALTER TABLE `student_payment`
   ADD KEY `stu-pay` (`studentID`);
 
 --
+-- Indexes for table `submission`
+--
+ALTER TABLE `submission`
+  ADD PRIMARY KEY (`submissionID`),
+  ADD KEY `student-submission` (`studentID`),
+  ADD KEY `task-submission` (`taskID`);
+
+--
 -- Indexes for table `task`
 --
 ALTER TABLE `task`
   ADD PRIMARY KEY (`taskID`),
   ADD KEY `task-company` (`companyID`),
   ADD KEY `task-student` (`assignedStudentID`),
-  ADD KEY `task-category` (`categoryID`);
+  ADD KEY `task-category` (`categoryID`),
+  ADD KEY `assignment-task` (`assignmentID`);
 
 --
 -- Indexes for table `university`
@@ -414,13 +618,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `adminID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `adminID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `assignment`
+--
+ALTER TABLE `assignment`
+  MODIFY `assignmentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `categoryID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `categoryID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `certificate`
@@ -438,7 +648,7 @@ ALTER TABLE `certificate-category`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `companyID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `companyID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `company_payment`
@@ -450,13 +660,13 @@ ALTER TABLE `company_payment`
 -- AUTO_INCREMENT for table `dispute`
 --
 ALTER TABLE `dispute`
-  MODIFY `disputeID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `disputeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `moderator`
 --
 ALTER TABLE `moderator`
-  MODIFY `moderatorID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `moderatorID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `Moderator_Verifies_Company`
@@ -474,19 +684,19 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `proposal`
 --
 ALTER TABLE `proposal`
-  MODIFY `porposalID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `proposalID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `reviewID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `reviewID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `studentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `student_payment`
@@ -495,22 +705,28 @@ ALTER TABLE `student_payment`
   MODIFY `student_payment_ID` int NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `submission`
+--
+ALTER TABLE `submission`
+  MODIFY `submissionID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `taskID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `taskID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-  MODIFY `universityID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `universityID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables
@@ -521,6 +737,13 @@ ALTER TABLE `user`
 --
 ALTER TABLE `admin`
   ADD CONSTRAINT `user-admin` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `assignment`
+--
+ALTER TABLE `assignment`
+  ADD CONSTRAINT `assigned proposal` FOREIGN KEY (`proposalID`) REFERENCES `proposal` (`proposalID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `task-assignment` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `certificate`
@@ -604,9 +827,17 @@ ALTER TABLE `student_payment`
   ADD CONSTRAINT `stu-pay` FOREIGN KEY (`studentID`) REFERENCES `student` (`studentID`) ON UPDATE CASCADE;
 
 --
+-- Constraints for table `submission`
+--
+ALTER TABLE `submission`
+  ADD CONSTRAINT `student-submission` FOREIGN KEY (`studentID`) REFERENCES `student` (`studentID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `task-submission` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `task`
 --
 ALTER TABLE `task`
+  ADD CONSTRAINT `assignment-task` FOREIGN KEY (`assignmentID`) REFERENCES `assignment` (`assignmentID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `task-category` FOREIGN KEY (`categoryID`) REFERENCES `category` (`categoryID`) ON DELETE RESTRICT ON UPDATE CASCADE,
   ADD CONSTRAINT `task-company` FOREIGN KEY (`companyID`) REFERENCES `company` (`companyID`) ON DELETE RESTRICT ON UPDATE CASCADE,
   ADD CONSTRAINT `task-student` FOREIGN KEY (`assignedStudentID`) REFERENCES `student` (`studentID`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Oct 31, 2023 at 02:48 PM
+-- Generation Time: Oct 31, 2023 at 11:53 PM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -86,7 +86,7 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`categoryID`, `title`, `description`, `tags`) VALUES
 (1, 'Graphic Design', 'Work related to graphic designing ', 'graphic\r\nlogo\r\ndesign'),
 (2, 'Web development', 'Work associated with web development', 'php\r\nhtml\r\ncss\r\n'),
-(3, 'Animation', 'Work associated with animations', 'anime\r\nvideo editing\r\n3d');
+(3, 'Animation', 'Work associated with animations', 'anime,video editing,3d,gaming');
 
 -- --------------------------------------------------------
 
@@ -138,7 +138,7 @@ CREATE TABLE `company` (
 
 INSERT INTO `company` (`companyID`, `companyName`, `status`, `firstName`, `lastName`, `address`, `website`, `description`, `brn`, `userID`) VALUES
 (1, 'kk', 'verification pending', 'aa', 'aa', 'aaa', 'https://www.kk.com', '', 'aa', 16),
-(2, 'seekwork', 'verification pending', 'chathura', 'lakshan', 'colombo', 'https://www.seekwork.com', 'wwwwwwwwww', '1111111', 22),
+(2, 'Pheonix', 'verification pending', 'chathura', 'lakshan', 'colombo', 'https://www.seekwork.com', 'Pheonix is a dynamic and innovative design company dedicated to turning your creative vision into reality. With a team of highly skilled and experienced designers, we offer a wide range of design services tailored to meet the unique needs of our clients.', '1111111', 22),
 (3, 'seekwork.com', 'verified', 'lakshan', 'chathura', 'colombo', '', NULL, '11111', 24),
 (4, 'Seekwork Company', 'verification pending', 'Seekwork', 'Company', 'No.5 Seekwork rd.', '', NULL, '1111111111', 27);
 
@@ -417,7 +417,8 @@ CREATE TABLE `university` (
 
 INSERT INTO `university` (`universityID`, `universityName`, `domain`) VALUES
 (1, 'UCSC', 'stu.ucsc.cmb.ac.lk'),
-(2, 'UOC', 'stu.uoc.cmb.ac.lk');
+(2, 'UOC', 'stu.uoc.cmb.ac.lk'),
+(4, 'Science', 'stu.fos.cmb.ac.lk');
 
 -- --------------------------------------------------------
 
@@ -630,7 +631,7 @@ ALTER TABLE `assignment`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `categoryID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `categoryID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `certificate`
@@ -648,7 +649,7 @@ ALTER TABLE `certificate-category`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `companyID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `companyID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `company_payment`
@@ -720,13 +721,13 @@ ALTER TABLE `task`
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-  MODIFY `universityID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `universityID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables

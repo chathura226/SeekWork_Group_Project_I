@@ -24,7 +24,11 @@
 			media marketing, there's a freelance opportunity waiting for you here.
 			<br>
 			<br>
-			At SeekWork, we believe that your academic journey should be complemented by practical, hands-on experiences 
+			
+		</p>
+	</div>
+    <div class="sec1-text c-s-1 c-e-6">
+    At SeekWork, we believe that your academic journey should be complemented by practical, hands-on experiences 
 			that help you build a strong portfolio and network with professionals in your field. With user-friendly features 
 			and a supportive community, you can find projects that align with your interests and skills.
 			<br>
@@ -34,19 +38,34 @@
 			for undergraduates. Start your journey to success with us!
 			<br>
 			<br>
-		</p>
-	</div>
+    </div>
+    <div class="sec2 c-s-6 c-e-13 ">
+        <img src="<?=ROOT?>/assets/images/home/undergrad.jpg" >
+    </div>
+
     <div class="sec2 c-s-1 c-e-8 ">
         <img src="<?=ROOT?>/assets/images/home/smiling.png" >
     </div>
     <div class="sec2-text c-s-8 c-e-13">
-        <h2>The best part?</h2>
+        <h2>The best part ?</h2>
         &#x2714; Skill Development <br>
         &#x2714; Portfolio Building <br>
         &#x2714; Real-World Experience <br>
         &#x2714; Flexibility <br>
         &#x2714; Location Independence <br>
         &#x2714; Income Generation <br>
+    </div>
+
+    <div class="sec2-text c-s-1 c-e-6">
+        <h2>For Companies ,</h2>
+        &#x2714; Flexible Workforce <br>
+        &#x2714; Reduced Training Time <br>
+        &#x2714; Fresh Perspectives <br>
+        &#x2714; Risk Mitigation <br>
+        &#x2714; Cost-Effective Solutions <br>
+    </div>
+    <div class="sec2 c-s-6 c-e-13 ">
+        <img src="<?=ROOT?>/assets/images/home/creative-people-working-office.jpg" >
     </div>
 	<script>
 		let stars=document.getElementById("stars");
