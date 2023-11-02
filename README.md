@@ -2,10 +2,12 @@
 
 ## Steps:
 Clone the repo </br>
+In Windows,</br>
 In terminal go inside docker folder </br>
-execute the command "sudo docker-compose up --build" </br>
+execute the command 'seekwork up' </br>
 now the phpMyAdmin will be running on localhost:8001 and website will be inside localhost/public </br>
 
 ## To stop the server:
-In terminal ctrl+c to and then execute command "sudo docker-compose down"</br>
+In Windows,</br>
+In terminal execute command "seekwork down"</br>
 
