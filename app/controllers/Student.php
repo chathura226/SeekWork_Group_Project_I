@@ -75,9 +75,21 @@ class Student extends Controller{
 
         //should implement the validation and procedure
         if($_SERVER['REQUEST_METHOD']=="POST"){
-            
-            message("Password changed successfully!");
-            redirect('student/profile');
+            if($_POST['newpassword']!==$_POST['confirmnewpassword']){
+                message("Password and confirm password does not match!");
+                redirect('student/changepassword');
+            }
+            $userInst = new User();
+            $user=$userInst->first(['userID'=>Auth::getuserID()]);
+            if (password_verify($_POST['currentpassword'],$user->password)){
+                $password=password_hash($_POST['newpassword'],PASSWORD_DEFAULT);
+                $userInst->update(['password'=>$password],Auth::getuserID());
+                message("Password Updated Successfully!");
+                redirect('student/profile');
+            }else{
+                message("Current password is wrong!");
+                redirect('student/changepassword');
+            }
         }
 
 
