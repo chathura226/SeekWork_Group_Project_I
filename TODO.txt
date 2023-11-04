@@ -1,0 +1,2 @@
+password strength checker
+colosr scheme (too bright green)

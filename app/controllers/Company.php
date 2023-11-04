@@ -86,8 +86,6 @@ class Company extends Controller{
     }
 
 
-    
-
     public function changepassword(){
         if(!Auth::logged_in()){//if not logged in redirect to login page
             message('Please login to view the company section!');
@@ -105,14 +103,29 @@ class Company extends Controller{
 
         //should implement the validation and procedure
         if($_SERVER['REQUEST_METHOD']=="POST"){
-            
-            message("Password changed successfully!");
-            redirect('company/profile');
+            if($_POST['newpassword']!==$_POST['confirmnewpassword']){
+                message("Password and confirm password does not match!");
+                redirect('company/changepassword');
+            }
+            $userInst = new User();
+            $user=$userInst->first(['userID'=>Auth::getuserID()]);
+            if (password_verify($_POST['currentpassword'],$user->password)){
+                $password=password_hash($_POST['newpassword'],PASSWORD_DEFAULT);
+                $userInst->update(['password'=>$password],Auth::getuserID());
+                message("Password Updated Successfully!");
+                redirect('company/profile');
+            }else{
+                message("Current password is wrong!");
+                redirect('company/changepassword');
+            }
         }
 
 
         $this->view('company/changepassword',$data);
     }
+
+
+
 
     public function updateprofile(){
         if(!Auth::logged_in()){//if not logged in redirect to login page

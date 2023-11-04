@@ -8,6 +8,8 @@ if [ "$arg1" = "up" ]; then
     docker-compose up --build -d
     sleep 5
     echo "SeekWork started successfully!"
+    echo "Seekwork running @ : http://localhost/public"
+    echo "phpMyAdmin @ http://localhost:8001"
 elif [ "$arg1" = "down" ]; then
     echo "Exporting the database !............."
     docker exec -i docker-db-1 mysqldump -uadmin -ppassword SeekWorkDB > ../db/SeekWorkDB.sql
@@ -18,6 +20,7 @@ elif [ "$arg1" = "down" ]; then
     echo "Ending SeekWork server ....... running docker-compose down"
     docker-compose down
     echo "SeekWork ended successfully!"
+
 else
     echo "Invalid Argument. Use 'up' or 'down'"
 fi

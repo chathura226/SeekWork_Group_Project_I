@@ -7,6 +7,8 @@ if "%arg1%" == "up" (
     docker-compose up --build -d
     timeout /t 5 /nobreak
     echo "SeekWork started successfully!"
+    echo "Seekwork running @ : http://localhost/public"
+    echo "phpMyAdmin @ http://localhost:8001"
 )else if "%arg1%" == "down" (
     echo "Exporting the database !............."
     docker exec -i docker-db-1 mysqldump -uadmin -ppassword SeekWorkDB > ../db/SeekWorkDB.sql
