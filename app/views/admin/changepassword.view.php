@@ -38,17 +38,17 @@
                 <div class="form-input">
                   <label>Current Password</label>
                   <!-- <input type="password" name="password"  placeholder="Enter a password" required>  -->
-                  <input   class="" type="password" name="currentpassword" id="currentpassword" placeholder="Enter the current password">              
+                  <input   class="" type="password" name="currentpassword" id="currentpassword" placeholder="Enter the current password" required>              
               </div>
               <div class="form-input">
                   <label>New Password</label>
                   <!-- <input type="password" name="password"  placeholder="Enter a password" required>  -->
-                  <input   class="" type="password" name="newpassword" id="newpassword" placeholder="Enter the new password">              
+                  <input   class="" type="password" name="newpassword" id="newpassword" placeholder="Enter the new password" required>              
               </div>
               <div class="form-input">
                   <label>Confirm New Password</label>
                   <!-- <input type="password" name="password"  placeholder="Enter a password" required>  -->
-                  <input   class="" type="password" name="confirmnewpassword" id="confirmnewpassword" placeholder="Retype the new password">              
+                  <input   class="" type="password" name="confirmnewpassword" id="confirmnewpassword" placeholder="Retype the new password" required>              
               </div>
               <div class="form-input">
                   <button>Change</button>

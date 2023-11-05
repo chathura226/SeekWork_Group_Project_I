@@ -51,6 +51,47 @@ class Admin extends Controller{
     }
 
 
+    
+    public function changepassword(){
+
+        if(!Auth::logged_in()){//if not logged in redirect to login page
+            message('Please login to view the admin section!');
+            redirect('login');
+        }
+        if(!Auth::is_admin()){///if not an admin, redirect to home
+            message('Only admins can view admin dashboard!');
+            redirect('home');
+        }
+      
+        
+        $data['title'] = "Change Password";
+        
+        
+
+        //should implement the validation and procedure
+        if($_SERVER['REQUEST_METHOD']=="POST"){
+            if($_POST['newpassword']!==$_POST['confirmnewpassword']){
+                message("Password and confirm password does not match!");
+                redirect('admin/changepassword');
+            }
+            $userInst = new User();
+            $user=$userInst->first(['userID'=>Auth::getuserID()]);
+            if (password_verify($_POST['currentpassword'],$user->password)){
+                $password=password_hash($_POST['newpassword'],PASSWORD_DEFAULT);
+                $userInst->update(['password'=>$password],Auth::getuserID());
+                message("Password Updated Successfully!");
+                redirect('admin/profile');
+            }else{
+                message("Current password is wrong!");
+                redirect('admin/changepassword');
+            }
+        }
+
+
+        $this->view('admin/changepassword',$data);
+    }
+
+
     //implement this to show all users and specific user if the id is passeed with url
     public function otherusers($id=null){
 
@@ -97,32 +138,6 @@ class Admin extends Controller{
         $this->view('admin/otherusers',$data);
     }
 
-
-    public function changepassword(){
-        if(!Auth::logged_in()){//if not logged in redirect to login page
-            message('Please login to view the admin section!');
-            redirect('login');
-        }
-        if(!Auth::is_admin()){///if not an admin, redirect to home
-            message('Only admins can view admin dashboard!');
-            redirect('home');
-        }
-
-        
-        $data['title'] = "Change Password";
-        
-        
-
-        //should implement the validation and procedure
-        if($_SERVER['REQUEST_METHOD']=="POST"){
-            
-            message("Password changed successfully!");
-            redirect('admin/profile');
-        }
-
-
-        $this->view('admin/changepassword',$data);
-    }
 
     public function updateprofile(){
         if(!Auth::logged_in()){//if not logged in redirect to login page
