@@ -11,6 +11,7 @@ services:
       - 443:443 #for ssl traffics
   db:
     # image: mysql:latest
+    container_name: db
     build: 
       context: ./db
       dockerfile: Dockerfile
