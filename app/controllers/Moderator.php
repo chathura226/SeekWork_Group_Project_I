@@ -144,6 +144,7 @@ class Moderator extends Controller{
 
 
     public function changepassword(){
+
         if(!Auth::logged_in()){//if not logged in redirect to login page
             message('Please login to view the moderator section!');
             redirect('login');
@@ -152,7 +153,6 @@ class Moderator extends Controller{
             message('Only moderators can view moderator dashboard!');
             redirect('home');
         }
-
         
         $data['title'] = "Change Password";
         
@@ -160,9 +160,21 @@ class Moderator extends Controller{
 
         //should implement the validation and procedure
         if($_SERVER['REQUEST_METHOD']=="POST"){
-            
-            message("Password changed successfully!");
-            redirect('moderator/profile');
+            if($_POST['newpassword']!==$_POST['confirmnewpassword']){
+                message("Password and confirm password does not match!");
+                redirect('moderator/changepassword');
+            }
+            $userInst = new User();
+            $user=$userInst->first(['userID'=>Auth::getuserID()]);
+            if (password_verify($_POST['currentpassword'],$user->password)){
+                $password=password_hash($_POST['newpassword'],PASSWORD_DEFAULT);
+                $userInst->update(['password'=>$password],Auth::getuserID());
+                message("Password Updated Successfully!");
+                redirect('moderator/profile');
+            }else{
+                message("Current password is wrong!");
+                redirect('moderator/changepassword');
+            }
         }
 
 
