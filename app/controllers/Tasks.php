@@ -23,7 +23,7 @@ class Tasks extends Controller{
 
             if(!empty($row)){
                 
-                $company=new Company();
+                $company=new CompanyModel();
                 $compDetails=$company->first(['companyID'=>$row->companyID]);
                 $user = new User();
                 $userdetails=$user->first(['userID'=>$compDetails->userID]);
@@ -90,7 +90,7 @@ class Tasks extends Controller{
 
             if(!empty($row)){
                 
-                $company=new Company();
+                $company=new CompanyModel();
                 $compDetails=$company->first(['companyID'=>$row->companyID]);
                 $user = new User();
                 $userdetails=$user->first(['userID'=>$compDetails->userID]);

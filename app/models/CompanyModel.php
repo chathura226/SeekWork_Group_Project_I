@@ -1,7 +1,7 @@
 <?php
 
 //Company class
-class Company extends Model {
+class CompanyModel extends Model {
     protected $table="company";
     public $errors=[];
     protected $primaryKey='companyID';

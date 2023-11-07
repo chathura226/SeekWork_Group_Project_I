@@ -67,7 +67,7 @@
                 </div>
                 <div class="form-input">
                     <label>NIC number</label>
-                    <input value="<?= Auth::getNIC()?>" class="<?= !empty($errors['NIC']) ? 'error-border' : '' ?>" type="text" name="NIC" id="NIC" placeholder="Enter your NIC number">
+                    <input value="<?= Auth::getNIC()?>" class="<?= !empty($errors['NIC']) ? 'error-border' : '' ?>" type="text" name="NIC" id="NIC" placeholder="Enter your NIC number" disabled>
                     <?php if(!empty($errors['NIC'])):?>
                     <div class="text-error"><small><?=$errors['NIC']?></small></div>
                     <?php endif;?>

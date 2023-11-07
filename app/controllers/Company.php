@@ -258,7 +258,7 @@ class Company extends Controller{
                             redirect('company/tasks/'.$id);
                         }
 
-                        $studentInst=new Student();
+                        $studentInst=new StudentModel();
                         $proposalInst=new Proposal();
                         for ($i = 0; $i < count($assignments); $i++) {
                             $proposal=$proposalInst->first(['proposalID'=>$assignments[$i]->proposalID]);
@@ -284,7 +284,7 @@ class Company extends Controller{
                             $proposalInst=new Proposal();
                             $proposal=$proposalInst->first(['proposalID'=>$id2]);
                             if(!empty($proposal)){
-                                $studentInst=new Student();
+                                $studentInst=new StudentModel();
                                 $student=$studentInst->first(['studentID'=>$proposal->studentID]);
                                 $universityInst=new University();
                                 $university=$universityInst->first(['universityID'=>$student->universityID]);
@@ -377,7 +377,7 @@ class Company extends Controller{
 
         if(!empty($id)){
 
-            $studentInst = new Student();
+            $studentInst = new StudentModel();
             $student = $studentInst->first((['studentID'=>$id]));//get user details corresponding to the user id
             
  
@@ -591,7 +591,7 @@ class Company extends Controller{
                         redirect('company/review');
                     }else{
 
-                        $student=new Student();
+                        $student=new StudentModel();
                         $data['student']=$student->first(['studentID'=>$row->assignedStudentID]);//send the details of student relevant to the review
                         $data['task']=$row;
                         $data['title']='Add a Review';
@@ -632,7 +632,7 @@ class Company extends Controller{
                         $taskDetails=$task->first(['taskID'=>$row->taskID,'companyID'=>Auth::getcompanyID()]);
                         $data['task']=$taskDetails;
 
-                        $student=new Student();
+                        $student=new StudentModel();
                         $data['student']=$student->first(['studentID'=>$row->studentID]);
                        
                         
@@ -682,7 +682,7 @@ class Company extends Controller{
             return;
         }
         $task=new Task();
-        $student=new Student();
+        $student=new StudentModel();
         for ($i = 0; $i < count($row); $i++) {
             $row[$i]->task=$task->first(['taskID'=>$row[$i]->taskID]);
             $row[$i]->student=$student->first(['studentID'=>$row[$i]->studentID]);

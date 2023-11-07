@@ -273,7 +273,7 @@ class Moderator extends Controller{
                         $university=new University();
                         $row=$university->first(['universityID'=>$id]);
                         if(!empty($row)){
-                            $studentInst=new Student();
+                            $studentInst=new StudentModel();
                             $student=$studentInst->first(['universityID'=>$row->universityID]);
                             If(!empty($student)){
                                 message('Cannot delete the university domain while students are there from that domain!');
@@ -302,7 +302,7 @@ class Moderator extends Controller{
             redirect('moderator');
         }
 
-        $student=new Student();
+        $student=new StudentModel();
         for ($i = 0; $i < count($universities); $i++) {
             $countUsers=$student->where(['universityID'=>$universities[$i]->universityID]);
             if(!empty($countUsers))$universities[$i]->userCount=count($countUsers);

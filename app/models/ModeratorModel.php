@@ -1,7 +1,7 @@
 <?php
 
 //Moderator class
-class Moderator extends Model {
+class ModeratorModel extends Model {
     protected $table="moderator";
     protected $primaryKey='moderatorID';
 

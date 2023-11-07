@@ -121,4 +121,21 @@ class Auth{
         return '';
     }
 
+
+    //to update session after updating user data
+    public static function updateSession(){
+        if(!empty($_SESSION['USER_DATA'])){
+            $user=new User();
+            $row=$user->first(['userID'=>Auth::getuserID()]);
+            $userDetails=$user->getFirstCustom($row->role,['userID'=>$row->userID],$row->role."ID");
+
+            //if user is a student put university details too
+            if($row->role==='student'){
+                $universityDetails=$user->getFirstCustom('university',['universityID'=>$userDetails->universityID],"universityID");
+                $combinedObject1= (object)array_merge((array)$userDetails, (array)$universityDetails);
+                $combinedObject = (object)array_merge((array)$row, (array)$combinedObject1);
+            }else $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
+            Auth::authenticate($combinedObject);
+        }
+    }
 }

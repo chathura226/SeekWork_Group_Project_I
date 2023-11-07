@@ -27,7 +27,7 @@ class Signup extends Controller{
                     ]);
                     $_POST['userID']=$row->userID;
 
-                    $student= new Student();
+                    $student= new StudentModel();
                     $student->insert($_POST);//default value for verification status is set to 'pending' from the database
 
                     message("Account creation successful! Please Log in.");
@@ -49,7 +49,7 @@ class Signup extends Controller{
                     ]);
                     $_POST['userID']=$row->userID;
 
-                    $company= new Company();
+                    $company= new CompanyModel();
                     $company->insert($_POST);//default value for verification status is set to 'pending' from the database
 
                     message("Account creation successful! Please Log in.");

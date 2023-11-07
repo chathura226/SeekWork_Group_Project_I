@@ -77,7 +77,7 @@
                 </div>
                 <div class="form-input">
                     <label>BRN number</label>
-                    <input value="<?= Auth::getbrn()?>" class="<?= !empty($errors['brn']) ? 'error-border' : '' ?>" type="text" name="brn" id="brn" placeholder="Enter your BRN number">
+                    <input value="<?= Auth::getbrn()?>" class="<?= !empty($errors['brn']) ? 'error-border' : '' ?>" type="text" name="brn" id="brn" placeholder="Enter your BRN number" disabled>
                     <?php if(!empty($errors['brn'])):?>
                     <div class="text-error"><small><?=$errors['brn']?></small></div>
                     <?php endif;?>

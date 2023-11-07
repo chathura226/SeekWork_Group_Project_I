@@ -117,6 +117,11 @@ class Student extends Controller{
         //should implement the validation and procedure
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
+            $studentInst=new StudentModel();
+            $studentInst->update($_POST,Auth::getstudentID());
+            Auth::updateSession();
+            // show($_SESSION['USER_DATA']);
+            // die;
             message("Profile updated successfully!");
             redirect('student/profile');
         }
@@ -190,7 +195,7 @@ class Student extends Controller{
                 $task=new Task();
                 $data['task']=$task->first(['taskID'=>$row->taskID]);
                 if(!empty($data['task'])){
-                    $company=new Company();
+                    $company=new CompanyModel();
                     $data['company']=$company->first(['companyID'=>$data['task']->companyID]);
                     if(!empty($data['company'])){
 
@@ -252,7 +257,7 @@ class Student extends Controller{
                     $task=new Task();
                     $data['task']=$task->first(['taskID'=>$row->taskID]);
                     if(!empty($data['task'])){
-                        $company=new Company();
+                        $company=new CompanyModel();
                         $data['company']=$company->first(['companyID'=>$data['task']->companyID]);
                         if(!empty($data['company'])){
 
@@ -416,7 +421,7 @@ class Student extends Controller{
                         }
                     }
                     $data['task']=$row;
-                    $company=new Company();
+                    $company=new CompanyModel();
                     $user=new User();
 
                     $compdetails=$company->first(['companyID'=>$row->companyID]);
@@ -507,7 +512,7 @@ class Student extends Controller{
                         redirect('student/review');
                     }else{
 
-                        $company=new Company();
+                        $company=new CompanyModel();
                         $data['company']=$company->first(['companyID'=>$row->companyID]);//send the details of student relevant to the review
                         $data['task']=$row;
                         $data['title']='Add a Review';
@@ -548,7 +553,7 @@ class Student extends Controller{
                         $taskDetails=$task->first(['taskID'=>$row->taskID,'assignedStudentID'=>Auth::getstudentID()]);
                         $data['task']=$taskDetails;
 
-                        $company=new Company();
+                        $company=new CompanyModel();
                         $data['company']=$company->first(['companyID'=>$row->companyID]);
                        
                         
@@ -600,7 +605,7 @@ class Student extends Controller{
             return;
         }
         $task=new Task();
-        $company=new Company();
+        $company=new CompanyModel();
         for ($i = 0; $i < count($row); $i++) {
             $row[$i]->task=$task->first(['taskID'=>$row[$i]->taskID]);
             $row[$i]->company=$company->first(['companyID'=>$row[$i]->companyID]);
@@ -680,7 +685,7 @@ class Student extends Controller{
 
         $assignmentInst=new Assignment();
         $taskInst=new Task();
-        $companyInst=new Company();
+        $companyInst=new CompanyModel();
         $assignments = array();
         for ($i = 0; $i < count($proposals); $i++) {
             $assignment=$assignmentInst->first(['proposalID'=>$proposals[$i]->proposalID]);//getting assignment wiht the specific proposal id

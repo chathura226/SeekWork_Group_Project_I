@@ -200,7 +200,7 @@ class Admin extends Controller{
                         ]);
                         $_POST['userID']=$row->userID;
     
-                        $moderatorInst= new Moderator();
+                        $moderatorInst= new ModeratorModel();
                         $moderatorInst->insert($_POST);//default value for verification status is set to 'pending' from the database
     
                         message("Moderator account creation successful!");
@@ -218,7 +218,7 @@ class Admin extends Controller{
                 
                     if(!empty($id)){//admin id of diabling user   
                         //get corresponding user id
-                        $moderatorInst= new Moderator();
+                        $moderatorInst= new ModeratorModel();
                         $moderator=$moderatorInst->first(['moderatorID'=>$id]);
                         if(empty($moderator)){
                             message('No user with given moderatorID found');
@@ -238,7 +238,7 @@ class Admin extends Controller{
                 
                     if(!empty($id)){//admin id of diabling user   
                         //get corresponding user id
-                        $moderatorInst= new Moderator();
+                        $moderatorInst= new ModeratorModel();
                         $moderator=$moderatorInst->first(['moderatorID'=>$id]);
                         if(empty($moderator)){
                             message('No user with given moderatorID found');
@@ -254,7 +254,7 @@ class Admin extends Controller{
             }
         }
         $userInst=new User();
-        $moderatorInst=new Moderator();
+        $moderatorInst=new ModeratorModel();
         $moderators=$userInst->where(['role'=>'moderator']);
 
         for ($i = 0; $i < count($moderators); $i++) {
