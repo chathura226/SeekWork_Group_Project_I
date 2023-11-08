@@ -137,8 +137,11 @@ class Company extends Controller{
             redirect('home');
         }
       
+      
 
         
+
+
         $data['title'] = "Update Profile";
         
         
@@ -146,6 +149,11 @@ class Company extends Controller{
         //should implement the validation and procedure
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
+            $companyInst=new CompanyModel();
+            $companyInst->update($_POST,Auth::getcompanyID());
+            Auth::updateSession();
+            // show($_SESSION['USER_DATA']);
+            // die;
             message("Profile updated successfully!");
             redirect('company/profile');
         }
