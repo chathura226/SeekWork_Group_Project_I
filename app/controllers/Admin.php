@@ -142,14 +142,18 @@ class Admin extends Controller{
     public function updateprofile(){
         if(!Auth::logged_in()){//if not logged in redirect to login page
             message('Please login to view the admin section!');
-            redirect('login');
+            redirect('admin');
         }
         if(!Auth::is_admin()){///if not an admin, redirect to home
             message('Only admins can view admin dashboard!');
             redirect('home');
         }
+        
+      
 
         
+
+
         $data['title'] = "Update Profile";
         
         
@@ -157,6 +161,11 @@ class Admin extends Controller{
         //should implement the validation and procedure
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
+            $adminInst=new AdminModel();
+            $adminInst->update($_POST,Auth::getadminID());
+            Auth::updateSession();
+            // show($_SESSION['USER_DATA']);
+            // die;
             message("Profile updated successfully!");
             redirect('admin/profile');
         }
