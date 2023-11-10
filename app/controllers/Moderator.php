@@ -190,8 +190,11 @@ class Moderator extends Controller{
             message('Only moderators can view moderator dashboard!');
             redirect('home');
         }
+      
 
         
+
+
         $data['title'] = "Update Profile";
         
         
@@ -199,6 +202,11 @@ class Moderator extends Controller{
         //should implement the validation and procedure
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
+            $moderatorInst=new ModeratorModel();
+            $moderatorInst->update($_POST,Auth::getmoderatorID());
+            Auth::updateSession();
+            // show($_SESSION['USER_DATA']);
+            // die;
             message("Profile updated successfully!");
             redirect('moderator/profile');
         }
@@ -206,7 +214,6 @@ class Moderator extends Controller{
 
         $this->view('moderator/updateprofile',$data);
     }
-
     public function university($action=null,$id=null){
 
         if(!Auth::logged_in()){//if not logged in redirect to login page
