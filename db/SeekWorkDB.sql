@@ -59,6 +59,7 @@ CREATE TABLE `admin` (
   `firstName` varchar(20) NOT NULL,
   `lastName` varchar(20) NOT NULL,
   `address` text,
+  `profilePic` varchar(1024) DEFAULT NULL,
   `userID` int NOT NULL,
   PRIMARY KEY (`adminID`),
   KEY `user-admin` (`userID`),
@@ -72,7 +73,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (3,'chathura','lakshan',NULL,11),(4,'Seekwork','Admin','No.5 Seekwork rd.',25);
+INSERT INTO `admin` VALUES (3,'chathura','lakshan',NULL,NULL,11),(4,'Seekwork','Admin','No.5 Seekwork rd.','uploads/images/169980033311111.jpg',25);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -624,4 +625,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-11 15:35:14
+-- Dump completed on 2023-11-12 14:47:58
