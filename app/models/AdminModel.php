@@ -13,8 +13,9 @@ class AdminModel extends Model {
         'firstName',
         'lastName',
         'address',
+        'profilePic',
         'userID',
     ];
 
-     
+
 }

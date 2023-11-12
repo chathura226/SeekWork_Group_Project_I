@@ -1,3 +1,14 @@
+function load_image(file){
+
+    //linking local resource
+    var myLink=window.URL.createObjectURL(file);
+    document.getElementById("uploadedImage").src=myLink;
+    document.getElementById("uploadedImage").style.display="block";
+    
+    }
+
+    
+    
 document.addEventListener('DOMContentLoaded', function() {
     const imageInput = document.getElementById('imageInput');
     const uploadedImage = document.getElementById('uploadedImage');
@@ -20,3 +31,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+
