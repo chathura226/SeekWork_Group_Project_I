@@ -149,13 +149,7 @@ class Admin extends Controller{
             redirect('home');
         }
         
-      
 
-        
-
-
-        
-        
         
         $adminInst=new AdminModel();
 

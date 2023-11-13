@@ -190,30 +190,75 @@ class Moderator extends Controller{
             message('Only moderators can view moderator dashboard!');
             redirect('home');
         }
-      
-
         
 
-
-        $data['title'] = "Update Profile";
         
-        
+        $modertorInst=new ModeratorModel();
 
         //should implement the validation and procedure
         if($_SERVER['REQUEST_METHOD']=="POST"){
-            
-            $moderatorInst=new ModeratorModel();
-            $moderatorInst->update($_POST,Auth::getmoderatorID());
-            Auth::updateSession();
-            // show($_SESSION['USER_DATA']);
-            // die;
-            message("Profile updated successfully!");
-            redirect('moderator/profile');
-        }
 
+            if(!empty($_FILES['imageInput']['name'])){
+
+                $allowed=['image/jpeg','image/png'];
+                if($_FILES['imageInput']['error']==0){
+
+                    if(in_array($_FILES['imageInput']['type'],$allowed)){
+
+                        //before move upload files validate other data
+                        if($modertorInst->validate($_POST)){
+
+                            $folder="uploads/profilePics/";
+                            if(!file_exists($folder)){
+                                mkdir($folder,0777,true);
+                                //for security, adding empty index.php files
+                                file_put_contents($folder."index.php","<?php //Access Denied");
+                                file_put_contents("uploads/index.php","<?php //Access Denied");
+                            }
+
+                            $destination=$folder.time().$_FILES['imageInput']['name'];
+                            move_uploaded_file($_FILES['imageInput']['tmp_name'],$destination);
+                            $_POST['profilePic']=$destination;
+                            
+                            //deleting old image
+                            if(file_exists(Auth::getprofilePic())){
+                                unlink(Auth::getprofilePic());
+                            }
+                            $modertorInst->update($_POST,Auth::getmoderatorID());
+                            //update session so that Auth get functions work properly
+                            Auth::updateSession();
+                            // show($_SESSION['USER_DATA']);
+                            // die;
+                            message("Profile updated successfully!");
+                            redirect('moderator/profile');
+                        }
+                    }else{
+                        $modertorInst->errors['imageInput']="File Type is not allowed!";
+
+                    }
+                }else{
+                    $modertorInst->errors['imageInput']="Couldn't upload the image";
+                }
+            }else{
+                if($modertorInst->validate($_POST)){
+                    $modertorInst->update($_POST,Auth::getmoderatorID());
+                    Auth::updateSession();
+                    // show($_SESSION['USER_DATA']);
+                    // die;
+                    message("Profile updated successfully!");
+                    redirect('moderator/profile');
+                }
+            }
+
+
+        }
+        $data['title'] = "Update Profile";
+
+        $data['errors']=$modertorInst->errors;
 
         $this->view('moderator/updateprofile',$data);
     }
+
     public function university($action=null,$id=null){
 
         if(!Auth::logged_in()){//if not logged in redirect to login page

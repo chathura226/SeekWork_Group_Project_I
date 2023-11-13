@@ -302,6 +302,7 @@ CREATE TABLE `moderator` (
   `firstName` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `lastName` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `address` varchar(100) NOT NULL,
+  `profilePic` varchar(1024) DEFAULT NULL,
   `userID` int NOT NULL,
   PRIMARY KEY (`moderatorID`),
   KEY `user-moderator` (`userID`),
@@ -315,7 +316,7 @@ CREATE TABLE `moderator` (
 
 LOCK TABLES `moderator` WRITE;
 /*!40000 ALTER TABLE `moderator` DISABLE KEYS */;
-INSERT INTO `moderator` VALUES (1,'Seekwork','Moderator','No.5 Seekwork rd.',28),(2,'Pasindu','Ekanayake','colombo',31);
+INSERT INTO `moderator` VALUES (1,'Seekwork','Moderator','No.5 Seekwork rd.','uploads/profilePics/1699847763Screenshot from 2023-11-13 09-24-28.png',28),(2,'Pasindu','Ekanayake','colombo',NULL,31);
 /*!40000 ALTER TABLE `moderator` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -626,4 +627,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-13  3:01:16
+-- Dump completed on 2023-11-13  3:56:38
