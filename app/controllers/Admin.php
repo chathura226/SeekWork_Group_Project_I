@@ -172,7 +172,7 @@ class Admin extends Controller{
                         //before move upload files validate other data
                         if($adminInst->validate($_POST)){
 
-                            $folder="uploads/images/";
+                            $folder="uploads/profilePics/";
                             if(!file_exists($folder)){
                                 mkdir($folder,0777,true);
                                 //for security, adding empty index.php files

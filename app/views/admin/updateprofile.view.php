@@ -57,7 +57,7 @@
                   <label>Profile Picture</label>
                   <input  onchange="load_image(this.files[0])" class="" type="file" name="imageInput" id="imageInput" accept="image/*">    
                   <div class="image-container">
-                    <img id="uploadedImage" >
+                    <img  id="uploadedImage" <?php if(!empty(Auth::getprofilePic())) echo "src='".ROOT.'/'.Auth::getprofilePic()."'style='display: block;'";?>>
                 </div>  
                 <?php if(!empty($errors['imageInput'])):?>
                     <div class="text-error"><small><?=$errors['imageInput']?></small></div>
