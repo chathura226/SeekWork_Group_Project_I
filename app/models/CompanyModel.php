@@ -24,7 +24,7 @@ class CompanyModel extends Model {
 
     //company validation for update profile
     //if all goes well, return true, else false
-    public function validateCompany($data){
+    public function validate($data){
         $this->errors=[];
 
         

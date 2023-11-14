@@ -136,28 +136,71 @@ class Company extends Controller{
             message('Only companies can view company dashboard!');
             redirect('home');
         }
-      
-      
-
         
 
-
-        $data['title'] = "Update Profile";
         
-        
+        $companyInst=new CompanyModel();
 
         //should implement the validation and procedure
         if($_SERVER['REQUEST_METHOD']=="POST"){
-            
-            $companyInst=new CompanyModel();
-            $companyInst->update($_POST,Auth::getcompanyID());
-            Auth::updateSession();
-            // show($_SESSION['USER_DATA']);
-            // die;
-            message("Profile updated successfully!");
-            redirect('company/profile');
-        }
 
+            if(!empty($_FILES['imageInput']['name'])){
+
+                $allowed=['image/jpeg','image/png'];
+                if($_FILES['imageInput']['error']==0){
+
+                    if(in_array($_FILES['imageInput']['type'],$allowed)){
+
+                        //before move upload files validate other data
+                        if($companyInst->validate($_POST)){
+
+                            $folder="uploads/profilePics/";
+                            if(!file_exists($folder)){
+                                mkdir($folder,0777,true);
+                                //for security, adding empty index.php files
+                                file_put_contents($folder."index.php","<?php //Access Denied");
+                                file_put_contents("uploads/index.php","<?php //Access Denied");
+                            }
+
+                            $destination=$folder.time().$_FILES['imageInput']['name'];
+                            move_uploaded_file($_FILES['imageInput']['tmp_name'],$destination);
+                            $_POST['profilePic']=$destination;
+                            
+                            //deleting old image
+                            if(file_exists(Auth::getprofilePic())){
+                                unlink(Auth::getprofilePic());
+                            }
+                            $companyInst->update($_POST,Auth::getcompanyID());
+                            //update session so that Auth get functions work properly
+                            Auth::updateSession();
+                            // show($_SESSION['USER_DATA']);
+                            // die;
+                            message("Profile updated successfully!");
+                            redirect('company/profile');
+                        }
+                    }else{
+                        $companyInst->errors['imageInput']="File Type is not allowed!";
+
+                    }
+                }else{
+                    $companyInst->errors['imageInput']="Couldn't upload the image";
+                }
+            }else{
+                if($companyInst->validate($_POST)){
+                    $companyInst->update($_POST,Auth::getcompanyID());
+                    Auth::updateSession();
+                    // show($_SESSION['USER_DATA']);
+                    // die;
+                    message("Profile updated successfully!");
+                    redirect('company/profile');
+                }
+            }
+
+
+        }
+        $data['title'] = "Update Profile";
+
+        $data['errors']=$companyInst->errors;
 
         $this->view('company/updateprofile',$data);
     }

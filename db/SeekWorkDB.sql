@@ -206,6 +206,7 @@ CREATE TABLE `company` (
   `address` text NOT NULL,
   `website` text,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `profilePic` varchar(1024) DEFAULT NULL,
   `brn` varchar(50) NOT NULL,
   `userID` int NOT NULL,
   PRIMARY KEY (`companyID`),
@@ -221,7 +222,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` VALUES (1,'kk','verification pending','aa','aa','aaa','https://www.kk.com','','aa',16),(2,'Pheonix','verification pending','chathura','lakshan','colombo','https://www.seekwork.com','Pheonix is a dynamic and innovative design company dedicated to turning your creative vision into reality. With a team of highly skilled and experienced designers, we offer a wide range of design services tailored to meet the unique needs of our clients.','1111111',22),(3,'seekwork.com','verified','lakshan','chathura','colombo','',NULL,'11111',24),(4,'Seekwork Company','verification pending','Seekwork','Company','No.5 Seekwork rd.','',NULL,'1111111111',27);
+INSERT INTO `company` VALUES (1,'kk','verification pending','aa','aa','aaa','https://www.kk.com','',NULL,'aa',16),(2,'Pheonix','verification pending','chathura','lakshan','colombo','https://www.seekwork.com','Pheonix is a dynamic and innovative design company dedicated to turning your creative vision into reality. With a team of highly skilled and experienced designers, we offer a wide range of design services tailored to meet the unique needs of our clients.',NULL,'1111111',22),(3,'seekwork.com','verified','lakshan','chathura','colombo','',NULL,NULL,'11111',24),(4,'Seekwork Company','verification pending','Seekwork','Company','No.5 Seekwork rd.','https://www.seekwork.com',NULL,'uploads/profilePics/1699934037Screenshot from 2023-11-14 09-21-13.png','1111111111',27);
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,7 +317,7 @@ CREATE TABLE `moderator` (
 
 LOCK TABLES `moderator` WRITE;
 /*!40000 ALTER TABLE `moderator` DISABLE KEYS */;
-INSERT INTO `moderator` VALUES (1,'Seekwork','Moderator','No.5 Seekwork rd.','uploads/profilePics/1699847763Screenshot from 2023-11-13 09-24-28.png',28),(2,'Pasindu','Ekanayake','colombo',NULL,31);
+INSERT INTO `moderator` VALUES (1,'Seekwork','Moderator','No.5 Seekwork rd.','uploads/profilePics/1699932647Screenshot from 2023-11-13 09-24-28.png',28),(2,'Pasindu','Ekanayake','colombo',NULL,31);
 /*!40000 ALTER TABLE `moderator` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -627,4 +628,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-13  3:56:38
+-- Dump completed on 2023-11-14  3:54:18
