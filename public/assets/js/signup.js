@@ -6,9 +6,24 @@ let tabBodyElements = tab.querySelectorAll(".tab-body > div");
 
 for (let i=0;i<tabHeaderElements.length;i++){
     tabHeaderElements[i].addEventListener("click",function(){
+
+        //removing hide passsword show passwrod for a bit 
+        let el=document.querySelector(".company .pw-display-toggle-button");
+
+                document.querySelector(".company #password").setAttribute("type","password");
+                el.classList.remove("active");
+        let el2=document.querySelector(".student .pw-display-toggle-button");
+
+        document.querySelector(".student #password").setAttribute("type","password");
+        el2.classList.remove("active");
+
+
+        //toogle the tabs
         tabHeader.querySelector(".active").classList.remove("active");
         tabHeaderElements[i].classList.add("active");
         tabBody.querySelector(".active").classList.remove("active");
         tabBodyElements[i].classList.add("active");
+
+
     });
 }
