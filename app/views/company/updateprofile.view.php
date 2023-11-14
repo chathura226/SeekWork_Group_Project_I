@@ -42,35 +42,35 @@
                 </div> 
                 <div class="form-input">
                     <label>Company Name</label>
-                    <input value="<?=Auth::getcompanyName()?>" class="<?= !empty($errors['companyName']) ? 'error-border' : '' ?>" type="text" name="companyName" id="companyName" placeholder="Enter the name of the company">
+                    <input value="<?=(isset($_POST['companyName']))?set_value('companyName'):Auth::getcompanyName()?>" class="<?= !empty($errors['companyName']) ? 'error-border' : '' ?>" type="text" name="companyName" id="companyName" placeholder="Enter the name of the company">
                     <?php if(!empty($errors['companyName'])):?>
                     <div class="text-error"><small><?=$errors['companyName']?></small></div>
                     <?php endif;?>
                 </div> 
                 <div class="form-input">
                     <label>Website URL in the format "https://www.seekwork.com" (If Available) </label>
-                    <input value="<?=Auth::getwebsite()?>" class="<?= !empty($errors['website']) ? 'error-border' : '' ?>" type="text" name="website" id="website" placeholder="Enter company website URL if available">
+                    <input value="<?=(isset($_POST['website']))?set_value('website'):Auth::getwebsite()?>" class="<?= !empty($errors['website']) ? 'error-border' : '' ?>" type="text" name="website" id="website" placeholder="Enter company website URL if available">
                     <?php if(!empty($errors['website'])):?>
                     <div class="text-error"><small><?=$errors['website']?></small></div>
                     <?php endif;?>
                 </div>              
                 <div class="form-input">
                     <label>First Name of the Contact Person</label>
-                    <input value="<?=Auth::getfirstName()?>" class="<?= !empty($errors['firstName']) ? 'error-border' : '' ?>" type="text" name="firstName" id="firstName" placeholder="Enter your first name">
+                    <input value="<?=(isset($_POST['firstName']))?set_value('firstName'):Auth::getfirstName()?>" class="<?= !empty($errors['firstName']) ? 'error-border' : '' ?>" type="text" name="firstName" id="firstName" placeholder="Enter your first name">
                     <?php if(!empty($errors['firstName'])):?>
                     <div class="text-error"><small><?=$errors['firstName']?></small></div>
                     <?php endif;?>
                 </div>
                 <div class="form-input">
                     <label>Last Name of the Contact Person</label>
-                    <input value="<?=Auth::getlastName()?>" class="<?= !empty($errors['lastName']) ? 'error-border' : '' ?>" type="text" name="lastName" id="lastName" placeholder="Enter your last name">
+                    <input value="<?=(isset($_POST['lastName']))?set_value('lastName'):Auth::getlastName()?>" class="<?= !empty($errors['lastName']) ? 'error-border' : '' ?>" type="text" name="lastName" id="lastName" placeholder="Enter your last name">
                     <?php if(!empty($errors['lastName'])):?>
                     <div class="text-error"><small><?=$errors['lastName']?></small></div>
                     <?php endif;?>
                 </div>
                 <div class="form-input">
                     <label>Company Location</label>
-                    <input value="<?=Auth::getaddress()?>" class="<?= !empty($errors['address']) ? 'error-border' : '' ?>" type="text" name="address" id="address" placeholder="Enter your address">
+                    <input value="<?=(isset($_POST['address']))?set_value('address'):Auth::getaddress()?>" class="<?= !empty($errors['address']) ? 'error-border' : '' ?>" type="text" name="address" id="address" placeholder="Enter your address">
                     <?php if(!empty($errors['address'])):?>
                     <div class="text-error"><small><?=$errors['address']?></small></div>
                     <?php endif;?>
@@ -85,16 +85,19 @@
                 <div class="form-input">
                     
                   <label>Company Description</label>
-                  <textarea value=""rows = "5" cols = "45" id="description" name = "description" placeholder="Enter a description about the company"><?=Auth::getdescription()?></textarea>
+                  <textarea value=""rows = "5" cols = "45" id="description" name = "description" placeholder="Enter a description about the company"><?=(isset($_POST['description']))?set_value('description'):Auth::getdescription()?></textarea>
                     <br>
               </div>
 
-                <div class="form-input">
+              <div class="form-input">
                   <label>Profile Picture</label>
-                  <input   class="" type="file" name="imageInput" id="imageInput" accept="image/*">    
+                  <input  onchange="load_image(this.files[0])" class="" type="file" name="imageInput" id="imageInput" accept="image/*">    
                   <div class="image-container">
-                    <img id="uploadedImage" >
-                </div>          
+                    <img  id="uploadedImage" <?php if(!empty(Auth::getprofilePic())) echo "src='".ROOT.'/'.Auth::getprofilePic()."'style='display: block;'";?>>
+                </div>  
+                <?php if(!empty($errors['imageInput'])):?>
+                    <div class="text-error"><small><?=$errors['imageInput']?></small></div>
+                    <?php endif;?>        
               </div>
               <div class="form-input">
                   <button>Update</button>

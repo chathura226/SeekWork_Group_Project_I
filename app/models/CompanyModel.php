@@ -12,11 +12,60 @@ class CompanyModel extends Model {
         'firstName',	
         'lastName',	
         'address',	
-        'website',	
+        'website',
+        'profilePic',	
         'brn',	
         'userID',	
     ];
 
      
     //company validate function is in user model.....................
+
+
+    //company validation for update profile
+    //if all goes well, return true, else false
+    public function validateCompany($data){
+        $this->errors=[];
+
+        
+        if(empty($data['companyName'])){
+            $this->errors['companyName']="Company Name is required!";
+        }
+        if(empty($data['firstName'])){
+            $this->errors['firstName']="First Name is required!";
+        }
+        if(empty($data['lastName'])){
+            $this->errors['lastName']="Last Name is required!";
+        }
+        if(empty($data['address'])){
+            $this->errors['address']="Address is required!";
+        }
+
+
+        
+
+        
+
+        if (!empty($data['website'])) {
+            $website = $data['website'];
+        
+            // Remove leading and trailing spaces from the input
+            $website = trim($website);
+        
+            // Check if it's a valid URL
+            if (!filter_var($website, FILTER_VALIDATE_URL)) {
+                $this->errors['website']="Invalid website URL!";
+            }
+        }
+
+
+        // print_r($this->errors);
+        if(empty($this->errors)){
+            return true;
+        }
+        
+        return false;
+    }
+
+
 }
