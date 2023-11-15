@@ -21,7 +21,7 @@
 
     <div class="card c-s-1 row-4">
       <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
-      <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
+      <div class="card__avatar"><img src="<?=ROOT?><?=(!empty(Auth::getprofilePic()))?"/".Auth::getprofilePic():"/assets/images/noImage.png"?>" alt="Profile Picture"></div>
       <div class="card__title"><?=ucfirst(Auth::getfirstName())?> <?=ucfirst(Auth::getlastName())?> </div>
       <div class="card__subtitle"><?=ucfirst(Auth::getrole())?> </div>
       <div class="card__wrapper">
