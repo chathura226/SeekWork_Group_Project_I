@@ -19,7 +19,7 @@
           <div class="form-input">
             <label>OTP Code</label>
             <!-- <input type="password" name="password"  placeholder="Enter a password" required>  -->
-            <input class="" type="text" name="otp" id="otp" placeholder="Enter the OTP code" required>
+            <input class="" type="text" name="otpCode" id="otpCode" maxlength="10" placeholder="Enter the OTP code" required>
           </div>
           
           <div class="form-input">
