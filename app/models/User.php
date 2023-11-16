@@ -13,6 +13,7 @@ class User extends Model {
         'contactNo',
         'role',
         'status',
+        'isOTPVerified',
     ];
     protected $primaryKey='userID';
      
