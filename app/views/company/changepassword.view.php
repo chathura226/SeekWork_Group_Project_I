@@ -71,6 +71,6 @@
 </div>
 
 
-<script type="text/javascript" src="<?=ROOT?>/assets/js/passwordStrengthForSignup.js"></script>
+<script type="text/javascript" src="<?=ROOT?>/assets/js/passwordStrengthForChangePass.js"></script>
 
 <?php $this->view('company/company-footer',$data) ?>

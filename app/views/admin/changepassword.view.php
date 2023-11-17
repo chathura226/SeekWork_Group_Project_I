@@ -77,6 +77,6 @@
   </div>
 </div>
 
-<script type="text/javascript" src="<?= ROOT ?>/assets/js/passwordStrengthForSignup.js"></script>
+<script type="text/javascript" src="<?= ROOT ?>/assets/js/passwordStrengthForChangePass.js"></script>
 
 <?php $this->view('admin/admin-footer', $data) ?>
