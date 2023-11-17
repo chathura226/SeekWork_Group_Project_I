@@ -31,6 +31,20 @@ class Auth{
         return false;
     }
 
+    //check if the user is email verified
+    public static function is_otp_verified(){
+        
+        if(!empty($_SESSION['USER_DATA'])){
+            //if otp is not verified return false
+            if(!$_SESSION['USER_DATA']->isOTPVerified){
+                return false;
+            }else return true;
+            
+        }
+        return false;
+    }
+
+
     public static function is_admin(){
         if(!empty($_SESSION['USER_DATA'])){
             

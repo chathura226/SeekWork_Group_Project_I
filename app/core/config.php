@@ -37,3 +37,9 @@ if($_SERVER['SERVER_NAME']=='localhost'){
     //rootpath for live server : http://www.myweb.com/
     define('ROOT','http://localhost/public') ;   
 }
+
+
+//for php mailer
+define('MAILER_HOST','smtp.gmail.com');
+define('MAILER_EMAIL','seekworklk@gmail.com');
+define('MAILER_PASS','fiqslttijzawoyut');
