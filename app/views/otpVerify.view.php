@@ -39,7 +39,7 @@
 
 
         <!-- ------------------scripts---------------- -->
-        <?=($updatedAt)?'<label for="updatedAt" hidden>'.$updatedAt.'</label>':''?>
+        <?=(!empty($updatedAt))?'<label for="updatedAt" hidden>'.$updatedAt.'</label>':''?>
 <script type="text/javascript" src="<?=ROOT?>/assets/js/otp.js"></script>
 
 <?php $this->view("includes/footer",$data);
