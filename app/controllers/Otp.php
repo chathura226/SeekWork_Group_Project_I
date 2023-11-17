@@ -55,7 +55,13 @@ class Otp extends Controller
         $otpInst=new OtpModel();
         $otpInst->insert($var);
 
+        $fullName=Auth::getfirstName().' '.Auth::getlastName();
+        $content="OTP code for your email verification is ".$var['otpCode'];
 
+        if(!MailService::sendMail(Auth::getemail(),$fullName,'OTP for Email Verification',$content)){//if unsuccessful
+            message('Sending OTP via Email Failed! Try again later');
+            redirect('home');
+        }
 
         $data['title']="OTP Verify";
         $this->view("otpVerify",$data);
