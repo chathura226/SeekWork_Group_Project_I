@@ -17,6 +17,9 @@ class Otp extends Controller
             redirect(Auth::getrole());
         }
 
+        $minWaitTime=120;//min wait before req another
+
+
         //post method-> submitting verification code
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $otpInst = new OtpModel();
@@ -43,6 +46,16 @@ class Otp extends Controller
         }
 
         if (!empty($action) && $action == 'get') { //if the user requesting an OTP
+            $otpInst = new OtpModel();
+            $row = $otpInst->first(['userID' => Auth::getuserID()]);
+            if (!empty($row)) {
+                $lastUpdatedTIme = strtotime($row->updatedAt);
+                $currentTime = time();
+                if (($lastUpdatedTIme+$minWaitTime) >= $currentTime) { //code is valid
+                    message('You should wait for 2 minutes before retrying!');
+                    redirect('otp');
+                }
+            }
 
             $length = 10; //length of OTP
             $string = uniqid(rand()); //generate uniqid
@@ -54,8 +67,7 @@ class Otp extends Controller
             $var['updatedAt'] = date('Y-m-d H:i:s', $timeStamp);;
             $var['expireAt'] = date('Y-m-d H:i:s', $timeStamp + (10 * 60)); //add 10 min to the current time
 
-            $otpInst = new OtpModel();
-            $row = $otpInst->first(['userID' => Auth::getuserID()]);
+
 
             if (!empty($row)) { //theres a record in the otp table
                 //updating exisiting record
@@ -72,6 +84,15 @@ class Otp extends Controller
                 message('Sending OTP via Email Failed! Try again later');
                 redirect('home');
             }
+            message('OTP sent to your email address successfully!');
+        
+        }
+
+        //if an otp has been sent already, send the last updated time as an data attribute
+        $otpInst = new OtpModel();
+        $row = $otpInst->first(['userID' => Auth::getuserID()]);
+        if(!empty($row)){//theres an otp record
+            $data['updatedAt']=strtotime($row->updatedAt);
         }
 
 
