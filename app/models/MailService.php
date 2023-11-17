@@ -3,15 +3,15 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../thirdParty/PHPMailer-master/src/Exception.php';
-require '../thirdParty/PHPMailer-master/src/PHPMailer.php';
-require '../thirdParty/PHPMailer-master/src/SMTP.php';
+require '../app/thirdParty/PHPMailer-master/src/Exception.php';
+require '../app/thirdParty/PHPMailer-master/src/PHPMailer.php';
+require '../app/thirdParty/PHPMailer-master/src/SMTP.php';
 
 class MailService
 {
     public static function sendMail($recipient_mail, $recipient_name, $subject, $body)
     {
-        $mail = new PHPMailer();
+        $mail = new PHPMailer(true);
 
         try {
             $mail->isSMTP(); //send using smtp
@@ -20,7 +20,9 @@ class MailService
             $mail->SMTPAuth = TRUE;
             $mail->SMTPSecure = "tls";
             $mail->Port = 587;
-            $mail->Host = MAILER_EMAIL;
+
+            $mail->Host = MAILER_HOST;
+            $mail->Username = MAILER_EMAIL;
             $mail->Password = MAILER_PASS;
 
             $mail->isHTML();
@@ -30,7 +32,10 @@ class MailService
             $mail->Body = $body;
             $mail->send();
             return true;
-        } catch (Exception $e) { //unsuccessful
+
+        }catch (Exception $e) { //unsuccessful
+            echo $e;
+            die;
             return false;
         }
     }

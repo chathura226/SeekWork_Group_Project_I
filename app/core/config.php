@@ -40,5 +40,6 @@ if($_SERVER['SERVER_NAME']=='localhost'){
 
 
 //for php mailer
+define('MAILER_HOST','smtp.gmail.com');
 define('MAILER_EMAIL','seekworklk@gmail.com');
 define('MAILER_PASS','fiqslttijzawoyut');
