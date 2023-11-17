@@ -34,8 +34,8 @@ class MailService
             return true;
 
         }catch (Exception $e) { //unsuccessful
-            echo $e;
-            die;
+            // echo $e;
+            // die;
             return false;
         }
     }
