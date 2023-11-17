@@ -775,19 +775,19 @@ class Company extends Controller
 
         $disputeInst = new Dispute();
         $res = [];
-
-        for ($i = 0; $i < count($tasks); $i++) {
-            $dispute = $disputeInst->where(['taskID' => $tasks[$i]->taskID, 'initiatedParty' => 'company']);
-            if (!empty($dispute)) {
-                for ($j = 0; $j < count($dispute); $j++) {
-                    $dispute[$j]->task = $tasks[$i];
-                    $res[] = $dispute[$j];
+        if (!empty($tasks)) {
+            for ($i = 0; $i < count($tasks); $i++) {
+                $dispute = $disputeInst->where(['taskID' => $tasks[$i]->taskID, 'initiatedParty' => 'company']);
+                if (!empty($dispute)) {
+                    for ($j = 0; $j < count($dispute); $j++) {
+                        $dispute[$j]->task = $tasks[$i];
+                        $res[] = $dispute[$j];
+                    }
                 }
             }
+            //        show($res);
+            //        die;
         }
-        //        show($res);
-        //        die;
-
         $data['disputes'] = $res;
         $data['title'] = "Disputes";
 

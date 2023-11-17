@@ -44,5 +44,8 @@ if (roleIndex !== -1) {
 if(correctTab!==-1){
     var tab=document.getElementById(correctTab);
     // console.log(tab);
+    if(tab==null){//stuff related to profile (eg: change pass, update profile etc)
+        tab=document.getElementById('profile');
+    }
     tab.classList.add("active");
 }
