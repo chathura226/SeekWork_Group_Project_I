@@ -62,7 +62,6 @@ class User extends Model {
             $this->errors['email']="The email is not valid!";
         }else if($this->where(['email'=>$data['email']])){
             $this->errors['email']="Email already exists!";
-
         }
         if(empty($data['firstName'])){
             $this->errors['firstName']="First Name is required!";
@@ -92,6 +91,17 @@ class User extends Model {
             $this->errors['NIC']="NIC already exist!";
         }
         
+
+        //checking for university email
+        $emailParts=explode("@",$data['email']);
+        $domain=$emailParts[1];//part after @ symbol
+
+        $univeersityInst=new University();
+        $row=$univeersityInst->first(['domain'=>$domain]);
+
+        if(empty($row)){
+            $this->errors['email']="Not a valid univeristy student email address (eg: seek@stu.ucsc.cmb.ac.lk) or Your university is not in our list. If so please contant our support agent";
+        }
 
         // print_r($this->errors);
         if(empty($this->errors)){
