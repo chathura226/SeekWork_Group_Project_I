@@ -74,7 +74,7 @@ class Moderator extends Controller
                         $userInst = new User();
                         $user = $userInst->first(['userID' => $id]);
                         if (empty($user)) {
-                            message('No user with given ID found');
+                            message(['No user with given ID found','danger']);
                             redirect('moderator/otherusers');
                         }
 
@@ -92,7 +92,7 @@ class Moderator extends Controller
                         $userInst = new User();
                         $user = $userInst->first(['userID' => $id]);
                         if (empty($user)) {
-                            message('No user with given ID found');
+                            message(['No user with given ID found','danger']);
                             redirect('moderator/otherusers');
                         }
 
@@ -108,7 +108,7 @@ class Moderator extends Controller
 
         if (empty($row)) {
 
-            message('Error fetching data');
+            message(['Error fetching data','danger']);
             redirect('moderator');
 
             // //get details of user from relevant table and make a combined object 
@@ -119,7 +119,7 @@ class Moderator extends Controller
         for ($i = 0; $i < count($row); $i++) {
             $userDetails = $user->getFirstCustom($row[$i]->role, ['userID' => $row[$i]->userID], $row[$i]->role . "ID");
             if (empty($userDetails)) {
-                message('Error fetching data ' . $row[$i]->userID);
+                message(['Error fetching data ' . $row[$i]->userID,'danger']);
                 redirect('moderator');
             }
             if ($row[$i]->role === 'student') { //removing 'status' key from the result because user table also have a status field
@@ -155,7 +155,7 @@ class Moderator extends Controller
         //should implement the validation and procedure
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if ($_POST['newpassword'] !== $_POST['confirmnewpassword']) {
-                message("Password and confirm password does not match!");
+                message(["Password and confirm password does not match!",'danger']);
                 redirect('moderator/changepassword');
             }
             $userInst = new User();
@@ -166,7 +166,7 @@ class Moderator extends Controller
                 message("Password Updated Successfully!");
                 redirect('moderator/profile');
             } else {
-                message("Current password is wrong!");
+                message(["Current password is wrong!",'danger']);
                 redirect('moderator/changepassword');
             }
         }
@@ -256,7 +256,7 @@ class Moderator extends Controller
                     $university = new University();
                     $isThere = $university->first(['domain' => $_POST['domain']]);
                     if (!empty($isThere)) {
-                        message('University Domain Already Exists!');
+                        message(['University Domain Already Exists!','danger']);
                         redirect('moderator/university');
                     }
                     $university->insert($_POST);
@@ -274,7 +274,7 @@ class Moderator extends Controller
                         $university = new University();
                         $isThere = $university->first(['domain' => $_POST['domain']]);
                         if (!empty($isThere) && $isThere->universityID != $id) {
-                            message('University Domain Already Exists!');
+                            message(['University Domain Already Exists!','danger']);
                             redirect('moderator/university');
                         }
                         $university->update($_POST, $id);
@@ -290,7 +290,7 @@ class Moderator extends Controller
                         $this->view('moderator/modify-university', $data);
                         return;
                     }
-                    message('Error fetching data!');
+                    message(['Error fetching data!','danger']);
                     redirect('moderator/university');
                 } else {
                     message('Choose a university to modify!');
@@ -306,14 +306,14 @@ class Moderator extends Controller
                             $studentInst = new StudentModel();
                             $student = $studentInst->first(['universityID' => $row->universityID]);
                             if (!empty($student)) {
-                                message('Cannot delete the university domain while students are there from that domain!');
+                                message(['Cannot delete the university domain while students are there from that domain!','danger']);
                                 redirect('moderator/university');
                             }
                             $university->delete($id);
                             message('University Deleted Successfully!');
                             redirect('moderator/university');
                         }
-                        message('Error Fetching!');
+                        message(['Error Fetching!','danger']);
                         redirect('moderator/university');
                     } else {
                         message('Choose a university to delete!');
@@ -327,7 +327,7 @@ class Moderator extends Controller
         $university = new University();
         $universities = $university->getAll();
         if (empty($universities)) {
-            message('No universities in the database!');
+            message(['No universities in the database!','danger']);
             redirect('moderator');
         }
 
@@ -381,7 +381,7 @@ class Moderator extends Controller
                         $this->view('moderator/modify-category', $data);
                         return;
                     }
-                    message('Error fetching data!');
+                    message(['Error fetching data!','danger']);
                     redirect('moderator/category');
                 } else {
                     message('Choose a category to modify!');
@@ -397,14 +397,14 @@ class Moderator extends Controller
                             $taskInst = new Task();
                             $tasks = $taskInst->first(['categoryID' => $row->categoryID]);
                             if (!empty($tasks)) {
-                                message('Category Cannot be Deleted while tasks are there from that category!');
+                                message(['Category Cannot be Deleted while tasks are there from that category!','danger']);
                                 redirect('moderator/category');
                             }
                             $category->delete($id);
                             message('Category Deleted Successfully!');
                             redirect('moderator/category');
                         }
-                        message('Error Fetching!');
+                        message(['Error Fetching!','danger']);
                         redirect('moderator/category');
                     } else {
                         message('Choose a category to delete!');
@@ -418,7 +418,7 @@ class Moderator extends Controller
         $category = new Category();
         $categories = $category->getAll();
         if (empty($categories)) {
-            message('No categories in the database!');
+            message(['No categories in the database!','danger']);
             redirect('moderator');
         }
 
