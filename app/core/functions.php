@@ -22,9 +22,12 @@ function redirect($link){
 }
 
 //popup message
-function message($msg='',$erase=false){
+//message[] consists of message and the type of message
+//$msg=['this is the message','success']
+//$msg=['this is the message','danger']
+function message($msg=['','success'],$erase=false){
     
-    if(!empty($msg)){
+    if(!empty($msg[0])){
         $_SESSION['message']=$msg;
     }else{
         if(!empty($_SESSION['message'])){

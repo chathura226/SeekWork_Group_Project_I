@@ -52,7 +52,7 @@ class Otp extends Controller
                 $lastUpdatedTIme = strtotime($row->updatedAt);
                 $currentTime = time();
                 if (($lastUpdatedTIme+$minWaitTime) >= $currentTime) { //code is valid
-                    message('You should wait for 2 minutes before retrying!');
+                    message(['You should wait for 2 minutes before retrying!','danger']);
                     redirect('otp');
                 }
             }

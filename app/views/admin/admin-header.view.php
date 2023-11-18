@@ -159,7 +159,7 @@
         <div class="content-wrapper wrapper grid-gap-20">
 
             <?php if (message()) : ?>
-                <div class=" alert alert-success " id="alert">
-                    <h3><?= message('', true) ?></h3>
+                <div class=" alert <?= (message()[1]=='success')? 'alert-success' : 'alert-danger';?> " id="alert"> //if msg type is success add css class alert-sucess else add alert-danger
+                    <h3><?= message([], true)[0] ?></h3>
                 </div>
             <?php endif; ?>
