@@ -16,6 +16,17 @@ class Signup extends Controller
             //validating student data and inserting to database
             if ($_POST['form_id'] === 'student') {
                 if ($user->validateStudent($_POST)) {
+                    //since we validated the data, its sure that the domain is in the databse
+                    $emailParts = explode("@", $_POST['email']);
+                    $domain = $emailParts[1]; //part after @ symbol
+
+                    $univeersityInst = new University();
+                    $row = $univeersityInst->first(['domain' => $domain]);
+                    if(empty($row)){
+                        message(["Error creating account. Try again",'danger']);
+                        redirect('login');
+                    }
+                    $_POST['universityID']=$row->universityID;
 
                     $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
                     $_POST['role'] = "student";
@@ -29,13 +40,7 @@ class Signup extends Controller
                     ]);
                     $_POST['userID'] = $row->userID;
 
-                    //since we validated the data, its sure that the domain is in the databse
-                    $emailParts = explode("@", $_POST['email']);
-                    $domain = $emailParts[1]; //part after @ symbol
 
-                    $univeersityInst = new University();
-                    $row = $univeersityInst->first(['domain' => $domain]);
-                    $_POST['universityID']=$row->universityID;
 
                     $student = new StudentModel();
                     $student->insert($_POST); //default value for verification status is set to 'pending' from the database
