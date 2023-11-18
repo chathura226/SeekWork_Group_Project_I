@@ -152,14 +152,15 @@
         </div>
 
         <!-- ------------------scripts---------------- -->
-        <label for="role" hidden><?=Auth::getrole();?></label>
+        <label for="role" hidden><?= Auth::getrole(); ?></label>
         <script src="<?= ROOT ?>/assets/js/admin-header.js"></script>
 
 
         <div class="content-wrapper wrapper grid-gap-20">
 
+            <!-- //if msg type is success add css class alert-sucess else add alert-danger -->
             <?php if (message()) : ?>
-                <div class=" alert alert-success " id="alert">
-                    <h3><?= message('', true) ?></h3>
+                <div class=" alert <?= (message()[1] == 'success') ? 'alert-success' : 'alert-danger'; ?> " id="alert">
+                    <h3><?= message([], true)[0] ?></h3>
                 </div>
             <?php endif; ?>

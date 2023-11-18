@@ -36,11 +36,11 @@ class Otp extends Controller
                     message('Email Verified Successfully!');
                     redirect(Auth::getrole());
                 } else { //code is expired
-                    message('OTP is expired !');
+                    message(['OTP is expired !','danger']);
                     redirect('otp');
                 }
             } else {
-                message('Invalid OTP !');
+                message(['Invalid OTP !','danger']);
                 redirect('otp');
             }
         }
@@ -52,7 +52,7 @@ class Otp extends Controller
                 $lastUpdatedTIme = strtotime($row->updatedAt);
                 $currentTime = time();
                 if (($lastUpdatedTIme+$minWaitTime) >= $currentTime) { //code is valid
-                    message('You should wait for 2 minutes before retrying!');
+                    message(['You should wait for 2 minutes before retrying!','danger']);
                     redirect('otp');
                 }
             }
@@ -81,7 +81,7 @@ class Otp extends Controller
             $content = "Hello " . ucfirst(Auth::getfirstName()) . ",<br><br>Your OTP for email verification is: <strong>" . $var['otpCode'] . "</strong>.<br><br>Please use this OTP to complete your verification.<br>This is only valid for 10 minutes.<br><br>Regards,<br>SeekWork Team";
 
             if (!MailService::sendMail(Auth::getemail(), $fullName, 'OTP for Email Verification', $content)) { //if unsuccessful
-                message('Sending OTP via Email Failed! Try again later');
+                message(['Sending OTP via Email Failed! Try again later','danger']);
                 redirect('home');
             }
             message('OTP sent to your email address successfully!');

@@ -73,7 +73,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (3,'chathura','lakshan',NULL,NULL,11),(4,'Seekwork','admin','No.5 Seekwork rd.','uploads/profilePics/1699840713Screenshot from 2023-11-13 07-28-11.png',25);
+INSERT INTO `admin` VALUES (3,'chathura','lakshan',NULL,NULL,11),(4,'Seekwork','admin','No.5 Seekwork r','uploads/profilePics/1699840713Screenshot from 2023-11-13 07-28-11.png',25);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -338,7 +338,7 @@ CREATE TABLE `otp` (
   PRIMARY KEY (`otpID`),
   KEY `user-otp` (`userID`),
   CONSTRAINT `user-otp` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -347,7 +347,7 @@ CREATE TABLE `otp` (
 
 LOCK TABLES `otp` WRITE;
 /*!40000 ALTER TABLE `otp` DISABLE KEYS */;
-INSERT INTO `otp` VALUES (22,'1837742321',33,'2023-11-17 01:52:19','2023-11-17 03:19:35','2023-11-17 03:29:35');
+INSERT INTO `otp` VALUES (22,'1837742321',33,'2023-11-17 01:52:19','2023-11-17 03:19:35','2023-11-17 03:29:35'),(23,'1439068283',25,'2023-11-18 02:43:16','2023-11-18 02:51:58','2023-11-18 03:01:58');
 /*!40000 ALTER TABLE `otp` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -646,7 +646,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (11,'admin@admin.com','$2y$10$O9fihdAv7ftZ5N5mp.IQwuh1S644VmGJCNcRy0UEObVZ4y67fBv6a','123','admin','2023-09-17 16:11:13','active',0),(12,'aa@k.com','$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC','012-345-6789','student','2023-09-18 09:26:48','active',0),(14,'aabj@k.com','$2y$10$KnHOE3tyqErLsjggmUPas.KZ/UmwyShx.lXYzuqW5bC9MbAFClUdy','012-345-6789','student','2023-09-18 09:34:29','active',0),(15,'aaabj@k.com','$2y$10$78iEQp8L2EuONr7yVceNCebUdsYhaS1ICxIBk0fIv.FKGwyBeL4N2','012-345-6789','student','2023-09-18 09:36:48','active',0),(16,'aaa@kk.com','$2y$10$P08nvJCK7z0t7dNScXZElO.uQ3MRgx90LbD9UkaZGPWqScqqn93qO','012-234-4567','company','2023-09-18 10:13:50','deactivated',0),(17,'2021cs109@stu.ucsc.cmb.ac.lk','$2y$10$nt.D/ZdzXfdE/Qcjh/i7TOy/qZX1IsQDiKPy.44J0vMuCeiR2kh/O','012-345-6789','student','2023-09-18 11:47:26','active',0),(18,'2021cs1029@stu.ucsc.cmb.ac.lk','$2y$10$VZn32bcZ7z4hfDZI8I1me.YjPNp/trCscXwAPXuHe1FLGjEuLx9vC','0775017409','student','2023-09-19 07:56:38','active',0),(19,'2021cs018@stu.ucsc.cmb.ac.lk','$2y$10$COXY0b5joTnRQWRYJbySQe6/S1B90n3SJTUUWLi7/3GziO0xd0kEq','1111111111','student','2023-09-19 07:59:14','active',0),(21,'chathura@stu.ucsc.cmb.ac.lk','$2y$10$k2xZ8oNZAsCvUtTV1wWwPe/pmGjO/QwXHbFL3z6od1JNcXLOTy6da','0112339220','student','2023-09-21 23:19:29','active',0),(22,'chathura@seekwork.com','$2y$10$KPl6CHFI3XpZJiRhj1mbU.p3W3/jUxGLn8hHup94D7WMxI6YijZw.','0775017409','company','2023-09-23 10:04:25','active',0),(24,'verifiedcompany@seekwork.com','$2y$10$zzkLQrkDSAopuKUH/PRflOpuJ2ccdKLuW6cuHe5pYiOLEd78IzY5G','0112929330','company','2023-09-23 10:57:51','active',0),(25,'admin@seekwork.lk','$2y$10$Vods1YVO7kfZgyFDmz2niup1HSCjeQk5cTy.JJX7RzzVtRuspJXVq','0111111111','admin','2023-09-26 09:26:34','active',0),(26,'student@seekwork.lk','$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu','0111111111','student','2023-09-26 09:27:28','active',0),(27,'company@seekwork.lk','$2y$10$w3GHokkOlEVPbWeYdT3vSe2jwpE2DwQ1mmigKaZf5LeZW.RQ/N3re','0111111111','company','2023-09-26 09:28:43','active',0),(28,'moderator@seekwork.lk','$2y$10$fHyCVpJQCQOhzd00yCI8ie0LG6EXmy1KjjriLo5tzJSSl1aSfeDFq','0111111111','moderator','2023-09-26 09:29:49','active',0),(29,'kk.dmkde@gmail.com','$2y$10$ydF9klVGGOmPzg50FR5AHe.1fxbzKUqLjYwsFhn3KwdniTXSwQP/u','0116259662','student','2023-10-31 10:13:36','active',0),(30,'chathura@ll.com','$2y$10$ActHuYVpk5nGfTyq98pf6eWvBY3OCvEvR03UjGGAqqNH.Rto00eD6','0775017409','student','2023-10-31 12:53:24','active',0),(31,'pasindu@seekwork.lk','$2y$10$QED7NOu1nR/5DvUXbDgsN.csptwaf5N48hH6dhDx5EV66cS4JKNpW','0112939220','moderator','2023-10-31 14:43:38','active',0),(33,'chathuralakshan226@gmail.com','$2y$10$fFxkXpOFGy7WH2Opr1o54OfvUk3mYJVKblVZZLZj1edWwIcrrRfaK','0112939220','student','2023-11-17 00:55:44','active',1);
+INSERT INTO `user` VALUES (11,'admin@admin.com','$2y$10$O9fihdAv7ftZ5N5mp.IQwuh1S644VmGJCNcRy0UEObVZ4y67fBv6a','123','admin','2023-09-17 16:11:13','active',0),(12,'aa@k.com','$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC','012-345-6789','student','2023-09-18 09:26:48','active',0),(14,'aabj@k.com','$2y$10$KnHOE3tyqErLsjggmUPas.KZ/UmwyShx.lXYzuqW5bC9MbAFClUdy','012-345-6789','student','2023-09-18 09:34:29','active',0),(15,'aaabj@k.com','$2y$10$78iEQp8L2EuONr7yVceNCebUdsYhaS1ICxIBk0fIv.FKGwyBeL4N2','012-345-6789','student','2023-09-18 09:36:48','active',0),(16,'aaa@kk.com','$2y$10$P08nvJCK7z0t7dNScXZElO.uQ3MRgx90LbD9UkaZGPWqScqqn93qO','012-234-4567','company','2023-09-18 10:13:50','deactivated',0),(17,'2021cs109@stu.ucsc.cmb.ac.lk','$2y$10$nt.D/ZdzXfdE/Qcjh/i7TOy/qZX1IsQDiKPy.44J0vMuCeiR2kh/O','012-345-6789','student','2023-09-18 11:47:26','active',0),(18,'2021cs1029@stu.ucsc.cmb.ac.lk','$2y$10$VZn32bcZ7z4hfDZI8I1me.YjPNp/trCscXwAPXuHe1FLGjEuLx9vC','0775017409','student','2023-09-19 07:56:38','active',0),(19,'2021cs018@stu.ucsc.cmb.ac.lk','$2y$10$COXY0b5joTnRQWRYJbySQe6/S1B90n3SJTUUWLi7/3GziO0xd0kEq','1111111111','student','2023-09-19 07:59:14','active',0),(21,'chathura@stu.ucsc.cmb.ac.lk','$2y$10$k2xZ8oNZAsCvUtTV1wWwPe/pmGjO/QwXHbFL3z6od1JNcXLOTy6da','0112339220','student','2023-09-21 23:19:29','active',0),(22,'chathura@seekwork.com','$2y$10$KPl6CHFI3XpZJiRhj1mbU.p3W3/jUxGLn8hHup94D7WMxI6YijZw.','0775017409','company','2023-09-23 10:04:25','active',0),(24,'verifiedcompany@seekwork.com','$2y$10$zzkLQrkDSAopuKUH/PRflOpuJ2ccdKLuW6cuHe5pYiOLEd78IzY5G','0112929330','company','2023-09-23 10:57:51','active',0),(25,'admin@seekwork.lk','$2y$10$Vods1YVO7kfZgyFDmz2niup1HSCjeQk5cTy.JJX7RzzVtRuspJXVq','0111111111','admin','2023-09-26 09:26:34','active',1),(26,'student@seekwork.lk','$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu','0111111111','student','2023-09-26 09:27:28','active',0),(27,'company@seekwork.lk','$2y$10$w3GHokkOlEVPbWeYdT3vSe2jwpE2DwQ1mmigKaZf5LeZW.RQ/N3re','0111111111','company','2023-09-26 09:28:43','active',0),(28,'moderator@seekwork.lk','$2y$10$fHyCVpJQCQOhzd00yCI8ie0LG6EXmy1KjjriLo5tzJSSl1aSfeDFq','0111111111','moderator','2023-09-26 09:29:49','active',0),(29,'kk.dmkde@gmail.com','$2y$10$ydF9klVGGOmPzg50FR5AHe.1fxbzKUqLjYwsFhn3KwdniTXSwQP/u','0116259662','student','2023-10-31 10:13:36','active',0),(30,'chathura@ll.com','$2y$10$ActHuYVpk5nGfTyq98pf6eWvBY3OCvEvR03UjGGAqqNH.Rto00eD6','0775017409','student','2023-10-31 12:53:24','active',0),(31,'pasindu@seekwork.lk','$2y$10$QED7NOu1nR/5DvUXbDgsN.csptwaf5N48hH6dhDx5EV66cS4JKNpW','0112939220','moderator','2023-10-31 14:43:38','active',0),(33,'chathuralakshan226@gmail.com','$2y$10$fFxkXpOFGy7WH2Opr1o54OfvUk3mYJVKblVZZLZj1edWwIcrrRfaK','0112939220','student','2023-11-17 00:55:44','active',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -659,4 +659,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-17  7:16:32
+-- Dump completed on 2023-11-18  3:15:38

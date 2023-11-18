@@ -11,12 +11,12 @@ class Company extends Controller
             redirect('login');
         }
         if (!Auth::is_otp_verified()) {
-            message('Verify Email before accessing dashboard!');
+            message(['Verify Email before accessing dashboard!','danger']);
             redirect('otp');
         }
 
         if (!Auth::is_company()) { ///if not an admin, redirect to home
-            message('Only companies can view company dashboard!');
+            message(['Only companies can view company dashboard!','danger']);
             redirect('home');
         }
     }
@@ -99,7 +99,7 @@ class Company extends Controller
         //should implement the validation and procedure
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if ($_POST['newpassword'] !== $_POST['confirmnewpassword']) {
-                message("Password and confirm password does not match!");
+                message(["Password and confirm password does not match!",'danger']);
                 redirect('company/changepassword');
             }
             $userInst = new User();
@@ -110,7 +110,7 @@ class Company extends Controller
                 message("Password Updated Successfully!");
                 redirect('company/profile');
             } else {
-                message("Current password is wrong!");
+                message(["Current password is wrong!",'danger']);
                 redirect('company/changepassword');
             }
         }
@@ -225,7 +225,7 @@ class Company extends Controller
             $row = $task->where(['companyID' => Auth::getcompanyID()]);
 
             if (empty($row)) {
-                message('You have no tasks posted!');
+                message(['You have no tasks posted!','danger']);
                 redirect('company');
             }
             $data['title'] = "Tasks";
@@ -242,7 +242,7 @@ class Company extends Controller
 
             if (!empty($row)) {
                 if ($row->companyID !== Auth::getcompanyID()) {
-                    message('Unauthorized! Task is not yours');
+                    message(['Unauthorized! Task is not yours','danger']);
                     redirect('company/tasks');
                 }
                 if (!empty($action)) {
@@ -252,7 +252,7 @@ class Company extends Controller
                             $submissionInst = new Submission();
                             $submission = $submissionInst->first(['submissionID' => $id2]);
                             if (empty($submission)) {
-                                message('No Submission with this ID!');
+                                message(['No Submission with this ID!','danger']);
                                 redirect('company/tasks/' . $id . '/submissions');
                             }
                             $data['title'] = "Submission";
@@ -264,7 +264,7 @@ class Company extends Controller
                         $submissionInst = new Submission();
                         $submissions = $submissionInst->where(['taskID' => $id]);
                         if (empty($submissions)) {
-                            message('No Submissions Recieved!');
+                            message(['No Submissions have Recieved!','danger']);
                             redirect('company/tasks/' . $id);
                         }
 
@@ -278,7 +278,7 @@ class Company extends Controller
                         $assignments = $assignmentInst->where(['taskID' => $id]);
 
                         if (empty($assignments)) {
-                            message('No Invitations sent!');
+                            message(['No Invitations have been sent!','danger']);
                             redirect('company/tasks/' . $id);
                         }
 
@@ -318,7 +318,7 @@ class Company extends Controller
                                 $this->view('company/proposal', $data);
                                 return;
                             }
-                            message('Invalid Proposal ID!');
+                            message(['Invalid Proposal ID!','danger']);
                             redirect('company/tasks/' . $id . '/view-proposals');
                             return;
                         }
@@ -347,7 +347,7 @@ class Company extends Controller
                         }
                     }
 
-                    message('Invalid Action!');
+                    message(['Invalid Action!','danger']);
                     redirect('company');
                     return;
                 }
@@ -365,12 +365,12 @@ class Company extends Controller
 
                     $this->view('company/task', $data);
                 } else {
-                    message('Unauthorized');
+                    message(['Unauthorized','danger']);
                     redirect('company/tasks');
                 }
             } else {
 
-                message('Error fetching data!');
+                message(['Error fetching data!','danger']);
                 redirect('company/tasks');
             }
         }
@@ -417,7 +417,7 @@ class Company extends Controller
             }
         }
 
-        message('Invalid User ID!');
+        message(['Invalid User ID!','danger']);
         redirect('company');
     }
 
@@ -493,12 +493,12 @@ class Company extends Controller
                     $this->view('company/modify', $data);
                 } else {
 
-                    message('Unauthorized');
+                    message(['Unauthorized','danger']);
                     redirect('company/tasks');
                 }
             } else {
 
-                message('Error fetching data!');
+                message(['Error fetching data!','danger']);
                 redirect('company/tasks');
             }
         }
@@ -521,10 +521,10 @@ class Company extends Controller
                         message('Task Deleted Successfully!');
                         redirect('company/tasks');
                     }
-                    message('Unauthorized !');
+                    message(['Unauthorized !','danger']);
                     redirect('company/tasks');
                 }
-                message('Error Fetching!');
+                message(['Error Fetching!','danger']);
                 redirect('company/tasks');
             }
         }
@@ -545,12 +545,12 @@ class Company extends Controller
                     $row = $task->first(['taskID' => $id, 'companyID' => Auth::getcompanyID()]);
 
                     if (empty($row)) { //no task posted by him with the given id is found
-                        message('Unauthorized!');
+                        message(['Unauthorized!','danger']);
                         redirect('company/tasks');
                     }
 
                     if ($row->status !== 'closed') {
-                        message('You cannot add the review until the task is finished!');
+                        message(['You cannot add the review until the task is finished!','danger']);
                         redirect('company/tasks');
                     }
 
@@ -565,7 +565,7 @@ class Company extends Controller
                         $review = new Review();
                         $is_review = $review->first(['taskID' => $id, 'reviewType' => 'companyTOstudent']);
                         if (!empty($is_review)) {
-                            message('Failed!  You have a review for this task already!');
+                            message(['Failed!  You have a review for this task already!','danger']);
                             redirect('company/review');
                         }
                         $review->insert($_POST);
@@ -593,7 +593,7 @@ class Company extends Controller
                     $task = new Task();
                     $taskDetails = $task->first(['taskID' => $row->taskID, 'companyID' => Auth::getcompanyID()]);
                     if (empty($row)) { //no review posted by him with the given reviewID is found
-                        message('Unauthorized!');
+                        message(['Unauthorized!','danger']);
                         redirect('company/review');
                     }
 
@@ -639,7 +639,7 @@ class Company extends Controller
                             message('Review Deleted Successfully!');
                             redirect('company/review');
                         } else {
-                            message('Unauthorized!');
+                            message(['Unauthorized!','danger']);
                             redirect('company/review');
                         }
                     } else {
@@ -757,11 +757,11 @@ class Company extends Controller
                                 message('Dispute deleted successfully!');
                                 redirect('company/disputes');
                             } else {
-                                message('You dont have permission to execute this operation!');
+                                message(['You dont have permission to execute this operation!','danger']);
                                 redirect('company/disputes');
                             }
                         } else {
-                            message('Error occured while deletion!');
+                            message(['Error occured while deletion!','danger']);
                             redirect('company/disputes');
                         }
                     }

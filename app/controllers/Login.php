@@ -22,7 +22,7 @@ class Login extends Controller{
                 if (password_verify($_POST['password'],$row->password)){
 
                     if($row->status==='deactivated'){
-                        message('Your account has been deactivated! </br>Please contact the administrator!');
+                        message(['Your account has been deactivated! </br>Please contact the administrator!','danger']);
                         redirect('login');
                     }
                     //get details of user from relevant table and ake a combined object to store as session data

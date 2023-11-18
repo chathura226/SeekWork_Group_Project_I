@@ -59,7 +59,7 @@ class Tasks extends Controller{
             redirect('login');
         }
         if(!Auth::is_student()){///if not a student, redirect to home
-            message('Only students can apply for tasks!');
+            message(['Only students can apply for tasks!','danger']);
             redirect('home');
         }
         if(empty($id)){
