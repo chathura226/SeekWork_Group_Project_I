@@ -11,11 +11,11 @@ class Moderator extends Controller
             redirect('login');
         }
         if (!Auth::is_otp_verified()) { ///if not a student, redirect to home
-            message('Verify Email before accessing dashboard!');
+            message(['Verify Email before accessing dashboard!','danger']);
             redirect('otp');
         }
         if (!Auth::is_moderator()) { ///if not an moderator, redirect to home
-            message('Only moderators can view moderator dashboard!');
+            message(['Only moderators can view moderator dashboard!','danger']);
             redirect('home');
         }
     }

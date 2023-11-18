@@ -11,11 +11,11 @@ class Admin extends Controller
             redirect('login');
         }
         if (!Auth::is_otp_verified()) {
-            message('Verify Email before accessing dashboard!');
+            message(['Verify Email before accessing dashboard!','danger']);
             redirect('otp');
         }
         if (!Auth::is_admin()) { ///if not an admin, redirect to home
-            message('Only admins can view admin dashboard!');
+            message(['Only admins can view admin dashboard!','danger']);
             redirect('home');
         }
     }

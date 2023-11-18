@@ -11,11 +11,11 @@ class Student extends Controller
             redirect('login');
         }
         if (!Auth::is_otp_verified()) { ///if not a student, redirect to home
-            message('Verify Email before accessing dashboard!');
+            message(['Verify Email before accessing dashboard!','danger']);
             redirect('otp');
         }
         if (!Auth::is_student()) { ///if not a student, redirect to home
-            message('Only students can view student dashboard!');
+            message(['Only students can view student dashboard!','danger']);
             redirect('home');
         }
     }

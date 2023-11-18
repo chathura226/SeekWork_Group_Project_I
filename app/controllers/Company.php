@@ -11,12 +11,12 @@ class Company extends Controller
             redirect('login');
         }
         if (!Auth::is_otp_verified()) {
-            message('Verify Email before accessing dashboard!');
+            message(['Verify Email before accessing dashboard!','danger']);
             redirect('otp');
         }
 
         if (!Auth::is_company()) { ///if not an admin, redirect to home
-            message('Only companies can view company dashboard!');
+            message(['Only companies can view company dashboard!','danger']);
             redirect('home');
         }
     }
