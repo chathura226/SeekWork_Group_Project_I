@@ -17,3 +17,5 @@ In terminal execute command "seekwork down"</br></br>
 In Linux,</br>
 In terminal execute command "./seekwork.sh down"</br></br>
 
+Features :
+ image resize to reduce size

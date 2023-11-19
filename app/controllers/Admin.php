@@ -163,6 +163,8 @@ class Admin extends Controller
 
                             $destination = $folder . time() . $_FILES['imageInput']['name'];
                             move_uploaded_file($_FILES['imageInput']['tmp_name'], $destination);
+                            $destination=resizeImage($destination);//resizing and reducing file size 
+
                             $_POST['profilePic'] = $destination;
 
                             //deleting old image
