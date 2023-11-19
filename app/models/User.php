@@ -65,10 +65,17 @@ class User extends Model {
         }
         if(empty($data['firstName'])){
             $this->errors['firstName']="First Name is required!";
+        }else if(!preg_match("/^[a-zA-Z]+$/",trim($data['firstName']))){//checking for numbers
+            $this->errors['firstName']="First Name can only contain letters without spaces!";
         }
+
+
         if(empty($data['lastName'])){
             $this->errors['lastName']="Last Name is required!";
+        }else if(!preg_match("/^[a-zA-Z]+$/",trim($data['lastName']))){//checking for numbers
+            $this->errors['lastName']="Last Name can only contain letters without spaces!";
         }
+
         if(empty($data['address'])){
             $this->errors['address']="Address is required!";
         }
@@ -134,10 +141,16 @@ class User extends Model {
         }
         if(empty($data['firstName'])){
             $this->errors['firstName']="First Name is required!";
+        }else if(!preg_match("/^[a-zA-Z]+$/",trim($data['firstName']))){//checking for numbers
+            $this->errors['firstName']="First Name can only contain letters without spaces!";
         }
+
         if(empty($data['lastName'])){
             $this->errors['lastName']="Last Name is required!";
+        }else if(!preg_match("/^[a-zA-Z]+$/",trim($data['lastName']))){//checking for numbers
+            $this->errors['lastName']="Last Name can only contain letters without spaces!";
         }
+        
         if(empty($data['address'])){
             $this->errors['address']="Address is required!";
         }
@@ -193,10 +206,15 @@ class User extends Model {
         }
         if(empty($data['firstName'])){
             $this->errors['firstName']="First Name is required!";
+        }else if(!preg_match("/^[a-zA-Z]+$/",trim($data['firstName']))){//checking for numbers
+            $this->errors['firstName']="First Name can only contain letters without spaces!";
         }
         if(empty($data['lastName'])){
             $this->errors['lastName']="Last Name is required!";
+        }else if(!preg_match("/^[a-zA-Z]+$/",trim($data['lastName']))){//checking for numbers
+            $this->errors['lastName']="Last Name can only contain letters without spaces!";
         }
+        
         if(empty($data['address'])){
             $this->errors['address']="Address is required!";
         }
@@ -234,10 +252,16 @@ class User extends Model {
         }
         if(empty($data['firstName'])){
             $this->errors['firstName']="First Name is required!";
+        }else if(!preg_match("/^[a-zA-Z]+$/",trim($data['firstName']))){//checking for numbers
+            $this->errors['firstName']="First Name can only contain letters without spaces!";
         }
+
         if(empty($data['lastName'])){
             $this->errors['lastName']="Last Name is required!";
+        }else if(!preg_match("/^[a-zA-Z]+$/",trim($data['lastName']))){//checking for numbers
+            $this->errors['lastName']="Last Name can only contain letters without spaces!";
         }
+        
         if(empty($data['address'])){
             $this->errors['address']="Address is required!";
         }

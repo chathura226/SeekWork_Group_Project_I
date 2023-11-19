@@ -11,11 +11,11 @@ class Admin extends Controller
             redirect('login');
         }
         if (!Auth::is_otp_verified()) {
-            message(['Verify Email before accessing dashboard!','danger']);
+            message(['Verify Email before accessing dashboard!', 'danger']);
             redirect('otp');
         }
         if (!Auth::is_admin()) { ///if not an admin, redirect to home
-            message(['Only admins can view admin dashboard!','danger']);
+            message(['Only admins can view admin dashboard!', 'danger']);
             redirect('home');
         }
     }
@@ -70,7 +70,7 @@ class Admin extends Controller
         //should implement the validation and procedure
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if ($_POST['newpassword'] !== $_POST['confirmnewpassword']) {
-                message(["Password and confirm password does not match!",'danger']);
+                message(["Password and confirm password does not match!", 'danger']);
                 redirect('admin/changepassword');
             }
             $userInst = new User();
@@ -81,7 +81,7 @@ class Admin extends Controller
                 message("Password Updated Successfully!");
                 redirect('admin/profile');
             } else {
-                message(["Current password is wrong!",'danger']);
+                message(["Current password is wrong!", 'danger']);
                 redirect('admin/changepassword');
             }
         }
@@ -104,7 +104,7 @@ class Admin extends Controller
 
         if (empty($row)) {
 
-            message(['Error fetching data','danger']);
+            message(['Error fetching data', 'danger']);
             redirect('admin');
 
             // //get details of uvalidateModeratorser from relevant table and make a combined object 
@@ -115,7 +115,7 @@ class Admin extends Controller
         for ($i = 0; $i < count($row); $i++) {
             $userDetails = $user->getFirstCustom($row[$i]->role, ['userID' => $row[$i]->userID], $row[$i]->role . "ID");
             if (empty($userDetails)) {
-                message(['Error fetching data ' . $row[$i]->userID,'danger']);
+                message(['Error fetching data ' . $row[$i]->userID, 'danger']);
                 redirect('admin');
             }
 
@@ -250,7 +250,7 @@ class Admin extends Controller
                         $moderatorInst = new ModeratorModel();
                         $moderator = $moderatorInst->first(['moderatorID' => $id]);
                         if (empty($moderator)) {
-                            message(['No user with given moderatorID found','danger']);
+                            message(['No user with given moderatorID found', 'danger']);
                             redirect('admin/managemoderators');
                         }
 
@@ -269,7 +269,7 @@ class Admin extends Controller
                         $moderatorInst = new ModeratorModel();
                         $moderator = $moderatorInst->first(['moderatorID' => $id]);
                         if (empty($moderator)) {
-                            message(['No user with given moderatorID found','danger']);
+                            message(['No user with given moderatorID found', 'danger']);
                             redirect('admin/managemoderators');
                         }
 
@@ -345,7 +345,7 @@ class Admin extends Controller
                         $adminInst = new AdminModel();
                         $admin = $adminInst->first(['adminID' => $id]);
                         if (empty($admin)) {
-                            message(['No user with given adminID found','danger']);
+                            message(['No user with given adminID found', 'danger']);
                             redirect('admin/manageadmins');
                         }
 
@@ -364,7 +364,7 @@ class Admin extends Controller
                         $adminInst = new AdminModel();
                         $admin = $adminInst->first(['adminID' => $id]);
                         if (empty($admin)) {
-                            message(['No user with given adminID found','danger']);
+                            message(['No user with given adminID found', 'danger']);
                             redirect('admin/manageadmins');
                         }
 
