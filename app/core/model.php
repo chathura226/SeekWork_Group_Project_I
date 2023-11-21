@@ -31,6 +31,47 @@ class Model extends Database{
         // show($data);
     }
 
+    //inner join
+    //$tables- array of table names that need to be joined with $this->table
+    //$joinCOnditions = array of join conditions for each join
+    //$data = conditions for where clauses
+    //$selectColumns= columns that they need
+    public function innerJoin($tables=[],$joinConditions=[],$data=[],$selectColumns=['*']){
+        if(count($tables)<1 && count($tables)==count($joinConditions)){
+            return false; // Need atleast one more table than $this->table to use innerjoin
+        }
+
+        $query = "SELECT ". implode(", ",$selectColumns) . "FROM ". $this->table;
+        //adding inner joins
+        for ($i = 0; $i < count($tables); $i++) {
+
+            $query=$query . " INNER JOIN " . $tables[$i] . " ON ";
+            
+            //adding join condition if mentioned, else add default
+            $query=$query . $joinConditions[$i] . " ";
+        }
+
+        //adding where conditions
+        if(!empty($data)){
+            $keys=array_keys($data);
+            $query=$query."WHERE ";
+            foreach($keys as $key){
+                $query.=$key."=:".$key." && ";
+            }
+    
+            //remove the additional '&&' 
+            $query=trim($query,"&& ");
+        }
+
+        $res=$this->query($query,$data);
+
+        if(is_array($res)){
+            return $res;
+        }else return false;
+
+
+    }
+
     //update
     public function update($data,$id){
 
