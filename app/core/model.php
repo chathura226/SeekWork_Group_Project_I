@@ -35,13 +35,15 @@ class Model extends Database{
     //$tables- array of table names that need to be joined with $this->table
     //$joinCOnditions = array of join conditions for each join
     //$data = conditions for where clauses
-    //$selectColumns= columns that they need
+    //$selectColumns= columns that they need. SHoould not be ambiguous =  ['lastName','user.userID']
+    //NOTE: Where clause is expanaded in here. not using key value pairs for PDO using $key=:$key. 
+    // There for no need to send the $data to PDO
     public function innerJoin($tables=[],$joinConditions=[],$data=[],$selectColumns=['*']){
         if(count($tables)<1 && count($tables)==count($joinConditions)){
             return false; // Need atleast one more table than $this->table to use innerjoin
         }
 
-        $query = "SELECT ". implode(", ",$selectColumns) . "FROM ". $this->table;
+        $query = "SELECT ". implode(", ",$selectColumns) . " FROM ". $this->table;
         //adding inner joins
         for ($i = 0; $i < count($tables); $i++) {
 
@@ -56,14 +58,19 @@ class Model extends Database{
             $keys=array_keys($data);
             $query=$query."WHERE ";
             foreach($keys as $key){
-                $query.=$key."=:".$key." && ";
+                $query.=$key."=".$data[$key]." && ";
             }
     
             //remove the additional '&&' 
             $query=trim($query,"&& ");
         }
+        // show($query);
+        // show($data);
+        // die;
 
-        $res=$this->query($query,$data);
+        //since $data for where clause is expanded in here, no need to send the data to PDO
+        //didnt use $key:=$key
+        $res=$this->query($query,$data=[]);
 
         if(is_array($res)){
             return $res;
