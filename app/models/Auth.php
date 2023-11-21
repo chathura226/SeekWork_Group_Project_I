@@ -140,16 +140,40 @@ class Auth{
     public static function updateSession(){
         if(!empty($_SESSION['USER_DATA'])){
             $user=new User();
-            $row=$user->first(['userID'=>Auth::getuserID()]);
-            $userDetails=$user->getFirstCustom($row->role,['userID'=>$row->userID],$row->role."ID");
+            // $row=$user->first(['userID'=>Auth::getuserID()]);
+            // $userDetails=$user->getFirstCustom($row->role,['userID'=>$row->userID],$row->role."ID");
 
+            // //if user is a student put university details too
+            // if($row->role==='student'){
+            //     $universityDetails=$user->getFirstCustom('university',['universityID'=>$userDetails->universityID],"universityID");
+            //     $combinedObject1= (object)array_merge((array)$userDetails, (array)$universityDetails);
+            //     $combinedObject = (object)array_merge((array)$row, (array)$combinedObject1);
+            // }else $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
+
+            $joiningTables=[Auth::getrole()];
+            $joinConditions=["user.userID=".Auth::getrole()."."."userID"];
             //if user is a student put university details too
-            if($row->role==='student'){
-                $universityDetails=$user->getFirstCustom('university',['universityID'=>$userDetails->universityID],"universityID");
-                $combinedObject1= (object)array_merge((array)$userDetails, (array)$universityDetails);
-                $combinedObject = (object)array_merge((array)$row, (array)$combinedObject1);
-            }else $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
+            if(Auth::getrole()==='student'){
+                $joiningTables[]="university";
+                $joinConditions[]="student.universityID=university.universityID";
+            }
+            //use innerjoin and take first element
+            $combinedObject = $user->innerJoin($joiningTables,$joinConditions,['user.userID'=>Auth::getuserID()])[0];
+
             Auth::authenticate($combinedObject);
         }
     }
 }
+
+
+                    // $userDetails=$user->getFirstCustom($row->role,['userID'=>$row->userID],$row->role."ID");
+
+                    // //if user is a student put university details too
+                    // if($row->role==='student'){
+                    //     $universityDetails=$user->getFirstCustom('university',['universityID'=>$userDetails->universityID],"universityID");
+                    //     $combinedObject1= (object)array_merge((array)$userDetails, (array)$universityDetails);
+                    //     $combinedObject = (object)array_merge((array)$row, (array)$combinedObject1);
+                    // }else $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
+
+
+ 
