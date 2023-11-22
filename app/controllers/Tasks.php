@@ -19,16 +19,21 @@ class Tasks extends Controller{
         }else{
 
             $task=new Task();
-            $row = $task->getFirstCustom('task',['taskID'=>$id],'taskID');//get task details corresponding to the tadsk id
+            $row = $task->first(['taskID'=>$id]);//get task details corresponding to the tadsk id
+            
 
             if(!empty($row)){
                 
                 $company=new CompanyModel();
-                $compDetails=$company->first(['companyID'=>$row->companyID]);
-                $user = new User();
-                $userdetails=$user->first(['userID'=>$compDetails->userID]);
-                $compDetails->createdAt=$userdetails->createdAt;
+                // $compDetails=$company->first(['companyID'=>$row->companyID]);
+                // $user = new User();
+                // $userdetails=$user->first(['userID'=>$compDetails->userID]);
+                // $compDetails->createdAt=$userdetails->createdAt;
                 
+                $compDetails=$company->innerJoin(['user'],['company.userID=user.userID'],['company.companyID'=>$row->companyID])[0];
+                // show($compDetails);
+                // die;
+
                 if(!empty($compDetails)){
                     $data['error']="Error fetching data!";
                 }
@@ -86,15 +91,13 @@ class Tasks extends Controller{
 
             //if not a post request-------------------------------------------------------------------------
             $task=new Task();
-            $row = $task->getFirstCustom('task',['taskID'=>$id],'taskID');//get task details corresponding to the tadsk id
+            $row = $task->first(['taskID'=>$id]);//get task details corresponding to the tadsk id
 
             if(!empty($row)){
                 
                 $company=new CompanyModel();
-                $compDetails=$company->first(['companyID'=>$row->companyID]);
-                $user = new User();
-                $userdetails=$user->first(['userID'=>$compDetails->userID]);
-                $compDetails->createdAt=$userdetails->createdAt;
+                
+                $compDetails=$company->innerJoin(['user'],['company.userID=user.userID'],['company.companyID'=>$row->companyID])[0];
                 
                 if(!empty($compDetails)){
                     $data['error']="Error fetching data!";
