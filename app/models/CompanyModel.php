@@ -15,7 +15,8 @@ class CompanyModel extends Model {
         'website',
         'profilePic',	
         'brn',	
-        'userID',	
+        'userID',
+        'companyID',	
     ];
 
      

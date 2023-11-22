@@ -20,15 +20,21 @@ class Tasks extends Controller{
 
             $task=new Task();
             $row = $task->getFirstCustom('task',['taskID'=>$id],'taskID');//get task details corresponding to the tadsk id
+            //get task dails and company details at once
+            
 
             if(!empty($row)){
                 
                 $company=new CompanyModel();
-                $compDetails=$company->first(['companyID'=>$row->companyID]);
-                $user = new User();
-                $userdetails=$user->first(['userID'=>$compDetails->userID]);
-                $compDetails->createdAt=$userdetails->createdAt;
+                // $compDetails=$company->first(['companyID'=>$row->companyID]);
+                // $user = new User();
+                // $userdetails=$user->first(['userID'=>$compDetails->userID]);
+                // $compDetails->createdAt=$userdetails->createdAt;
                 
+                $compDetails=$company->innerJoin(['user'],['company.userID=user.userID'],['company.companyID'=>$row->companyID])[0];
+                // show($compDetails);
+                // die;
+
                 if(!empty($compDetails)){
                     $data['error']="Error fetching data!";
                 }

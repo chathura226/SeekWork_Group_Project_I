@@ -19,3 +19,4 @@ In terminal execute command "./seekwork.sh down"</br></br>
 
 Features :
  image resize to reduce size
+ inner joins using function
