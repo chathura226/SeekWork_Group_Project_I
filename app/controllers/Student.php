@@ -4,6 +4,13 @@
 class Student extends Controller
 {
 
+    // Constructor
+    public function __construct()
+    {
+        // veridfy at controller creation
+        $this->all_common_verifications();
+    }
+
     public function all_common_verifications()
     {
         if (!Auth::logged_in()) { //if not logged in redirect to login page
@@ -11,18 +18,18 @@ class Student extends Controller
             redirect('login');
         }
         if (!Auth::is_otp_verified()) { ///if not a student, redirect to home
-            message(['Verify Email before accessing dashboard!','danger']);
+            message(['Verify Email before accessing dashboard!', 'danger']);
             redirect('otp');
         }
         if (!Auth::is_student()) { ///if not a student, redirect to home
-            message(['Only students can view student dashboard!','danger']);
+            message(['Only students can view student dashboard!', 'danger']);
             redirect('home');
         }
     }
     public function index()
     {
 
-        $this->all_common_verifications();
+
 
 
 
@@ -35,7 +42,7 @@ class Student extends Controller
 
     public function profile($id = null)
     {
-        $this->all_common_verifications();
+
 
 
         //if id is null make it current logged in user id
@@ -63,7 +70,7 @@ class Student extends Controller
 
     public function changepassword()
     {
-        $this->all_common_verifications();
+
 
 
         $data['title'] = "Change Password";
@@ -73,7 +80,7 @@ class Student extends Controller
         //should implement the validation and procedure
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if ($_POST['newpassword'] !== $_POST['confirmnewpassword']) {
-                message(["Password and confirm password does not match!",'danger']);
+                message(["Password and confirm password does not match!", 'danger']);
                 redirect('student/changepassword');
             }
             $userInst = new User();
@@ -84,7 +91,7 @@ class Student extends Controller
                 message("Password Updated Successfully!");
                 redirect('student/profile');
             } else {
-                message(["Current password is wrong!",'danger']);
+                message(["Current password is wrong!", 'danger']);
                 redirect('student/changepassword');
             }
         }
@@ -95,7 +102,7 @@ class Student extends Controller
 
     public function updateprofile()
     {
-        $this->all_common_verifications();
+
 
 
         $studentInst = new StudentModel();
@@ -163,7 +170,7 @@ class Student extends Controller
 
     public function verification()
     {
-        $this->all_common_verifications();
+
 
 
 
@@ -185,13 +192,13 @@ class Student extends Controller
     public function proposals($id = null)
     {
 
-        $this->all_common_verifications();
+
 
         if (empty($id)) {
             $proposal = new Proposal();
             $proposals = $proposal->where(['studentID' => Auth::getstudentID()]);
             if (empty($proposals)) {
-                message(['You have not submitted any proposals!','danger']);
+                message(['You have not submitted any proposals!', 'danger']);
                 redirect('student');
             }
             $task = new Task();
@@ -224,7 +231,7 @@ class Student extends Controller
                     }
                 }
             }
-            message(['Error fetching data!','danger']);
+            message(['Error fetching data!', 'danger']);
             redirect('student/proposals');
         }
     }
@@ -233,7 +240,7 @@ class Student extends Controller
     public function modify($id = null)
     {
 
-        $this->all_common_verifications();
+
 
         if (empty($id)) {
             message('Select a proposal to modify!');
@@ -248,7 +255,7 @@ class Student extends Controller
 
                 $proposal = new Proposal();
                 if ($proposal->first(['proposalID' => $id])->studentID !== Auth::getstudentID()) {
-                    message(['Unauthorized!','danger']);
+                    message(['Unauthorized!', 'danger']);
                     redirect('student/proposals');
                 }
                 $proposal->update($_POST, $id);
@@ -276,7 +283,7 @@ class Student extends Controller
                         }
                     }
                 }
-                message(['Error fetching data!','danger']);
+                message(['Error fetching data!', 'danger']);
                 redirect('student/proposals');
             }
         }
@@ -286,7 +293,7 @@ class Student extends Controller
     public function delete($id = null)
     {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            $this->all_common_verifications();
+
 
 
 
@@ -299,10 +306,10 @@ class Student extends Controller
                         message('Proposal Deleted Successfully!');
                         redirect('student/proposals');
                     }
-                    message(['Unauthorized !','danger']);
+                    message(['Unauthorized !', 'danger']);
                     redirect('student/proposals');
                 }
-                message(['Error Fetching!','danger']);
+                message(['Error Fetching!', 'danger']);
                 redirect('student/proposals');
             }
         }
@@ -312,7 +319,7 @@ class Student extends Controller
     public function tasks($id = null, $action = null, $id2 = null, $action2 = null)
     {
 
-        $this->all_common_verifications();
+
 
         $task = new Task();
 
@@ -333,7 +340,7 @@ class Student extends Controller
 
                                 if (empty($submission)) {
 
-                                    message(['Invalid Submission ID or Submission is not yours!','danger']);
+                                    message(['Invalid Submission ID or Submission is not yours!', 'danger']);
                                     redirect('student/tasks/' . $id . '/submissions');
                                 }
 
@@ -346,7 +353,7 @@ class Student extends Controller
                                                 message('Submission deleted successfully!');
                                                 redirect('student/tasks/' . $id . '/submissions');
                                             } else {
-                                                message(['You cannot delete a accepted or rejected submission!','danger']);
+                                                message(['You cannot delete a accepted or rejected submission!', 'danger']);
                                                 redirect('student/tasks/' . $id . '/submissions');
                                             }
                                         }
@@ -425,12 +432,12 @@ class Student extends Controller
                     $this->view('student/task', $data);
                     return;
                 } else {
-                    message(['Unauthorized','danger']);
+                    message(['Unauthorized', 'danger']);
                     redirect('student/tasks');
                 }
             } else {
 
-                message(['Error fetching data!','danger']);
+                message(['Error fetching data!', 'danger']);
                 redirect('student/tasks');
             }
         }
@@ -455,7 +462,7 @@ class Student extends Controller
     public function review($action = null, $id = null)
     {
 
-        $this->all_common_verifications();
+
 
         if (!empty($action)) {
 
@@ -466,12 +473,12 @@ class Student extends Controller
                     $row = $task->first(['taskID' => $id, 'assignedStudentID' => Auth::getstudentID()]);
 
                     if (empty($row)) { //no task posted by him with the given id is found
-                        message(['Unauthorized!','danger']);
+                        message(['Unauthorized!', 'danger']);
                         redirect('student/tasks');
                     }
 
                     if ($row->status !== 'closed') {
-                        message(['You cannot add the review until the task is finished!','danger']);
+                        message(['You cannot add the review until the task is finished!', 'danger']);
                         redirect('student/tasks');
                     }
 
@@ -486,7 +493,7 @@ class Student extends Controller
                         $review = new Review();
                         $is_review = $review->first(['taskID' => $id, 'reviewType' => 'studentTOcompany']);
                         if (!empty($is_review)) {
-                            message(['Failed!  You have a review for this task already!','danger']);
+                            message(['Failed!  You have a review for this task already!', 'danger']);
                             redirect('student/review');
                         }
                         $review->insert($_POST);
@@ -514,7 +521,7 @@ class Student extends Controller
                     $task = new Task();
                     $taskDetails = $task->first(['taskID' => $row->taskID, 'assignedStudentID' => Auth::getstudentID()]);
                     if (empty($row)) { //no review posted by him with the given reviewID is found
-                        message(['Unauthorized!','danger']);
+                        message(['Unauthorized!', 'danger']);
                         redirect('student/review');
                     }
 
@@ -560,7 +567,7 @@ class Student extends Controller
                             message('Review Deleted Successfully!');
                             redirect('student/review');
                         } else {
-                            message(['Unauthorized!','danger']);
+                            message(['Unauthorized!', 'danger']);
                             redirect('student/review');
                         }
                     } else {
@@ -598,7 +605,7 @@ class Student extends Controller
 
     public function pendinginvites($action = null, $id = null)
     {
-        $this->all_common_verifications();
+
 
 
         if (!empty($action)) {
@@ -646,7 +653,7 @@ class Student extends Controller
         $proposalInst = new Proposal();
         $proposals = $proposalInst->where(['studentID' => Auth::getstudentID()]); //all of his proposals
         if (empty($proposals)) {
-            message(['You have not submitted any proposals thus there are no invitaions!','danger']);
+            message(['You have not submitted any proposals thus there are no invitaions!', 'danger']);
             redirect('student');
         }
 
@@ -675,7 +682,7 @@ class Student extends Controller
     public function chats($id = null)
     {
 
-        $this->all_common_verifications();
+
 
         if (!empty($id)) { //req a particular chat
             //implement chat connection with db
@@ -702,7 +709,7 @@ class Student extends Controller
     public function disputes($action = null, $id = null)
     {
 
-        $this->all_common_verifications();
+
 
         if (!empty($action)) {
             if ($action === 'post') {
@@ -767,11 +774,11 @@ class Student extends Controller
                                 message('Dispute deleted successfully!');
                                 redirect('student/disputes');
                             } else {
-                                message(['You dont have permission to execute this operation!','danger']);
+                                message(['You dont have permission to execute this operation!', 'danger']);
                                 redirect('student/disputes');
                             }
                         } else {
-                            message(['Error occured while deletion!','danger']);
+                            message(['Error occured while deletion!', 'danger']);
                             redirect('student/disputes');
                         }
                     }
@@ -785,7 +792,7 @@ class Student extends Controller
 
         $disputeInst = new Dispute();
         $res = [];
-        if(!empty($tasks)){
+        if (!empty($tasks)) {
             for ($i = 0; $i < count($tasks); $i++) {
                 $dispute = $disputeInst->where(['taskID' => $tasks[$i]->taskID, 'initiatedParty' => 'student']);
                 if (!empty($dispute)) {
@@ -796,7 +803,7 @@ class Student extends Controller
                 }
             }
         }
- 
+
         //        show($res);
         //        die;
 

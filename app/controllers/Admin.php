@@ -4,6 +4,12 @@
 class Admin extends Controller
 {
 
+    // Constructor
+    public function __construct() {
+        // veridfy at controller creation
+        $this->all_common_verifications();
+    }
+
     public function all_common_verifications()
     {
         if (!Auth::logged_in()) { //if not logged in redirect to login page
@@ -23,7 +29,7 @@ class Admin extends Controller
     public function index()
     {
 
-        $this->all_common_verifications();
+        
         $data['title'] = "Dashboard";
 
         $this->view('admin/dashboard', $data);
@@ -32,7 +38,7 @@ class Admin extends Controller
     public function profile($id = null)
     {
 
-        $this->all_common_verifications();
+        
 
         //if id is null make it current logged in user id
         $id = $id ?? Auth::getuserID();
@@ -60,7 +66,7 @@ class Admin extends Controller
     public function changepassword()
     {
 
-        $this->all_common_verifications();
+        
 
 
         $data['title'] = "Change Password";
@@ -95,7 +101,7 @@ class Admin extends Controller
     public function otherusers($id = null)
     {
 
-        $this->all_common_verifications();
+        
 
 
 
@@ -142,7 +148,7 @@ class Admin extends Controller
 
     public function updateprofile()
     {
-        $this->all_common_verifications();
+        
 
 
 
@@ -215,7 +221,7 @@ class Admin extends Controller
     public function managemoderators($action = null, $id = null)
     {
 
-        $this->all_common_verifications();
+        
 
         if (!empty($action)) {
             if ($action === 'post') { //add new moderator
@@ -314,7 +320,7 @@ class Admin extends Controller
     public function manageadmins($action = null, $id = null)
     {
 
-        $this->all_common_verifications();
+        
 
         if (!empty($action)) {
             if ($action === 'post') { //add new moderator
