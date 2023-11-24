@@ -283,15 +283,19 @@ class Admin extends Controller
                 redirect('admin/managemoderators');
             }
         }
-        $userInst = new User();
+        // $userInst = new User();
+        // $moderatorInst = new ModeratorModel();
+        // $moderators = $userInst->where(['role' => 'moderator']);
+
+        // for ($i = 0; $i < count($moderators); $i++) {
+        //     $moderatorDetails = $moderatorInst->first(['userID' => $moderators[$i]->userID]);
+
+        //     $moderators[$i] = (object)array_merge((array)$moderators[$i], (array)$moderatorDetails);
+        // }
+        
         $moderatorInst = new ModeratorModel();
-        $moderators = $userInst->where(['role' => 'moderator']);
 
-        for ($i = 0; $i < count($moderators); $i++) {
-            $moderatorDetails = $moderatorInst->first(['userID' => $moderators[$i]->userID]);
-
-            $moderators[$i] = (object)array_merge((array)$moderators[$i], (array)$moderatorDetails);
-        }
+        $moderators=$moderatorInst->innerJoin(['user'],['moderator.userID=user.userID']);
         $data['moderators'] = $moderators;
 
         $data['title'] = "Manage Moderators";
@@ -378,15 +382,19 @@ class Admin extends Controller
                 redirect('admin/manageadmins');
             }
         }
-        $userInst = new User();
+        // $userInst = new User();
+        // $adminInst = new AdminModel();
+        // $admins = $userInst->where(['role' => 'admin']);
+
+        // for ($i = 0; $i < count($admins); $i++) {
+        //     $adminDetails = $adminInst->first(['userID' => $admins[$i]->userID]);
+
+        //     $admins[$i] = (object)array_merge((array)$admins[$i], (array)$adminDetails);
+        // }
         $adminInst = new AdminModel();
-        $admins = $userInst->where(['role' => 'admin']);
-
-        for ($i = 0; $i < count($admins); $i++) {
-            $adminDetails = $adminInst->first(['userID' => $admins[$i]->userID]);
-
-            $admins[$i] = (object)array_merge((array)$admins[$i], (array)$adminDetails);
-        }
+        $admins=$adminInst->innerJoin(['user'],['admin.userID=user.userID']);
+        // show($admins);
+        // die;
         $data['admins'] = $admins;
 
         $data['title'] = "Manage Admins";
