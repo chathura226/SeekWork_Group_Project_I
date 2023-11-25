@@ -114,17 +114,17 @@ abstract class Users extends Controller
                         $user = $userInst->first(['userID' => $id]);
                         if (empty($user)) {
                             message(['No user with given ID found', 'danger']);
-                            redirect($this->controllerRole.'/otherusers');
-                        }else if($this->controllerRole=='moderator' && ($user->role=='admin'||$user->role=='moderator')){
+                            redirect($this->controllerRole . '/otherusers');
+                        } else if ($this->controllerRole == 'moderator' && ($user->role == 'admin' || $user->role == 'moderator')) {
                             message(['Unauthorized', 'danger']);
-                            redirect($this->controllerRole.'/otherusers');
+                            redirect($this->controllerRole . '/otherusers');
                         }
 
                         $userInst->update(['status' => 'deactivated'], $user->userID);
                         message('Deactivation Successful!');
                     }
                 }
-                redirect($this->controllerRole.'/otherusers');
+                redirect($this->controllerRole . '/otherusers');
             } else if ($action === 'enable') {
 
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -135,10 +135,10 @@ abstract class Users extends Controller
                         $user = $userInst->first(['userID' => $id]);
                         if (empty($user)) {
                             message(['No user with given ID found', 'danger']);
-                            redirect($this->controllerRole.'/otherusers');
-                        }else if($this->controllerRole=='moderator' && ($user->role=='admin'||$user->role=='moderator')){
+                            redirect($this->controllerRole . '/otherusers');
+                        } else if ($this->controllerRole == 'moderator' && ($user->role == 'admin' || $user->role == 'moderator')) {
                             message(['Unauthorized', 'danger']);
-                            redirect($this->controllerRole.'/otherusers');
+                            redirect($this->controllerRole . '/otherusers');
                         }
 
                         $userInst->update(['status' => 'active'], $user->userID);
@@ -165,6 +165,81 @@ abstract class Users extends Controller
 
         $data['title'] = "Other Users";
 
-        $this->view($this->controllerRole.'/otherusers', $data);
+        $this->view($this->controllerRole . '/otherusers', $data);
+    }
+
+
+    //update profile
+    public function updateprofile()
+    {
+        //calling model instance relavant to role
+        $roleModel = ucfirst($this->controllerRole) . "Model";
+        $roleModelInst = new $roleModel();
+
+        //should implement the validation and procedure
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+            if (!empty($_FILES['imageInput']['name'])) {
+
+                $allowed = ['image/jpeg', 'image/png'];
+                if ($_FILES['imageInput']['error'] == 0) {
+
+                    if (in_array($_FILES['imageInput']['type'], $allowed)) {
+
+                        //before move upload files validate other data
+                        if ($roleModelInst->validate($_POST)) {
+
+                            $folder = "uploads/profilePics/";
+                            if (!file_exists($folder)) {
+                                mkdir($folder, 0777, true);
+                                //for security, adding empty index.php files
+                                file_put_contents($folder . "index.php", "<?php //Access Denied");
+                                file_put_contents("uploads/index.php", "<?php //Access Denied");
+                            }
+
+                            $destination = $folder . time() . $_FILES['imageInput']['name'];
+                            move_uploaded_file($_FILES['imageInput']['tmp_name'], $destination);
+                            $destination = resizeImage($destination); //resizing and reducing file size 
+
+                            $_POST['profilePic'] = $destination;
+
+                            //deleting old image
+                            if (file_exists(Auth::getprofilePic())) {
+                                unlink(Auth::getprofilePic());
+                            }
+
+                            //calling Auth::getadminID() using dynamic vaiable as role so for student it will be Auth::getstudentID()
+                            $methodName = 'get' . $this->controllerRole . 'ID';
+                            $roleModelInst->update($_POST, Auth::$methodName());
+                            //update session so that Auth get functions work properly
+                            Auth::updateSession();
+                            // show($_SESSION['USER_DATA']);
+                            // die;
+                            message("Profile updated successfully!");
+                            redirect($this->controllerRole . '/profile');
+                        }
+                    } else {
+                        $roleModelInst->errors['imageInput'] = "File Type is not allowed!";
+                    }
+                } else {
+                    $roleModelInst->errors['imageInput'] = "Couldn't upload the image";
+                }
+            } else {
+                if ($roleModelInst->validate($_POST)) {
+                    $methodName = 'get' . $this->controllerRole . 'ID';
+                    $roleModelInst->update($_POST, Auth::$methodName());
+                    Auth::updateSession();
+                    // show($_SESSION['USER_DATA']);
+                    // die;
+                    message("Profile updated successfully!");
+                    redirect($this->controllerRole . '/profile');
+                }
+            }
+        }
+        $data['title'] = "Update Profile";
+
+        $data['errors'] = $roleModelInst->errors;
+
+        $this->view($this->controllerRole . '/updateprofile', $data);
     }
 }

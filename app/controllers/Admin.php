@@ -6,87 +6,13 @@ class Admin extends Users
 
     // Constructor
     //all the validations for authorizations are in the parent controller
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct('admin');
     }
 
-
-    public function updateprofile()
-    {
-        
-
-
-
-        $adminInst = new AdminModel();
-
-        //should implement the validation and procedure
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-            if (!empty($_FILES['imageInput']['name'])) {
-
-                $allowed = ['image/jpeg', 'image/png'];
-                if ($_FILES['imageInput']['error'] == 0) {
-
-                    if (in_array($_FILES['imageInput']['type'], $allowed)) {
-
-                        //before move upload files validate other data
-                        if ($adminInst->validate($_POST)) {
-
-                            $folder = "uploads/profilePics/";
-                            if (!file_exists($folder)) {
-                                mkdir($folder, 0777, true);
-                                //for security, adding empty index.php files
-                                file_put_contents($folder . "index.php", "<?php //Access Denied");
-                                file_put_contents("uploads/index.php", "<?php //Access Denied");
-                            }
-
-                            $destination = $folder . time() . $_FILES['imageInput']['name'];
-                            move_uploaded_file($_FILES['imageInput']['tmp_name'], $destination);
-                            $destination=resizeImage($destination);//resizing and reducing file size 
-
-                            $_POST['profilePic'] = $destination;
-
-                            //deleting old image
-                            if (file_exists(Auth::getprofilePic())) {
-                                unlink(Auth::getprofilePic());
-                            }
-                            $adminInst->update($_POST, Auth::getadminID());
-                            //update session so that Auth get functions work properly
-                            Auth::updateSession();
-                            // show($_SESSION['USER_DATA']);
-                            // die;
-                            message("Profile updated successfully!");
-                            redirect('admin/profile');
-                        }
-                    } else {
-                        $adminInst->errors['imageInput'] = "File Type is not allowed!";
-                    }
-                } else {
-                    $adminInst->errors['imageInput'] = "Couldn't upload the image";
-                }
-            } else {
-                if ($adminInst->validate($_POST)) {
-                    $adminInst->update($_POST, Auth::getadminID());
-                    Auth::updateSession();
-                    // show($_SESSION['USER_DATA']);
-                    // die;
-                    message("Profile updated successfully!");
-                    redirect('admin/profile');
-                }
-            }
-        }
-        $data['title'] = "Update Profile";
-
-        $data['errors'] = $adminInst->errors;
-
-        $this->view('admin/updateprofile', $data);
-    }
-
-
     public function managemoderators($action = null, $id = null)
     {
-
-        
 
         if (!empty($action)) {
             if ($action === 'post') { //add new moderator
@@ -174,7 +100,7 @@ class Admin extends Users
 
         $moderatorInst = new ModeratorModel();
 
-        $moderators=$moderatorInst->innerJoin(['user'],['moderator.userID=user.userID']);
+        $moderators = $moderatorInst->innerJoin(['user'], ['moderator.userID=user.userID']);
         $data['moderators'] = $moderators;
 
         $data['title'] = "Manage Moderators";
@@ -185,7 +111,7 @@ class Admin extends Users
     public function manageadmins($action = null, $id = null)
     {
 
-        
+
 
         if (!empty($action)) {
             if ($action === 'post') { //add new moderator
@@ -271,7 +197,7 @@ class Admin extends Users
         //     $admins[$i] = (object)array_merge((array)$admins[$i], (array)$adminDetails);
         // }
         $adminInst = new AdminModel();
-        $admins=$adminInst->innerJoin(['user'],['admin.userID=user.userID']);
+        $admins = $adminInst->innerJoin(['user'], ['admin.userID=user.userID']);
         // show($admins);
         // die;
         $data['admins'] = $admins;

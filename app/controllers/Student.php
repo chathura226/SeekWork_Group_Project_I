@@ -11,73 +11,7 @@ class Student extends Users
         parent::__construct('student');
     }
 
-    public function updateprofile()
-    {
-
-
-
-        $studentInst = new StudentModel();
-
-        //validation
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-            if (!empty($_FILES['imageInput']['name'])) {
-
-                $allowed = ['image/jpeg', 'image/png'];
-                if ($_FILES['imageInput']['error'] == 0) {
-
-                    if (in_array($_FILES['imageInput']['type'], $allowed)) {
-
-                        //before move upload files validate other data
-                        if ($studentInst->validate($_POST)) {
-
-                            $folder = "uploads/profilePics/";
-                            if (!file_exists($folder)) {
-                                mkdir($folder, 0777, true);
-                                //for security, adding empty index.php files
-                                file_put_contents($folder . "index.php", "<?php //Access Denied");
-                                file_put_contents("uploads/index.php", "<?php //Access Denied");
-                            }
-
-                            $destination = $folder . time() . $_FILES['imageInput']['name'];
-                            move_uploaded_file($_FILES['imageInput']['tmp_name'], $destination);
-                            $_POST['profilePic'] = $destination;
-
-                            //deleting old image
-                            if (file_exists(Auth::getprofilePic())) {
-                                unlink(Auth::getprofilePic());
-                            }
-                            $studentInst->update($_POST, Auth::getstudentID());
-                            //update session so that Auth get functions work properly
-                            Auth::updateSession();
-                            // show($_SESSION['USER_DATA']);
-                            // die;
-                            message("Profile updated successfully!");
-                            redirect('student/profile');
-                        }
-                    } else {
-                        $studentInst->errors['imageInput'] = "File Type is not allowed!";
-                    }
-                } else {
-                    $studentInst->errors['imageInput'] = "Couldn't upload the image";
-                }
-            } else {
-                if ($studentInst->validate($_POST)) {
-                    $studentInst->update($_POST, Auth::getstudentID());
-                    Auth::updateSession();
-                    // show($_SESSION['USER_DATA']);
-                    // die;
-                    message("Profile updated successfully!");
-                    redirect('student/profile');
-                }
-            }
-        }
-        $data['title'] = "Update Profile";
-
-        $data['errors'] = $studentInst->errors;
-
-        $this->view('student/updateprofile', $data);
-    }
+    
 
     public function verification()
     {
