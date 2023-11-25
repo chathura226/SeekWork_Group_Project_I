@@ -79,6 +79,46 @@ class Model extends Database
         } else return false;
     }
 
+    //left outer join
+    public function leftOuterJoin($tables = [], $joinConditions = [], $data = [], $selectColumns = ['*'])
+    {
+        if (count($tables) < 1 || count($tables) !== count($joinConditions)) {
+            return false; // Need equal number of tables and join conditions for outer join
+        }
+
+        $query = "SELECT " . implode(", ", $selectColumns) . " FROM " . $this->table;
+
+        // adding outer joins
+        for ($i = 0; $i < count($tables); $i++) {
+            $query .= " LEFT OUTER JOIN " . $tables[$i] . " ON ";
+            $query .= $joinConditions[$i] . " ";
+        }
+
+        //adding where conditions
+        if (!empty($data)) {
+            $keys = array_keys($data);
+            $query = $query . "WHERE ";
+            foreach ($keys as $key) {
+                $query .= $key . "=" . $data[$key] . " && ";
+            }
+
+            //remove the additional '&&' 
+            $query = trim($query, "&& ");
+        }
+        // show($query);
+        // show($data);
+        // die;
+
+        //since $data for where clause is expanded in here, no need to send the data to PDO
+        //didnt use $key:=$key
+        $res = $this->query($query, $data = []);
+
+        if (is_array($res)) {
+            return $res;
+        } else return false;
+    }
+
+
     //update
     public function update($data, $id)
     {
