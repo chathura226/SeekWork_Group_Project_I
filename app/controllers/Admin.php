@@ -1,39 +1,17 @@
 <?php
-
+require_once 'Users.php';
 //Admin class
-class Admin extends Controller
+class Admin extends Users
 {
 
     // Constructor
     public function __construct() {
+        parent::__construct('admin');
         // veridfy at controller creation
-        $this->all_common_verifications();
     }
 
-    public function all_common_verifications()
-    {
-        if (!Auth::logged_in()) { //if not logged in redirect to login page
-            message('Please login to view the admin section!');
-            redirect('login');
-        }
-        if (!Auth::is_otp_verified()) {
-            message(['Verify Email before accessing dashboard!', 'danger']);
-            redirect('otp');
-        }
-        if (!Auth::is_admin()) { ///if not an admin, redirect to home
-            message(['Only admins can view admin dashboard!', 'danger']);
-            redirect('home');
-        }
-    }
 
-    public function index()
-    {
 
-        
-        $data['title'] = "Dashboard";
-
-        $this->view('admin/dashboard', $data);
-    }
 
     public function profile($id = null)
     {
