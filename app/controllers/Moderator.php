@@ -1,68 +1,17 @@
 <?php
-
+require_once 'Users.php';
 //Moderator class
-class Moderator extends Controller
+class Moderator extends Users
 {
 
 
     // Constructor
+    //all the validations for authorizations are in the parent controller
     public function __construct()
     {
-        // veridfy at controller creation
-        $this->all_common_verifications();
+        parent::__construct('admin');
     }
 
-    public function all_common_verifications()
-    {
-        if (!Auth::logged_in()) { //if not logged in redirect to login page
-            message('Please login to view the moderator section!');
-            redirect('login');
-        }
-        if (!Auth::is_otp_verified()) { ///if not a student, redirect to home
-            message(['Verify Email before accessing dashboard!', 'danger']);
-            redirect('otp');
-        }
-        if (!Auth::is_moderator()) { ///if not an moderator, redirect to home
-            message(['Only moderators can view moderator dashboard!', 'danger']);
-            redirect('home');
-        }
-    }
-
-    public function index()
-    {
-
-
-
-        $data['title'] = "Dashboard";
-
-        $this->view('moderator/dashboard', $data);
-    }
-
-    public function profile($id = null)
-    {
-
-
-
-        //if id is null make it current logged in user id
-        $id = $id ?? Auth::getuserID();
-
-        $user = new User();
-        $row = $user->first((['userID' => $id])); //get user details corresponding to the user id
-
-        if (!empty($row)) {
-            //get details of user from relevant table and make a combined object 
-            $userDetails = $user->getFirstCustom($row->role, ['userID' => $row->userID], $row->role . "ID");
-            $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
-        } else  $combinedObject = null;
-        //pass the combined object to the view
-        $data['user'] = $combinedObject;
-
-        // show($combinedObject);
-        // die;
-        $data['title'] = "Profile";
-
-        $this->view('moderator/profile', $data);
-    }
 
 
     //implement this to show all users and specific user if the id is passeed with url

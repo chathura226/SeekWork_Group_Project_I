@@ -1,45 +1,17 @@
 <?php
+require_once 'Users.php';
 
 //Company class
-class Company extends Controller
+class Company extends Users
 {
 
-    // Constructor
+        // Constructor
+    //all the validations for authorizations are in the parent controller
     public function __construct()
     {
-        // veridfy at controller creation
-        $this->all_common_verifications();
+        parent::__construct('admin');
     }
 
-    public function all_common_verifications()
-    {
-        if (!Auth::logged_in()) { //if not logged in redirect to login page
-            message('Please login to view the company section!');
-            redirect('login');
-        }
-        if (!Auth::is_otp_verified()) {
-            message(['Verify Email before accessing dashboard!', 'danger']);
-            redirect('otp');
-        }
-
-        if (!Auth::is_company()) { ///if not an admin, redirect to home
-            message(['Only companies can view company dashboard!', 'danger']);
-            redirect('home');
-        }
-    }
-
-
-    public function index()
-    {
-
-
-
-
-
-        $data['title'] = "Dashboard";
-
-        $this->view('company/dashboard', $data);
-    }
 
     public function chats($id = null)
     {
@@ -66,66 +38,6 @@ class Company extends Controller
 
         $this->view('company/chats', $data);
     }
-
-
-    public function profile($id = null)
-    {
-
-
-
-        //if id is null make it current logged in user id
-        $id = $id ?? Auth::getuserID();
-
-        $user = new User();
-        $row = $user->first((['userID' => $id])); //get user details corresponding to the user id
-
-        if (!empty($row)) {
-            //get details of user from relevant table and make a combined object 
-            $userDetails = $user->getFirstCustom($row->role, ['userID' => $row->userID], $row->role . "ID");
-            $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
-        } else  $combinedObject = null;
-        //pass the combined object to the view
-        $data['row'] = $combinedObject;
-
-
-        $data['title'] = "Profile";
-
-        $this->view('company/profile', $data);
-    }
-
-
-    public function changepassword()
-    {
-
-
-
-        $data['title'] = "Change Password";
-
-
-
-        //should implement the validation and procedure
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            if ($_POST['newpassword'] !== $_POST['confirmnewpassword']) {
-                message(["Password and confirm password does not match!", 'danger']);
-                redirect('company/changepassword');
-            }
-            $userInst = new User();
-            $user = $userInst->first(['userID' => Auth::getuserID()]);
-            if (password_verify($_POST['currentpassword'], $user->password)) {
-                $password = password_hash($_POST['newpassword'], PASSWORD_DEFAULT);
-                $userInst->update(['password' => $password], Auth::getuserID());
-                message("Password Updated Successfully!");
-                redirect('company/profile');
-            } else {
-                message(["Current password is wrong!", 'danger']);
-                redirect('company/changepassword');
-            }
-        }
-
-
-        $this->view('company/changepassword', $data);
-    }
-
 
 
 
