@@ -75,7 +75,7 @@ abstract class Users extends Controller
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if ($_POST['newpassword'] !== $_POST['confirmnewpassword']) {
                 message(["Password and confirm password does not match!", 'danger']);
-                redirect($this->controllerRole .'/changepassword');
+                redirect($this->controllerRole . '/changepassword');
             }
             $userInst = new User();
             $user = $userInst->first(['userID' => Auth::getuserID()]);
@@ -83,13 +83,88 @@ abstract class Users extends Controller
                 $password = password_hash($_POST['newpassword'], PASSWORD_DEFAULT);
                 $userInst->update(['password' => $password], Auth::getuserID());
                 message("Password Updated Successfully!");
-                redirect($this->controllerRole .'/profile');
+                redirect($this->controllerRole . '/profile');
             } else {
                 message(["Current password is wrong!", 'danger']);
-                redirect($this->controllerRole .'/changepassword');
+                redirect($this->controllerRole . '/changepassword');
             }
         }
 
-        $this->view($this->controllerRole .'/changepassword', $data);
+        $this->view($this->controllerRole . '/changepassword', $data);
+    }
+
+    //only moderators and admins can use this function
+    // show all users and specific user if the id is passeed with url
+    public function otherusers($action = null, $id = null)
+    {
+
+        if (!($this->controllerRole == 'admin' || $this->controllerRole == 'moderator')) {
+            message(["Unauthorized!", 'danger']);
+            redirect($this->controllerRole);
+        }
+
+        if (!empty($action)) {
+            if ($action === 'disable') {
+
+                if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+                    if (!empty($id)) { //userid
+
+                        $userInst = new User();
+                        $user = $userInst->first(['userID' => $id]);
+                        if (empty($user)) {
+                            message(['No user with given ID found', 'danger']);
+                            redirect($this->controllerRole.'/otherusers');
+                        }else if($this->controllerRole=='moderator' && ($user->role=='admin'||$user->role=='moderator')){
+                            message(['Unauthorized', 'danger']);
+                            redirect($this->controllerRole.'/otherusers');
+                        }
+
+                        $userInst->update(['status' => 'deactivated'], $user->userID);
+                        message('Deactivation Successful!');
+                    }
+                }
+                redirect($this->controllerRole.'/otherusers');
+            } else if ($action === 'enable') {
+
+                if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+                    if (!empty($id)) { //userid
+
+                        $userInst = new User();
+                        $user = $userInst->first(['userID' => $id]);
+                        if (empty($user)) {
+                            message(['No user with given ID found', 'danger']);
+                            redirect($this->controllerRole.'/otherusers');
+                        }else if($this->controllerRole=='moderator' && ($user->role=='admin'||$user->role=='moderator')){
+                            message(['Unauthorized', 'danger']);
+                            redirect($this->controllerRole.'/otherusers');
+                        }
+
+                        $userInst->update(['status' => 'active'], $user->userID);
+                        message('Activation Successful!');
+                    }
+                }
+                redirect('$this->controllerRole./otherusers');
+            }
+        }
+
+
+        $user = new User();
+        $row1 = $user->innerJoin(['student'], ['student.userID=user.userID'], [], ['*,user.status AS status,student.status AS studentStatus']);
+        $row2 = $user->innerJoin(['moderator'], ['moderator.userID=user.userID']);
+        $row3 = $user->innerJoin(['admin'], ['admin.userID=user.userID']);
+        $row4 = $user->innerJoin(['company'], ['company.userID=user.userID'], [], ['*,user.status AS status,company.status AS companyStatus']);
+        $row = (object)array_merge((array)$row1, (array)$row2);
+        $row = (object)array_merge((array)$row, (array)$row3);
+        $row = (object)array_merge((array)$row, (array)$row4);
+
+
+        //pass the combined object to the view
+        $data['users'] = $row;
+
+        $data['title'] = "Other Users";
+
+        $this->view($this->controllerRole.'/otherusers', $data);
     }
 }

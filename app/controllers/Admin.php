@@ -11,59 +11,6 @@ class Admin extends Users
     }
 
 
-
-    
-
-
-    //implement this to show all users and specific user if the id is passeed with url
-    public function otherusers($id = null)
-    {
-
-        
-
-
-
-        $user = new User();
-        $row1=$user->innerJoin(['student'],['student.userID=user.userID']);
-        $row2=$user->innerJoin(['moderator'],['moderator.userID=user.userID']);
-        $row3=$user->innerJoin(['admin'],['admin.userID=user.userID']);
-        $row4=$user->innerJoin(['company'],['company.userID=user.userID']);
-        $row = (object)array_merge((array)$row1, (array)$row2);
-        $row = (object)array_merge((array)$row, (array)$row3);
-        $row = (object)array_merge((array)$row, (array)$row4);
-
-        if (empty($row)) {
-
-            message(['Error fetching data', 'danger']);
-            redirect('admin');
-
-            // //get details of uvalidateModeratorser from relevant table and make a combined object 
-            // $userDetails=$user->getFirstCustom($row->role,['userID'=>$row->userID],$row->role."ID");
-            // $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
-        }
-
-        // for ($i = 0; $i < count($row); $i++) {
-        //     $userDetails = $user->getFirstCustom($row[$i]->role, ['userID' => $row[$i]->userID], $row[$i]->role . "ID");
-        //     if (empty($userDetails)) {
-        //         message(['Error fetching data ' . $row[$i]->userID, 'danger']);
-        //         redirect('admin');
-        //     }
-
-        //     $row[$i] = (object)array_merge((array)$row[$i], (array)$userDetails);
-        // }
-
-        // show($row);
-        // die;
-        //pass the combined object to the view
-        $data['users'] = $row;
-
-
-        $data['title'] = "Other Users";
-
-        $this->view('admin/otherusers', $data);
-    }
-
-
     public function updateprofile()
     {
         

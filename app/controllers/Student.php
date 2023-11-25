@@ -8,7 +8,7 @@ class Student extends Users
     //all the validations for authorizations are in the parent controller
     public function __construct()
     {
-        parent::__construct('admin');
+        parent::__construct('student');
     }
 
     public function updateprofile()

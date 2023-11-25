@@ -9,95 +9,12 @@ class Moderator extends Users
     //all the validations for authorizations are in the parent controller
     public function __construct()
     {
-        parent::__construct('admin');
+        parent::__construct('moderator');
     }
 
 
 
-    //implement this to show all users and specific user if the id is passeed with url
-    public function otherusers($action = null, $id = null)
-    {
-
-
-
-
-        if (!empty($action)) {
-            if ($action === 'disable') {
-
-                if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-                    if (!empty($id)) { //userid
-
-                        $userInst = new User();
-                        $user = $userInst->first(['userID' => $id]);
-                        if (empty($user)) {
-                            message(['No user with given ID found', 'danger']);
-                            redirect('moderator/otherusers');
-                        }
-
-                        $userInst->update(['status' => 'deactivated'], $user->userID);
-                        message('Deactivation Successful!');
-                    }
-                }
-                redirect('moderator/otherusers');
-            } else if ($action === 'enable') {
-
-                if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-                    if (!empty($id)) { //userid
-
-                        $userInst = new User();
-                        $user = $userInst->first(['userID' => $id]);
-                        if (empty($user)) {
-                            message(['No user with given ID found', 'danger']);
-                            redirect('moderator/otherusers');
-                        }
-
-                        $userInst->update(['status' => 'active'], $user->userID);
-                        message('Activation Successful!');
-                    }
-                }
-                redirect('moderator/otherusers');
-            }
-        }
-        $user = new User();
-        $row = $user->getAll();
-
-        if (empty($row)) {
-
-            message(['Error fetching data', 'danger']);
-            redirect('moderator');
-
-            // //get details of user from relevant table and make a combined object 
-            // $userDetails=$user->getFirstCustom($row->role,['userID'=>$row->userID],$row->role."ID");
-            // $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
-        }
-
-        for ($i = 0; $i < count($row); $i++) {
-            $userDetails = $user->getFirstCustom($row[$i]->role, ['userID' => $row[$i]->userID], $row[$i]->role . "ID");
-            if (empty($userDetails)) {
-                message(['Error fetching data ' . $row[$i]->userID, 'danger']);
-                redirect('moderator');
-            }
-            if ($row[$i]->role === 'student') { //removing 'status' key from the result because user table also have a status field
-                $userDetails->studentStatus = $userDetails->status;
-                unset($userDetails->status);
-            }
-            if ($row[$i]->role === 'company') { //removing 'status' key from the result because user table also have a status field
-                $userDetails->companyStatus = $userDetails->status;
-                unset($userDetails->status);
-            }
-            $row[$i] = (object)array_merge((array)$row[$i], (array)$userDetails);
-        }
-
-        //pass the combined object to the view
-        $data['users'] = $row;
-
-
-        $data['title'] = "Other Users";
-
-        $this->view('moderator/otherusers', $data);
-    }
+ 
 
 
     public function changepassword()
