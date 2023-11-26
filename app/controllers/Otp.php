@@ -79,48 +79,7 @@ class Otp extends Controller
 
             $fullName = Auth::getfirstName() . ' ' . Auth::getlastName();
             // $content = "Hello " . ucfirst(Auth::getfirstName()) . ",<br><br>Your OTP for email verification is: <strong>" . $var['otpCode'] . "</strong>.<br><br>Please use this OTP to complete your verification.<br>This is only valid for 10 minutes.<br><br>Regards,<br>SeekWork Team";
-            $content=' <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <td align="center">
-                    <table width="600" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td bgcolor="#000000" style="padding: 40px;">
-                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                    <tr>
-                                        <td align="center">
-                                            <img src="https://via.placeholder.com/96x96" width="96" height="96" style="border-radius: 50%;">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="center" style="color: #ffffff; font-size: 52px; font-family: Inter, sans-serif; font-weight: 600; line-height: 64px; padding-top: 24px; padding-bottom: 24px;">
-                                            Your OTP for Email Verification
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="center" style="color: #ffffff; font-size: 16px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px;">
-                                            Please copy and paste the OTP below to confirm your account.
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="center" bgcolor="#141414" style="padding: 20px 0; border-radius: 24px;">
-                                            <div style="color: #FAC337; font-size: 40px; font-family: Inter, sans-serif; font-weight: 600; line-height: 52px;">
-                                                123456789
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="center" style="color: #757575; font-size: 16px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px;">
-                                            Please note: The code will be only valid for the next 10 minutes.
-                                        </td>
-                                    </tr>
-                                    <!-- Other content goes here -->
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>';
+            $content=MailService::prepareOTPEmail($fullName,$var['otpCode']);
             if (!MailService::sendMail(Auth::getemail(), $fullName, 'OTP for Email Verification', $content)) { //if unsuccessful
                 message(['Sending OTP via Email Failed! Try again later','danger']);
                 redirect('home');
