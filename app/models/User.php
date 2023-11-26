@@ -101,14 +101,17 @@ class User extends Model {
 
         //checking for university email
         $emailParts=explode("@",$data['email']);
-        $domain=$emailParts[1];//part after @ symbol
+        if(!empty($emailParts) && sizeof($emailParts)>1){
+            $domain=$emailParts[1];//part after @ symbol
 
-        $univeersityInst=new University();
-        $row=$univeersityInst->first(['domain'=>$domain]);
+            $univeersityInst=new University();
+            $row=$univeersityInst->first(['domain'=>$domain]);
 
-        if(empty($row)){
-            $this->errors['email']="Not a valid univeristy student email address (eg: seek@stu.ucsc.cmb.ac.lk) or Your university is not in our list. If so please contant our support agent";
+            if(empty($row)){
+                $this->errors['email']="Not a valid univeristy student email address (eg: seek@stu.ucsc.cmb.ac.lk) or Your university is not in our list. If so please contant our support agent";
+            }
         }
+
 
         // print_r($this->errors);
         if(empty($this->errors)){
