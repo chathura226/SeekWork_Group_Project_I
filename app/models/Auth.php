@@ -48,14 +48,16 @@ class Auth{
     public static function is_admin(){
         if(!empty($_SESSION['USER_DATA'])){
             
-            //creating an model instance to use database
-            $modelInstance=new Model();
-            //getting from databse admin which match with the userID in session and ordrr 
-            //the data by adminID and select one from that (check getFirstCustom)
-            $row = $modelInstance->getFirstCustom('admin',['userID'=>$_SESSION['USER_DATA']->userID],'adminID');
-            
+//            //creating an model instance to use database
+//            $modelInstance=new Model();
+//            //getting from databse admin which match with the userID in session and ordrr
+//            //the data by adminID and select one from that (check getFirstCustom)
+//            $row = $modelInstance->getFirstCustom('admin',['userID'=>$_SESSION['USER_DATA']->userID],'adminID');
+//
+//
+//            //if not found, $row will be false
 
-            //if not found, $row will be false
+            $row=$_SESSION['USER_DATA']->role==='admin';
             if($row){
                return true;
             }else return false;
@@ -67,14 +69,16 @@ class Auth{
     public static function is_moderator(){
         if(!empty($_SESSION['USER_DATA'])){
             
-            //creating an model instance to use database
-            $modelInstance=new Model();
-            //getting from databse admin which match with the userID in session and ordrr 
-            //the data by adminID and select one from that (check getFirstCustom)
-            $row = $modelInstance->getFirstCustom('moderator',['userID'=>$_SESSION['USER_DATA']->userID],'moderatorID');
-            
+//            //creating an model instance to use database
+//            $modelInstance=new Model();
+//            //getting from databse admin which match with the userID in session and ordrr
+//            //the data by adminID and select one from that (check getFirstCustom)
+//            $row = $modelInstance->getFirstCustom('moderator',['userID'=>$_SESSION['USER_DATA']->userID],'moderatorID');
+//
+//
+//            //if not found, $row will be false
+            $row=$_SESSION['USER_DATA']->role==='moderator';
 
-            //if not found, $row will be false
             if($row){
                return true;
             }else return false;
@@ -87,12 +91,14 @@ class Auth{
         if(!empty($_SESSION['USER_DATA'])){
             
             //creating an model instance to use database
-            $modelInstance=new Model();
-            //getting from databse admin which match with the userID in session and ordrr 
-            //the data by adminID and select one from that (check getFirstCustom)
-            $row = $modelInstance->getFirstCustom('student',['userID'=>$_SESSION['USER_DATA']->userID],'studentID');
-            
-            //if not found, $row will be false
+//            $modelInstance=new Model();
+//            //getting from databse admin which match with the userID in session and ordrr
+//            //the data by adminID and select one from that (check getFirstCustom)
+//            $row = $modelInstance->getFirstCustom('student',['userID'=>$_SESSION['USER_DATA']->userID],'studentID');
+//
+//            //if not found, $row will be false
+            $row=$_SESSION['USER_DATA']->role==='student';
+
             if($row){
                return true;
             }else return false;
@@ -104,14 +110,16 @@ class Auth{
     public static function is_company(){
         if(!empty($_SESSION['USER_DATA'])){
             
-            //creating an model instance to use database
-            $modelInstance=new Model();
-            //getting from databse admin which match with the userID in session and ordrr 
-            //the data by adminID and select one from that (check getFirstCustom)
-            $row = $modelInstance->getFirstCustom('company',['userID'=>$_SESSION['USER_DATA']->userID],'companyID');
-            
+//            //creating an model instance to use database
+//            $modelInstance=new Model();
+//            //getting from databse admin which match with the userID in session and ordrr
+//            //the data by adminID and select one from that (check getFirstCustom)
+//            $row = $modelInstance->getFirstCustom('company',['userID'=>$_SESSION['USER_DATA']->userID],'companyID');
+//
 
             //if not found, $row will be false
+            $row=$_SESSION['USER_DATA']->role==='company';
+
             if($row){
                return true;
             }else return false;
