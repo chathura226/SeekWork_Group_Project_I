@@ -74,7 +74,7 @@
     <div class="comp-details c-s-8 c-e-13">
         <h2>About the Student</h2>
         <div class="comp-img">
-            <img src="<?=ROOT?>/assets/images/profile1.png" alt="profileImage">
+        <img src="<?= ROOT ?><?= (!empty($student->profilePic)) ? "/" . $student->profilePic : "/assets/images/noImage.png" ?>" alt="Profile Picture">
         </div>
         <h3><?=ucfirst($student->firstName)." ".ucfirst($student->lastName)?> <small>( 10 tasks )</small></h3>
         <div class="rating">

@@ -24,7 +24,7 @@
 
     <div class="card ">
       <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
-      <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
+      <div class="card__avatar"><img src="<?= ROOT ?><?= (!empty($user->profilePic)) ? "/" . $user->profilePic : "/assets/images/noImage.png" ?>" alt="Profile Picture"></div>
       <div class="card__title"><?=ucfirst($user->firstName)?> <?=ucfirst($user->lastName)?> </div>
       <div class="card__subtitle"><?=ucfirst($user->role)?> <small><?=($user->status==='active')?'&#x1F7E2;':'&#x1F534;'?></small></div>
       <div class="card__wrapper">
