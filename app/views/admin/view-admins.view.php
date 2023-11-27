@@ -32,7 +32,7 @@
     <?php if($admin->adminID!=Auth::getadminID()):?>
     <div class="card ">
       <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
-      <div class="card__avatar"><img src="<?=ROOT?>/assets/images/profile1.png" alt="Profile Picture"></div>
+      <div class="card__avatar"><img src="<?= ROOT ?><?= (!empty($admin->profilePic)) ? "/" . $admin->profilePic : "/assets/images/noImage.png" ?>" alt="Profile Picture"></div>
       <div class="card__title"><?=ucfirst($admin->firstName)?> <?=ucfirst($admin->lastName)?> </div>
       <div class="card__subtitle"><?=ucfirst($admin->role)?> <small><?=($admin->status==='active')?'&#x1F7E2;':'&#x1F534;'?></small></div>
       <div class="card__wrapper">
