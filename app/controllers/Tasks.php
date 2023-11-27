@@ -10,7 +10,10 @@ class Tasks extends Controller{
         $data['title'] = "Tasks";
         
         $task=new Task();
-        $row=$task->where(['status'=>'active']);
+        // $row=$task->where(['status'=>'active']);
+        $row=$task->innerJoin(['company'],['task.companyID=company.companyID'],['task.status'=>"'active'"],['*,task.status AS status , company.status AS companyStatus']);
+        // show($row);
+        // die;
         $data['tasks']=$row;
         
 
