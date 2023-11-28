@@ -145,7 +145,7 @@ abstract class Users extends Controller
                         message('Activation Successful!');
                     }
                 }
-                redirect('$this->controllerRole./otherusers');
+                redirect($this->controllerRole.'/otherusers');
             }
         }
 
