@@ -235,7 +235,7 @@ CREATE TABLE `company` (
   UNIQUE KEY `brn-unique` (`brn`),
   KEY `user-company` (`userID`),
   CONSTRAINT `user-company` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,41 +275,6 @@ CREATE TABLE `company_payment` (
 LOCK TABLES `company_payment` WRITE;
 /*!40000 ALTER TABLE `company_payment` DISABLE KEYS */;
 /*!40000 ALTER TABLE `company_payment` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `deleted_users`
---
-
-DROP TABLE IF EXISTS `deleted_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `deleted_users` (
-  `deleteLogID` int NOT NULL AUTO_INCREMENT,
-  `userID` int DEFAULT NULL,
-  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `password` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `contactNo` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `role` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `createdAt` timestamp NULL DEFAULT NULL,
-  `status` enum('active','deactivated') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `isOTPVerified` tinyint(1) DEFAULT NULL,
-  `fromRoleTable` text,
-  `deletedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`deleteLogID`),
-  UNIQUE KEY `userID` (`userID`),
-  KEY `userID_2` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `deleted_users`
---
-
-LOCK TABLES `deleted_users` WRITE;
-/*!40000 ALTER TABLE `deleted_users` DISABLE KEYS */;
-INSERT INTO `deleted_users` VALUES (1,11,'admin@admin.com','$2y$10$O9fihdAv7ftZ5N5mp.IQwuh1S644VmGJCNcRy0UEObVZ4y67fBv6a','123','admin','2023-09-17 16:11:13','active',0,NULL,'2023-11-27 14:49:18');
-/*!40000 ALTER TABLE `deleted_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -395,7 +360,7 @@ CREATE TABLE `otp` (
   PRIMARY KEY (`otpID`),
   KEY `user-otp` (`userID`),
   CONSTRAINT `user-otp` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -694,7 +659,7 @@ CREATE TABLE `user` (
   `isOTPVerified` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`userID`),
   UNIQUE KEY `UNIQUE_EMAIL` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -715,7 +680,120 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `user_delete` BEFORE DELETE ON `user` FOR EACH ROW INSERT INTO deleted_users (userID,email,password,contactNo,role,createdAt,status,isOTPVerified) VALUES (OLD.userID, OLD.email, OLD.password,OLD.contactNo,OLD.role,OLD.createdAt,OLD.status,OLD.isOTPVerified) */;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `user_insert_audit_trigger` AFTER INSERT ON `user` FOR EACH ROW BEGIN
+    INSERT INTO user_audit_log (
+        userID,
+        actionType,
+        actionTime,
+        old_data,
+        new_data,
+        loggedUserID
+    )
+    VALUES(
+        NEW.userID,
+        'INSERT',
+        CURRENT_TIMESTAMP,
+        NULL,
+        JSON_OBJECT(
+            "email", NEW.email,
+            "password", NEW.password,
+            "contactNo", NEW.contactNo,
+            "role", NEW.role,
+            "createdAt", NEW.createdAt,
+            "status", NEW.status,
+            "isOTPVerified", NEW.isOTPVerified
+        ),
+        @logged_user
+    );
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `user_update_audit_trigger` AFTER UPDATE ON `user` FOR EACH ROW BEGIN
+    INSERT INTO user_audit_log (
+        userID,
+        actionType,
+        actionTime,
+        old_data,
+        new_data,
+        loggedUserID
+    )
+    VALUES(
+        NEW.userID,
+        'UPDATE',
+        CURRENT_TIMESTAMP,
+        JSON_OBJECT(
+            "email", OLD.email,
+            "password", OLD.password,
+            "contactNo", OLD.contactNo,
+            "role", OLD.role,
+            "createdAt", OLD.createdAt,
+            "status", OLD.status,
+            "isOTPVerified", OLD.isOTPVerified
+        ),
+        JSON_OBJECT(
+            "email", NEW.email,
+            "password", NEW.password,
+            "contactNo", NEW.contactNo,
+            "role", NEW.role,
+            "createdAt", NEW.createdAt,
+            "status", NEW.status,
+            "isOTPVerified", NEW.isOTPVerified
+        ),
+        @logged_user
+    );
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `user_delete_audit_trigger` AFTER DELETE ON `user` FOR EACH ROW BEGIN
+    INSERT INTO user_audit_log (
+        userID,
+        actionType,
+        actionTime,
+        old_data,
+        new_data,
+        loggedUserID
+    )
+    VALUES(
+        OLD.userID,
+        'DELETE',
+        CURRENT_TIMESTAMP,
+        JSON_OBJECT(
+            "email", OLD.email,
+            "password", OLD.password,
+            "contactNo", OLD.contactNo,
+            "role", OLD.role,
+            "createdAt", OLD.createdAt,
+            "status", OLD.status,
+            "isOTPVerified", OLD.isOTPVerified
+        ),
+        NULL,
+        @logged_user
+    );
+END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -746,6 +824,7 @@ CREATE TABLE `user_audit_log` (
 
 LOCK TABLES `user_audit_log` WRITE;
 /*!40000 ALTER TABLE `user_audit_log` DISABLE KEYS */;
+INSERT INTO `user_audit_log` VALUES (36,'INSERT','2023-11-28 14:12:40',NULL,'{\"role\": \"company\", \"email\": \"compan2y@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$WsXyUZFX3aX35XeKKgelEeJOBS4K2kD5/iyG95LUBk39tXHmA.MSe\", \"contactNo\": \"0999999999\", \"createdAt\": \"2023-11-28 14:12:40.000000\", \"isOTPVerified\": 0}',NULL),(36,'UPDATE','2023-11-28 14:13:45','{\"role\": \"company\", \"email\": \"compan2y@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$WsXyUZFX3aX35XeKKgelEeJOBS4K2kD5/iyG95LUBk39tXHmA.MSe\", \"contactNo\": \"0999999999\", \"createdAt\": \"2023-11-28 14:12:40.000000\", \"isOTPVerified\": 0}','{\"role\": \"company\", \"email\": \"compan2y@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$WsXyUZFX3aX35XeKKgelEeJOBS4K2kD5/iyG95LUBk39tXHmA.MSe\", \"contactNo\": \"0999999999\", \"createdAt\": \"2023-11-28 14:12:40.000000\", \"isOTPVerified\": 1}',NULL),(36,'DELETE','2023-11-28 14:14:19','{\"role\": \"company\", \"email\": \"compan2y@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$WsXyUZFX3aX35XeKKgelEeJOBS4K2kD5/iyG95LUBk39tXHmA.MSe\", \"contactNo\": \"0999999999\", \"createdAt\": \"2023-11-28 14:12:40.000000\", \"isOTPVerified\": 1}',NULL,NULL);
 /*!40000 ALTER TABLE `user_audit_log` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -758,4 +837,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-28 13:51:33
+-- Dump completed on 2023-11-28 14:14:37
