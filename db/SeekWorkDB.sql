@@ -73,9 +73,31 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (3,'chathura','lakshan',NULL,NULL,11),(4,'Seekwork','admin','No.5 Seekwork r','uploads/profilePics/1701055253404_cat.png',25);
+INSERT INTO `admin` VALUES (4,'Seekwork','admin','No.5 Seekwork r','uploads/profilePics/1701055253404_cat.png',25);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `admin_delete_oncascade` AFTER DELETE ON `admin` FOR EACH ROW BEGIN
+    DECLARE deleted_values TEXT;
+    SET deleted_values = CONCAT(OLD.adminID, ',', OLD.firstName, ',', OLD.lastName, ',', OLD.address, ',', OLD.profilePic); 
+    
+    UPDATE deleted_users
+    SET fromRoleTable = deleted_values
+    WHERE userID = OLD.userID;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `assignment`
@@ -253,6 +275,41 @@ CREATE TABLE `company_payment` (
 LOCK TABLES `company_payment` WRITE;
 /*!40000 ALTER TABLE `company_payment` DISABLE KEYS */;
 /*!40000 ALTER TABLE `company_payment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `deleted_users`
+--
+
+DROP TABLE IF EXISTS `deleted_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `deleted_users` (
+  `deleteLogID` int NOT NULL AUTO_INCREMENT,
+  `userID` int DEFAULT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `password` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `contactNo` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `role` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT NULL,
+  `status` enum('active','deactivated') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `isOTPVerified` tinyint(1) DEFAULT NULL,
+  `fromRoleTable` text,
+  `deletedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`deleteLogID`),
+  UNIQUE KEY `userID` (`userID`),
+  KEY `userID_2` (`userID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `deleted_users`
+--
+
+LOCK TABLES `deleted_users` WRITE;
+/*!40000 ALTER TABLE `deleted_users` DISABLE KEYS */;
+INSERT INTO `deleted_users` VALUES (1,11,'admin@admin.com','$2y$10$O9fihdAv7ftZ5N5mp.IQwuh1S644VmGJCNcRy0UEObVZ4y67fBv6a','123','admin','2023-09-17 16:11:13','active',0,NULL,'2023-11-27 14:49:18');
+/*!40000 ALTER TABLE `deleted_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -646,8 +703,50 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (11,'admin@admin.com','$2y$10$O9fihdAv7ftZ5N5mp.IQwuh1S644VmGJCNcRy0UEObVZ4y67fBv6a','123','admin','2023-09-17 16:11:13','active',0),(12,'aa@k.com','$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC','012-345-6789','student','2023-09-18 09:26:48','active',0),(14,'aabj@k.com','$2y$10$KnHOE3tyqErLsjggmUPas.KZ/UmwyShx.lXYzuqW5bC9MbAFClUdy','012-345-6789','student','2023-09-18 09:34:29','active',0),(15,'aaabj@k.com','$2y$10$78iEQp8L2EuONr7yVceNCebUdsYhaS1ICxIBk0fIv.FKGwyBeL4N2','012-345-6789','student','2023-09-18 09:36:48','active',0),(16,'aaa@kk.com','$2y$10$P08nvJCK7z0t7dNScXZElO.uQ3MRgx90LbD9UkaZGPWqScqqn93qO','012-234-4567','company','2023-09-18 10:13:50','deactivated',0),(17,'2021cs109@stu.ucsc.cmb.ac.lk','$2y$10$nt.D/ZdzXfdE/Qcjh/i7TOy/qZX1IsQDiKPy.44J0vMuCeiR2kh/O','012-345-6789','student','2023-09-18 11:47:26','active',0),(18,'2021cs1029@stu.ucsc.cmb.ac.lk','$2y$10$VZn32bcZ7z4hfDZI8I1me.YjPNp/trCscXwAPXuHe1FLGjEuLx9vC','0775017409','student','2023-09-19 07:56:38','active',0),(19,'2021cs018@stu.ucsc.cmb.ac.lk','$2y$10$COXY0b5joTnRQWRYJbySQe6/S1B90n3SJTUUWLi7/3GziO0xd0kEq','1111111111','student','2023-09-19 07:59:14','active',0),(21,'chathura@stu.ucsc.cmb.ac.lk','$2y$10$k2xZ8oNZAsCvUtTV1wWwPe/pmGjO/QwXHbFL3z6od1JNcXLOTy6da','0112339220','student','2023-09-21 23:19:29','active',0),(22,'chathura@seekwork.com','$2y$10$KPl6CHFI3XpZJiRhj1mbU.p3W3/jUxGLn8hHup94D7WMxI6YijZw.','0775017409','company','2023-09-23 10:04:25','active',0),(24,'verifiedcompany@seekwork.com','$2y$10$zzkLQrkDSAopuKUH/PRflOpuJ2ccdKLuW6cuHe5pYiOLEd78IzY5G','0112929330','company','2023-09-23 10:57:51','active',0),(25,'admin@seekwork.lk','$2y$10$Vods1YVO7kfZgyFDmz2niup1HSCjeQk5cTy.JJX7RzzVtRuspJXVq','0111111111','admin','2023-09-26 09:26:34','active',1),(26,'student@seekwork.lk','$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu','0111111111','student','2023-09-26 09:27:28','active',0),(27,'company@seekwork.lk','$2y$10$w3GHokkOlEVPbWeYdT3vSe2jwpE2DwQ1mmigKaZf5LeZW.RQ/N3re','0111111111','company','2023-09-26 09:28:43','active',1),(28,'moderator@seekwork.lk','$2y$10$fHyCVpJQCQOhzd00yCI8ie0LG6EXmy1KjjriLo5tzJSSl1aSfeDFq','0111111111','moderator','2023-09-26 09:29:49','active',1),(29,'kk.dmkde@gmail.com','$2y$10$ydF9klVGGOmPzg50FR5AHe.1fxbzKUqLjYwsFhn3KwdniTXSwQP/u','0116259662','student','2023-10-31 10:13:36','active',0),(30,'chathura@ll.com','$2y$10$ActHuYVpk5nGfTyq98pf6eWvBY3OCvEvR03UjGGAqqNH.Rto00eD6','0775017409','student','2023-10-31 12:53:24','active',0),(31,'pasindu@seekwork.lk','$2y$10$QED7NOu1nR/5DvUXbDgsN.csptwaf5N48hH6dhDx5EV66cS4JKNpW','0112939220','moderator','2023-10-31 14:43:38','active',0),(34,'chathuralakshan20010226@gmail.com','$2y$10$LACTfCQiHWKPtudTEGOfZulCo/zxfUc4muTR6N2DyAid9v41uiDtK','0112939299','company','2023-11-26 10:24:23','active',1),(35,'chathuralakshan226@gmail.com','$2y$10$f3Qk9rAh2q872zHBrDjGYeO5DvmXpzCdsPkMAHcYgb2lr3sO2NKju','0885017409','company','2023-11-26 10:29:40','active',0);
+INSERT INTO `user` VALUES (12,'aa@k.com','$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC','012-345-6789','student','2023-09-18 09:26:48','active',0),(14,'aabj@k.com','$2y$10$KnHOE3tyqErLsjggmUPas.KZ/UmwyShx.lXYzuqW5bC9MbAFClUdy','012-345-6789','student','2023-09-18 09:34:29','active',0),(15,'aaabj@k.com','$2y$10$78iEQp8L2EuONr7yVceNCebUdsYhaS1ICxIBk0fIv.FKGwyBeL4N2','012-345-6789','student','2023-09-18 09:36:48','active',0),(16,'aaa@kk.com','$2y$10$P08nvJCK7z0t7dNScXZElO.uQ3MRgx90LbD9UkaZGPWqScqqn93qO','012-234-4567','company','2023-09-18 10:13:50','deactivated',0),(17,'2021cs109@stu.ucsc.cmb.ac.lk','$2y$10$nt.D/ZdzXfdE/Qcjh/i7TOy/qZX1IsQDiKPy.44J0vMuCeiR2kh/O','012-345-6789','student','2023-09-18 11:47:26','active',0),(18,'2021cs1029@stu.ucsc.cmb.ac.lk','$2y$10$VZn32bcZ7z4hfDZI8I1me.YjPNp/trCscXwAPXuHe1FLGjEuLx9vC','0775017409','student','2023-09-19 07:56:38','active',0),(19,'2021cs018@stu.ucsc.cmb.ac.lk','$2y$10$COXY0b5joTnRQWRYJbySQe6/S1B90n3SJTUUWLi7/3GziO0xd0kEq','1111111111','student','2023-09-19 07:59:14','active',0),(21,'chathura@stu.ucsc.cmb.ac.lk','$2y$10$k2xZ8oNZAsCvUtTV1wWwPe/pmGjO/QwXHbFL3z6od1JNcXLOTy6da','0112339220','student','2023-09-21 23:19:29','active',0),(22,'chathura@seekwork.com','$2y$10$KPl6CHFI3XpZJiRhj1mbU.p3W3/jUxGLn8hHup94D7WMxI6YijZw.','0775017409','company','2023-09-23 10:04:25','active',0),(24,'verifiedcompany@seekwork.com','$2y$10$zzkLQrkDSAopuKUH/PRflOpuJ2ccdKLuW6cuHe5pYiOLEd78IzY5G','0112929330','company','2023-09-23 10:57:51','active',0),(25,'admin@seekwork.lk','$2y$10$Vods1YVO7kfZgyFDmz2niup1HSCjeQk5cTy.JJX7RzzVtRuspJXVq','0111111111','admin','2023-09-26 09:26:34','active',1),(26,'student@seekwork.lk','$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu','0111111111','student','2023-09-26 09:27:28','active',0),(27,'company@seekwork.lk','$2y$10$w3GHokkOlEVPbWeYdT3vSe2jwpE2DwQ1mmigKaZf5LeZW.RQ/N3re','0111111111','company','2023-09-26 09:28:43','active',1),(28,'moderator@seekwork.lk','$2y$10$fHyCVpJQCQOhzd00yCI8ie0LG6EXmy1KjjriLo5tzJSSl1aSfeDFq','0111111111','moderator','2023-09-26 09:29:49','active',1),(29,'kk.dmkde@gmail.com','$2y$10$ydF9klVGGOmPzg50FR5AHe.1fxbzKUqLjYwsFhn3KwdniTXSwQP/u','0116259662','student','2023-10-31 10:13:36','active',0),(30,'chathura@ll.com','$2y$10$ActHuYVpk5nGfTyq98pf6eWvBY3OCvEvR03UjGGAqqNH.Rto00eD6','0775017409','student','2023-10-31 12:53:24','active',0),(31,'pasindu@seekwork.lk','$2y$10$QED7NOu1nR/5DvUXbDgsN.csptwaf5N48hH6dhDx5EV66cS4JKNpW','0112939220','moderator','2023-10-31 14:43:38','active',0),(34,'chathuralakshan20010226@gmail.com','$2y$10$LACTfCQiHWKPtudTEGOfZulCo/zxfUc4muTR6N2DyAid9v41uiDtK','0112939299','company','2023-11-26 10:24:23','active',1),(35,'chathuralakshan226@gmail.com','$2y$10$f3Qk9rAh2q872zHBrDjGYeO5DvmXpzCdsPkMAHcYgb2lr3sO2NKju','0885017409','company','2023-11-26 10:29:40','active',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `user_delete` BEFORE DELETE ON `user` FOR EACH ROW INSERT INTO deleted_users (userID,email,password,contactNo,role,createdAt,status,isOTPVerified) VALUES (OLD.userID, OLD.email, OLD.password,OLD.contactNo,OLD.role,OLD.createdAt,OLD.status,OLD.isOTPVerified) */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `user_audit_log`
+--
+
+DROP TABLE IF EXISTS `user_audit_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_audit_log` (
+  `userID` int NOT NULL,
+  `actionType` enum('INSERT','UPDATE','DELETE') NOT NULL,
+  `actionTime` timestamp NOT NULL,
+  `old_data` json DEFAULT NULL,
+  `new_data` json DEFAULT NULL,
+  `loggedUserID` int DEFAULT NULL,
+  PRIMARY KEY (`userID`,`actionType`,`actionTime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_audit_log`
+--
+
+LOCK TABLES `user_audit_log` WRITE;
+/*!40000 ALTER TABLE `user_audit_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_audit_log` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -659,4 +758,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-27  4:16:30
+-- Dump completed on 2023-11-28 13:51:33
