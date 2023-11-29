@@ -235,7 +235,7 @@ CREATE TABLE `company` (
   UNIQUE KEY `brn-unique` (`brn`),
   KEY `user-company` (`userID`),
   CONSTRAINT `user-company` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -246,6 +246,174 @@ LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
 INSERT INTO `company` VALUES (1,'kk','verification pending','aa','aa','aaa','https://www.kk.com','',NULL,'aa',16),(2,'Pheonix','verification pending','chathura','lakshan','colombo','https://www.seekwork.com','Pheonix is a dynamic and innovative design company dedicated to turning your creative vision into reality. With a team of highly skilled and experienced designers, we offer a wide range of design services tailored to meet the unique needs of our clients.',NULL,'1111111',22),(3,'seekwork.com','verified','lakshan','chathura','colombo','',NULL,NULL,'11111',24),(4,'Seekwork Company','verification pending','Seekwork','Company','No.5 Seekwork rd.','https://www.seekwork.com',NULL,'uploads/profilePics/1699934037Screenshot from 2023-11-14 09-21-13.png','1111111111',27),(6,'lll','verification pending','lll','lll','lll','',NULL,NULL,'gb78',34),(7,'kk','verification pending','kk','ll','ll','',NULL,NULL,'kjn',35);
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `company_insert_audit_trigger` AFTER INSERT ON `company` FOR EACH ROW BEGIN
+    INSERT INTO company_audit_log(
+        companyID,
+        actionType,
+        actionTime,
+        old_data,
+        new_data,
+        loggedUserID
+    )
+    VALUES(
+        NEW.companyID,
+        'INSERT',
+        CURRENT_TIMESTAMP,
+        NULL,
+        JSON_OBJECT(
+            "companyName", NEW.companyName,
+            "status", NEW.status,
+            "firstName", NEW.firstName,
+            "lastName", NEW.lastName,
+            "address", NEW.address,
+            "website", NEW.website,
+            "description", NEW.description,
+            "profilePic", NEW.profilePic,
+            "brn", NEW.brn,
+            "userID", NEW.userID
+        ),
+        @logged_user
+    );
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `company_update_audit_trigger` AFTER UPDATE ON `company` FOR EACH ROW BEGIN
+    INSERT INTO company_audit_log(
+        companyID,
+        actionType,
+        actionTime,
+        old_data,
+        new_data,
+        loggedUserID
+    )
+    VALUES(
+        NEW.companyID,
+        'UPDATE',
+        CURRENT_TIMESTAMP,
+        JSON_OBJECT(
+            "companyName", OLD.companyName,
+            "status", OLD.status,
+            "firstName", OLD.firstName,
+            "lastName", OLD.lastName,
+            "address", OLD.address,
+            "website", OLD.website,
+            "description", OLD.description,
+            "profilePic", OLD.profilePic,
+            "brn", OLD.brn,
+            "userID", OLD.userID
+        ),
+        JSON_OBJECT(
+            "companyName", NEW.companyName,
+            "status", NEW.status,
+            "firstName", NEW.firstName,
+            "lastName", NEW.lastName,
+            "address", NEW.address,
+            "website", NEW.website,
+            "description", NEW.description,
+            "profilePic", NEW.profilePic,
+            "brn", NEW.brn,
+            "userID", NEW.userID
+        ),
+        @logged_user
+    );
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `company_delete_audit_trigger` AFTER DELETE ON `company` FOR EACH ROW BEGIN
+    INSERT INTO company_audit_log(
+        companyID,
+        actionType,
+        actionTime,
+        old_data,
+        new_data,
+        loggedUserID
+    )
+    VALUES(
+        OLD.companyID,
+        'DELETE',
+        CURRENT_TIMESTAMP,
+        JSON_OBJECT(
+            "companyName", OLD.companyName,
+            "status", OLD.status,
+            "firstName", OLD.firstName,
+            "lastName", OLD.lastName,
+            "address", OLD.address,
+            "website", OLD.website,
+            "description", OLD.description,
+            "profilePic", OLD.profilePic,
+            "brn", OLD.brn,
+            "userID", OLD.userID
+        ),
+        NULL,
+        @logged_user
+    );
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `company_audit_log`
+--
+
+DROP TABLE IF EXISTS `company_audit_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `company_audit_log` (
+  `companyID` int NOT NULL,
+  `actionType` enum('INSERT','UPDATE','DELETE') NOT NULL,
+  `actionTime` timestamp NOT NULL,
+  `old_data` json DEFAULT NULL,
+  `new_data` json DEFAULT NULL,
+  `loggedUserID` int DEFAULT NULL,
+  PRIMARY KEY (`companyID`,`actionType`,`actionTime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `company_audit_log`
+--
+
+LOCK TABLES `company_audit_log` WRITE;
+/*!40000 ALTER TABLE `company_audit_log` DISABLE KEYS */;
+INSERT INTO `company_audit_log` VALUES (9,'INSERT','2023-11-29 08:52:47',NULL,'{\"brn\": \"swq2\", \"status\": \"verification pending\", \"userID\": 17, \"address\": \"\", \"website\": null, \"lastName\": \"jbhj\", \"firstName\": \"bjh\", \"profilePic\": null, \"companyName\": \"hj\", \"description\": null}',NULL),(9,'UPDATE','2023-11-29 08:52:56','{\"brn\": \"swq2\", \"status\": \"verification pending\", \"userID\": 17, \"address\": \"\", \"website\": null, \"lastName\": \"jbhj\", \"firstName\": \"bjh\", \"profilePic\": null, \"companyName\": \"hj\", \"description\": null}','{\"brn\": \"swq2dewdw\", \"status\": \"verification pending\", \"userID\": 17, \"address\": \"\", \"website\": null, \"lastName\": \"jbhj\", \"firstName\": \"bjh\", \"profilePic\": null, \"companyName\": \"hj\", \"description\": null}',NULL),(9,'DELETE','2023-11-29 08:53:00','{\"brn\": \"swq2dewdw\", \"status\": \"verification pending\", \"userID\": 17, \"address\": \"\", \"website\": null, \"lastName\": \"jbhj\", \"firstName\": \"bjh\", \"profilePic\": null, \"companyName\": \"hj\", \"description\": null}',NULL,NULL);
+/*!40000 ALTER TABLE `company_audit_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -497,7 +665,7 @@ CREATE TABLE `student` (
   KEY `student-university` (`universityID`),
   CONSTRAINT `student-university` FOREIGN KEY (`universityID`) REFERENCES `university` (`universityID`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `user-student` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -506,7 +674,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (4,'aaa','bbb','qqqq','ddd','200105702857','ccc','verified',NULL,NULL,NULL,12,1),(6,'aaa','bb',NULL,NULL,'660951105v','aaa','verification pending',NULL,NULL,NULL,14,NULL),(7,'aaa','bb',NULL,NULL,'660951145v','aaa','verification pending',NULL,NULL,NULL,15,NULL),(8,'chathura','lakshan',NULL,NULL,'200105702855','skjnwk','verification pending',NULL,NULL,NULL,17,NULL),(9,'sajith','rajapakse',NULL,NULL,'200012365849','99 madamulana pallebedda','verification pending',NULL,NULL,NULL,18,NULL),(10,'sajith','rajapakse',NULL,NULL,'960951105v','99 madamulana pallebedda','verification pending',NULL,NULL,NULL,19,NULL),(12,'chathura','lakshan',NULL,NULL,'123456789123','111','verification pending',NULL,NULL,NULL,21,NULL),(14,'Seekwork','student','student qualifications','student description','234567890123','No.5 Seekwork rd.','verification pending',NULL,NULL,NULL,26,1),(16,'chathura','lakshan',NULL,NULL,'200105702899','dkjmwd','verification pending',NULL,NULL,NULL,29,NULL),(17,'chathura','lakshan',NULL,NULL,'200105702868','njasw','verification pending',NULL,NULL,NULL,30,NULL),(20,'jk',',jn',NULL,NULL,'mmkl','','verification pending',NULL,NULL,NULL,22,NULL);
+INSERT INTO `student` VALUES (4,'aaa','bbb','qqqq','ddd','200105702857','ccc','verified',NULL,NULL,NULL,12,1),(6,'aaa','bb',NULL,NULL,'660951105v','aaa','verification pending',NULL,NULL,NULL,14,NULL),(7,'aaa','bb',NULL,NULL,'660951145v','aaa','verification pending',NULL,NULL,NULL,15,NULL),(8,'chathura','lakshan',NULL,NULL,'200105702855','skjnwk','verification pending',NULL,NULL,NULL,17,NULL),(9,'sajith','rajapakse',NULL,NULL,'200012365849','99 madamulana pallebedda','verification pending',NULL,NULL,NULL,18,NULL),(10,'sajith','rajapakse',NULL,NULL,'960951105v','99 madamulana pallebedda','verification pending',NULL,NULL,NULL,19,NULL),(12,'chathura','lakshan',NULL,NULL,'123456789123','111','verification pending',NULL,NULL,NULL,21,NULL),(14,'Seekwork','student','student qualifications','student description','234567890123','No.5 Seekwork rd.','verification pending',NULL,NULL,NULL,26,1),(16,'chathura','lakshan',NULL,NULL,'200105702899','dkjmwd','verification pending',NULL,NULL,NULL,29,NULL),(17,'chathura','lakshan',NULL,NULL,'200105702868','njasw','verification pending',NULL,NULL,NULL,30,NULL),(20,'jk',',jn',NULL,NULL,'mmkl','','verification pending',NULL,NULL,NULL,22,NULL),(21,'jybh','hbj',NULL,NULL,'200105702555','jbhhjn','verification pending',NULL,NULL,NULL,38,1);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -682,7 +850,7 @@ CREATE TABLE `student_audit_log` (
 
 LOCK TABLES `student_audit_log` WRITE;
 /*!40000 ALTER TABLE `student_audit_log` DISABLE KEYS */;
-INSERT INTO `student_audit_log` VALUES (19,'INSERT','2023-11-29 08:13:01',NULL,'{\"NIC\": \"200105702555\", \"status\": \"verification pending\", \"userID\": 37, \"address\": \"jbhhjn\", \"lastName\": \"hbj\", \"accountNo\": null, \"firstName\": \"jybh\", \"profilePic\": null, \"description\": null, \"universityID\": 1, \"qualifications\": null, \"verificationDocuments\": null}',NULL),(20,'INSERT','2023-11-29 08:22:13',NULL,'{\"NIC\": \"mmkl\", \"status\": \"verification pending\", \"userID\": 22, \"address\": \"\", \"lastName\": \",jn\", \"accountNo\": null, \"firstName\": \"jk\", \"profilePic\": null, \"description\": null, \"universityID\": null, \"qualifications\": null, \"verificationDocuments\": null}',NULL);
+INSERT INTO `student_audit_log` VALUES (19,'INSERT','2023-11-29 08:13:01',NULL,'{\"NIC\": \"200105702555\", \"status\": \"verification pending\", \"userID\": 37, \"address\": \"jbhhjn\", \"lastName\": \"hbj\", \"accountNo\": null, \"firstName\": \"jybh\", \"profilePic\": null, \"description\": null, \"universityID\": 1, \"qualifications\": null, \"verificationDocuments\": null}',NULL),(20,'INSERT','2023-11-29 08:22:13',NULL,'{\"NIC\": \"mmkl\", \"status\": \"verification pending\", \"userID\": 22, \"address\": \"\", \"lastName\": \",jn\", \"accountNo\": null, \"firstName\": \"jk\", \"profilePic\": null, \"description\": null, \"universityID\": null, \"qualifications\": null, \"verificationDocuments\": null}',NULL),(21,'INSERT','2023-11-29 08:40:12',NULL,'{\"NIC\": \"200105702555\", \"status\": \"verification pending\", \"userID\": 38, \"address\": \"jbhhjn\", \"lastName\": \"hbj\", \"accountNo\": null, \"firstName\": \"jybh\", \"profilePic\": null, \"description\": null, \"universityID\": 1, \"qualifications\": null, \"verificationDocuments\": null}',NULL);
 /*!40000 ALTER TABLE `student_audit_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -835,7 +1003,7 @@ CREATE TABLE `user` (
   `isOTPVerified` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`userID`),
   UNIQUE KEY `UNIQUE_EMAIL` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -844,7 +1012,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (12,'aa@k.com','$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC','012-345-6789','student','2023-09-18 09:26:48','active',0),(14,'aabj@k.com','$2y$10$KnHOE3tyqErLsjggmUPas.KZ/UmwyShx.lXYzuqW5bC9MbAFClUdy','012-345-6789','student','2023-09-18 09:34:29','active',0),(15,'aaabj@k.com','$2y$10$78iEQp8L2EuONr7yVceNCebUdsYhaS1ICxIBk0fIv.FKGwyBeL4N2','012-345-6789','student','2023-09-18 09:36:48','active',0),(16,'aaa@kk.com','$2y$10$P08nvJCK7z0t7dNScXZElO.uQ3MRgx90LbD9UkaZGPWqScqqn93qO','012-234-4567','company','2023-09-18 10:13:50','deactivated',0),(17,'2021cs109@stu.ucsc.cmb.ac.lk','$2y$10$nt.D/ZdzXfdE/Qcjh/i7TOy/qZX1IsQDiKPy.44J0vMuCeiR2kh/O','012-345-6789','student','2023-09-18 11:47:26','active',0),(18,'2021cs1029@stu.ucsc.cmb.ac.lk','$2y$10$VZn32bcZ7z4hfDZI8I1me.YjPNp/trCscXwAPXuHe1FLGjEuLx9vC','0775017409','student','2023-09-19 07:56:38','active',0),(19,'2021cs018@stu.ucsc.cmb.ac.lk','$2y$10$COXY0b5joTnRQWRYJbySQe6/S1B90n3SJTUUWLi7/3GziO0xd0kEq','1111111111','student','2023-09-19 07:59:14','active',0),(21,'chathura@stu.ucsc.cmb.ac.lk','$2y$10$k2xZ8oNZAsCvUtTV1wWwPe/pmGjO/QwXHbFL3z6od1JNcXLOTy6da','0112339220','student','2023-09-21 23:19:29','active',0),(22,'chathura@seekwork.com','$2y$10$KPl6CHFI3XpZJiRhj1mbU.p3W3/jUxGLn8hHup94D7WMxI6YijZw.','0775017409','company','2023-09-23 10:04:25','active',0),(24,'verifiedcompany@seekwork.com','$2y$10$zzkLQrkDSAopuKUH/PRflOpuJ2ccdKLuW6cuHe5pYiOLEd78IzY5G','0112929330','company','2023-09-23 10:57:51','active',0),(25,'admin@seekwork.lk','$2y$10$Vods1YVO7kfZgyFDmz2niup1HSCjeQk5cTy.JJX7RzzVtRuspJXVq','0111111111','admin','2023-09-26 09:26:34','active',1),(26,'student@seekwork.lk','$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu','0111111111','student','2023-09-26 09:27:28','active',0),(27,'company@seekwork.lk','$2y$10$w3GHokkOlEVPbWeYdT3vSe2jwpE2DwQ1mmigKaZf5LeZW.RQ/N3re','0111111111','company','2023-09-26 09:28:43','active',1),(28,'moderator@seekwork.lk','$2y$10$fHyCVpJQCQOhzd00yCI8ie0LG6EXmy1KjjriLo5tzJSSl1aSfeDFq','0111111111','moderator','2023-09-26 09:29:49','active',1),(29,'kk.dmkde@gmail.com','$2y$10$ydF9klVGGOmPzg50FR5AHe.1fxbzKUqLjYwsFhn3KwdniTXSwQP/u','0116259662','student','2023-10-31 10:13:36','active',0),(30,'chathura@ll.com','$2y$10$ActHuYVpk5nGfTyq98pf6eWvBY3OCvEvR03UjGGAqqNH.Rto00eD6','0775017409','student','2023-10-31 12:53:24','active',0),(31,'pasindu@seekwork.lk','$2y$10$QED7NOu1nR/5DvUXbDgsN.csptwaf5N48hH6dhDx5EV66cS4JKNpW','0112939220','moderator','2023-10-31 14:43:38','active',0),(34,'chathuralakshan20010226@gmail.com','$2y$10$LACTfCQiHWKPtudTEGOfZulCo/zxfUc4muTR6N2DyAid9v41uiDtK','0112939299','company','2023-11-26 10:24:23','active',1),(35,'chathuralakshan226@gmail.com','$2y$10$f3Qk9rAh2q872zHBrDjGYeO5DvmXpzCdsPkMAHcYgb2lr3sO2NKju','0885017409','company','2023-11-26 10:29:40','active',0);
+INSERT INTO `user` VALUES (12,'aa@k.com','$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC','012-345-6789','student','2023-09-18 09:26:48','active',0),(14,'aabj@k.com','$2y$10$KnHOE3tyqErLsjggmUPas.KZ/UmwyShx.lXYzuqW5bC9MbAFClUdy','012-345-6789','student','2023-09-18 09:34:29','active',0),(15,'aaabj@k.com','$2y$10$78iEQp8L2EuONr7yVceNCebUdsYhaS1ICxIBk0fIv.FKGwyBeL4N2','012-345-6789','student','2023-09-18 09:36:48','active',0),(16,'aaa@kk.com','$2y$10$P08nvJCK7z0t7dNScXZElO.uQ3MRgx90LbD9UkaZGPWqScqqn93qO','012-234-4567','company','2023-09-18 10:13:50','deactivated',0),(17,'2021cs109@stu.ucsc.cmb.ac.lk','$2y$10$nt.D/ZdzXfdE/Qcjh/i7TOy/qZX1IsQDiKPy.44J0vMuCeiR2kh/O','012-345-6789','student','2023-09-18 11:47:26','active',0),(18,'2021cs1029@stu.ucsc.cmb.ac.lk','$2y$10$VZn32bcZ7z4hfDZI8I1me.YjPNp/trCscXwAPXuHe1FLGjEuLx9vC','0775017409','student','2023-09-19 07:56:38','active',0),(19,'2021cs018@stu.ucsc.cmb.ac.lk','$2y$10$COXY0b5joTnRQWRYJbySQe6/S1B90n3SJTUUWLi7/3GziO0xd0kEq','1111111111','student','2023-09-19 07:59:14','active',0),(21,'chathura@stu.ucsc.cmb.ac.lk','$2y$10$k2xZ8oNZAsCvUtTV1wWwPe/pmGjO/QwXHbFL3z6od1JNcXLOTy6da','0112339220','student','2023-09-21 23:19:29','active',0),(22,'chathura@seekwork.com','$2y$10$KPl6CHFI3XpZJiRhj1mbU.p3W3/jUxGLn8hHup94D7WMxI6YijZw.','0775017409','company','2023-09-23 10:04:25','active',0),(24,'verifiedcompany@seekwork.com','$2y$10$zzkLQrkDSAopuKUH/PRflOpuJ2ccdKLuW6cuHe5pYiOLEd78IzY5G','0112929330','company','2023-09-23 10:57:51','active',0),(25,'admin@seekwork.lk','$2y$10$Vods1YVO7kfZgyFDmz2niup1HSCjeQk5cTy.JJX7RzzVtRuspJXVq','0111111111','admin','2023-09-26 09:26:34','active',1),(26,'student@seekwork.lk','$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu','0111111111','student','2023-09-26 09:27:28','active',0),(27,'company@seekwork.lk','$2y$10$w3GHokkOlEVPbWeYdT3vSe2jwpE2DwQ1mmigKaZf5LeZW.RQ/N3re','0111111111','company','2023-09-26 09:28:43','active',1),(28,'moderator@seekwork.lk','$2y$10$fHyCVpJQCQOhzd00yCI8ie0LG6EXmy1KjjriLo5tzJSSl1aSfeDFq','0111111111','moderator','2023-09-26 09:29:49','active',1),(29,'kk.dmkde@gmail.com','$2y$10$ydF9klVGGOmPzg50FR5AHe.1fxbzKUqLjYwsFhn3KwdniTXSwQP/u','0116259662','student','2023-10-31 10:13:36','active',0),(30,'chathura@ll.com','$2y$10$ActHuYVpk5nGfTyq98pf6eWvBY3OCvEvR03UjGGAqqNH.Rto00eD6','0775017409','student','2023-10-31 12:53:24','active',0),(31,'pasindu@seekwork.lk','$2y$10$QED7NOu1nR/5DvUXbDgsN.csptwaf5N48hH6dhDx5EV66cS4JKNpW','0112939220','moderator','2023-10-31 14:43:38','active',0),(34,'chathuralakshan20010226@gmail.com','$2y$10$LACTfCQiHWKPtudTEGOfZulCo/zxfUc4muTR6N2DyAid9v41uiDtK','0112939299','company','2023-11-26 10:24:23','active',1),(35,'chathuralakshan226@gmail.com','$2y$10$f3Qk9rAh2q872zHBrDjGYeO5DvmXpzCdsPkMAHcYgb2lr3sO2NKju','0885017409','company','2023-11-26 10:29:40','active',0),(38,'1@stu.ucsc.cmb.ac.lk','$2y$10$LfOVEWi5Y2W/uC8Gc9S7u.1cKmmBq1Xu4SMWxIh.SEQf4i/5EDem6','0112939220','student','2023-11-29 08:40:12','active',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1000,7 +1168,7 @@ CREATE TABLE `user_audit_log` (
 
 LOCK TABLES `user_audit_log` WRITE;
 /*!40000 ALTER TABLE `user_audit_log` DISABLE KEYS */;
-INSERT INTO `user_audit_log` VALUES (12,'UPDATE','2023-11-28 14:29:55','{\"role\": \"student\", \"email\": \"aa@k.com\", \"status\": \"active\", \"password\": \"$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC\", \"contactNo\": \"012-345-6789\", \"createdAt\": \"2023-09-18 09:26:48.000000\", \"isOTPVerified\": 0}','{\"role\": \"student\", \"email\": \"aa@k.com\", \"status\": \"deactivated\", \"password\": \"$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC\", \"contactNo\": \"012-345-6789\", \"createdAt\": \"2023-09-18 09:26:48.000000\", \"isOTPVerified\": 0}',25),(12,'UPDATE','2023-11-28 14:30:45','{\"role\": \"student\", \"email\": \"aa@k.com\", \"status\": \"deactivated\", \"password\": \"$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC\", \"contactNo\": \"012-345-6789\", \"createdAt\": \"2023-09-18 09:26:48.000000\", \"isOTPVerified\": 0}','{\"role\": \"student\", \"email\": \"aa@k.com\", \"status\": \"active\", \"password\": \"$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC\", \"contactNo\": \"012-345-6789\", \"createdAt\": \"2023-09-18 09:26:48.000000\", \"isOTPVerified\": 0}',25),(26,'UPDATE','2023-11-28 14:31:24','{\"role\": \"student\", \"email\": \"student@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu\", \"contactNo\": \"0111111111\", \"createdAt\": \"2023-09-26 09:27:28.000000\", \"isOTPVerified\": 0}','{\"role\": \"student\", \"email\": \"student@seekwork.lk\", \"status\": \"deactivated\", \"password\": \"$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu\", \"contactNo\": \"0111111111\", \"createdAt\": \"2023-09-26 09:27:28.000000\", \"isOTPVerified\": 0}',25),(26,'UPDATE','2023-11-28 14:31:29','{\"role\": \"student\", \"email\": \"student@seekwork.lk\", \"status\": \"deactivated\", \"password\": \"$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu\", \"contactNo\": \"0111111111\", \"createdAt\": \"2023-09-26 09:27:28.000000\", \"isOTPVerified\": 0}','{\"role\": \"student\", \"email\": \"student@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu\", \"contactNo\": \"0111111111\", \"createdAt\": \"2023-09-26 09:27:28.000000\", \"isOTPVerified\": 0}',25),(36,'INSERT','2023-11-28 14:12:40',NULL,'{\"role\": \"company\", \"email\": \"compan2y@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$WsXyUZFX3aX35XeKKgelEeJOBS4K2kD5/iyG95LUBk39tXHmA.MSe\", \"contactNo\": \"0999999999\", \"createdAt\": \"2023-11-28 14:12:40.000000\", \"isOTPVerified\": 0}',NULL),(36,'UPDATE','2023-11-28 14:13:45','{\"role\": \"company\", \"email\": \"compan2y@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$WsXyUZFX3aX35XeKKgelEeJOBS4K2kD5/iyG95LUBk39tXHmA.MSe\", \"contactNo\": \"0999999999\", \"createdAt\": \"2023-11-28 14:12:40.000000\", \"isOTPVerified\": 0}','{\"role\": \"company\", \"email\": \"compan2y@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$WsXyUZFX3aX35XeKKgelEeJOBS4K2kD5/iyG95LUBk39tXHmA.MSe\", \"contactNo\": \"0999999999\", \"createdAt\": \"2023-11-28 14:12:40.000000\", \"isOTPVerified\": 1}',NULL),(36,'DELETE','2023-11-28 14:14:19','{\"role\": \"company\", \"email\": \"compan2y@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$WsXyUZFX3aX35XeKKgelEeJOBS4K2kD5/iyG95LUBk39tXHmA.MSe\", \"contactNo\": \"0999999999\", \"createdAt\": \"2023-11-28 14:12:40.000000\", \"isOTPVerified\": 1}',NULL,NULL),(37,'INSERT','2023-11-29 08:13:01',NULL,'{\"role\": \"student\", \"email\": \"1@stu.ucsc.cmb.ac.lk\", \"status\": \"active\", \"password\": \"$2y$10$Ej1GOLkBCjFhQEw09HwZtOLn4uIxjwfC71h5BE1sD1msIQslv/EaO\", \"contactNo\": \"0112939220\", \"createdAt\": \"2023-11-29 08:13:01.000000\", \"isOTPVerified\": 0}',NULL),(37,'DELETE','2023-11-29 08:22:53','{\"role\": \"student\", \"email\": \"1@stu.ucsc.cmb.ac.lk\", \"status\": \"active\", \"password\": \"$2y$10$Ej1GOLkBCjFhQEw09HwZtOLn4uIxjwfC71h5BE1sD1msIQslv/EaO\", \"contactNo\": \"0112939220\", \"createdAt\": \"2023-11-29 08:13:01.000000\", \"isOTPVerified\": 0}',NULL,NULL);
+INSERT INTO `user_audit_log` VALUES (12,'UPDATE','2023-11-28 14:29:55','{\"role\": \"student\", \"email\": \"aa@k.com\", \"status\": \"active\", \"password\": \"$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC\", \"contactNo\": \"012-345-6789\", \"createdAt\": \"2023-09-18 09:26:48.000000\", \"isOTPVerified\": 0}','{\"role\": \"student\", \"email\": \"aa@k.com\", \"status\": \"deactivated\", \"password\": \"$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC\", \"contactNo\": \"012-345-6789\", \"createdAt\": \"2023-09-18 09:26:48.000000\", \"isOTPVerified\": 0}',25),(12,'UPDATE','2023-11-28 14:30:45','{\"role\": \"student\", \"email\": \"aa@k.com\", \"status\": \"deactivated\", \"password\": \"$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC\", \"contactNo\": \"012-345-6789\", \"createdAt\": \"2023-09-18 09:26:48.000000\", \"isOTPVerified\": 0}','{\"role\": \"student\", \"email\": \"aa@k.com\", \"status\": \"active\", \"password\": \"$2y$10$gxa6lYdaNU6rfHY82CQGa.L4ABMpdTZUWgUlcbHTRarIJ7H1cYMwC\", \"contactNo\": \"012-345-6789\", \"createdAt\": \"2023-09-18 09:26:48.000000\", \"isOTPVerified\": 0}',25),(26,'UPDATE','2023-11-28 14:31:24','{\"role\": \"student\", \"email\": \"student@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu\", \"contactNo\": \"0111111111\", \"createdAt\": \"2023-09-26 09:27:28.000000\", \"isOTPVerified\": 0}','{\"role\": \"student\", \"email\": \"student@seekwork.lk\", \"status\": \"deactivated\", \"password\": \"$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu\", \"contactNo\": \"0111111111\", \"createdAt\": \"2023-09-26 09:27:28.000000\", \"isOTPVerified\": 0}',25),(26,'UPDATE','2023-11-28 14:31:29','{\"role\": \"student\", \"email\": \"student@seekwork.lk\", \"status\": \"deactivated\", \"password\": \"$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu\", \"contactNo\": \"0111111111\", \"createdAt\": \"2023-09-26 09:27:28.000000\", \"isOTPVerified\": 0}','{\"role\": \"student\", \"email\": \"student@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$SGoys3mOBHgW/hVBL1IP4e0nYbLCDU1AwVglqjrfulBET8ot1xDqu\", \"contactNo\": \"0111111111\", \"createdAt\": \"2023-09-26 09:27:28.000000\", \"isOTPVerified\": 0}',25),(36,'INSERT','2023-11-28 14:12:40',NULL,'{\"role\": \"company\", \"email\": \"compan2y@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$WsXyUZFX3aX35XeKKgelEeJOBS4K2kD5/iyG95LUBk39tXHmA.MSe\", \"contactNo\": \"0999999999\", \"createdAt\": \"2023-11-28 14:12:40.000000\", \"isOTPVerified\": 0}',NULL),(36,'UPDATE','2023-11-28 14:13:45','{\"role\": \"company\", \"email\": \"compan2y@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$WsXyUZFX3aX35XeKKgelEeJOBS4K2kD5/iyG95LUBk39tXHmA.MSe\", \"contactNo\": \"0999999999\", \"createdAt\": \"2023-11-28 14:12:40.000000\", \"isOTPVerified\": 0}','{\"role\": \"company\", \"email\": \"compan2y@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$WsXyUZFX3aX35XeKKgelEeJOBS4K2kD5/iyG95LUBk39tXHmA.MSe\", \"contactNo\": \"0999999999\", \"createdAt\": \"2023-11-28 14:12:40.000000\", \"isOTPVerified\": 1}',NULL),(36,'DELETE','2023-11-28 14:14:19','{\"role\": \"company\", \"email\": \"compan2y@seekwork.lk\", \"status\": \"active\", \"password\": \"$2y$10$WsXyUZFX3aX35XeKKgelEeJOBS4K2kD5/iyG95LUBk39tXHmA.MSe\", \"contactNo\": \"0999999999\", \"createdAt\": \"2023-11-28 14:12:40.000000\", \"isOTPVerified\": 1}',NULL,NULL),(37,'INSERT','2023-11-29 08:13:01',NULL,'{\"role\": \"student\", \"email\": \"1@stu.ucsc.cmb.ac.lk\", \"status\": \"active\", \"password\": \"$2y$10$Ej1GOLkBCjFhQEw09HwZtOLn4uIxjwfC71h5BE1sD1msIQslv/EaO\", \"contactNo\": \"0112939220\", \"createdAt\": \"2023-11-29 08:13:01.000000\", \"isOTPVerified\": 0}',NULL),(37,'DELETE','2023-11-29 08:22:53','{\"role\": \"student\", \"email\": \"1@stu.ucsc.cmb.ac.lk\", \"status\": \"active\", \"password\": \"$2y$10$Ej1GOLkBCjFhQEw09HwZtOLn4uIxjwfC71h5BE1sD1msIQslv/EaO\", \"contactNo\": \"0112939220\", \"createdAt\": \"2023-11-29 08:13:01.000000\", \"isOTPVerified\": 0}',NULL,NULL),(38,'INSERT','2023-11-29 08:40:12',NULL,'{\"role\": \"student\", \"email\": \"1@stu.ucsc.cmb.ac.lk\", \"status\": \"active\", \"password\": \"$2y$10$LfOVEWi5Y2W/uC8Gc9S7u.1cKmmBq1Xu4SMWxIh.SEQf4i/5EDem6\", \"contactNo\": \"0112939220\", \"createdAt\": \"2023-11-29 08:40:12.000000\", \"isOTPVerified\": 0}',NULL);
 /*!40000 ALTER TABLE `user_audit_log` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1013,4 +1181,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-29  8:28:28
+-- Dump completed on 2023-11-29  8:53:25
