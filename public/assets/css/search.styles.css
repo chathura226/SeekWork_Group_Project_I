@@ -2,9 +2,10 @@
     display: flex;
     line-height: 28px;
     align-items: center;
-    position: relative;
+    position: absolute;
     max-width: 190px;
-    top: 20px;
+    right: 20px;
+    top: 90px;
   }
   
   .input-search {

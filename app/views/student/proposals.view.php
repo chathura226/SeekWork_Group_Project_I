@@ -1,8 +1,17 @@
 <?php $this->view('student/student-header',$data) ?>
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/companyMyTasks.styles.css"/>
+<link rel="stylesheet" href="<?=ROOT?>/assets/css/search.styles.css"/>
 
 
 <div class="pagetitle column-12">
+<div class="search-group c-s-2 c-e-13 r-s-1 r-e-2">
+      <svg class="icon-search" aria-hidden="true" viewBox="0 0 24 24" style="padding: 0 !important;">
+          <g>
+              <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+          </g>
+      </svg>
+      <input placeholder="Search" type="search" class="input-search" id="search-bar">
+  </div>
       <h1>Proposals</h1>
       <nav>
 
@@ -18,6 +27,9 @@
           </li>
         </ul>
       </nav>
+
+        
+  
 </div><!-- End Page Title -->
 
 
@@ -47,3 +59,21 @@
 
 
 <?php $this->view('student/student-footer',$data) ?>
+
+
+<script>
+
+document.getElementById('search-bar').addEventListener('input', function() {
+    let filter = this.value.toLowerCase();
+    let items = document.getElementsByClassName("mytask-tasks");
+
+    for (let i = 0; i < items.length; i++) {
+        let itemName = items[i].getElementsByTagName('h2')[0].textContent.toLowerCase();
+      if (itemName.indexOf(filter) > -1) {
+        items[i].style.display = 'flex';
+      } else {
+        items[i].style.display = 'none';
+      }
+    }
+  });
+</script>
