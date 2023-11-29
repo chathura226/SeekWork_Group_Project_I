@@ -9,6 +9,7 @@ class StudentModel extends Model {
 
     //fields that can be updated
     protected $allowedColumns=[
+        'studentID',
         'firstName',
         'lastName',
         'qualifications',

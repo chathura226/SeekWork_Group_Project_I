@@ -24,6 +24,13 @@ class Database{
 
         $con=$this->connect();
 
+        if(Auth::logged_in()){//if the user is logged in set logged_user session variable in mysql for auditing
+                    // Set the @logged_user variable
+            $loggedUserId = Auth::getuserID();
+            $setLoggedUser = $con->prepare("SET @logged_user = ?");
+            $setLoggedUser->execute([$loggedUserId]);
+        }
+
         $stm=$con->prepare($query);
         //if db couldnt prepare statemtn, it wil return false
         //if it prepared statement successfully, it will return PDOstatement object
