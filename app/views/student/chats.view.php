@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="<?= ROOT ?>/assets/css/searchNearBreadCrums.styles.css" />
 
 <div class="pagetitle column-12">
+
   <div class="search-group c-s-2 c-e-13 r-s-1 r-e-2">
     <svg class="icon-search" aria-hidden="true" viewBox="0 0 24 24" style="padding: 0 !important;">
       <g>
@@ -12,6 +13,7 @@
     </svg>
     <input placeholder="Search" type="search" class="input-search" id="search-bar">
   </div>
+
   <h1>Chats</h1>
   <nav>
 
@@ -73,18 +75,4 @@
 </div>
 <?php $this->view('student/student-footer', $data) ?>
 
-<script>
-  document.getElementById('search-bar').addEventListener('input', function() {
-    let filter = this.value.toLowerCase();
-    let items = document.getElementsByClassName("mytask-tasks");
-
-    for (let i = 0; i < items.length; i++) {
-      let itemName = items[i].getElementsByTagName('h2')[0].textContent.toLowerCase();
-      if (itemName.indexOf(filter) > -1) {
-        items[i].style.display = 'flex';
-      } else {
-        items[i].style.display = 'none';
-      }
-    }
-  });
-</script>
+<script type="text/javascript" src="<?= ROOT ?>/assets/js/searchNearBreadCrums.js"></script>
