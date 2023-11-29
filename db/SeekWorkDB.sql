@@ -624,7 +624,7 @@ CREATE TABLE `moderator` (
   PRIMARY KEY (`moderatorID`),
   KEY `user-moderator` (`userID`),
   CONSTRAINT `user-moderator` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -635,6 +635,154 @@ LOCK TABLES `moderator` WRITE;
 /*!40000 ALTER TABLE `moderator` DISABLE KEYS */;
 INSERT INTO `moderator` VALUES (1,'Seekwork','Moderator','No.5 Seekwork rd.','uploads/profilePics/1699932647Screenshot from 2023-11-13 09-24-28.png',28),(2,'Pasindu','Ekanayake','colombo',NULL,31);
 /*!40000 ALTER TABLE `moderator` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `moderator_insert_audit_trigger` AFTER INSERT ON `moderator` FOR EACH ROW BEGIN
+    INSERT INTO moderator_audit_log(
+        moderatorID,
+        actionType,
+        actionTime,
+        old_data,
+        new_data,
+        loggedUserID
+    )
+    VALUES(
+        NEW.moderatorID,
+        'INSERT',
+        CURRENT_TIMESTAMP,
+        NULL,
+        JSON_OBJECT(
+            "firstName", NEW.firstName,
+            "lastName", NEW.lastName,
+            "address", NEW.address,
+            "profilePic", NEW.profilePic,
+            "userID", NEW.userID
+        ),
+        @logged_user
+    );
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `moderator_update_audit_trigger` AFTER UPDATE ON `moderator` FOR EACH ROW BEGIN
+    INSERT INTO moderator_audit_log(
+        moderatorID,
+        actionType,
+        actionTime,
+        old_data,
+        new_data,
+        loggedUserID
+    )
+    VALUES(
+        NEW.moderatorID,
+        'UPDATE',
+        CURRENT_TIMESTAMP,
+        JSON_OBJECT(
+            "firstName", OLD.firstName,
+            "lastName", OLD.lastName,
+            "address", OLD.address,
+            "profilePic", OLD.profilePic,
+            "userID", OLD.userID
+        ),
+        JSON_OBJECT(
+            "firstName", NEW.firstName,
+            "lastName", NEW.lastName,
+            "address", NEW.address,
+            "profilePic", NEW.profilePic,
+            "userID", NEW.userID
+        ),
+        @logged_user
+    );
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `moderator_delete_audit_trigger` AFTER DELETE ON `moderator` FOR EACH ROW BEGIN
+    INSERT INTO moderator_audit_log(
+        moderatorID,
+        actionType,
+        actionTime,
+        old_data,
+        new_data,
+        loggedUserID
+    )
+    VALUES(
+        OLD.moderatorID,
+        'DELETE',
+        CURRENT_TIMESTAMP,
+        JSON_OBJECT(
+            "firstName", OLD.firstName,
+            "lastName", OLD.lastName,
+            "address", OLD.address,
+            "profilePic", OLD.profilePic,
+            "userID", OLD.userID
+        ),
+        NULL,
+        @logged_user
+    );
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `moderator_audit_log`
+--
+
+DROP TABLE IF EXISTS `moderator_audit_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `moderator_audit_log` (
+  `moderatorID` int NOT NULL,
+  `actionType` enum('INSERT','UPDATE','DELETE') NOT NULL,
+  `actionTime` timestamp NOT NULL,
+  `old_data` json DEFAULT NULL,
+  `new_data` json DEFAULT NULL,
+  `loggedUserID` int DEFAULT NULL,
+  PRIMARY KEY (`moderatorID`,`actionType`,`actionTime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `moderator_audit_log`
+--
+
+LOCK TABLES `moderator_audit_log` WRITE;
+/*!40000 ALTER TABLE `moderator_audit_log` DISABLE KEYS */;
+INSERT INTO `moderator_audit_log` VALUES (3,'INSERT','2023-11-29 09:41:51',NULL,'{\"userID\": 29, \"address\": \"bj\", \"lastName\": \"j\", \"firstName\": \"jhb\", \"profilePic\": null}',NULL),(3,'UPDATE','2023-11-29 09:41:58','{\"userID\": 29, \"address\": \"bj\", \"lastName\": \"j\", \"firstName\": \"jhb\", \"profilePic\": null}','{\"userID\": 29, \"address\": \"bj\", \"lastName\": \"j\", \"firstName\": \"jhbdscdsdcs\", \"profilePic\": null}',NULL),(3,'DELETE','2023-11-29 09:42:01','{\"userID\": 29, \"address\": \"bj\", \"lastName\": \"j\", \"firstName\": \"jhbdscdsdcs\", \"profilePic\": null}',NULL,NULL);
+/*!40000 ALTER TABLE `moderator_audit_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1307,4 +1455,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-29  9:22:22
+-- Dump completed on 2023-11-29  9:42:17
