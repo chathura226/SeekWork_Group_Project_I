@@ -64,7 +64,7 @@ CREATE TABLE `admin` (
   PRIMARY KEY (`adminID`),
   KEY `user-admin` (`userID`),
   CONSTRAINT `user-admin` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,19 +85,145 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `admin_delete_oncascade` AFTER DELETE ON `admin` FOR EACH ROW BEGIN
-    DECLARE deleted_values TEXT;
-    SET deleted_values = CONCAT(OLD.adminID, ',', OLD.firstName, ',', OLD.lastName, ',', OLD.address, ',', OLD.profilePic); 
-    
-    UPDATE deleted_users
-    SET fromRoleTable = deleted_values
-    WHERE userID = OLD.userID;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `admin_insert_audit_trigger` AFTER INSERT ON `admin` FOR EACH ROW BEGIN
+    INSERT INTO admin_audit_log(
+        adminID,
+        actionType,
+        actionTime,
+        old_data,
+        new_data,
+        loggedUserID
+    )
+    VALUES(
+        NEW.adminID,
+        'INSERT',
+        CURRENT_TIMESTAMP,
+        NULL,
+        JSON_OBJECT(
+            "firstName", NEW.firstName,
+            "lastName", NEW.lastName,
+            "address", NEW.address,
+            "profilePic", NEW.profilePic,
+            "userID", NEW.userID
+        ),
+        @logged_user
+    );
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `admin_update_audit_trigger` AFTER UPDATE ON `admin` FOR EACH ROW BEGIN
+    INSERT INTO admin_audit_log(
+        adminID,
+        actionType,
+        actionTime,
+        old_data,
+        new_data,
+        loggedUserID
+    )
+    VALUES(
+        NEW.adminID,
+        'UPDATE',
+        CURRENT_TIMESTAMP,
+        JSON_OBJECT(
+            "firstName", OLD.firstName,
+            "lastName", OLD.lastName,
+            "address", OLD.address,
+            "profilePic", OLD.profilePic,
+            "userID", OLD.userID
+        ),
+        JSON_OBJECT(
+            "firstName", NEW.firstName,
+            "lastName", NEW.lastName,
+            "address", NEW.address,
+            "profilePic", NEW.profilePic,
+            "userID", NEW.userID
+        ),
+        @logged_user
+    );
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`admin`@`%`*/ /*!50003 TRIGGER `admin_delete_audit_trigger` AFTER DELETE ON `admin` FOR EACH ROW BEGIN
+    INSERT INTO admin_audit_log(
+        adminID,
+        actionType,
+        actionTime,
+        old_data,
+        new_data,
+        loggedUserID
+    )
+    VALUES(
+        OLD.adminID,
+        'DELETE',
+        CURRENT_TIMESTAMP,
+        JSON_OBJECT(
+            "firstName", OLD.firstName,
+            "lastName", OLD.lastName,
+            "address", OLD.address,
+            "profilePic", OLD.profilePic,
+            "userID", OLD.userID
+        ),
+        NULL,
+        @logged_user
+    );
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `admin_audit_log`
+--
+
+DROP TABLE IF EXISTS `admin_audit_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `admin_audit_log` (
+  `adminID` int NOT NULL,
+  `actionType` enum('INSERT','UPDATE','DELETE') NOT NULL,
+  `actionTime` timestamp NOT NULL,
+  `old_data` json DEFAULT NULL,
+  `new_data` json DEFAULT NULL,
+  `loggedUserID` int DEFAULT NULL,
+  PRIMARY KEY (`adminID`,`actionType`,`actionTime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `admin_audit_log`
+--
+
+LOCK TABLES `admin_audit_log` WRITE;
+/*!40000 ALTER TABLE `admin_audit_log` DISABLE KEYS */;
+INSERT INTO `admin_audit_log` VALUES (5,'INSERT','2023-11-29 09:21:58',NULL,'{\"userID\": 18, \"address\": null, \"lastName\": \"hbj\", \"firstName\": \"bhj\", \"profilePic\": \"bjh\"}',NULL),(5,'UPDATE','2023-11-29 09:22:04','{\"userID\": 18, \"address\": null, \"lastName\": \"hbj\", \"firstName\": \"bhj\", \"profilePic\": \"bjh\"}','{\"userID\": 18, \"address\": null, \"lastName\": \"hbjdewdewdew\", \"firstName\": \"bhj\", \"profilePic\": \"bjh\"}',NULL),(5,'DELETE','2023-11-29 09:22:07','{\"userID\": 18, \"address\": null, \"lastName\": \"hbjdewdewdew\", \"firstName\": \"bhj\", \"profilePic\": \"bjh\"}',NULL,NULL);
+/*!40000 ALTER TABLE `admin_audit_log` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `assignment`
@@ -1181,4 +1307,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-29  8:53:25
+-- Dump completed on 2023-11-29  9:22:22
