@@ -50,7 +50,7 @@ class Login extends Controller{
                     // die;
                     //authenticate (this will be a static class)
                     Auth::authenticate($combinedObject);
-
+                    Log::info("test");
                     redirect('home');
                 }
             }
