@@ -69,9 +69,9 @@ class Company extends Users
     {
 
 
-
         if (empty($id)) {
 
+            //TODO: implemet number of proposals query for tasks list
 
             $task = new Task();
             $row = $task->where(['companyID' => Auth::getcompanyID()]);
@@ -206,6 +206,7 @@ class Company extends Users
 
 
 
+                //TODO: implemet uploaded file view
 
                 if ($row->companyID === Auth::getcompanyID()) {
                     $assignmentInst = new Assignment();
@@ -302,7 +303,7 @@ class Company extends Users
                         $insertedID=$task->insert($_POST);
 
                         if($insertedID){//successful insertion
-                            $folder = "../app/uploads/tasks/".$insertedID."details/";
+                            $folder = "../app/uploads/tasks/".$insertedID."/details/";
                             if (!file_exists($folder)) {
                                 mkdir($folder, 0777, true);
                                 //for security, adding empty index.php files
@@ -357,6 +358,7 @@ class Company extends Users
     {
 
 
+        //TODO: implemet upload file
 
         if (empty($id)) {
             message('Choose a task to modify!');

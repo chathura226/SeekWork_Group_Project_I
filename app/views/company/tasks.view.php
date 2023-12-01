@@ -34,7 +34,7 @@
   <?php if (!empty($tasks)) : foreach ($tasks as $task) : ?>
       <div class="mytask-tasks height-150">
         <h2><?= ucfirst($task->title) ?></h2>
-        <h4>Deadline: 06/10/2023</h4>
+        <h4>Deadline: <?=($task->deadline)?$task->deadline:"No deadline"?></h4>
         <h4>Number of proposals: 45</h4>
         <h4>Status: <?= ucfirst($task->status) ?></h4>
         <h4>Assignment status: <?= empty($task->assignmentID) ? '<span style="color: red;">Not Assigned</span>' : '<span style="color: green;">Assigned</span>' ?></h4>
