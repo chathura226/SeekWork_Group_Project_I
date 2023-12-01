@@ -32,3 +32,10 @@ services:
     environment:
       - PMA_HOST=db
       - PMA_PORT=3306
+
+
+  composer:
+    image: composer:latest
+    command: ["composer", "install"]
+    volumes:
+      - "../app/thirdParty/composer/:/app"
