@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     volumes: 
       - "../:/var/www/html" #sync and map project dir with container web dir
+      - "./www/php.ini:/usr/local/etc/php/php.ini" # Mount custom php.ini file for upload size changes
     ports: 
       - 80:80
       - 443:443 #for ssl traffics

@@ -94,6 +94,7 @@
 
               <div class="form-input">
                   <label>Any Related Document</label>
+                  <small>If there are more than one file, Zip the files before upload</small>
                   <input   class="" type="file" name="documents" id="documents" >
                   <?php if(!empty($errors['documents'])):?>
                       <div class="text-error"><small><?=$errors['documents']?></small></div>

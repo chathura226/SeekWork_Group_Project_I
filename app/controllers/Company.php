@@ -294,6 +294,7 @@ class Company extends Users
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
             if (!empty($_FILES['documents']['name'])) {//checking for a file upload
+
                 if ($_FILES['documents']['error'] == 0) {
 
                     $_POST['status'] = 'active';
