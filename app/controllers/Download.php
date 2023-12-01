@@ -7,14 +7,15 @@ class Download extends Controller
 
     public function __construct()
     {
+        if (!Auth::logged_in()) { //if not logged in redirect to login page
+            message('Please login to download!');
+            redirect('login');
+        }
         $this->filePath="../app/uploads/";        
     }
     public function tasks($id='',$dir=''){
         if(!empty($id) && !empty($dir)){
-            if (!Auth::logged_in()) { //if not logged in redirect to login page
-                message('Please login to download!');
-                redirect('login');
-            }
+
             if($dir=='details'){
                 if (isset($_GET['file'])) {
                     $this->filePath=$this->filePath."tasks/".$id."/details/".$_GET['file'];
