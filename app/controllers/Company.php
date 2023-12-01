@@ -287,20 +287,32 @@ class Company extends Users
     public function post()
     {
 
-
+        $task = new Task();
 
         //if the method is post->creatre task
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-            $task = new Task();
+            if (!empty($_FILES['documents']['name'])) {//checking for a file upload
+                if ($_FILES['documents']['error'] == 0) {
+                    //TODO: when the file doesnt have errors
+                }else {
+                    //TODO: WHen the file has errors
+                }
+            }else {
+                //TODO:When the post has no files
+            }
+
+
             $_POST['status'] = 'active';
             $_POST['companyID'] = Auth::getcompanyID();
             if (empty($_POST['deadline'])) unset($_POST['deadline']);
+            if ($task->validate($_POST)) {//validate task details
 
-            $task->insert($_POST);
+                $task->insert($_POST);
 
-            message('Task Posted Successfully!');
-            redirect('company/tasks');
+                message('Task Posted Successfully!');
+                redirect('company/tasks');
+            }
         }
 
         $category = new Category();

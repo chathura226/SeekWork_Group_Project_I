@@ -9,3 +9,4 @@
 [2023-12-01T02:38:09.272229+00:00] log.INFO: Failed login attempt from a user. {"IP_Address":"172.19.0.1"} []
 [2023-12-01T02:38:46.870937+00:00] log.INFO: Login attempt from a deactivated user. {"IP_Address":"172.19.0.1"} []
 [2023-12-01T02:38:57.847398+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.19.0.1"} []
+[2023-12-01T06:52:19.912055+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.18.0.1"} []

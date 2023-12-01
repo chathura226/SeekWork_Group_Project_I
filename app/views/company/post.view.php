@@ -31,7 +31,7 @@
   </div>
   <div class="tab-body">
       <div class="active1">
-          <form method="post"> 
+          <form method="post" enctype="multipart/form-data">
                 </br>               
                 <h3>Company Details</h3>
                 <hr>       
@@ -83,6 +83,11 @@
                   <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Describe your task"><?= set_value('description')?></textarea>
                     <br>
                 </div>
+
+              <div class="form-input">
+                  <label>Any Related Document</label>
+                  <input   class="" type="file" name="documents" id="documents" >
+              </div>
 
                 <div class="form-input">
                   <label>Price <small>(If the task is for bidding, enter the starting value)</small></label>
