@@ -25,4 +25,9 @@ class Task extends Model {
     ];
 
 
+    public function validate($data){
+        //TODO:Implement task post data validation
+    }
+
+
 }

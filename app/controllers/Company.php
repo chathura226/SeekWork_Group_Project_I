@@ -294,24 +294,50 @@ class Company extends Users
 
             if (!empty($_FILES['documents']['name'])) {//checking for a file upload
                 if ($_FILES['documents']['error'] == 0) {
-                    //TODO: when the file doesnt have errors
+
+                    $_POST['status'] = 'active';
+                    $_POST['companyID'] = Auth::getcompanyID();
+                    if (empty($_POST['deadline'])) unset($_POST['deadline']);
+                    if($task->validate($_POST)){//before move file, validate other data and insert
+                        $insertedID=$task->insert($_POST);
+
+                        if($insertedID){//successful insertion
+                            $folder = "../app/uploads/tasks/".$insertedID."details/";
+                            if (!file_exists($folder)) {
+                                mkdir($folder, 0777, true);
+                                //for security, adding empty index.php files
+                                file_put_contents($folder . "index.php", "<?php //Access Denied");
+                                file_put_contents("../app/uploads/tasks/".$insertedID."/index.php", "<?php //Access Denied");
+
+                            }
+                            $destination = $folder . time() . $_FILES['documents']['name'];
+                            move_uploaded_file($_FILES['documents']['tmp_name'], $destination);
+
+                            $fileLoc['documents']=$destination;
+                            $task->update($fileLoc,$insertedID);//updating file location
+                            message('Task Posted Successfully!');
+                            redirect('company/tasks');
+
+                        }else{//didnt inserted to db
+                            message(['Error occured while posting! Try again',"danger"]);
+                            redirect('company/tasks');
+                        }
+
+                    }
                 }else {
-                    //TODO: WHen the file has errors
+                    $task->errors['documents'] = "Couldn't upload the file";
                 }
             }else {
-                //TODO:When the post has no files
-            }
+                $_POST['status'] = 'active';
+                $_POST['companyID'] = Auth::getcompanyID();
+                if (empty($_POST['deadline'])) unset($_POST['deadline']);
+                if ($task->validate($_POST)) {//validate task details
 
+                    $task->insert($_POST);
 
-            $_POST['status'] = 'active';
-            $_POST['companyID'] = Auth::getcompanyID();
-            if (empty($_POST['deadline'])) unset($_POST['deadline']);
-            if ($task->validate($_POST)) {//validate task details
-
-                $task->insert($_POST);
-
-                message('Task Posted Successfully!');
-                redirect('company/tasks');
+                    message('Task Posted Successfully!');
+                    redirect('company/tasks');
+                }
             }
         }
 
@@ -320,6 +346,7 @@ class Company extends Users
         $data['categories'] = $row;
 
         $data['title'] = "Post Task";
+        $data['errors'] = $task->errors;
 
         $this->view('company/post', $data);
     }

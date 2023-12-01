@@ -38,6 +38,13 @@ class Database{
             //check whether it executed correctly using $check
             $check = $stm->execute($data);
             if($check){
+
+                // Retrieve the last inserted ID if the query was an insert query and rows were affected
+                if ($stm->rowCount() > 0) {
+                    $lastInsertId = $con->lastInsertId();
+                    return $lastInsertId;
+                }
+
                 if($type!='object'){
                     $type= PDO::FETCH_ASSOC;
                 }else{
