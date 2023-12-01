@@ -60,7 +60,7 @@
                 <hr>
                 <div class="form-input">
                     <label>Task Title</label>
-                    <input value="<?=$task->title?>" class="<?= !empty($errors['title']) ? 'error-border' : '' ?>" type="text" name="title" id="title" placeholder="Enter a title for the task">
+                    <input value="<?=(isset($_POST['title']))?set_value('title'):$task->title?>" class="<?= !empty($errors['title']) ? 'error-border' : '' ?>" type="text" name="title" id="title" placeholder="Enter a title for the task">
                     <?php if(!empty($errors['title'])):?>
                     <div class="text-error"><small><?=$errors['title']?></small></div>
                     <?php endif;?>
@@ -85,18 +85,27 @@
                 
                 <div class="form-input">
                   <label>Task Description</label>
-                  <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Describe your task"><?=$task->description?></textarea>
+                  <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Describe your task"><?=(isset($_POST['description']))?set_value('description'):$task->description?></textarea>
                     <br>
                 </div>
 
+              <div class="form-input">
+                  <label>Any Related Document</label>
+                  <small>If there are more than one file, Zip the files before upload</small>
+                  <input   class="" type="file" name="documents" id="documents" >
+                  <?php if(!empty($errors['documents'])):?>
+                      <div class="text-error"><small><?=$errors['documents']?></small></div>
+                  <?php endif;?>
+              </div>
+
                 <div class="form-input">
                   <label>Price <small>(If the task is for bidding, enter the starting value)</small></label>
-                  <input   value="<?=$task->value?>" type="number" name="value" id="value" placeholder="Enter the price" required>              
+                  <input   value="<?=(isset($_POST['value']))?set_value('value'):$task->value?>" type="number" name="value" id="value" placeholder="Enter the price" required>
                 </div>
 
                 <div class="form-input">
                     <label>Deadline <small>(If any)</small></label>
-                    <input value="<?=$task->deadline?>" type="date" id="deadline" name="deadline" >
+                    <input value="<?=(isset($_POST['deadline']))?set_value('deadline'):$task->deadline?>" type="date" id="deadline" name="deadline" >
                 </div>
 
 
