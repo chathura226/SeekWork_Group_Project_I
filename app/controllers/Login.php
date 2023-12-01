@@ -50,7 +50,7 @@ class Login extends Controller{
                     // die;
                     //authenticate (this will be a static class)
                     Auth::authenticate($combinedObject);
-                    Log::info("User Logged in Successfully!",['user_id' => Auth::getuserID(), 'username' => Auth::getfirstName()]);
+                    Log::info("User Logged in Successfully!",['user_id' => Auth::getuserID(), 'IP_Address'=>$_SERVER['REMOTE_ADDR']]);
                     redirect('home');
                 }
             }
