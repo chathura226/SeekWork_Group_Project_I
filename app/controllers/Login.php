@@ -23,6 +23,7 @@ class Login extends Controller{
 
                     if($row->status==='deactivated'){
                         message(['Your account has been deactivated! </br>Please contact the administrator!','danger']);
+                        Log::info("Login attempt from a deactivated user.",['IP_Address'=>$_SERVER['REMOTE_ADDR']]);
                         redirect('login');
                     }
                     // //get details of user from relevant table and ake a combined object to store as session data
@@ -56,6 +57,8 @@ class Login extends Controller{
             }
 
             $data['errors']['email']="Wrong email or password!";
+            Log::info("Failed login attempt from a user.",['IP_Address'=>$_SERVER['REMOTE_ADDR']]);
+
         }
 
         $this->view('login',$data);
