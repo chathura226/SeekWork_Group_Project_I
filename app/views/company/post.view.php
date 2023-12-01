@@ -112,8 +112,8 @@
                 <div class="form-input">
                     <label>Deadline <small>(If any)</small></label>
                     <input value="<?= set_value('deadline')?>" type="date" id="deadline" name="deadline" >
-                    <?php if(!empty($errors['value'])):?>
-                        <div class="text-error"><small><?=$errors['value']?></small></div>
+                    <?php if(!empty($errors['deadline'])):?>
+                        <div class="text-error"><small><?=$errors['deadline']?></small></div>
                     <?php endif;?>
                 </div>
 

@@ -359,7 +359,7 @@ class Company extends Users
     {
 
 
-        //TODO: implemet upload file
+        $task = new Task();
 
         if (empty($id)) {
             message('Choose a task to modify!');
@@ -369,20 +369,57 @@ class Company extends Users
             //if the method is post->update task
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-                $task = new Task();
-                $_POST['status'] = 'active';
-                $_POST['companyID'] = Auth::getcompanyID();
-                if (empty($_POST['deadline'])) unset($_POST['deadline']);
+                if (!empty($_FILES['documents']['name'])) {//checking for a file upload
 
-                $task->update($_POST, $id);
+                    if ($_FILES['documents']['error'] == 0) {
 
-                message('Task Updated Successfully!');
-                redirect('company/tasks/' . $id);
+                        if (empty($_POST['deadline'])) unset($_POST['deadline']);
+                        if($task->validate($_POST)){//before move file, validate other data and insert
+                            $row=$task->first(['taskID'=>$id]);
+                            if(!empty($row)){
+                                $file=$row->documents;
+                                if(!empty($file)){
+                                    if (file_exists($file)) {
+                                        unlink($file);
+                                    }
+                                }
+                                $folder = "../app/uploads/tasks/".$id."/details/";
+                                if (!file_exists($folder)) {
+                                    mkdir($folder, 0777, true);
+                                    //for security, adding empty index.php files
+                                    file_put_contents($folder . "index.php", "<?php //Access Denied");
+                                    file_put_contents("../app/uploads/tasks/".$id."/index.php", "<?php //Access Denied");
+                                }
+                                $destination = $folder . time() . $_FILES['documents']['name'];
+                                move_uploaded_file($_FILES['documents']['tmp_name'], $destination);
+//TODO:doesnt work uploading
+                                $_POST['documents']=$destination;
+                                $task->update($_POST,$id);//updating task
+                                message("Task modified successfully!");
+                                redirect('company/tasks/'.$id);
+                            }else{
+                                message(['Error occured while modifying! Try again',"danger"]);
+                                redirect('company/tasks');
+                            }
+
+                        }
+                    }else {
+                        $task->errors['documents'] = "Couldn't upload the file";
+                    }
+                }else{
+
+                    if (empty($_POST['deadline'])) unset($_POST['deadline']);
+                    if($task->validate($_POST)){
+                        $task->update($_POST,$id);
+
+                        message('Task Modified Successfully!');
+                        redirect('company/tasks/'.$id);
+                    }
+                }
             }
 
 
-            $task = new Task();
-            $row = $task->getFirstCustom('task', ['taskID' => $id], 'taskID'); //get task details corresponding to the tadsk id
+            $row = $task->first(['taskID'=>$id]); //get task details corresponding to the tadsk id
 
             if (!empty($row)) {
                 if ($row->companyID === Auth::getcompanyID()) {
@@ -393,6 +430,7 @@ class Company extends Users
 
                     $data['task'] = $row;
                     $data['title'] = "Modify - " . $row->title;
+                    $data['errors'] = $task->errors;
 
                     $this->view('company/modify', $data);
                 } else {

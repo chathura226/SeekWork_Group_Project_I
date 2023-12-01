@@ -34,7 +34,7 @@ class Task extends Model {
 
         if(empty($data['title'])){
             $this->errors['title']="Title is required!";
-        }else if(!preg_match("/^[a-zA-Z\S]+$/",trim($data['title']))){//checking for numbers
+        }else if(!preg_match("/^[a-zA-Z\s]+$/",trim($data['title']))){//checking for numbers
             $this->errors['title']="Title can only contain letters and spaces!";
         }
 

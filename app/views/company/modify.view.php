@@ -87,6 +87,9 @@
                   <label>Task Description</label>
                   <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Describe your task"><?=(isset($_POST['description']))?set_value('description'):$task->description?></textarea>
                     <br>
+                    <?php if(!empty($errors['description'])):?>
+                        <div class="text-error"><small><?=$errors['description']?></small></div>
+                    <?php endif;?>
                 </div>
 
               <div class="form-input">
@@ -101,11 +104,17 @@
                 <div class="form-input">
                   <label>Price <small>(If the task is for bidding, enter the starting value)</small></label>
                   <input   value="<?=(isset($_POST['value']))?set_value('value'):$task->value?>" type="number" name="value" id="value" placeholder="Enter the price" required>
+                    <?php if(!empty($errors['value'])):?>
+                        <div class="text-error"><small><?=$errors['value']?></small></div>
+                    <?php endif;?>
                 </div>
 
                 <div class="form-input">
                     <label>Deadline <small>(If any)</small></label>
                     <input value="<?=(isset($_POST['deadline']))?set_value('deadline'):$task->deadline?>" type="date" id="deadline" name="deadline" >
+                    <?php if(!empty($errors['deadline'])):?>
+                        <div class="text-error"><small><?=$errors['deadline']?></small></div>
+                    <?php endif;?>
                 </div>
 
 
