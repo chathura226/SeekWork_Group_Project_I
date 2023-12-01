@@ -392,7 +392,6 @@ class Company extends Users
                                 }
                                 $destination = $folder . time() . $_FILES['documents']['name'];
                                 move_uploaded_file($_FILES['documents']['tmp_name'], $destination);
-//TODO:doesnt work uploading
                                 $_POST['documents']=$destination;
                                 $task->update($_POST,$id);//updating task
                                 message("Task modified successfully!");

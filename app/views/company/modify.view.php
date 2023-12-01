@@ -36,7 +36,7 @@
   </div>
   <div class="tab-body">
       <div class="active1">
-          <form method="post"> 
+          <form method="post" enctype="multipart/form-data">
                 </br>               
                 <h3>Company Details</h3>
                 <hr>       
@@ -94,7 +94,8 @@
 
               <div class="form-input">
                   <label>Any Related Document</label>
-                  <small>If there are more than one file, Zip the files before upload</small>
+                  <small>If there are more than one file, Zip the files before upload</small><br>
+                  <small>Note that old file will be replaced by the new file you upload!</small>
                   <input   class="" type="file" name="documents" id="documents" >
                   <?php if(!empty($errors['documents'])):?>
                       <div class="text-error"><small><?=$errors['documents']?></small></div>
