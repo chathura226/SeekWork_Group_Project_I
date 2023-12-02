@@ -34,7 +34,7 @@
   </div>
   <div class="tab-body">
       <div class="active1">
-          <form method="post"> 
+          <form method="post" enctype="multipart/form-data">
                 </br>               
                 <h3>Student Details</h3>
                 <hr>       
@@ -89,14 +89,7 @@
                   <!-- <input   class="" type="text" name="description" id="description" placeholder="Enter a description about you">               -->
               </div>
 
-              <div class="form-input">
-                  <label>Any Related Document</label>
-                  <small>If there are more than one file, Zip the files before upload</small>
-                  <input   class="" type="file" name="documents" id="documents" >
-                  <?php if(!empty($errors['documents'])):?>
-                      <div class="text-error"><small><?=$errors['documents']?></small></div>
-                  <?php endif;?>
-              </div>
+
 
               <div class="form-input">
                   <label>Any Related Document</label>
@@ -127,6 +120,7 @@
                       <div class="text-error"><small><?=$errors['proposeAmount']?></small></div>
                   <?php endif;?>
               </div>
+              <input type="hidden" name="taskID" value="<?=$task->taskID?>">
 
               <div class="form-input">
                   <button>Apply</button>
