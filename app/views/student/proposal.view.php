@@ -29,7 +29,16 @@
         <h2>Proposal Details</h2>
         <div class="task-description">
             <?= $proposal->description ?>
-
+            <br><br>
+            <h4>Relavant Documents : </h4>
+            <?php if (!empty($proposal->documents)) : ?>
+                <?php $fileName=array_reverse(explode("/",$proposal->documents))[0];?>
+                File Name: <?=$fileName?><br>
+                <a href="<?=ROOT?>/download/tasks/<?=$task->taskID?>/proposals?file=<?=$fileName?>">Download</a><br>
+            <?php else:?>
+                No files uploaded for this proposal!<br>
+            <?php endif; ?>
+            <br>
         </div>
         <div class="about-task">
             <h2>About the proposal</h2>
