@@ -62,14 +62,6 @@
             
         }
 
-
-        #left_pannel label:hover{
-
-            background-color:#778593;
-
-        }
-
-
         #left_pannel label img{
             float:right;
             width:25px;
@@ -131,7 +123,7 @@
                     <br>
                     <div>
                         <label for ="box">Chat<img src="ui/icons/chat.png"></label>
-                        <label>Contacts<img src="ui/icons/contacts.png"></label>
+                        <label>Contacts<img src="ui/icons/contact.png"></label>
                         <label>Settings<img src="ui/icons/settings.png"></label>
                     </div>    
 

@@ -63,8 +63,8 @@
         }
 
 
-        #left_pannel label:hover{
-
+        #left_pannel label :hover{
+            
             background-color:#778593;
 
         }

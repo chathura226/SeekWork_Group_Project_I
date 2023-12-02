@@ -63,12 +63,14 @@
         }
 
 
-        #left_pannel label:hover{
-
+        #left_pannel label :hover{
             background-color:#778593;
-
+            border-bottom:solid thin #ffffff55;
+            cursor: pointer;
+            padding: 5px;
+         
+            
         }
-
 
         #left_pannel label img{
             float:right;

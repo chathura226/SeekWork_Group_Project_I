@@ -40,7 +40,7 @@
 
         }
 
-        #profile_image{
+        #left_pannel img{
             width:50%;
             /*border:solid thin white;*/
             border-radius:50%;
@@ -52,31 +52,12 @@
 
         #left_pannel label{
             width:100%;
-            height: 20px;
+            height: 30px;
             display:block;
             background-color:#404b56;
-            border-bottom:solid thin #ffffff55;
-            cursor: pointer;
-            padding: 5px;
-         
+          
             
-        }
-
-
-        #left_pannel label:hover{
-
-            background-color:#778593;
-
-        }
-
-
-        #left_pannel label img{
-            float:right;
-            width:25px;
-
-            
-         
-            
+           
         }
 
         #right_pannel{
@@ -121,7 +102,7 @@
 
            <div id="left_pannel">
                 <div style="padding: 10px;">
-                    <img id="profile_image" src="ui/images/user3.jpg">
+                    <img src="ui/images/user3.jpg">
                     <br>
                     kelly hartmann
                     <br>
@@ -130,9 +111,9 @@
                     <br>
                     <br>
                     <div>
-                        <label for ="box">Chat<img src="ui/icons/chat.png"></label>
-                        <label>Contacts<img src="ui/icons/contacts.png"></label>
-                        <label>Settings<img src="ui/icons/settings.png"></label>
+                        <label for ="box">Chat</label>
+                        <label>Contacts</label>
+                        <label>Settings</label>
                     </div>    
 
                 </div>
