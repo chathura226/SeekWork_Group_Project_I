@@ -43,6 +43,16 @@
         </div>
         <div class="task-description">
             <?= $task->description ?>
+            <br><br>
+            <h4>Relavant Documents : </h4>
+            <?php if (!empty($task->documents)) : ?>
+                <?php $fileName=array_reverse(explode("/",$task->documents))[0];?>
+                File Name: <?=$fileName?><br>
+                <a href="<?=ROOT?>/download/tasks/<?=$task->taskID?>/details?file=<?=$fileName?>">Download</a><br>
+            <?php else:?>
+                No files uploaded for this task!<br>
+            <?php endif; ?>
+            <br>
             <h4>Relavant Tags : </h4>
             <div class="tags-wrapper">
 

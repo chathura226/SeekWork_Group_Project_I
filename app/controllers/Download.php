@@ -21,7 +21,12 @@ class Download extends Controller
                     $this->filePath=$this->filePath."tasks/".$id."/details/".$_GET['file'];
                     $this->serveFile();
                 } else {
-                    echo "File parameter not specified";
+                    // Handle file not specified
+                    // Get the referer without the ROOT for fallback page
+                    $referer = isset($_SERVER['HTTP_REFERER']) ? str_replace(ROOT.'/','',$_SERVER['HTTP_REFERER']): 'index.php';
+//            echo $referer;
+                    message(['File Parameter Invalid','danger']);
+                    redirect($referer);
                 }
             }
         }
@@ -41,8 +46,13 @@ class Download extends Controller
             readfile($this->filePath);    
             exit;
         } else {
+
             // Handle file not found
-            echo "File not found";
+            // Get the referer without the ROOT for fallback page
+            $referer = isset($_SERVER['HTTP_REFERER']) ? str_replace(ROOT.'/','',$_SERVER['HTTP_REFERER']): 'index.php';
+//            echo $referer;
+            message(['File Not Found','danger']);
+            redirect($referer);
         }
     }
 }
