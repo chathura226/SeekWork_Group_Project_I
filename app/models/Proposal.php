@@ -20,11 +20,16 @@ class Proposal extends Model {
 
     public function validate($data)
     {
+//        show($data);
+//        die;
         $this->errors = [];
+
+
+
         if(empty($data['description'])){
             $this->errors['description']="Proposal Description is required!";
         }
-        if(empty($data['value']) && empty($data['proposeAmount'])){
+        if(isset($data['proposeAmount']) && empty($data['proposeAmount'])){
             $this->errors['proposeAmount']="Proposing price is required!";
         }
 

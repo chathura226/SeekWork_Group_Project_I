@@ -82,7 +82,7 @@
 
                 <div class="form-input">
                   <label>Proposal Description</label>
-                  <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Enter your proposal"></textarea>
+                  <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Enter your proposal"><?= set_value('description')?></textarea>
                     <br>
                     <?php if(!empty($errors['description'])):?>
                         <div class="text-error"><small><?=$errors['description']?></small></div>
@@ -105,10 +105,10 @@
                   <label>Proposing Price</label>
 
                   <?php if($task->taskType!=='auction'):?>
-                  <input   value="Rs.<?=ucfirst($task->value)?>/=" type="text" name="value" id="value" placeholder="Enter the biddig value" disabled>              
+                  <input   value="Rs.<?=ucfirst($task->value)?>/=" type="text" name="value" id="value" placeholder="Enter the biddig value" disabled>
                   <small>Since the task is Fixed Price, You can't change the value</small>
                   <?php else:?>
-                  <input   value="" type="number" name="proposeAmount" id="proposeAmount" placeholder="Enter the biddig value" >              
+                  <input   value="<?= set_value('proposeAmount')?>" type="number" name="proposeAmount" id="proposeAmount" placeholder="Enter the biddig value" >
                     <?php endif;?>
                     <?php if(!empty($errors['proposeAmount'])):?>
                         <div class="text-error"><small><?=$errors['proposeAmount']?></small></div>

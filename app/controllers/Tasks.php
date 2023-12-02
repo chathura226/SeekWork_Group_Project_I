@@ -83,6 +83,13 @@ class Tasks extends Controller{
                     //appending student id to post array
                     $_POST['studentID'] = Auth::getstudentID();
 
+                    //if student has submitted a proposal, he cant submit again
+                    $row=$proposal->first(['studentID'=>$_POST['studentID'],'taskID'=>$_POST['taskID']]);
+                    if(!empty($row)){
+                        message(["You have already submitted a proposal!",'danger']);
+                        redirect('tasks/'.$id);
+                    }
+
                     //no need to check file errors since it will be validated using validate func
                     if (!empty($_FILES['documents']['name'])){//checking for a file upload
                         $folder = "../app/uploads/tasks/".$_POST['taskID']."/proposals/";
@@ -95,7 +102,7 @@ class Tasks extends Controller{
                     // show($_POST);
                     // die;
                     message("Proposal Submitted Successfully!");
-                    redirect('tasks');
+                    redirect('tasks/'.$id);
                 }
             }
 
@@ -129,12 +136,7 @@ class Tasks extends Controller{
 
             }
 
-
-
-
-            
         }
-
 
     }
     

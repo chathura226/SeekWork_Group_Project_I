@@ -36,7 +36,8 @@ class Student extends Users
 
     public function proposals($id = null)
     {
-
+//TODO: modify proposal uppload and download files
+        //TODO: view proposals upload and download files in both student and company
 
 
         if (empty($id)) {

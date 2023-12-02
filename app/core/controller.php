@@ -26,7 +26,9 @@ class Controller{
             file_put_contents($savingDir . "index.php", "<?php //Access Denied");
         }
         if(!empty($fileName)){
-            $destination = $savingDir . $fileName;
+            $extension=array_reverse(explode('.',$file['name']))[0];
+
+            $destination = $savingDir . $fileName.'.'.$extension;
         }else{
             $destination = $savingDir . time() .'-'. $file['name'];
         }
