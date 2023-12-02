@@ -25,7 +25,7 @@ class Controller{
             //for security, adding empty index.php files
             file_put_contents($savingDir . "index.php", "<?php //Access Denied");
         }
-        $destination = $savingDir . time() .'-'. $$file['name'];
+        $destination = $savingDir . time() .'-'. $file['name'];
         move_uploaded_file($file['tmp_name'], $destination);
         return $destination;
     }
