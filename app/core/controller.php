@@ -16,7 +16,7 @@ class Controller{
             echo "Couldn't find the view file ".$filename;
         }
     }
-
+//TODO:File extensions when saving
     //$file will be $_FILE['document'] which is superglobal
     public function uploadFile($file,$savingDir,$fileName=''): string
     {
