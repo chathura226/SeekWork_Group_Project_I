@@ -35,7 +35,7 @@
   </div>
   <div class="tab-body">
       <div class="active1">
-          <form method="post"> 
+          <form method="post" enctype="multipart/form-data">
                 </br>               
                 <h3>Student Details</h3>
                 <hr>       
@@ -82,30 +82,37 @@
 
                 <div class="form-input">
                   <label>Proposal Description</label>
-                  <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Enter your proposal"></textarea>
+                  <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Enter your proposal"><?= set_value('description')?></textarea>
                     <br>
-                  <!-- <input   class="" type="text" name="description" id="description" placeholder="Enter a description about you">               -->
+                    <?php if(!empty($errors['description'])):?>
+                        <div class="text-error"><small><?=$errors['description']?></small></div>
+                    <?php endif;?>
+                    <!-- <input   class="" type="text" name="description" id="description" placeholder="Enter a description about you">               -->
               </div>
-              
 
-                <div class="form-input">
+              <div class="form-input">
                   <label>Any Related Document</label>
-                  <input   class="" type="file" name="documents" id="documents" accept="image/*">    
-                  <div class="image-container">
-                    <img id="uploadedImage" >
-                    </div>          
-                </div>
+                  <small>If there are more than one file, Zip the files before upload</small>
+                  <input   class="" type="file" name="documents" id="documents" >
+                  <?php if(!empty($errors['documents'])):?>
+                      <div class="text-error"><small><?=$errors['documents']?></small></div>
+                  <?php endif;?>
+              </div>
+
+
 
                 <div class="form-input">
                   <label>Proposing Price</label>
 
                   <?php if($task->taskType!=='auction'):?>
-                  <input   value="Rs.<?=ucfirst($task->value)?>/=" type="text" name="value" id="value" placeholder="Enter the biddig value" disabled>              
+                  <input   value="Rs.<?=ucfirst($task->value)?>/=" type="text" name="value" id="value" placeholder="Enter the bidding value" disabled>
                   <small>Since the task is Fixed Price, You can't change the value</small>
                   <?php else:?>
-                  <input   value="" type="number" name="proposeAmount" id="proposeAmount" placeholder="Enter the biddig value" >              
+                  <input   value="<?= set_value('proposeAmount')?>" type="number" name="proposeAmount" id="proposeAmount" placeholder="Enter the bidding value" >
                     <?php endif;?>
-
+                    <?php if(!empty($errors['proposeAmount'])):?>
+                        <div class="text-error"><small><?=$errors['proposeAmount']?></small></div>
+                    <?php endif;?>
                 </div>
                 <input type="hidden" name="taskID" value="<?=$task->taskID?>">
 

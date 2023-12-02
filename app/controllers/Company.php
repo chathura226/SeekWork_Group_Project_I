@@ -305,15 +305,8 @@ class Company extends Users
 
                         if($insertedID){//successful insertion
                             $folder = "../app/uploads/tasks/".$insertedID."/details/";
-                            if (!file_exists($folder)) {
-                                mkdir($folder, 0777, true);
-                                //for security, adding empty index.php files
-                                file_put_contents($folder . "index.php", "<?php //Access Denied");
-                                file_put_contents("../app/uploads/tasks/".$insertedID."/index.php", "<?php //Access Denied");
 
-                            }
-                            $destination = $folder . time() . $_FILES['documents']['name'];
-                            move_uploaded_file($_FILES['documents']['tmp_name'], $destination);
+                            $destination=$this->uploadFile($_FILES['documents'],$folder);
 
                             $fileLoc['documents']=$destination;
                             $task->update($fileLoc,$insertedID);//updating file location
@@ -321,7 +314,7 @@ class Company extends Users
                             redirect('company/tasks');
 
                         }else{//didnt inserted to db
-                            message(['Error occured while posting! Try again',"danger"]);
+                            message(['Error occurred while posting! Try again',"danger"]);
                             redirect('company/tasks');
                         }
 
@@ -384,14 +377,7 @@ class Company extends Users
                                     }
                                 }
                                 $folder = "../app/uploads/tasks/".$id."/details/";
-                                if (!file_exists($folder)) {
-                                    mkdir($folder, 0777, true);
-                                    //for security, adding empty index.php files
-                                    file_put_contents($folder . "index.php", "<?php //Access Denied");
-                                    file_put_contents("../app/uploads/tasks/".$id."/index.php", "<?php //Access Denied");
-                                }
-                                $destination = $folder . time() . $_FILES['documents']['name'];
-                                move_uploaded_file($_FILES['documents']['tmp_name'], $destination);
+                                $destination = $this->uploadFile($_FILES['documents'],$folder);
                                 $_POST['documents']=$destination;
                                 $task->update($_POST,$id);//updating task
                                 message("Task modified successfully!");

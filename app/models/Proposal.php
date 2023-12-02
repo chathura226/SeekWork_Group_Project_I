@@ -18,5 +18,32 @@ class Proposal extends Model {
 
     ];
 
+    public function validate($data)
+    {
+//        show($data);
+//        die;
+        $this->errors = [];
+
+
+
+        if(empty($data['description'])){
+            $this->errors['description']="Proposal Description is required!";
+        }
+        if(isset($data['proposeAmount']) && empty($data['proposeAmount'])){
+            $this->errors['proposeAmount']="Proposing price is required!";
+        }
+
+        if (!empty($_FILES['documents']['name'])) {//checking for a file upload
+            if ($_FILES['documents']['error'] != 0) {
+                $this->errors['documents'] = "Couldn't upload the file";
+            }
+        }
+        if(empty($this->errors)){
+            return true;
+        }
+
+        return false;
+    }
+
      
 }

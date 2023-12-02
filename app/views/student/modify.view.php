@@ -34,7 +34,7 @@
   </div>
   <div class="tab-body">
       <div class="active1">
-          <form method="post"> 
+          <form method="post" enctype="multipart/form-data">
                 </br>               
                 <h3>Student Details</h3>
                 <hr>       
@@ -76,37 +76,51 @@
 
 
                 </br>
-                <h3>Proposal Details</h3>
-                <hr>
+              <h3>Proposal Details</h3>
+              <hr>
 
-                <div class="form-input">
+              <div class="form-input">
                   <label>Proposal Description</label>
-                  <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Enter your proposal"><?=$proposal->description?></textarea>
-                    <br>
+                  <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Enter your proposal"><?= (isset($_POST['description'])) ? set_value('description') : $proposal->description ?></textarea>
+                  <br>
+                  <?php if(!empty($errors['description'])):?>
+                      <div class="text-error"><small><?=$errors['description']?></small></div>
+                  <?php endif;?>
                   <!-- <input   class="" type="text" name="description" id="description" placeholder="Enter a description about you">               -->
               </div>
-              
 
-                <div class="form-input">
+
+
+              <div class="form-input">
                   <label>Any Related Document</label>
-                  <input   class="" type="file" name="documents" id="documents" accept="image/*">    
-                  <div class="image-container">
-                    <img id="uploadedImage" >
-                    </div>          
-                </div>
+                  <?php if (!empty($proposal->documents)) : ?>
+                      <?php $fileName=array_reverse(explode("/",$proposal->documents))[0];?>
+                      Uploaded File: <?=$fileName?><br>
+                      <a href="<?=ROOT?>/download/tasks/<?=$task->taskID?>/proposals?file=<?=$fileName?>">Download</a><br>
+                      <small>Note that old file will be replaced by the new file you upload!</small><br>
+                  <?php endif; ?>
+                  <small>If there are more than one file, Zip the files before upload</small>
+                  <input class="" type="file" name="documents" id="documents">
+                  <?php if (!empty($errors['documents'])) : ?>
+                      <div class="text-error"><small><?= $errors['documents'] ?></small></div>
+                  <?php endif; ?>
+              </div>
 
-                <div class="form-input">
+
+              <div class="form-input">
                   <label>Proposing Price</label>
 
                   <?php if($task->taskType!=='auction'):?>
-                  <input   value="Rs.<?=ucfirst($task->value)?>/=" type="text" name="value" id="value" placeholder="Enter the biddig value" disabled>              
-                  <small>Since the task is Fixed Price, You can't change the value</small>
+                      <input   value="Rs.<?=ucfirst($task->value)?>/=" type="text" name="value" id="value" placeholder="Enter the bidding value" disabled>
+                      <small>Since the task is Fixed Price, You can't change the value</small>
                   <?php else:?>
-                  <input   value="<?=$proposal->proposeAmount?>" type="number" name="proposeAmount" id="proposeAmount" placeholder="Enter the biddig value" >              
-                    <?php endif;?>
-
-                </div>
-                <input type="hidden" name="taskID" value="<?=$task->taskID?>">
+                      <input   value="<?= (isset($_POST['proposeAmount'])) ? set_value('proposeAmount') : $proposal->proposeAmount ?>" type="number" name="proposeAmount" id="proposeAmount" placeholder="Enter the bidding value" >
+                  <?php endif;?>
+                  <?php if(!empty($errors['proposeAmount'])):?>
+                      <div class="text-error"><small><?=$errors['proposeAmount']?></small></div>
+                  <?php endif;?>
+              </div>
+              <input type="hidden" name="taskID" value="<?=$task->taskID?>">
 
               <div class="form-input">
                   <button>Apply</button>

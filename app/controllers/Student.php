@@ -11,16 +11,12 @@ class Student extends Users
         parent::__construct('student');
     }
 
-    
 
     public function verification()
     {
 
 
-
-
         $data['title'] = "Verification";
-
 
 
         //should implement the validation and procedure
@@ -36,7 +32,8 @@ class Student extends Users
 
     public function proposals($id = null)
     {
-
+//TODO: modify proposal uppload and download files
+        //TODO: view proposals upload and download files in both student and company
 
 
         if (empty($id)) {
@@ -85,52 +82,53 @@ class Student extends Users
     public function modify($id = null)
     {
 
-
-
         if (empty($id)) {
             message('Select a proposal to modify!');
             redirect('student/proposals');
         } else {
+            $proposal = new Proposal();
 
             //if the method is post->modify proposal
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-                $_POST['studentID'] = Auth::getstudentID();
-                if (empty($_POST['documents'])) unset($_POST['documents']);
-
-                $proposal = new Proposal();
                 if ($proposal->first(['proposalID' => $id])->studentID !== Auth::getstudentID()) {
                     message(['Unauthorized!', 'danger']);
                     redirect('student/proposals');
                 }
-                $proposal->update($_POST, $id);
+                if ($proposal->validate($_POST)) {
+                    //no need to check file errors since it will be validated using validate func
+                    if (!empty($_FILES['documents']['name'])) {//checking for a file upload
+                        $folder = "../app/uploads/tasks/" . $_POST['taskID'] . "/proposals/";
+                        $destination = $this->uploadFile($_FILES['documents'], $folder, 'proposalBy' . Auth::getstudentID());
+                        $_POST['documents'] = $destination;
+                    }
+                    if (empty($_POST['documents'])) unset($_POST['documents']);
+                    $proposal->update($_POST, $id);
+                    message('Proposal Updated Successfully!');
+                    redirect('student/proposals/' . $id);
+                }
 
-                message('Proposal Updated Successfully!');
-                redirect('student/proposals');
-            } else {
+            }
 
-                $proposal = new Proposal();
-                $row = $proposal->first(['proposalID' => $id]);
-                if (!empty($row)) {
-                    $data['proposal'] = $row;
+            $row = $proposal->first(['proposalID' => $id]);
+            if (!empty($row)) {
+                $data['proposal'] = $row;
+                $task = new Task();
+                $data['task'] = $task->first(['taskID' => $row->taskID]);
+                if (!empty($data['task'])) {
+                    $company = new CompanyModel();
+                    $data['company'] = $company->first(['companyID' => $data['task']->companyID]);
+                    if (!empty($data['company'])) {
 
-
-                    $task = new Task();
-                    $data['task'] = $task->first(['taskID' => $row->taskID]);
-                    if (!empty($data['task'])) {
-                        $company = new CompanyModel();
-                        $data['company'] = $company->first(['companyID' => $data['task']->companyID]);
-                        if (!empty($data['company'])) {
-
-                            $data['title'] = "Modify Proposal";
-                            $this->view('student/modify', $data);
-                            return;
-                        }
+                        $data['errors'] = $proposal->errors;
+                        $data['title'] = "Modify Proposal";
+                        $this->view('student/modify', $data);
+                        return;
                     }
                 }
-                message(['Error fetching data!', 'danger']);
-                redirect('student/proposals');
             }
+            message(['Error fetching data!', 'danger']);
+            redirect('student/proposals');
+
         }
     }
 
@@ -138,8 +136,6 @@ class Student extends Users
     public function delete($id = null)
     {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-
 
 
             if (!empty($id)) {
@@ -163,7 +159,6 @@ class Student extends Users
 
     public function tasks($id = null, $action = null, $id2 = null, $action2 = null)
     {
-
 
 
         $task = new Task();
@@ -302,11 +297,9 @@ class Student extends Users
     }
 
 
-
     //review
     public function review($action = null, $id = null)
     {
-
 
 
         if (!empty($action)) {
@@ -425,8 +418,6 @@ class Student extends Users
         }
 
 
-
-
         $review = new Review();
         $row = $review->where(['studentID' => Auth::getstudentID(), 'reviewType' => 'studentTOcompany']); //get reviews written by this user
         if (empty($row)) { //no review posted by him with the given reviewID is found
@@ -450,7 +441,6 @@ class Student extends Users
 
     public function pendinginvites($action = null, $id = null)
     {
-
 
 
         if (!empty($action)) {
@@ -528,13 +518,8 @@ class Student extends Users
     {
 
 
-
         if (!empty($id)) { //req a particular chat
             //implement chat connection with db
-
-
-
-
 
 
             $data['title'] = "Chat";
@@ -553,7 +538,6 @@ class Student extends Users
 
     public function disputes($action = null, $id = null)
     {
-
 
 
         if (!empty($action)) {
