@@ -25,9 +25,14 @@ class Proposal extends Model {
             $this->errors['description']="Proposal Description is required!";
         }
         if(empty($data['value']) && empty($data['proposeAmount'])){
-            $this->errors['value']="Proposing price is required!";
+            $this->errors['proposeAmount']="Proposing price is required!";
         }
 
+        if (!empty($_FILES['documents']['name'])) {//checking for a file upload
+            if ($_FILES['documents']['error'] != 0) {
+                $this->errors['documents'] = "Couldn't upload the file";
+            }
+        }
         if(empty($this->errors)){
             return true;
         }

@@ -35,7 +35,7 @@
   </div>
   <div class="tab-body">
       <div class="active1">
-          <form method="post"> 
+          <form method="post" enctype="multipart/form-data">
                 </br>               
                 <h3>Student Details</h3>
                 <hr>       
@@ -84,7 +84,10 @@
                   <label>Proposal Description</label>
                   <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Enter your proposal"></textarea>
                     <br>
-                  <!-- <input   class="" type="text" name="description" id="description" placeholder="Enter a description about you">               -->
+                    <?php if(!empty($errors['description'])):?>
+                        <div class="text-error"><small><?=$errors['description']?></small></div>
+                    <?php endif;?>
+                    <!-- <input   class="" type="text" name="description" id="description" placeholder="Enter a description about you">               -->
               </div>
 
               <div class="form-input">
@@ -107,7 +110,9 @@
                   <?php else:?>
                   <input   value="" type="number" name="proposeAmount" id="proposeAmount" placeholder="Enter the biddig value" >              
                     <?php endif;?>
-
+                    <?php if(!empty($errors['proposeAmount'])):?>
+                        <div class="text-error"><small><?=$errors['proposeAmount']?></small></div>
+                    <?php endif;?>
                 </div>
                 <input type="hidden" name="taskID" value="<?=$task->taskID?>">
 
