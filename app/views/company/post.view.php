@@ -31,7 +31,7 @@
   </div>
   <div class="tab-body">
       <div class="active1">
-          <form method="post"> 
+          <form method="post" enctype="multipart/form-data">
                 </br>               
                 <h3>Company Details</h3>
                 <hr>       
@@ -63,8 +63,13 @@
                 <div class="form-input">
                     <label>Task Type</label>
                     <select id="taskType" name="taskType" required>
-                        <option value="fixed Price" selected>Fixed Price</option>
-                        <option value="auction" >Auction</option>
+                        <?php if(isset($_POST['taskType']) && $_POST['taskType']=='auction' ):?>
+                            <option value="fixed Price">Fixed Price</option>
+                            <option value="auction" selected>Auction</option>
+                        <?php else:?>
+                            <option value="fixed Price" selected>Fixed Price</option>
+                            <option value="auction" >Auction</option>
+                        <?php endif;?>
                     </select>
                 </div>
 
@@ -82,16 +87,34 @@
                   <label>Task Description</label>
                   <textarea rows = "10" cols = "45" id="description" name = "description" placeholder="Describe your task"><?= set_value('description')?></textarea>
                     <br>
+                    <?php if(!empty($errors['description'])):?>
+                        <div class="text-error"><small><?=$errors['description']?></small></div>
+                    <?php endif;?>
                 </div>
+
+              <div class="form-input">
+                  <label>Any Related Document</label>
+                  <small>If there are more than one file, Zip the files before upload</small>
+                  <input   class="" type="file" name="documents" id="documents" >
+                  <?php if(!empty($errors['documents'])):?>
+                      <div class="text-error"><small><?=$errors['documents']?></small></div>
+                  <?php endif;?>
+              </div>
 
                 <div class="form-input">
                   <label>Price <small>(If the task is for bidding, enter the starting value)</small></label>
-                  <input   value="<?= set_value('value')?>" type="number" name="value" id="value" placeholder="Enter the price" required>              
+                  <input   value="<?= set_value('value')?>" type="number" name="value" id="value" placeholder="Enter the price" required>
+                    <?php if(!empty($errors['value'])):?>
+                        <div class="text-error"><small><?=$errors['value']?></small></div>
+                    <?php endif;?>
                 </div>
 
                 <div class="form-input">
                     <label>Deadline <small>(If any)</small></label>
                     <input value="<?= set_value('deadline')?>" type="date" id="deadline" name="deadline" >
+                    <?php if(!empty($errors['deadline'])):?>
+                        <div class="text-error"><small><?=$errors['deadline']?></small></div>
+                    <?php endif;?>
                 </div>
 
 

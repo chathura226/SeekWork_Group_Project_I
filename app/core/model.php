@@ -27,7 +27,7 @@ class Model extends Database
 
         //we can call query qithout creating new database instance since we inherit 
         // this class from database class
-        $this->query($query, $data);
+        return $this->query($query, $data);
         // show($query);
         // show($data);
     }
