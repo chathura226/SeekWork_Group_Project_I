@@ -105,10 +105,10 @@
                   <label>Proposing Price</label>
 
                   <?php if($task->taskType!=='auction'):?>
-                  <input   value="Rs.<?=ucfirst($task->value)?>/=" type="text" name="value" id="value" placeholder="Enter the biddig value" disabled>
+                  <input   value="Rs.<?=ucfirst($task->value)?>/=" type="text" name="value" id="value" placeholder="Enter the bidding value" disabled>
                   <small>Since the task is Fixed Price, You can't change the value</small>
                   <?php else:?>
-                  <input   value="<?= set_value('proposeAmount')?>" type="number" name="proposeAmount" id="proposeAmount" placeholder="Enter the biddig value" >
+                  <input   value="<?= set_value('proposeAmount')?>" type="number" name="proposeAmount" id="proposeAmount" placeholder="Enter the bidding value" >
                     <?php endif;?>
                     <?php if(!empty($errors['proposeAmount'])):?>
                         <div class="text-error"><small><?=$errors['proposeAmount']?></small></div>
