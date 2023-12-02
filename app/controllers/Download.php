@@ -4,35 +4,69 @@
 class Download extends Controller
 {
     private $filePath;
-
+    private $referer;
     public function __construct()
     {
         if (!Auth::logged_in()) { //if not logged in redirect to login page
             message('Please login to download!');
             redirect('login');
         }
-        $this->filePath="../app/uploads/";        
-    }
-    public function tasks($id='',$dir=''){
-        if(!empty($id) && !empty($dir)){
+        $this->filePath = "../app/uploads/";
 
-            if($dir=='details'){
-                if (isset($_GET['file'])) {
-                    $this->filePath=$this->filePath."tasks/".$id."/details/".$_GET['file'];
-                    $this->serveFile();
-                } else {
-                    // Handle file not specified
-                    // Get the referer without the ROOT for fallback page
-                    $referer = isset($_SERVER['HTTP_REFERER']) ? str_replace(ROOT.'/','',$_SERVER['HTTP_REFERER']): 'index.php';
-//            echo $referer;
-                    message(['File Parameter Invalid','danger']);
-                    redirect($referer);
+        //for any fallbacks
+        // Get the referer without the ROOT for fallback page
+        $this->referer = isset($_SERVER['HTTP_REFERER']) ? str_replace(ROOT . '/', '', $_SERVER['HTTP_REFERER']) : 'index.php';
+
+    }
+
+    public function tasks($id = '', $dir = '')
+    {
+        if (!empty($id) && !empty($dir)) {
+
+            if (!isset($_GET['file'])) {//no set
+                // Handle file not specified
+                message(['File Parameter Invalid', 'danger']);
+                redirect($this->referer);
+            }
+
+            if ($dir == 'details') {
+
+                $this->filePath = $this->filePath . "tasks/" . $id . "/details/" . $_GET['file'];
+                $this->serveFile();
+
+            } else if ($dir == 'proposals') {
+                $this->filePath = $this->filePath . "tasks/" . $id . "/proposals/" . $_GET['file'];
+                $proposal=new Proposal();
+
+                if (Auth::is_student()) { //if a student, only the proposal's owner can download
+
+                    $row=$proposal->first(['taskID'=>$id,'studentID'=>Auth::getstudentID()]);
+                    if(!empty($row) && $row->documents==$this->filePath){
+                        $this->serveFile();
+                    }else{
+                        message(['Unauthorized', 'danger']);
+                        redirect($this->referer);
+                    }
+
+                }else if(Auth::is_company()){//if a company, only task's owner can download
+                    $row=$proposal->innerJoin(['task'],['proposal.taskID=task.taskID'],['proposal.taskID'=>$id,'task.companyID'=>Auth::getcompanyID()]);
+                    if(!empty($row)){//if there are at least one file
+                        $this->serveFile();
+                    }else{
+                        message(['Unauthorized', 'danger']);
+                        redirect($this->referer);
+                    }
                 }
+
+                //for any other type of user (admin or moderator has direct access)
+                $this->serveFile();
+
             }
         }
     }
 
-    public function serveFile(){
+    public function serveFile()
+    {
         // echo $this->filePath;
         // die;
         // Check if the file exists
@@ -43,15 +77,15 @@ class Download extends Controller
             header('Content-Length: ' . filesize($this->filePath));
 
             // Read the file and output it to the browser
-            readfile($this->filePath);    
+            readfile($this->filePath);
             exit;
         } else {
 
             // Handle file not found
             // Get the referer without the ROOT for fallback page
-            $referer = isset($_SERVER['HTTP_REFERER']) ? str_replace(ROOT.'/','',$_SERVER['HTTP_REFERER']): 'index.php';
+            $referer = isset($_SERVER['HTTP_REFERER']) ? str_replace(ROOT . '/', '', $_SERVER['HTTP_REFERER']) : 'index.php';
 //            echo $referer;
-            message(['File Not Found','danger']);
+            message(['File Not Found', 'danger']);
             redirect($referer);
         }
     }
