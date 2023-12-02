@@ -17,4 +17,17 @@ class Controller{
         }
     }
 
+    //$file will be $_FILE['document'] which is superglobal
+    public function uploadFile($file,$savingDir): string
+    {
+        if (!file_exists($savingDir)) {
+            mkdir($savingDir, 0777, true);
+            //for security, adding empty index.php files
+            file_put_contents($savingDir . "index.php", "<?php //Access Denied");
+        }
+        $destination = $savingDir . time() .'-'. $$file['name'];
+        move_uploaded_file($file['tmp_name'], $destination);
+        return $destination;
+    }
+
 }

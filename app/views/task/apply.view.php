@@ -86,15 +86,17 @@
                     <br>
                   <!-- <input   class="" type="text" name="description" id="description" placeholder="Enter a description about you">               -->
               </div>
-              
 
-                <div class="form-input">
+              <div class="form-input">
                   <label>Any Related Document</label>
-                  <input   class="" type="file" name="documents" id="documents" accept="image/*">    
-                  <div class="image-container">
-                    <img id="uploadedImage" >
-                    </div>          
-                </div>
+                  <small>If there are more than one file, Zip the files before upload</small>
+                  <input   class="" type="file" name="documents" id="documents" >
+                  <?php if(!empty($errors['documents'])):?>
+                      <div class="text-error"><small><?=$errors['documents']?></small></div>
+                  <?php endif;?>
+              </div>
+
+
 
                 <div class="form-input">
                   <label>Proposing Price</label>
