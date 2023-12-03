@@ -1,3 +1,4 @@
+let filesArr = []; // Array to store selected files
 // Get the file upload div
 const fileUploadDiv = document.getElementById('fileUploadDiv');
 const documentsInput = document.getElementById('documents');
@@ -40,28 +41,55 @@ function unhighlight() {
 fileUploadDiv.addEventListener('drop', handleDrop, false);
 
 function handleDrop(e) {
+    console.log(filesArr);
+    console.log(documentsInput.files);
+
     const dt = e.dataTransfer;
     const files = dt.files;
 
-    handleFiles(files);
+    // Set the event target's files property to the dropped files
+    Object.defineProperty(documentsInput, 'files', {
+        value: files,
+        writable: true // Ensures the property is read-only
+    });
+
+    // Trigger the change event on the documentsInput element
+    const event = new Event('change');
+    documentsInput.dispatchEvent(event);
+
 }
 
-function handleFiles(files) {
-    // Handle uploaded files here
-    // Add dropped files to the documents input
-    documentsInput.files = files;
-
-}
 
 
 //handle file selects
 documentsInput.addEventListener('change', handleFileSelect, false);
 
 function handleFileSelect(event) {
-    const fileList = document.getElementById('file-list');
-    // fileList.innerHTML = '';
+    // console.log(filesArr);
+    // console.log(event.target.files);
 
-    const files = event.target.files;
+    //adding newly selected files to files array
+    const newlySelectedFiles = event.target.files;
+    for (let i = 0; i < newlySelectedFiles.length; i++) {
+        filesArr.push(newlySelectedFiles[i]); // Add newly selected files to the array
+    }
+    //updating
+    const newFileList = new DataTransfer();
+
+    for (let i = 0; i < filesArr.length; i++) {
+            newFileList.items.add(filesArr[i]);
+    }
+// console.log(newFileList)
+    // Replace the files in the input with the modified FileList
+    documentsInput.files = newFileList.files;
+    // console.log(documentsInput.files)
+
+    // console.log(filesArr)
+
+    const fileList = document.getElementById('file-list');
+    fileList.innerHTML = '';
+
+    const files = filesArr;
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const listItem = document.createElement('div');
@@ -86,6 +114,8 @@ function handleFileSelect(event) {
 
         fileList.appendChild(listItem);
     }
+    console.log(filesArr);
+    console.log(documentsInput.files);
 }
 
 
