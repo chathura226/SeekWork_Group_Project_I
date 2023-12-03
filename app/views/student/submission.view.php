@@ -1,6 +1,7 @@
 <?php $this->view('student/student-header',$data) ?>
 
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/eachtask.styles.css">
+<link rel="stylesheet" href="<?=ROOT?>/assets/css/tables.styles.css">
 
 
 <div class="pagetitle column-12">
@@ -39,12 +40,28 @@
     </div>
         <br>
         <br>
-    <h2>Files:</h2>
-    <div class="task-description">
-        
-        <?php if(!empty($submission->documents)) echo $submission->documents; else echo "No files submitted!";?>
-        </br>
-    </div>
+        <h2>Files:</h2>
+        <div class="task-description">
+        <?php if(!empty($submission->documents)) {echo '
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th >#</th>
+                    <th >File Name</th>
+                    <th >Download Link</th>
+                </tr>
+                </thead>
+                <tbody> ';
+                 for($i=0;$i<sizeof($submission->documents);$i++):?>
+                <tr>
+                    <th><?=$i+1?></th>
+                    <td> <?=$submission->documents[$i]?></td>
+                    <td><a href="<?=ROOT?>/download/tasks/<?=$task->taskID?>/submissions?file=<?=$submission->documents[$i]?>">Download</a></td>
+                </tr>
+                    <?php endfor; echo "</tbody></table>";}
+            else echo "No files submitted!";?>
+            </br>
+        </div>
     <div class="about-task">
         <h2>About the Submission</h2>
 

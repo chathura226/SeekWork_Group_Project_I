@@ -227,6 +227,10 @@ class Student extends Users
                                     }
                                 }
 
+                                // Decode the JSON string back into an array
+                                $array = json_decode($submission->documents, true);
+                                //send only the keys (file names)
+                                $submission->documents=array_keys($array);
                                 $data['submission'] = $submission;
                                 $data['task'] = $row;
                                 $data['title'] = "Submission Details";
