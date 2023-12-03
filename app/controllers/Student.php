@@ -98,6 +98,12 @@ class Student extends Users
                     //no need to check file errors since it will be validated using validate func
                     if (!empty($_FILES['documents']['name'])) {//checking for a file upload
                         $folder = "../app/uploads/tasks/" . $_POST['taskID'] . "/proposals/";
+
+                        $res=$proposal->first(['taskID'=>$_POST['taskID'],'studentID'=>Auth::getstudentID()]);
+                        if(!empty($res) && !empty($res->documents)){
+                            unlink($res->documents);//removing old file
+                        }
+
                         $destination = $this->uploadFile($_FILES['documents'], $folder, 'proposalBy' . Auth::getstudentID());
                         $_POST['documents'] = $destination;
                     }
@@ -172,7 +178,7 @@ class Student extends Users
 
                     if (!empty($action)) {
                         if ($action === 'submissions') {
-
+//TODO:submisiiobn upload delete
                             //$id2=submission id
                             if (!empty($id2)) { //if theres an id after submissions => view each submission
                                 $submissionInst = new Submission();
@@ -240,18 +246,28 @@ class Student extends Users
                             return;
                         } else if ($action === 'addsubmission') {
 
-                            if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for add submision
+                            $submissionInst = new Submission();
 
-                                $submissionInst = new Submission();
+                            if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for add submission
+
                                 $_POST['studentID'] = Auth::getstudentID();
                                 $_POST['taskID'] = $id;
-                                $submissionInst->insert($_POST); //implement the things needed for storing documents
+                                if($submissionInst->validate($_POST)){
+                                    if(!empty($_FILES['documents']['name'][0])) {
 
-                                message('Submission Posted Successfully!');
-                                redirect('student/tasks/' . $id . '/submissions');
+                                        $folder = "../app/uploads/tasks/" . $id . "/submissions/";
+                                        $jsonDestinations=$this->uploadMultipleFiles($_FILES['documents'],$folder);
+                                        $_POST['documents']=$jsonDestinations;
+                                    }
+
+                                    $submissionInst->insert($_POST);
+                                    message('Submission Posted Successfully!');
+                                    redirect('student/tasks/' . $id . '/submissions');
+                                }
                             }
 
                             $data['task'] = $row;
+                            $data['errors'] = $submissionInst->errors;
 
                             $data['title'] = "New Submission";
                             $this->view('student/post-submission', $data);

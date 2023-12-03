@@ -871,7 +871,7 @@ CREATE TABLE `proposal` (
 
 LOCK TABLES `proposal` WRITE;
 /*!40000 ALTER TABLE `proposal` DISABLE KEYS */;
-INSERT INTO `proposal` VALUES (2,'ffwewcdcdc',NULL,NULL,'2023-09-26 07:35:47',9,14),(3,'dede',NULL,2,'2023-09-26 07:44:40',9,14),(5,'proposla',NULL,NULL,'2023-10-31 12:56:37',3,14),(6,'proposal for task 10',NULL,9000,'2023-11-01 01:17:12',10,14),(7,'',NULL,NULL,'2023-12-02 15:07:50',17,14),(8,'',NULL,NULL,'2023-12-02 15:07:59',17,14),(9,'cd','../app/uploads/tasks/6/proposals/proposalBy14',22,'2023-12-02 15:24:22',6,14);
+INSERT INTO `proposal` VALUES (2,'ffwewcdcdc',NULL,NULL,'2023-09-26 07:35:47',9,14),(3,'dede',NULL,2,'2023-09-26 07:44:40',9,14),(5,'proposla',NULL,NULL,'2023-10-31 12:56:37',3,14),(6,'proposal for task 10',NULL,9000,'2023-11-01 01:17:12',10,14),(7,'',NULL,NULL,'2023-12-02 15:07:50',17,14),(8,'',NULL,NULL,'2023-12-02 15:07:59',17,14),(9,'cd','../app/uploads/tasks/6/proposals/proposalBy14.srt',22,'2023-12-02 15:24:22',6,14);
 /*!40000 ALTER TABLE `proposal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1167,8 +1167,8 @@ DROP TABLE IF EXISTS `submission`;
 CREATE TABLE `submission` (
   `submissionID` int NOT NULL AUTO_INCREMENT,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `documents` text NOT NULL,
   `status` enum('pendingReview','accepted','rejected') NOT NULL DEFAULT 'pendingReview',
+  `documents` json DEFAULT NULL,
   `note` text COMMENT 'note by student abt submission',
   `reviewedDate` datetime DEFAULT NULL,
   `comments` text COMMENT 'comment by company ',
@@ -1179,7 +1179,7 @@ CREATE TABLE `submission` (
   KEY `task-submission` (`taskID`),
   CONSTRAINT `student-submission` FOREIGN KEY (`studentID`) REFERENCES `student` (`studentID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `task-submission` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1188,7 +1188,7 @@ CREATE TABLE `submission` (
 
 LOCK TABLES `submission` WRITE;
 /*!40000 ALTER TABLE `submission` DISABLE KEYS */;
-INSERT INTO `submission` VALUES (1,'2023-10-05 05:37:02','wswsw','pendingReview',NULL,NULL,NULL,14,9),(2,'2023-10-05 05:37:42','2222','pendingReview',NULL,NULL,NULL,14,9),(3,'2023-10-06 01:46:16','','pendingReview','boom',NULL,NULL,14,9),(4,'2023-10-06 01:46:56','','pendingReview','boom',NULL,NULL,14,9),(5,'2023-10-31 13:12:38','','pendingReview','description3',NULL,NULL,14,3);
+INSERT INTO `submission` VALUES (1,'2023-10-05 05:37:02','pendingReview',NULL,NULL,NULL,NULL,14,9),(2,'2023-10-05 05:37:42','pendingReview',NULL,NULL,NULL,NULL,14,9),(3,'2023-10-06 01:46:16','pendingReview',NULL,'boom',NULL,NULL,14,9),(4,'2023-10-06 01:46:56','pendingReview',NULL,'boom',NULL,NULL,14,9),(5,'2023-10-31 13:12:38','pendingReview',NULL,'description3',NULL,NULL,14,3),(6,'2023-12-03 11:09:25','pendingReview',NULL,'rge',NULL,NULL,14,3);
 /*!40000 ALTER TABLE `submission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1456,4 +1456,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-02 15:27:14
+-- Dump completed on 2023-12-03 11:41:11
