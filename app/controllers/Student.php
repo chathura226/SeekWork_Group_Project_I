@@ -98,6 +98,12 @@ class Student extends Users
                     //no need to check file errors since it will be validated using validate func
                     if (!empty($_FILES['documents']['name'])) {//checking for a file upload
                         $folder = "../app/uploads/tasks/" . $_POST['taskID'] . "/proposals/";
+
+                        $res=$proposal->first(['taskID'=>$_POST['taskID'],'studentID'=>Auth::getstudentID()]);
+                        if(!empty($res) && !empty($res->documents)){
+                            unlink($res->documents);//removing old file
+                        }
+
                         $destination = $this->uploadFile($_FILES['documents'], $folder, 'proposalBy' . Auth::getstudentID());
                         $_POST['documents'] = $destination;
                     }
@@ -172,7 +178,7 @@ class Student extends Users
 
                     if (!empty($action)) {
                         if ($action === 'submissions') {
-
+//TODO:submisiiobn upload delete
                             //$id2=submission id
                             if (!empty($id2)) { //if theres an id after submissions => view each submission
                                 $submissionInst = new Submission();
