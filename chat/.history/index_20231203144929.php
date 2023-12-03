@@ -109,16 +109,11 @@
             background-color:#f2f7f8;
             flex:2;
             min-height:430px;
-            transition:all 2s ease;
 
 
         }
 
-        #radio_contacts:checked ~ #inner_right_pannel{
-            flex:0;
-        }
-
-        #radio_settings:checked ~ #inner_right_pannel{
+        #radio_chat:checked inner_right_pannel{
             flex:0;
         }
 
@@ -154,9 +149,9 @@
                 <div id="inner_left_pannel">
                 </div>
 
-                <input type="radio" id="radio_chat" name="my_radio" style="display:none;">
-                <input type="radio" id="radio_contacts" name="my_radio" style="display:none;">
-                <input type="radio" id="radio_settings" name="my_radio" style="display:none;">
+                <input type="radio" id="radio_chat" name="my_radio">
+                <input type="radio" id="radio_contacts" name="my_radio">
+                <input type="radio" id="radio_settings" name="my_radio">
                 
                 <div id="inner_right_pannel"></div>
                 </div>

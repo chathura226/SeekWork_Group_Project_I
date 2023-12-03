@@ -114,11 +114,7 @@
 
         }
 
-        #radio_contacts:checked ~ #inner_right_pannel{
-            flex:0;
-        }
-
-        #radio_settings:checked ~ #inner_right_pannel{
+        #radio_chat:checked ~ #inner_right_pannel{
             flex:0;
         }
 

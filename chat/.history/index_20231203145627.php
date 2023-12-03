@@ -114,7 +114,7 @@
 
         }
 
-        #radio_contacts:checked ~ #inner_right_pannel{
+        #radio_contact:checked ~ #inner_right_pannel{
             flex:0;
         }
 

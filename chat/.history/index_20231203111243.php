@@ -42,7 +42,7 @@
 
         #profile_image{
             width:50%;
-            /*border:solid thin white;*/
+            border:solid thin white;
             border-radius:50%;
             margin:10px;
             
@@ -55,7 +55,7 @@
             height: 20px;
             display:block;
             background-color:#404b56;
-            border-bottom:solid thin #ffffff55;
+            /*border-bottom:solid thin #ffffff55;*/
             cursor: pointer;
             padding: 5px;
             transition: all 1s ease ;
@@ -109,17 +109,8 @@
             background-color:#f2f7f8;
             flex:2;
             min-height:430px;
-            transition:all 2s ease;
 
 
-        }
-
-        #radio_contacts:checked ~ #inner_right_pannel{
-            flex:0;
-        }
-
-        #radio_settings:checked ~ #inner_right_pannel{
-            flex:0;
         }
 
 
@@ -140,9 +131,9 @@
                     <br>
                     <br>
                     <div>
-                        <label id="label_chat"  for ="radio_chat">Chat<img src="ui/icons/chat.png"></label>
-                        <label id="label_contact"  for ="radio_contacts">Contacts<img src="ui/icons/contacts.png"></label>
-                        <label id="label_settings" for ="radio_settings">Settings<img src="ui/icons/settings.png"></label>
+                        <label for ="box">Chat<img src="ui/icons/chat.png"></label>
+                        <label>Contacts<img src="ui/icons/contacts.png"></label>
+                        <label>Settings<img src="ui/icons/settings.png"></label>
                     </div>    
 
                 </div>
@@ -150,15 +141,10 @@
            <div id="right_pannel"> 
               <div id="header" >My Chat</div>
                 <div id="container"  style="display: flex">
-
-                <div id="inner_left_pannel">
-                </div>
-
-                <input type="radio" id="radio_chat" name="my_radio" style="display:none;">
-                <input type="radio" id="radio_contacts" name="my_radio" style="display:none;">
-                <input type="radio" id="radio_settings" name="my_radio" style="display:none;">
-                
-                <div id="inner_right_pannel"></div>
+                    <div id="inner_left_pannel">
+                        <input type="checkbox" id="box">
+                    </div>
+                    <div id="inner_right_pannel"></div>
                 </div>
            </div>
 
