@@ -66,6 +66,9 @@
                         <br>
                         <label>Selected Files: </label>
                         <div id="file-list"></div>
+                        <?php if(!empty($errors['documents'])):?>
+                            <div class="text-error"><small><?=$errors['documents']?></small></div>
+                        <?php endif;?>
                     </div>
 
 
@@ -74,6 +77,9 @@
                         <textarea rows="10" cols="45" id="note" name="note"
                                   placeholder="Enter a description about the submission"></textarea>
                         <br>
+                        <?php if(!empty($errors['note'])):?>
+                            <div class="text-error"><small><?=$errors['note']?></small></div>
+                        <?php endif;?>
                     </div>
 
 

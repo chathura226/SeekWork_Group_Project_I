@@ -246,22 +246,28 @@ class Student extends Users
                             return;
                         } else if ($action === 'addsubmission') {
 
-                            if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for add submision
-                                $submissionInst = new Submission();
+                            $submissionInst = new Submission();
+
+                            if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for add submission
+
                                 $_POST['studentID'] = Auth::getstudentID();
                                 $_POST['taskID'] = $id;
                                 if($submissionInst->validate($_POST)){
+                                    if(!empty($_FILES['documents']['name'][0])) {
 
-                                    $submissionInst->insert($_POST); //implement the things needed for storing documents
+                                        $folder = "../app/uploads/tasks/" . $id . "/submissions/";
+                                        $jsonDestinations=$this->uploadMultipleFiles($_FILES['documents'],$folder);
+                                        $_POST['documents']=$jsonDestinations;
+                                    }
+
+                                    $submissionInst->insert($_POST);
                                     message('Submission Posted Successfully!');
                                     redirect('student/tasks/' . $id . '/submissions');
-                                }else{
-                                    echo "Dee";
                                 }
-
                             }
 
                             $data['task'] = $row;
+                            $data['errors'] = $submissionInst->errors;
 
                             $data['title'] = "New Submission";
                             $this->view('student/post-submission', $data);
