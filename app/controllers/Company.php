@@ -98,7 +98,7 @@ class Company extends Users
                     redirect('company/tasks');
                 }
                 if (!empty($action)) {
-
+//TODO:submission view as i did in students
                     if ($action === 'submissions') {
                         if (!empty($id2)) {
                             $submissionInst = new Submission();
