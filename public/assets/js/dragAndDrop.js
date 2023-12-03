@@ -41,24 +41,62 @@ function unhighlight() {
 fileUploadDiv.addEventListener('drop', handleDrop, false);
 
 function handleDrop(e) {
-    console.log(filesArr);
-    console.log(documentsInput.files);
+    // console.log(filesArr);
+    // console.log(documentsInput.files);
 
     const dt = e.dataTransfer;
     const files = dt.files;
 
-    // Set the event target's files property to the dropped files
-    Object.defineProperty(documentsInput, 'files', {
-        value: files,
-        writable: true // Ensures the property is read-only
-    });
-
-    // Trigger the change event on the documentsInput element
-    const event = new Event('change');
-    documentsInput.dispatchEvent(event);
+    handleFileSelectWhenDrop(files);
 
 }
+function handleFileSelectWhenDrop(newlySelectedFiles){
+    for (let i = 0; i < newlySelectedFiles.length; i++) {
+        filesArr.push(newlySelectedFiles[i]); // Add newly selected files to the array
+    }
 
+
+    //updating
+    const newFileList = new DataTransfer();
+
+    for (let i = 0; i < filesArr.length; i++) {
+        newFileList.items.add(filesArr[i]);
+    }
+
+    // Replace the files in the input with the modified FileList
+    documentsInput.files = newFileList.files;
+
+    const fileList = document.getElementById('file-list');
+    fileList.innerHTML = '';
+
+    const files = filesArr;
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const listItem = document.createElement('div');
+        listItem.className = 'file-item';
+
+        const fileName = document.createElement('span');
+        fileName.setAttribute('data-value', file.name);
+        fileName.innerHTML = '&#x25BA; ' + file.name;
+        listItem.appendChild(fileName);
+
+        const deleteButton = document.createElement('div');
+        deleteButton.className = 'file-delete';
+        deleteButton.innerHTML = "&nbsp&nbsp<svg style='fill:black !important;vertical-align: middle; ' viewBox=\"0 0 15 17.5\" height=\"25\" width=\"23\" xmlns=\"http://www.w3.org/2000/svg\" class=\"icon\">\n" +
+            "  <path transform=\"translate(-2.5 -1.25)\" d=\"M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z\" id=\"Fill\"></path>\n" +
+            "</svg>";
+
+        deleteButton.onclick = function () {
+            removeFileByName(listItem.querySelector('span').getAttribute('data-value'));
+            listItem.remove();
+        };
+        listItem.appendChild(deleteButton);
+
+        fileList.appendChild(listItem);
+    }
+
+
+}
 
 
 //handle file selects
@@ -73,6 +111,7 @@ function handleFileSelect(event) {
     for (let i = 0; i < newlySelectedFiles.length; i++) {
         filesArr.push(newlySelectedFiles[i]); // Add newly selected files to the array
     }
+
     //updating
     const newFileList = new DataTransfer();
 
@@ -114,8 +153,8 @@ function handleFileSelect(event) {
 
         fileList.appendChild(listItem);
     }
-    console.log(filesArr);
-    console.log(documentsInput.files);
+    // console.log(filesArr);
+    // console.log(documentsInput.files);
 }
 
 
@@ -139,3 +178,18 @@ function removeFileByName(fileNameToRemove) {
     documentsInput.files = newFileList.files;
     // console.log(documentsInput.files)
 }
+
+
+// Function to filter unique file objects based on their properties
+function getUniqueFiles(fileArray) {
+    const seen = new Set();
+    return fileArray.filter(file => {
+        const fileString = JSON.stringify(file);
+        if (!seen.has(fileString)) {
+            seen.add(fileString);
+            return true;
+        }
+        return false;
+    });
+}
+
