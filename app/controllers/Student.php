@@ -247,7 +247,8 @@ class Student extends Users
                         } else if ($action === 'addsubmission') {
 
                             if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for add submision
-
+                                show($_FILES);
+                                die;
                                 $submissionInst = new Submission();
                                 $_POST['studentID'] = Auth::getstudentID();
                                 $_POST['taskID'] = $id;
