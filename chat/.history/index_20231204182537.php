@@ -186,9 +186,9 @@
 
         var ajax = new XMLHttpRequest();
 
-        ajax.onload = function(){
+        ajx.onload = function(){
 
-            if(ajax.status==200 || ajax.readyState==4){
+            if(ajx.status==200 || ajax.readyState==4){
 
                 inner_pannel.innerHTML = ajax.responseText;
 
