@@ -1179,7 +1179,7 @@ CREATE TABLE `submission` (
   KEY `task-submission` (`taskID`),
   CONSTRAINT `student-submission` FOREIGN KEY (`studentID`) REFERENCES `student` (`studentID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `task-submission` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1188,7 +1188,7 @@ CREATE TABLE `submission` (
 
 LOCK TABLES `submission` WRITE;
 /*!40000 ALTER TABLE `submission` DISABLE KEYS */;
-INSERT INTO `submission` VALUES (1,'2023-10-05 05:37:02','pendingReview',NULL,NULL,NULL,NULL,14,9),(2,'2023-10-05 05:37:42','pendingReview',NULL,NULL,NULL,NULL,14,9),(3,'2023-10-06 01:46:16','pendingReview',NULL,'boom',NULL,NULL,14,9),(4,'2023-10-06 01:46:56','pendingReview',NULL,'boom',NULL,NULL,14,9),(5,'2023-10-31 13:12:38','pendingReview',NULL,'description3',NULL,NULL,14,3),(6,'2023-12-03 11:09:25','pendingReview',NULL,'rge',NULL,NULL,14,3);
+INSERT INTO `submission` VALUES (1,'2023-10-05 05:37:02','pendingReview',NULL,NULL,NULL,NULL,14,9),(2,'2023-10-05 05:37:42','pendingReview',NULL,NULL,NULL,NULL,14,9),(3,'2023-10-06 01:46:16','pendingReview',NULL,'boom',NULL,NULL,14,9),(4,'2023-10-06 01:46:56','pendingReview',NULL,'boom',NULL,NULL,14,9),(5,'2023-10-31 13:12:38','pendingReview',NULL,'description3',NULL,NULL,14,3),(6,'2023-12-03 11:09:25','pendingReview',NULL,'rge',NULL,NULL,14,3),(8,'2023-12-03 12:55:39','pendingReview','{\"21001091_lab1.pdf\": \"../app/uploads/tasks/3/submissions/1701608139-21001091_lab1.pdf\", \"21001091_lab2.pdf\": \"../app/uploads/tasks/3/submissions/1701608139-21001091_lab2.pdf\", \"21001091_labbjhn1 (1).pdf\": \"../app/uploads/tasks/3/submissions/1701608139-21001091_labbjhn1 (1).pdf\"}','a',NULL,NULL,14,3),(9,'2023-12-04 07:31:04','pendingReview','{\"Final Destination (2000) [1080p] [BluRay] [5.1] [YTS.MX].torrent\": \"../app/uploads/tasks/3/submissions/1701675064-Final Destination (2000) [1080p] [BluRay] [5.1] [YTS.MX].torrent\"}','sd',NULL,NULL,14,3),(10,'2023-12-04 07:36:49','pendingReview','{\"Desktop.png\": \"../app/uploads/tasks/3/submissions/1701675409-Desktop.png\", \"monolog-main.zip\": \"../app/uploads/tasks/3/submissions/1701675409-monolog-main.zip\", \"Final Destination (2000) [1080p] [BluRay] [5.1] [YTS.MX].torrent\": \"../app/uploads/tasks/3/submissions/1701675409-Final Destination (2000) [1080p] [BluRay] [5.1] [YTS.MX].torrent\"}','a',NULL,NULL,14,3),(11,'2023-12-04 13:51:50','pendingReview','{\"Desktop.png\": \"../app/uploads/tasks/3/submissions/1701697910-Desktop.png\", \"21001091_lab2.pdf\": \"../app/uploads/tasks/3/submissions/1701697910-21001091_lab2.pdf\", \"new wallpaper.png\": \"../app/uploads/tasks/3/submissions/1701697910-new wallpaper.png\"}','test',NULL,NULL,14,3),(12,'2023-12-04 13:56:22','pendingReview','{\"1701703835-Desktop.png\": \"../app/uploads/tasks/3/submissions/1701703835-Desktop.png\", \"1701698182-21001091_lab2.pdf\": \"../app/uploads/tasks/3/submissions/1701698182-21001091_lab2.pdf\", \"1701703835-new wallpaper.png\": \"../app/uploads/tasks/3/submissions/1701703835-new wallpaper.png\", \"1701703835-Screenshot from 2023-11-26 19-32-20.png\": \"../app/uploads/tasks/3/submissions/1701703835-Screenshot from 2023-11-26 19-32-20.png\"}','changed test',NULL,NULL,14,3);
 /*!40000 ALTER TABLE `submission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1456,4 +1456,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-03 11:41:11
+-- Dump completed on 2023-12-04 15:35:35
