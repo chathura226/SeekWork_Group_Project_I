@@ -2,6 +2,7 @@
 
 <link href="<?=ROOT?>/assets/css/post-task.styles.css" rel="stylesheet">
 <link href="<?=ROOT?>/assets/css/rating.styles.css" rel="stylesheet">
+<link rel="stylesheet" href="<?=ROOT?>/assets/css/tables.styles.css">
 
 
 
@@ -42,7 +43,32 @@
   </div>
   <div class="tab-body">
       <div class="active1">
-          <form method="post"> 
+          <h3>Uploaded Files</h3>
+          <hr>
+          <div class="task-description">
+              <?php if(!empty($submission->documents)) {echo '
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th >#</th>
+                    <th >File Name</th>
+                    <th >Download Link</th>
+                    <th >Delete</th>
+                </tr>
+                </thead>
+                <tbody> ';
+                  for($i=0;$i<sizeof($submission->documents);$i++):?>
+                      <tr>
+                          <th><?=$i+1?></th>
+                          <td> <?=$submission->documents[$i]?></td>
+                          <td><a href="<?=ROOT?>/download/tasks/<?=$task->taskID?>/submissions?file=<?=$submission->documents[$i]?>">Download</a></td>
+                          <td><a href="#" onclick='deleteFile(<?='"'.$submission->documents[$i].'"'?>)'>Delete</a></td>
+                      </tr>
+                  <?php endfor; echo "</tbody></table>";}
+              else echo "No files submitted!";?>
+              </br>
+          </div>
+          <form method="post" enctype="">
                 </br>               
                 <h3>Submission Details</h3>
                 <hr>  
@@ -75,6 +101,43 @@
 </div>
 
 </div>
+<script>
+    function deleteFile(fileName){
+        // console.log("dede")
+        const confirmDelete = confirm("Are you sure you want to delete "+fileName+" ?");
 
+        if (confirmDelete) {
+            const action = "deleteFile"; // Define the action here
+            // Send the action to the current URL
+            sendActionToCurrentURL(action,fileName);
+        } else {
+            alert("Deletion canceled!");
+        }
+    }
+
+    function sendActionToCurrentURL(action,fileName) {
+        // Create a form dynamically
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "<?=ROOT?>/student/tasks/<?=$task->taskID?>/submissions/<?=$submission->submissionID?>/deleteFile"; // Use the current URL
+        form.style.display = "none"; // Hide the form
+
+        // Create an input element for the action parameter
+        const actionInput = document.createElement("input");
+        actionInput.type = "hidden";
+        actionInput.name = "fileName";
+        actionInput.value = fileName;
+
+        // Append the input element to the form
+        form.appendChild(actionInput);
+
+        // Append the form to the document body
+        document.body.appendChild(form);
+// console.log("dede")
+        // Submit the form
+        form.submit();
+    }
+
+</script>
 
 <?php $this->view('student/student-footer',$data) ?>

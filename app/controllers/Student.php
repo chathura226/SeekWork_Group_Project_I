@@ -179,6 +179,7 @@ class Student extends Users
                     if (!empty($action)) {
                         if ($action === 'submissions') {
 //TODO:submisiiobn upload delete
+                            //TODO: submission stuatus change and blcok mldify after reviews
                             //$id2=submission id
                             if (!empty($id2)) { //if theres an id after submissions => view each submission
                                 $submissionInst = new Submission();
@@ -217,13 +218,46 @@ class Student extends Users
                                             redirect('student/tasks/' . $id . '/submissions/' . $id2);
                                         }
 
-                                        //implement the things needed for storing documents
+                                        // Decode the JSON string back into an array
+                                        if(!empty($submission->documents)) {
+                                            $array = json_decode($submission->documents, true);
+                                            //send only the keys (file names)
+                                            $submission->documents = array_keys($array);
+                                        }
+
                                         $data['task'] = $row;
                                         $data['submission'] = $submission;
 
                                         $data['title'] = "Modify Submission";
                                         $this->view('student/modify-submission', $data);
                                         return;
+                                    }else if ($action2 === 'deleteFile') { //submission modify - delete file
+
+                                        //handle only post req for file deelte
+                                        if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for modify submision
+
+                                            $array=[];
+                                            // Decode the JSON string back into an array
+                                            if(!empty($submission->documents)) {
+                                                $array = json_decode($submission->documents, true);
+                                            }
+                                            if(!empty($array) && !empty($_POST['fileName']) && !empty($array[($_POST['fileName'])])){
+                                                $deleteFilePath=$array[($_POST['fileName'])];
+                                                //updating document array
+                                                unset($array[($_POST['fileName'])]);
+                                                $json = json_encode($array);
+                                                //updating database
+                                                $submissionInst->update(['documents'=>$json],$submission->submissionID);
+                                                //deleting file
+                                                if (file_exists($deleteFilePath)) {
+                                                    unlink($deleteFilePath);
+                                                }
+                                                message('File Deleted Successfully!');
+                                                redirect('student/tasks/' . $id . '/submissions/'.$id2.'/modify');
+                                            }
+
+
+                                        }
                                     }
                                 }
 
