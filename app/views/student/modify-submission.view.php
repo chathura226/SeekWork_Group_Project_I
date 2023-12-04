@@ -69,7 +69,7 @@
               else echo "No files submitted!";?>
               </br>
           </div>
-          <form method="post" enctype="">
+          <form method="post" enctype="multipart/form-data">
                 </br>               
                 <h3>Submission Details</h3>
                 <hr>

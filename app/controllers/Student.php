@@ -208,14 +208,35 @@ class Student extends Users
                                     } else if ($action2 === 'modify') { //submission modify
 
 
-                                        if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for modify submision
+
+                                        if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for modify submission
 
                                             $_POST['studentID'] = Auth::getstudentID();
                                             $_POST['taskID'] = $id;
-                                            $submissionInst->update($_POST, $id2); //implement the things needed for storing documents
+                                            if($submissionInst->validate($_POST)){
+                                                if(!empty($_FILES['documents']['name'][0])) {
 
-                                            message('Submission modified Successfully!');
-                                            redirect('student/tasks/' . $id . '/submissions/' . $id2);
+                                                    $folder = "../app/uploads/tasks/" . $id . "/submissions/";
+                                                    $jsonDestinations=$this->uploadMultipleFiles($_FILES['documents'],$folder);
+
+                                                    //comining jsons for old files and new files
+                                                    // Decode JSON strings to PHP arrays
+                                                    $array1 = json_decode($submission->documents, true);
+                                                    $array2 = json_decode($jsonDestinations, true);
+
+                                                    // Merge the arrays
+                                                    $combinedArray = array_merge($array1, $array2);
+
+                                                    // Encode the merged array back to JSON
+                                                    $combinedJSON = json_encode($combinedArray);
+
+                                                    $_POST['documents']=$combinedJSON;
+                                                }
+
+                                                $submissionInst->update($_POST,$submission->submissionID);
+                                                message('Submission Updated Successfully!');
+                                                redirect('student/tasks/' . $id . '/submissions/'.$submission->submissionID);
+                                            }
                                         }
 
                                         // Decode the JSON string back into an array
