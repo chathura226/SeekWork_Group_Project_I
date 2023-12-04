@@ -167,15 +167,23 @@ function removeFileByName(fileNameToRemove) {
 
 
     const newFileList = new DataTransfer();
-
-    for (let i = 0; i < files.length; i++) {
-        if (files[i].name !== fileNameToRemove) {
-            newFileList.items.add(files[i]);
+    const newArr=[];
+    for (let i = 0; i < filesArr.length; i++) {
+        if (filesArr[i].name !== fileNameToRemove) {
+            newFileList.items.add(filesArr[i]);
+            newArr.push(filesArr[i]);
         }
     }
+
+    // for (let i = 0; i < files.length; i++) {
+    //     if (files[i].name !== fileNameToRemove) {
+    //         newFileList.items.add(files[i]);
+    //     }
+    // }
 // console.log(newFileList)
     // Replace the files in the input with the modified FileList
     documentsInput.files = newFileList.files;
+    filesArr = newArr;
     // console.log(documentsInput.files)
 }
 

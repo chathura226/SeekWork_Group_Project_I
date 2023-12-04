@@ -107,6 +107,14 @@ class Company extends Users
                                 message(['No Submission with this ID!', 'danger']);
                                 redirect('company/tasks/' . $id . '/submissions');
                             }
+
+                            // Decode the JSON string back into an array
+                            if(!empty($submission->documents)) {
+                                $array = json_decode($submission->documents, true);
+                                //send only the keys (file names)
+                                $submission->documents = array_keys($array);
+                            }
+
                             $data['title'] = "Submission";
                             $data['submission'] = $submission;
                             $data['task'] = $row;

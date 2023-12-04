@@ -59,11 +59,11 @@ class Controller
             ];
 
 
-
-            $destination = $savingDir . time() . '-' . $file['name'];
-
+            $newName=time() . '-' . $file['name'];
+            $destination = $savingDir . $newName;
 
             move_uploaded_file($file['tmp_name'], $destination);
+            $file['name']=$newName;
             $uploadedFiles[$file['name']]=$destination;
         }
 
