@@ -94,7 +94,7 @@ class Download extends Controller
 
     public function serveFile()
     {
-        // echo $this->filePath;
+//         echo $this->filePath;
         // die;
         // Check if the file exists
         if (file_exists($this->filePath)) {
