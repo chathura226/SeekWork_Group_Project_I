@@ -19,7 +19,6 @@ class Download extends Controller
 
     }
 
-    //TODO:: implement download of submissions
     public function tasks($id = '', $dir = '')
     {
         if (!empty($id) && !empty($dir)) {
@@ -51,6 +50,33 @@ class Download extends Controller
 
                 }else if(Auth::is_company()){//if a company, only task's owner can download
                     $row=$proposal->innerJoin(['task'],['proposal.taskID=task.taskID'],['proposal.taskID'=>$id,'task.companyID'=>Auth::getcompanyID()]);
+                    if(!empty($row)){//if there are at least one file
+                        $this->serveFile();
+                    }else{
+                        message(['Unauthorized', 'danger']);
+                        redirect($this->referer);
+                    }
+                }
+
+                //for any other type of user (admin or moderator has direct access)
+                $this->serveFile();
+
+            }else if ($dir == 'submissions') {
+                $this->filePath = $this->filePath . "tasks/" . $id . "/submissions/" . $_GET['file'];
+                $submission=new Submission();
+
+                if (Auth::is_student()) { //if a student, only the submission's owner can download
+
+                    $row=$submission->first(['taskID'=>$id,'studentID'=>Auth::getstudentID()]);
+                    if(!empty($row)){
+                        $this->serveFile();
+                    }else{
+                        message(['Unauthorized', 'danger']);
+                        redirect($this->referer);
+                    }
+
+                }else if(Auth::is_company()){//if a company, only task's owner can download
+                    $row=$submission->innerJoin(['task'],['submission.taskID=task.taskID'],['submission.taskID'=>$id,'task.companyID'=>Auth::getcompanyID()]);
                     if(!empty($row)){//if there are at least one file
                         $this->serveFile();
                     }else{
