@@ -48,10 +48,16 @@
                   <textarea value=""rows = "5" cols = "45" id="description" name = "description" placeholder="Enter a description about you"><?=(isset($_POST['description']))?set_value('description'):Auth::getdescription()?></textarea>
                   <br>
                   <!-- <input   class="" type="text" name="description" id="description" placeholder="Enter a description about you">               -->
+                  <?php if(!empty($errors['description'])):?>
+                      <div class="text-error"><small><?=$errors['description']?></small></div>
+                  <?php endif;?>
               </div>
               <div class="form-input">
                   <label>Qualifications</label>
                   <input  value="<?=(isset($_POST['qualifications']))?set_value('qualifications'):Auth::getqualifications()?>" class="" type="text" name="qualifications" id="qualifications" placeholder="">
+                  <?php if(!empty($errors['qualifications'])):?>
+                      <div class="text-error"><small><?=$errors['qualifications']?></small></div>
+                  <?php endif;?>
               </div>
 
 

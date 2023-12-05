@@ -5,7 +5,7 @@ require_once 'Users.php';
 class Company extends Users
 {
 
-        // Constructor
+    // Constructor
     //all the validations for authorizations are in the parent controller
     public function __construct()
     {
@@ -17,13 +17,8 @@ class Company extends Users
     {
 
 
-
         if (!empty($id)) { //req a particular chat
             //implement chat connection with db
-
-
-
-
 
 
             $data['title'] = "Chat";
@@ -40,27 +35,49 @@ class Company extends Users
     }
 
 
-
-    
+//TODO:implement verification status view with verification doc download
 
     public function verification()
     {
 
-
-
-
+        $companyInst = new CompanyModel();
         $data['title'] = "Verification";
 
-
-
+        $errors = [];
         //should implement the validation and procedure
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-            message("Details submitted successfully!");
-            redirect('company');
+            if (empty($_POST['description'])) {
+                $errors['description'] = "Description is required!";
+            }
+            if (empty($_FILES['imageInput']['name'])) {
+                $errors['imageInput'] = "University ID Card photo is required!";
+            }
+
+            if (empty($errors)) {
+                if ($_FILES['imageInput']['error'] == 0) {
+
+                    $folder = "../app/uploads/verification/" . Auth::userID() . "/";
+
+                    $destination = $this->uploadFile($_FILES['imageInput'], $folder);
+
+                    $verificationData['description'] = $_POST['description'];
+                    $verificationData['verificationDocuments'] = $destination;
+
+                    $companyInst->update($verificationData, Auth::getcompanyID());//updating file location
+
+                    message("Details submitted successfully!");
+                    redirect('company');
+                } else {
+                    $errors['imageInput'] = "Couldn't upload the file";
+                }
+
+            }
+
         }
 
 
+        $data['errors'] = $errors;
         $this->view('company/verification', $data);
     }
 
@@ -109,7 +126,7 @@ class Company extends Users
                             }
 
                             // Decode the JSON string back into an array
-                            if(!empty($submission->documents)) {
+                            if (!empty($submission->documents)) {
                                 $array = json_decode($submission->documents, true);
                                 //send only the keys (file names)
                                 $submission->documents = array_keys($array);
@@ -213,7 +230,6 @@ class Company extends Users
                 }
 
 
-
                 //TODO: implemet uploaded file view
 
                 if ($row->companyID === Auth::getcompanyID()) {
@@ -242,17 +258,9 @@ class Company extends Users
     {
 
 
-
-
-
-
-
-
-
         if (!empty($id)) {
 
             $studentInst = new StudentModel();
-
 
 
             $studentDetails = $studentInst->innerJoin(['user', 'university'], ['student.userID=user.userID', 'student.universityID=university.universityID'], ['student.studentID' => $id])[0];
@@ -308,29 +316,29 @@ class Company extends Users
                     $_POST['status'] = 'active';
                     $_POST['companyID'] = Auth::getcompanyID();
                     if (empty($_POST['deadline'])) unset($_POST['deadline']);
-                    if($task->validate($_POST)){//before move file, validate other data and insert
-                        $insertedID=$task->insert($_POST);
+                    if ($task->validate($_POST)) {//before move file, validate other data and insert
+                        $insertedID = $task->insert($_POST);
 
-                        if($insertedID){//successful insertion
-                            $folder = "../app/uploads/tasks/".$insertedID."/details/";
+                        if ($insertedID) {//successful insertion
+                            $folder = "../app/uploads/tasks/" . $insertedID . "/details/";
 
-                            $destination=$this->uploadFile($_FILES['documents'],$folder);
+                            $destination = $this->uploadFile($_FILES['documents'], $folder);
 
-                            $fileLoc['documents']=$destination;
-                            $task->update($fileLoc,$insertedID);//updating file location
+                            $fileLoc['documents'] = $destination;
+                            $task->update($fileLoc, $insertedID);//updating file location
                             message('Task Posted Successfully!');
                             redirect('company/tasks');
 
-                        }else{//didnt inserted to db
-                            message(['Error occurred while posting! Try again',"danger"]);
+                        } else {//didnt inserted to db
+                            message(['Error occurred while posting! Try again', "danger"]);
                             redirect('company/tasks');
                         }
 
                     }
-                }else {
+                } else {
                     $task->errors['documents'] = "Couldn't upload the file";
                 }
-            }else {
+            } else {
                 $_POST['status'] = 'active';
                 $_POST['companyID'] = Auth::getcompanyID();
                 if (empty($_POST['deadline'])) unset($_POST['deadline']);
@@ -375,44 +383,44 @@ class Company extends Users
                     if ($_FILES['documents']['error'] == 0) {
 
                         if (empty($_POST['deadline'])) unset($_POST['deadline']);
-                        if($task->validate($_POST)){//before move file, validate other data and insert
-                            $row=$task->first(['taskID'=>$id]);
-                            if(!empty($row)){
-                                $file=$row->documents;
-                                if(!empty($file)){
+                        if ($task->validate($_POST)) {//before move file, validate other data and insert
+                            $row = $task->first(['taskID' => $id]);
+                            if (!empty($row)) {
+                                $file = $row->documents;
+                                if (!empty($file)) {
                                     if (file_exists($file)) {
                                         unlink($file);
                                     }
                                 }
-                                $folder = "../app/uploads/tasks/".$id."/details/";
-                                $destination = $this->uploadFile($_FILES['documents'],$folder);
-                                $_POST['documents']=$destination;
-                                $task->update($_POST,$id);//updating task
+                                $folder = "../app/uploads/tasks/" . $id . "/details/";
+                                $destination = $this->uploadFile($_FILES['documents'], $folder);
+                                $_POST['documents'] = $destination;
+                                $task->update($_POST, $id);//updating task
                                 message("Task modified successfully!");
-                                redirect('company/tasks/'.$id);
-                            }else{
-                                message(['Error occured while modifying! Try again',"danger"]);
+                                redirect('company/tasks/' . $id);
+                            } else {
+                                message(['Error occured while modifying! Try again', "danger"]);
                                 redirect('company/tasks');
                             }
 
                         }
-                    }else {
+                    } else {
                         $task->errors['documents'] = "Couldn't upload the file";
                     }
-                }else{
+                } else {
 
                     if (empty($_POST['deadline'])) unset($_POST['deadline']);
-                    if($task->validate($_POST)){
-                        $task->update($_POST,$id);
+                    if ($task->validate($_POST)) {
+                        $task->update($_POST, $id);
 
                         message('Task Modified Successfully!');
-                        redirect('company/tasks/'.$id);
+                        redirect('company/tasks/' . $id);
                     }
                 }
             }
 
 
-            $row = $task->first(['taskID'=>$id]); //get task details corresponding to the tadsk id
+            $row = $task->first(['taskID' => $id]); //get task details corresponding to the tadsk id
 
             if (!empty($row)) {
                 if ($row->companyID === Auth::getcompanyID()) {
@@ -446,7 +454,6 @@ class Company extends Users
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
-
             if (!empty($id)) {
                 $task = new Task();
                 $row = $task->first(['taskID' => $id]);
@@ -468,7 +475,6 @@ class Company extends Users
     //review
     public function review($action = null, $id = null)
     {
-
 
 
         if (!empty($action)) {
@@ -612,9 +618,6 @@ class Company extends Users
     {
 
 
-
-
-
         $data['title'] = "Tasks in-progress";
         $tasksInst = new Task();
         $tasks = $tasksInst->where(['companyID' => Auth::getcompanyID(), 'status' => 'inProgress']);
@@ -625,7 +628,6 @@ class Company extends Users
 
     public function disputes($action = null, $id = null)
     {
-
 
 
         if (!empty($action)) {
