@@ -23,7 +23,7 @@
 
 <div class="form-wrap column-12">
 <div class="tab-form row-4">
-<div class="alert alert-danger text-center" id="alert">Your account is not yet verified! Please fill the details and upload relavant documents!</div>
+<div class="alert alert-danger text-center" id="alert">Your account is not yet verified! Please upload relevant documents!</div>
   <div class="myheader">
       <div class="active-login"><h2>Profile Details and Verification Documents</h2></div>
   </div>
@@ -42,25 +42,32 @@
                     <!-- <input type="email" placeholder="Enter your university student email address" required> -->
                     <input value="UCSC" class="" type="text" name="uni" id="uni"disabled>
                 </div>
-                <div class="form-input">
-                    
+              <div class="form-input">
+
                   <label>Description About Yourself</label>
-                  <textarea rows = "5" cols = "45" id="description" name = "description" placeholder="Enter a description about you"></textarea>
-                    <br>
+                  <textarea value=""rows = "5" cols = "45" id="description" name = "description" placeholder="Enter a description about you"><?=(isset($_POST['description']))?set_value('description'):Auth::getdescription()?></textarea>
+                  <br>
                   <!-- <input   class="" type="text" name="description" id="description" placeholder="Enter a description about you">               -->
               </div>
               <div class="form-input">
                   <label>Qualifications</label>
-                  <input   class="" type="text" name="qualifications" id="qualifications" placeholder="">              
+                  <input  value="<?=(isset($_POST['qualifications']))?set_value('qualifications'):Auth::getqualifications()?>" class="" type="text" name="qualifications" id="qualifications" placeholder="">
               </div>
+
+
               <div class="form-input">
                   <label>Clear Image of Your UniversityID Card</label>
-                  <!-- <input type="password" name="password"  placeholder="Enter a password" required>  -->
-                  <input   class="" type="file" name="imageInput" id="imageInput" accept="image/*">    
+                  <input  onchange="load_image(this.files[0])" class="" type="file" name="imageInput" id="imageInput" accept="image/*">
                   <div class="image-container">
-                    <img id="uploadedImage">
-                </div>                      
+                      <img  id="uploadedImage" ?>
+                  </div>
+                  <?php if(!empty($errors['imageInput'])):?>
+                      <div class="text-error"><small><?=$errors['imageInput']?></small></div>
+                  <?php endif;?>
               </div>
+
+
+
               <div class="form-input">
                   <button>Submit for Approval</button>
               </div>
