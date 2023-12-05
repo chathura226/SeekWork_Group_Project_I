@@ -29,7 +29,7 @@
   </div>
   <div class="tab-body">
       <div class="active1">
-          <form method="post"> 
+          <form method="post" enctype="multipart/form-data">
                 </br>                       
                 
                 <div class="form-input">

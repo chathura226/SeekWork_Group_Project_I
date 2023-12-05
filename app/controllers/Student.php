@@ -15,18 +15,47 @@ class Student extends Users
     public function verification()
     {
 
-
+        $studentInst=new StudentModel();
         $data['title'] = "Verification";
 
-
+        $errors = [];
         //should implement the validation and procedure
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-            message("Details submitted successfully!");
-            redirect('student');
+            if (empty($_POST['qualifications'])) {
+                $errors['qualifications'] = "Qualifications are required!";
+            }
+            if (empty($_POST['description'])) {
+                $errors['description'] = "Description is required!";
+            }
+            if (empty($_FILES['imageInput']['name'])) {
+                $errors['imageInput'] = "University ID Card photo is required!";
+            }
+
+            if (empty($errors)) {
+                if ($_FILES['imageInput']['error'] == 0) {
+
+                    $folder = "../app/uploads/verification/" . Auth::userID() . "/";
+
+                    $destination = $this->uploadFile($_FILES['imageInput'], $folder);
+
+                    $verificationData['qualifications']=$_POST['qualifications'];
+                    $verificationData['description']=$_POST['description'];
+                    $verificationData['verificationDocuments'] = $destination;
+
+                    $studentInst->update($verificationData, Auth::getstudentID());//updating file location
+
+                    message("Details submitted successfully!");
+                    redirect('student');
+                } else {
+                    $errors['imageInput'] = "Couldn't upload the file";
+                }
+
+            }
+
         }
 
-
+        $data['errors'] = $errors;
         $this->view('student/verification', $data);
     }
 
@@ -99,8 +128,8 @@ class Student extends Users
                     if (!empty($_FILES['documents']['name'])) {//checking for a file upload
                         $folder = "../app/uploads/tasks/" . $_POST['taskID'] . "/proposals/";
 
-                        $res=$proposal->first(['taskID'=>$_POST['taskID'],'studentID'=>Auth::getstudentID()]);
-                        if(!empty($res) && !empty($res->documents)){
+                        $res = $proposal->first(['taskID' => $_POST['taskID'], 'studentID' => Auth::getstudentID()]);
+                        if (!empty($res) && !empty($res->documents)) {
                             unlink($res->documents);//removing old file
                         }
 
@@ -178,7 +207,7 @@ class Student extends Users
 
                     if (!empty($action)) {
                         if ($action === 'submissions') {
-//TODO:submisiiobn upload delete
+
                             //TODO: submission stuatus change and blcok mldify after reviews
                             //$id2=submission id
                             if (!empty($id2)) { //if theres an id after submissions => view each submission
@@ -208,16 +237,15 @@ class Student extends Users
                                     } else if ($action2 === 'modify') { //submission modify
 
 
-
                                         if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for modify submission
 
                                             $_POST['studentID'] = Auth::getstudentID();
                                             $_POST['taskID'] = $id;
-                                            if($submissionInst->validate($_POST)){
-                                                if(!empty($_FILES['documents']['name'][0])) {
+                                            if ($submissionInst->validate($_POST)) {
+                                                if (!empty($_FILES['documents']['name'][0])) {
 
                                                     $folder = "../app/uploads/tasks/" . $id . "/submissions/";
-                                                    $jsonDestinations=$this->uploadMultipleFiles($_FILES['documents'],$folder);
+                                                    $jsonDestinations = $this->uploadMultipleFiles($_FILES['documents'], $folder);
 
                                                     //comining jsons for old files and new files
                                                     // Decode JSON strings to PHP arrays
@@ -230,17 +258,17 @@ class Student extends Users
                                                     // Encode the merged array back to JSON
                                                     $combinedJSON = json_encode($combinedArray);
 
-                                                    $_POST['documents']=$combinedJSON;
+                                                    $_POST['documents'] = $combinedJSON;
                                                 }
 
-                                                $submissionInst->update($_POST,$submission->submissionID);
+                                                $submissionInst->update($_POST, $submission->submissionID);
                                                 message('Submission Updated Successfully!');
-                                                redirect('student/tasks/' . $id . '/submissions/'.$submission->submissionID);
+                                                redirect('student/tasks/' . $id . '/submissions/' . $submission->submissionID);
                                             }
                                         }
 
                                         // Decode the JSON string back into an array
-                                        if(!empty($submission->documents)) {
+                                        if (!empty($submission->documents)) {
                                             $array = json_decode($submission->documents, true);
                                             //send only the keys (file names)
                                             $submission->documents = array_keys($array);
@@ -252,29 +280,29 @@ class Student extends Users
                                         $data['title'] = "Modify Submission";
                                         $this->view('student/modify-submission', $data);
                                         return;
-                                    }else if ($action2 === 'deleteFile') { //submission modify - delete file
+                                    } else if ($action2 === 'deleteFile') { //submission modify - delete file
 
                                         //handle only post req for file deelte
                                         if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for modify submision
 
-                                            $array=[];
+                                            $array = [];
                                             // Decode the JSON string back into an array
-                                            if(!empty($submission->documents)) {
+                                            if (!empty($submission->documents)) {
                                                 $array = json_decode($submission->documents, true);
                                             }
-                                            if(!empty($array) && !empty($_POST['fileName']) && !empty($array[($_POST['fileName'])])){
-                                                $deleteFilePath=$array[($_POST['fileName'])];
+                                            if (!empty($array) && !empty($_POST['fileName']) && !empty($array[($_POST['fileName'])])) {
+                                                $deleteFilePath = $array[($_POST['fileName'])];
                                                 //updating document array
                                                 unset($array[($_POST['fileName'])]);
                                                 $json = json_encode($array);
                                                 //updating database
-                                                $submissionInst->update(['documents'=>$json],$submission->submissionID);
+                                                $submissionInst->update(['documents' => $json], $submission->submissionID);
                                                 //deleting file
                                                 if (file_exists($deleteFilePath)) {
                                                     unlink($deleteFilePath);
                                                 }
                                                 message('File Deleted Successfully!');
-                                                redirect('student/tasks/' . $id . '/submissions/'.$id2.'/modify');
+                                                redirect('student/tasks/' . $id . '/submissions/' . $id2 . '/modify');
                                             }
 
 
@@ -283,7 +311,7 @@ class Student extends Users
                                 }
 
                                 // Decode the JSON string back into an array
-                                if(!empty($submission->documents)) {
+                                if (!empty($submission->documents)) {
                                     $array = json_decode($submission->documents, true);
                                     //send only the keys (file names)
                                     $submission->documents = array_keys($array);
@@ -313,12 +341,12 @@ class Student extends Users
 
                                 $_POST['studentID'] = Auth::getstudentID();
                                 $_POST['taskID'] = $id;
-                                if($submissionInst->validate($_POST)){
-                                    if(!empty($_FILES['documents']['name'][0])) {
+                                if ($submissionInst->validate($_POST)) {
+                                    if (!empty($_FILES['documents']['name'][0])) {
 
                                         $folder = "../app/uploads/tasks/" . $id . "/submissions/";
-                                        $jsonDestinations=$this->uploadMultipleFiles($_FILES['documents'],$folder);
-                                        $_POST['documents']=$jsonDestinations;
+                                        $jsonDestinations = $this->uploadMultipleFiles($_FILES['documents'], $folder);
+                                        $_POST['documents'] = $jsonDestinations;
                                     }
 
                                     $submissionInst->insert($_POST);
