@@ -221,7 +221,7 @@ class Model extends Database
         $query = trim($query, "&& ");
         $query .= " ORDER BY " . $this->primaryKey . " DESC LIMIT 1"; //get the first latest record from 
 
-        show($query);
+//        show($query);
         //we can call query qithout creating new database instance since we inherit 
         // this class from database class
         $res = $this->query($query, $data);

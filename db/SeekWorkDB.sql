@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS `Moderator_Verifies_Company`;
 CREATE TABLE `Moderator_Verifies_Company` (
   `verificationID` int NOT NULL AUTO_INCREMENT,
   `comments` text,
+  `status` enum('underReview','reviewed') NOT NULL DEFAULT 'underReview',
   `moderatorID` int DEFAULT NULL,
   `companyID` int NOT NULL,
   `documents` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
@@ -42,7 +43,7 @@ CREATE TABLE `Moderator_Verifies_Company` (
 
 LOCK TABLES `Moderator_Verifies_Company` WRITE;
 /*!40000 ALTER TABLE `Moderator_Verifies_Company` DISABLE KEYS */;
-INSERT INTO `Moderator_Verifies_Company` VALUES (1,NULL,NULL,4,'../app/uploads/verification/27/1701787986-1701764247-Screenshot from 2023-12-02 22-23-27.png');
+INSERT INTO `Moderator_Verifies_Company` VALUES (1,NULL,'underReview',NULL,4,'../app/uploads/verification/27/1701787986-1701764247-Screenshot from 2023-12-02 22-23-27.png');
 /*!40000 ALTER TABLE `Moderator_Verifies_Company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1454,4 +1455,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-05 15:14:30
+-- Dump completed on 2023-12-05 15:34:36

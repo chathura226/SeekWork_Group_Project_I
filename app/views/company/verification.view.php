@@ -1,4 +1,6 @@
 <?php $this->view('company/company-header', $data) ?>
+<link rel="stylesheet" href="<?= ROOT ?>/assets/css/profile.styles.css"/>
+<link rel="stylesheet" href="<?= ROOT ?>/assets/css/tables.styles.css">
 
 
 <link rel="stylesheet" href="<?= ROOT ?>/assets/css/company-verification.styles.css"/>
@@ -21,10 +23,35 @@
         </ul>
     </nav>
 </div><!-- End Page Title -->
+<?php if (!empty($verifications)): ?>
+    <div class="profile-details c-s-2 c-e-11 ">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Documents</th>
+                <th>Status</th>
+                <th>Comments</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php for ($i = 0; $i < sizeof($verifications); $i++): ?>
+                <tr>
+                    <th><?= $i + 1 ?></th>
+                    <td> <?= array_reverse(explode('/',$verifications[$i]->documents))[0] ?> <a href="<?= ROOT ?>/download/verification/<?= Auth::getuserID() ?>/<?=$verifications[$i]->verificationID?>">Download</a></td>
+                    <td> <?= ($verifications[$i]->status=='reviewed')?'Reviewed':'Under Review' ?></td>
+                    <td> <?= $verifications[$i]->comments ?></td>
 
+                </tr>
+            <?php endfor; ?>
+            </tbody>
+        </table>
+    </div>
+<?php else: ?>
 <div class="form-wrap column-12 row-5">
     <div class="tab-form  row-4">
-        <div class="alert alert-danger text-center">Your account is not yet verified! Please fill the details and upload
+        <div class="alert alert-danger text-center">Your account is not yet verified! Please fill the details
+            and upload
             relavant documents!
         </div>
         <div class="myheader">
@@ -32,6 +59,7 @@
         </div>
         <div class="tab-body">
             <div class="active1">
+
                 <form method="post" enctype="multipart/form-data">
                     </br>
 
@@ -65,6 +93,8 @@
                         <button>Submit for Approval</button>
                     </div>
                 </form>
+                <?php endif; ?>
+
             </div>
 
         </div>
