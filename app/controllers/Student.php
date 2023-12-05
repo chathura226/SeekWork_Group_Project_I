@@ -11,6 +11,7 @@ class Student extends Users
         parent::__construct('student');
     }
 
+//TODO:implement verification status view with verification doc download
 
     public function verification()
     {

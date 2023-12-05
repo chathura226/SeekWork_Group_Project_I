@@ -92,6 +92,41 @@ class Download extends Controller
         }
     }
 
+    public function verification($id = '')
+    {
+
+        if (!empty($id) ) {
+            if(Auth::is_student()){//if a student, only  owner can download
+                if(Auth::getuserID()!=$id){
+                    message(['Unauthorized', 'danger']);
+                    redirect($this->referer);
+                }
+            }
+            if(Auth::is_company()){//if a student, only  owner can download
+                if(Auth::getuserID()!=$id){
+                    message(['Unauthorized', 'danger']);
+                    redirect($this->referer);
+                }
+            }
+
+            $userInst=new User();
+            $row=$userInst->first(['userID'=>$id]);
+            if(!empty($row)){
+
+                $role=ucfirst($row->role)."Model";
+
+                $roleInst=new $role();
+
+                $roleData=$roleInst->first(['userID'=>$id]);
+
+                if(!empty($roleData)){
+                    $this->filePath=$roleData->verificationDocuments;
+                    $this->serveFile();
+                }
+            }
+        }
+    }
+
     public function serveFile()
     {
 //         echo $this->filePath;
