@@ -92,6 +92,56 @@ class Download extends Controller
         }
     }
 
+    public function verification($id = '',$id2='')
+    {
+
+        if (!empty($id) ) {
+            if(Auth::is_student()){//if a student, only  owner can download
+                if(Auth::getuserID()!=$id){
+                    message(['Unauthorized', 'danger']);
+                    redirect($this->referer);
+                }
+            }
+            if(Auth::is_company()){//if a compant, only  owner can download
+                if(Auth::getuserID()!=$id){
+                    message(['Unauthorized', 'danger']);
+                    redirect($this->referer);
+                }
+
+                //also if its a company, verificationID is required
+                if(!empty($id2)){
+                    $verificationInst=new Moderator_Verifies_Company();
+                    $row=$verificationInst->innerJoin(['company','user'],['Moderator_Verifies_Company.companyID=company.companyID','user.userID=company.userID'],['Moderator_Verifies_Company.verificationID'=>$id2,'user.userID'=>$id])[0];
+                    if(!empty($row)){
+
+                        $this->filePath=$row->documents;
+                        $this->serveFile();
+                        return;
+                    }
+                }else{
+                    message(['Unauthorized', 'danger']);
+                    redirect($this->referer);
+                }
+            }
+
+            $userInst=new User();
+            $row=$userInst->first(['userID'=>$id]);
+            if(!empty($row)){
+
+                $role=ucfirst($row->role)."Model";
+
+                $roleInst=new $role();
+
+                $roleData=$roleInst->first(['userID'=>$id]);
+
+                if(!empty($roleData)){
+                    $this->filePath=$roleData->verificationDocuments;
+                    $this->serveFile();
+                }
+            }
+        }
+    }
+
     public function serveFile()
     {
 //         echo $this->filePath;
