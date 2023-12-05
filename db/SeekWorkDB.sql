@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `Moderator_Verifies_Company`;
 CREATE TABLE `Moderator_Verifies_Company` (
   `verificationID` int NOT NULL AUTO_INCREMENT,
   `comments` text,
-  `moderatorID` int NOT NULL,
+  `moderatorID` int DEFAULT NULL,
   `companyID` int NOT NULL,
   `documents` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`verificationID`),
@@ -33,7 +33,7 @@ CREATE TABLE `Moderator_Verifies_Company` (
   KEY `verification-company` (`companyID`),
   CONSTRAINT `moderator-verification` FOREIGN KEY (`moderatorID`) REFERENCES `moderator` (`moderatorID`) ON UPDATE CASCADE,
   CONSTRAINT `verification-company` FOREIGN KEY (`companyID`) REFERENCES `company` (`companyID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `Moderator_Verifies_Company` (
 
 LOCK TABLES `Moderator_Verifies_Company` WRITE;
 /*!40000 ALTER TABLE `Moderator_Verifies_Company` DISABLE KEYS */;
+INSERT INTO `Moderator_Verifies_Company` VALUES (1,NULL,NULL,4,'../app/uploads/verification/27/1701787986-1701764247-Screenshot from 2023-12-02 22-23-27.png');
 /*!40000 ALTER TABLE `Moderator_Verifies_Company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,7 +369,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` VALUES (1,'kk','verification pending','aa','aa','aaa','https://www.kk.com','',NULL,'aa',16),(2,'Pheonix','verification pending','chathura','lakshan','colombo','https://www.seekwork.com','Pheonix is a dynamic and innovative design company dedicated to turning your creative vision into reality. With a team of highly skilled and experienced designers, we offer a wide range of design services tailored to meet the unique needs of our clients.',NULL,'1111111',22),(3,'seekwork.com','verified','lakshan','chathura','colombo','',NULL,NULL,'11111',24),(4,'Seekwork Company','verification pending','Seekwork','Company','No.5 Seekwork rd.','https://www.seekwork.com',NULL,'uploads/profilePics/1699934037Screenshot from 2023-11-14 09-21-13.png','1111111111',27),(6,'lll','verification pending','lll','lll','lll','',NULL,NULL,'gb78',34),(7,'kk','verification pending','kk','ll','ll','',NULL,NULL,'kjn',35);
+INSERT INTO `company` VALUES (1,'kk','verification pending','aa','aa','aaa','https://www.kk.com','',NULL,'aa',16),(2,'Pheonix','verification pending','chathura','lakshan','colombo','https://www.seekwork.com','Pheonix is a dynamic and innovative design company dedicated to turning your creative vision into reality. With a team of highly skilled and experienced designers, we offer a wide range of design services tailored to meet the unique needs of our clients.',NULL,'1111111',22),(3,'seekwork.com','verified','lakshan','chathura','colombo','',NULL,NULL,'11111',24),(4,'Seekwork Company','verification pending','Seekwork','Company','No.5 Seekwork rd.','https://www.seekwork.com','test','uploads/profilePics/1699934037Screenshot from 2023-11-14 09-21-13.png','1111111111',27),(6,'lll','verification pending','lll','lll','lll','',NULL,NULL,'gb78',34),(7,'kk','verification pending','kk','ll','ll','',NULL,NULL,'kjn',35);
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -536,7 +537,7 @@ CREATE TABLE `company_audit_log` (
 
 LOCK TABLES `company_audit_log` WRITE;
 /*!40000 ALTER TABLE `company_audit_log` DISABLE KEYS */;
-INSERT INTO `company_audit_log` VALUES (9,'INSERT','2023-11-29 08:52:47',NULL,'{\"brn\": \"swq2\", \"status\": \"verification pending\", \"userID\": 17, \"address\": \"\", \"website\": null, \"lastName\": \"jbhj\", \"firstName\": \"bjh\", \"profilePic\": null, \"companyName\": \"hj\", \"description\": null}',NULL),(9,'UPDATE','2023-11-29 08:52:56','{\"brn\": \"swq2\", \"status\": \"verification pending\", \"userID\": 17, \"address\": \"\", \"website\": null, \"lastName\": \"jbhj\", \"firstName\": \"bjh\", \"profilePic\": null, \"companyName\": \"hj\", \"description\": null}','{\"brn\": \"swq2dewdw\", \"status\": \"verification pending\", \"userID\": 17, \"address\": \"\", \"website\": null, \"lastName\": \"jbhj\", \"firstName\": \"bjh\", \"profilePic\": null, \"companyName\": \"hj\", \"description\": null}',NULL),(9,'DELETE','2023-11-29 08:53:00','{\"brn\": \"swq2dewdw\", \"status\": \"verification pending\", \"userID\": 17, \"address\": \"\", \"website\": null, \"lastName\": \"jbhj\", \"firstName\": \"bjh\", \"profilePic\": null, \"companyName\": \"hj\", \"description\": null}',NULL,NULL);
+INSERT INTO `company_audit_log` VALUES (4,'UPDATE','2023-12-05 14:51:18','{\"brn\": \"1111111111\", \"status\": \"verification pending\", \"userID\": 27, \"address\": \"No.5 Seekwork rd.\", \"website\": \"https://www.seekwork.com\", \"lastName\": \"Company\", \"firstName\": \"Seekwork\", \"profilePic\": \"uploads/profilePics/1699934037Screenshot from 2023-11-14 09-21-13.png\", \"companyName\": \"Seekwork Company\", \"description\": null}','{\"brn\": \"1111111111\", \"status\": \"verification pending\", \"userID\": 27, \"address\": \"No.5 Seekwork rd.\", \"website\": \"https://www.seekwork.com\", \"lastName\": \"Company\", \"firstName\": \"Seekwork\", \"profilePic\": \"uploads/profilePics/1699934037Screenshot from 2023-11-14 09-21-13.png\", \"companyName\": \"Seekwork Company\", \"description\": \"test\"}',27),(4,'UPDATE','2023-12-05 14:51:55','{\"brn\": \"1111111111\", \"status\": \"verification pending\", \"userID\": 27, \"address\": \"No.5 Seekwork rd.\", \"website\": \"https://www.seekwork.com\", \"lastName\": \"Company\", \"firstName\": \"Seekwork\", \"profilePic\": \"uploads/profilePics/1699934037Screenshot from 2023-11-14 09-21-13.png\", \"companyName\": \"Seekwork Company\", \"description\": \"test\"}','{\"brn\": \"1111111111\", \"status\": \"verification pending\", \"userID\": 27, \"address\": \"No.5 Seekwork rd.\", \"website\": \"https://www.seekwork.com\", \"lastName\": \"Company\", \"firstName\": \"Seekwork\", \"profilePic\": \"uploads/profilePics/1699934037Screenshot from 2023-11-14 09-21-13.png\", \"companyName\": \"Seekwork Company\", \"description\": \"test\"}',27),(4,'UPDATE','2023-12-05 14:53:06','{\"brn\": \"1111111111\", \"status\": \"verification pending\", \"userID\": 27, \"address\": \"No.5 Seekwork rd.\", \"website\": \"https://www.seekwork.com\", \"lastName\": \"Company\", \"firstName\": \"Seekwork\", \"profilePic\": \"uploads/profilePics/1699934037Screenshot from 2023-11-14 09-21-13.png\", \"companyName\": \"Seekwork Company\", \"description\": \"test\"}','{\"brn\": \"1111111111\", \"status\": \"verification pending\", \"userID\": 27, \"address\": \"No.5 Seekwork rd.\", \"website\": \"https://www.seekwork.com\", \"lastName\": \"Company\", \"firstName\": \"Seekwork\", \"profilePic\": \"uploads/profilePics/1699934037Screenshot from 2023-11-14 09-21-13.png\", \"companyName\": \"Seekwork Company\", \"description\": \"test\"}',27),(9,'INSERT','2023-11-29 08:52:47',NULL,'{\"brn\": \"swq2\", \"status\": \"verification pending\", \"userID\": 17, \"address\": \"\", \"website\": null, \"lastName\": \"jbhj\", \"firstName\": \"bjh\", \"profilePic\": null, \"companyName\": \"hj\", \"description\": null}',NULL),(9,'UPDATE','2023-11-29 08:52:56','{\"brn\": \"swq2\", \"status\": \"verification pending\", \"userID\": 17, \"address\": \"\", \"website\": null, \"lastName\": \"jbhj\", \"firstName\": \"bjh\", \"profilePic\": null, \"companyName\": \"hj\", \"description\": null}','{\"brn\": \"swq2dewdw\", \"status\": \"verification pending\", \"userID\": 17, \"address\": \"\", \"website\": null, \"lastName\": \"jbhj\", \"firstName\": \"bjh\", \"profilePic\": null, \"companyName\": \"hj\", \"description\": null}',NULL),(9,'DELETE','2023-11-29 08:53:00','{\"brn\": \"swq2dewdw\", \"status\": \"verification pending\", \"userID\": 17, \"address\": \"\", \"website\": null, \"lastName\": \"jbhj\", \"firstName\": \"bjh\", \"profilePic\": null, \"companyName\": \"hj\", \"description\": null}',NULL,NULL);
 /*!40000 ALTER TABLE `company_audit_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1453,4 +1454,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-05  8:59:10
+-- Dump completed on 2023-12-05 15:14:30

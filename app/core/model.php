@@ -147,13 +147,14 @@ class Model extends Database
         $data['id'] = $id;
         // show($query);
         // die;
-        // show($query);
-        // show($data);
-        // die;
+//         show($query);
+//         show($data);
+//         die;
         //we can call query qithout creating new database instance since we inherit 
         // this class from database class
         $this->query($query, $data);
-        // show($query);
+//         show($query);
+//         die;
         // show($data);
     }
 
@@ -220,12 +221,13 @@ class Model extends Database
         $query = trim($query, "&& ");
         $query .= " ORDER BY " . $this->primaryKey . " DESC LIMIT 1"; //get the first latest record from 
 
+        show($query);
         //we can call query qithout creating new database instance since we inherit 
         // this class from database class
         $res = $this->query($query, $data);
-        // show($query);
-        // show($data);
-
+//         show($res);
+//         show($data);
+//        die;
 
         if (is_array($res)) {
             return $res[0]; //returning only first element of the array (an obj)

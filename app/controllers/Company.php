@@ -39,6 +39,7 @@ class Company extends Users
 
     public function verification()
     {
+        $verificationInst=new Moderator_Verifies_Company();
 
         $companyInst = new CompanyModel();
         $data['title'] = "Verification";
@@ -62,12 +63,18 @@ class Company extends Users
                     $destination = $this->uploadFile($_FILES['imageInput'], $folder);
 
                     $verificationData['description'] = $_POST['description'];
-                    $verificationData['verificationDocuments'] = $destination;
+                    $verificationData['documents'] = $destination;
 
-                    $companyInst->update($verificationData, Auth::getcompanyID());//updating file location
+                    //theres no field for documents in company table
+                    $companyInst->update($verificationData, Auth::getcompanyID());//updating company description
+
+                    //dont put this before update , since company will check for companyID also
+                    $verificationData['companyID'] = Auth::getcompanyID();
+
+                    $verificationInst->insert($verificationData);
 
                     message("Details submitted successfully!");
-                    redirect('company');
+                    redirect('company/verification');
                 } else {
                     $errors['imageInput'] = "Couldn't upload the file";
                 }
@@ -76,8 +83,12 @@ class Company extends Users
 
         }
 
+        $rows=$verificationInst->where(['companyID'=>Auth::getcompanyID()]);
+        $data['verifications'] = $rows;
+
 
         $data['errors'] = $errors;
+
         $this->view('company/verification', $data);
     }
 
