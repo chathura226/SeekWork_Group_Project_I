@@ -208,6 +208,7 @@ class Moderator extends Users
 
         if(!empty($action)){
             if($action=='reviewed'){
+                //TODO: have to implement mechanism
                 $data['title'] = "Reviewed Verifications";
                 $this->view('moderator/reviewedVerifications', $data);
                 return;
