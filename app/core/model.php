@@ -32,6 +32,28 @@ class Model extends Database
         // show($data);
     }
 
+    //count
+    //    //to check and get from databse 'where' as arry of objects
+    public function count($data,$select='*')
+    {
+
+        $keys = array_keys($data);
+
+        $query = "SELECT COUNT(".$select.") FROM " . $this->table . " WHERE ";
+
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        //remove the additional '&&'
+        $query = trim($query, "&& ");
+
+        //we can call query qithout creating new database instance since we inherit
+        // this class from database class
+        return $this->query($query, $data);
+
+    }
+
     //inner join
     //$tables- array of table names that need to be joined with $this->table
     //$joinCOnditions = array of join conditions for each join
