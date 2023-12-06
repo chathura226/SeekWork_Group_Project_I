@@ -212,6 +212,20 @@ class Moderator extends Users
                 $this->view('moderator/reviewedVerifications', $data);
                 return;
             }else if($action='underverification'){
+                if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                    if(!empty($_POST['verificationID'])){
+                        $_POST['moderatorID']=Auth::getmoderatorID();
+                        $verificationInst->update($_POST,$_POST['verificationID']);
+                        if($_POST['status']=='reviewed'){
+                            $row=$verificationInst->first(['verificationID'=>$_POST['verificationID']]);
+                            $companyInst=new CompanyModel();
+                            $companyID=$companyInst->update(['status'=>'verified'],$row->companyID);
+                        }
+
+                        message('Submitted Successfully');
+                        redirect('moderator/toverify/underverification');
+                    }
+                }
                 $underReviews=$verificationInst->innerJoin(['company','user'],['Moderator_Verifies_Company.companyID=company.companyID','company.userID=user.userID'],['Moderator_Verifies_Company.status'=>'"underReview"'],['user.userID','Moderator_Verifies_Company.documents','Moderator_Verifies_Company.verificationID','company.companyName','Moderator_Verifies_Company.status']);
                 $data['underReviews']=$underReviews;
                 $data['title'] = "Reviewed Under Verification";

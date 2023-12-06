@@ -167,14 +167,14 @@ class Model extends Database
 
         //adding id into the array before executing 
         $data['id'] = $id;
-        // show($query);
+//         show($query);
         // die;
 //         show($query);
 //         show($data);
 //         die;
         //we can call query qithout creating new database instance since we inherit 
         // this class from database class
-        $this->query($query, $data);
+       return $this->query($query, $data);
 //         show($query);
 //         die;
         // show($data);

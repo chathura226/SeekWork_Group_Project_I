@@ -10,7 +10,8 @@ class CompanyModel extends Model {
     protected $allowedColumns=[
         'companyName',	
         'firstName',	
-        'lastName',	
+        'lastName',
+        'status',
         'address',	
         'website',
         'profilePic',

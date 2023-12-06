@@ -50,3 +50,4 @@
 [2023-12-06T07:46:45.210469+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.18.0.1"} []
 [2023-12-06T07:46:52.983431+00:00] log.INFO: User Logged in Successfully! {"user_id":25,"IP_Address":"172.18.0.1"} []
 [2023-12-06T07:47:02.294668+00:00] log.INFO: User Logged in Successfully! {"user_id":28,"IP_Address":"172.18.0.1"} []
+[2023-12-06T15:31:43.639286+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.18.0.1"} []
