@@ -121,7 +121,8 @@
 
             }
         }
-       
+
+        alert(JSON.stringify(data));
 
     }
    

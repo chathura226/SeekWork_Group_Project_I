@@ -96,7 +96,7 @@
     signup_button.addEventListener("click",collect_data);
 
     function collect_data(){
-        var myform = _("wrapper");
+        var myform = _("myform");
         var inputs = myform.getElementsByTagName("INPUT");
 
         var data = {};
@@ -121,7 +121,8 @@
 
             }
         }
-       
+
+        alert(JSON.stringify(data));
 
     }
    

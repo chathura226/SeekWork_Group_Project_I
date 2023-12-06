@@ -78,7 +78,7 @@
                 <input type="text"  name="email" placeholder="Email"><br>
                 <input type="password"  name="password" placeholder="Password"><br>
                 <input type="password"  name="password2" placeholder="Retype Password"><br>
-                <input type="submit"  value="Sign up" id ="signup_button"><br>
+                <input type="submit"  value="Sign up"><br>
             </form>
 
 
@@ -92,40 +92,33 @@
         return document.getElementById(element);
     }
 
-    var signup_button = _("signup_button");
-    signup_button.addEventListener("click",collect_data);
+    
+   
+    var label = _("label_chat");
 
-    function collect_data(){
-        var myform = _("wrapper");
-        var inputs = myform.getElementsByTagName("INPUT");
+    label.addEventListener("click",function(){
 
-        var data = {};
+        var inner_pannel = _("inner_left_pannel");
 
-        for(var i=inputs.length-1 ; i>=0; i--){
+        var ajax = new XMLHttpRequest();
 
-            var key =inputs[i].name;
+        ajax.onload = function(){
 
-            switch(key){
-                case "username":
-                    data.username=inputs[i].value;    
-                    break;    
-                case "email":
-                    data.email=inputs[i].value;    
-                    break; 
-                case "password":
-                    data.password=inputs[i].value;    
-                    break;  
-                case "password2":
-                    data.password2=inputs[i].value;    
-                    break;  
+            if(ajax.status==200 || ajax.readyState==4){
+
+                inner_pannel.innerHTML = ajax.responseText;
+
 
             }
+
+
         }
+
+        ajax.open("POST","file.txt",true);
+        ajax.send();
        
 
-    }
-   
-    
+    });
 
 
 
