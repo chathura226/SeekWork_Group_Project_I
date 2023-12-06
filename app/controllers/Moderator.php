@@ -12,15 +12,8 @@ class Moderator extends Users
         parent::__construct('moderator');
     }
 
-
-
- 
-
-
     public function university($action = null, $id = null)
     {
-
-
 
         if (!empty($action)) {
             if ($action === "post") { //for new uni
@@ -207,4 +200,49 @@ class Moderator extends Users
 
         $this->view('moderator/category', $data);
     }
+
+    //toverify - verify companies
+    public function toverify($action = null)
+    {
+        $verificationInst=new Moderator_Verifies_Company();
+
+        if(!empty($action)){
+            if($action=='reviewed'){
+                //TODO: have to implement mechanism
+                $data['title'] = "Reviewed Verifications";
+                $this->view('moderator/reviewedVerifications', $data);
+                return;
+            }else if($action='underverification'){
+                if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                    if(!empty($_POST['verificationID'])){
+                        $_POST['moderatorID']=Auth::getmoderatorID();
+                        $verificationInst->update($_POST,$_POST['verificationID']);
+                        if($_POST['status']=='reviewed'){
+                            $row=$verificationInst->first(['verificationID'=>$_POST['verificationID']]);
+                            $companyInst=new CompanyModel();
+                            $companyID=$companyInst->update(['status'=>'verified'],$row->companyID);
+                        }
+
+                        message('Submitted Successfully');
+                        redirect('moderator/toverify/underverification');
+                    }
+                }
+                $underReviews=$verificationInst->innerJoin(['company','user'],['Moderator_Verifies_Company.companyID=company.companyID','company.userID=user.userID'],['Moderator_Verifies_Company.status'=>'"underReview"'],['user.userID','Moderator_Verifies_Company.documents','Moderator_Verifies_Company.verificationID','company.companyName','Moderator_Verifies_Company.status']);
+                $data['underReviews']=$underReviews;
+                $data['title'] = "Reviewed Under Verification";
+                $this->view('moderator/underverification', $data);
+                return;
+            }
+        }
+
+        $reviewedCount=$verificationInst->count(['status'=>'reviewed'])[0]->{"COUNT(*)"};
+        $underReviewCount=$verificationInst->count(['status'=>'underReview'])[0]->{"COUNT(*)"};
+        $data['reviewed']=$reviewedCount;
+        $data['underReview']=$underReviewCount;
+
+        $data['title'] = "To Verify";
+        $this->view('moderator/toverify', $data);
+    }
+
+
 }

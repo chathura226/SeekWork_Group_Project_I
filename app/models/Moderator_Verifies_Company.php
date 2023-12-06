@@ -11,6 +11,7 @@ class Moderator_Verifies_Company extends Model {
         'verificationID',
         'comments',
         'moderatorID',
+        'status',
         'companyID',
         'documents',
     ];

@@ -43,9 +43,11 @@ class Student extends Users
                     $verificationData['qualifications']=$_POST['qualifications'];
                     $verificationData['description']=$_POST['description'];
                     $verificationData['verificationDocuments'] = $destination;
+                    $verificationData['status'] = 'verified';
 
                     $studentInst->update($verificationData, Auth::getstudentID());//updating file location
 
+                    Auth::updateSession();
                     message("Details submitted successfully!");
                     redirect('student');
                 } else {

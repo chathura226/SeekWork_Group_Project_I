@@ -32,6 +32,28 @@ class Model extends Database
         // show($data);
     }
 
+    //count
+    //    //to check and get from databse 'where' as arry of objects
+    public function count($data,$select='*')
+    {
+
+        $keys = array_keys($data);
+
+        $query = "SELECT COUNT(".$select.") FROM " . $this->table . " WHERE ";
+
+        foreach ($keys as $key) {
+            $query .= $key . "=:" . $key . " && ";
+        }
+
+        //remove the additional '&&'
+        $query = trim($query, "&& ");
+
+        //we can call query qithout creating new database instance since we inherit
+        // this class from database class
+        return $this->query($query, $data);
+
+    }
+
     //inner join
     //$tables- array of table names that need to be joined with $this->table
     //$joinCOnditions = array of join conditions for each join
@@ -66,9 +88,9 @@ class Model extends Database
             //remove the additional '&&' 
             $query = trim($query, "&& ");
         }
-        // show($query);
-        // show($data);
-        // die;
+//         show($query);
+//         show($data);
+//         die;
 
         //since $data for where clause is expanded in here, no need to send the data to PDO
         //didnt use $key:=$key
@@ -145,14 +167,14 @@ class Model extends Database
 
         //adding id into the array before executing 
         $data['id'] = $id;
-        // show($query);
+//         show($query);
         // die;
 //         show($query);
 //         show($data);
 //         die;
         //we can call query qithout creating new database instance since we inherit 
         // this class from database class
-        $this->query($query, $data);
+       return $this->query($query, $data);
 //         show($query);
 //         die;
         // show($data);
