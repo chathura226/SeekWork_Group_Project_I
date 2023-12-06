@@ -102,8 +102,8 @@ class Download extends Controller
                     redirect($this->referer);
                 }
             }
-            if(Auth::is_company()){//if a compant, only  owner can download
-                if(Auth::getuserID()!=$id){
+            if(Auth::is_company() || Auth::is_moderator() || Auth::is_admin()){//if a compant, only  owner can download
+                if(Auth::getuserID()!=$id && !(Auth::is_moderator() || Auth::is_admin())){
                     message(['Unauthorized', 'danger']);
                     redirect($this->referer);
                 }
@@ -112,11 +112,14 @@ class Download extends Controller
                 if(!empty($id2)){
                     $verificationInst=new Moderator_Verifies_Company();
                     $row=$verificationInst->innerJoin(['company','user'],['Moderator_Verifies_Company.companyID=company.companyID','user.userID=company.userID'],['Moderator_Verifies_Company.verificationID'=>$id2,'user.userID'=>$id])[0];
+
                     if(!empty($row)){
 
                         $this->filePath=$row->documents;
                         $this->serveFile();
                         return;
+                    }else {
+                        redirect($this->referer);
                     }
                 }else{
                     message(['Unauthorized', 'danger']);

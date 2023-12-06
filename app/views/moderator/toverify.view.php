@@ -52,7 +52,6 @@
     </div>
 
 </div>
-<?php $this->view('student/student-footer', $data) ?>
 
 
 

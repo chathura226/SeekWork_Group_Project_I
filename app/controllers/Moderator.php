@@ -211,7 +211,9 @@ class Moderator extends Users
                 $data['title'] = "Reviewed Verifications";
                 $this->view('moderator/reviewedVerifications', $data);
                 return;
-            }else if($action='under'){
+            }else if($action='underverification'){
+                $underReviews=$verificationInst->innerJoin(['company','user'],['Moderator_Verifies_Company.companyID=company.companyID','company.userID=user.userID'],['Moderator_Verifies_Company.status'=>'"underReview"'],['user.userID','Moderator_Verifies_Company.documents','Moderator_Verifies_Company.verificationID','company.companyName','Moderator_Verifies_Company.status']);
+                $data['underReviews']=$underReviews;
                 $data['title'] = "Reviewed Under Verification";
                 $this->view('moderator/underverification', $data);
                 return;

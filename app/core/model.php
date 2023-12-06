@@ -88,9 +88,9 @@ class Model extends Database
             //remove the additional '&&' 
             $query = trim($query, "&& ");
         }
-        // show($query);
-        // show($data);
-        // die;
+//         show($query);
+//         show($data);
+//         die;
 
         //since $data for where clause is expanded in here, no need to send the data to PDO
         //didnt use $key:=$key
