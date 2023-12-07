@@ -119,7 +119,8 @@
 
                 }
             }
-            
+
+            alert(JSON.stringify(data));
 
             send_data(data,"signup");
 
@@ -141,7 +142,7 @@
                 var data_string = JSON.stringify(data);
 
                 xml.open("POST","api.php",true);
-                xml.send(data_string);
+                xml.send(data);
 
 
             
