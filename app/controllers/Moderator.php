@@ -208,10 +208,12 @@ class Moderator extends Users
 
         if(!empty($action)){
             if($action=='reviewed'){
-                //TODO: have to implement mechanism
+                $reviewed=$verificationInst->innerJoin(['company','user'],['Moderator_Verifies_Company.companyID=company.companyID','company.userID=user.userID'],['Moderator_Verifies_Company.status'=>'"reviewed"'],['user.userID','Moderator_Verifies_Company.documents','Moderator_Verifies_Company.verificationID','company.companyName','Moderator_Verifies_Company.status']);
+                $data['reviewed']=$reviewed;
                 $data['title'] = "Reviewed Verifications";
                 $this->view('moderator/reviewedVerifications', $data);
                 return;
+
             }else if($action='underverification'){
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     if(!empty($_POST['verificationID'])){
