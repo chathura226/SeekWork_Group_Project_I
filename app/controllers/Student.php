@@ -227,6 +227,12 @@ class Student extends Users
                                 if (!empty($action2)) {
                                     if ($action2 === 'delete') { //submission deletion
                                         if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+                                            if($row->status=='closed'){
+                                                message(['Invalid Action. Task is closed!','danger']);
+                                                redirect('student/tasks');
+                                            }
+
                                             if ($submission->status === 'pendingReview') { //only submissions pending can be deleted
                                                 $submissionInst->delete($id2);
                                                 message('Submission deleted successfully!');
@@ -239,6 +245,10 @@ class Student extends Users
                                         redirect('student/tasks/' . $id . '/submissions/' . $id2);
                                     } else if ($action2 === 'modify') { //submission modify
 
+                                        if($row->status=='closed'){
+                                            message(['Invalid Action. Task is closed!','danger']);
+                                            redirect('student/tasks');
+                                        }
 
                                         if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for modify submission
 
@@ -284,6 +294,11 @@ class Student extends Users
                                         $this->view('student/modify-submission', $data);
                                         return;
                                     } else if ($action2 === 'deleteFile') { //submission modify - delete file
+
+                                        if($row->status=='closed'){
+                                            message(['Invalid Action. Task is closed!','danger']);
+                                            redirect('student/tasks');
+                                        }
 
                                         //handle only post req for file deelte
                                         if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for modify submision
@@ -339,6 +354,11 @@ class Student extends Users
                         } else if ($action === 'addsubmission') {
 
                             $submissionInst = new Submission();
+
+                            if($row->status=='closed'){
+                                message(['Invalid Action. Task is closed!','danger']);
+                                redirect('student/tasks');
+                            }
 
                             if ($_SERVER['REQUEST_METHOD'] == "POST") { //when get a post req for add submission
 
