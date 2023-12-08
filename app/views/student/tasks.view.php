@@ -33,7 +33,7 @@
       <h2><?= ucfirst($task->title) ?></h2>
       <h4>Deadline: <?php if (!empty($task->deadline)) echo $task->deadline;
                     else echo "No deadline available!"; ?></h4>
-      <h4>Status: <?= ucfirst($task->status) ?></h4>
+      <h4>Status: <?=($task->status==='closed')?'<span style="color: red;">Closed</span>':'<span style="color: green;">'.ucfirst($task->status).'</span>'?></h4>
 
       <a href="<?= ROOT ?>/student/tasks/<?= $task->taskID ?>">
         <button class="details-button">

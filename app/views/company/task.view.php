@@ -86,6 +86,7 @@
         <?php if (!empty($assignments)) : ?><a href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/pendingassignments"><button class="apply">Assignment Invites</button></a><?php endif; ?>
         &nbsp &nbsp
         <?php if (!empty($assignments)) : ?><a href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/submissions"><button class="apply">Submissions</button></a><?php endif; ?>
+        <a href="<?= ROOT ?>/company/close/<?= $task->taskID ?>"><button class="apply">Close the Task</button></a>
 
         <?php if ($task->status === 'closed') : ?>
             &nbsp &nbsp

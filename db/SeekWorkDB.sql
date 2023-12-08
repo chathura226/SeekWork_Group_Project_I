@@ -1167,7 +1167,7 @@ DROP TABLE IF EXISTS `submission`;
 CREATE TABLE `submission` (
   `submissionID` int NOT NULL AUTO_INCREMENT,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `documents` text NOT NULL,
+  `documents` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `status` enum('pendingReview','accepted','rejected') NOT NULL DEFAULT 'pendingReview',
   `note` text COMMENT 'note by student abt submission',
   `reviewedDate` datetime DEFAULT NULL,
@@ -1455,4 +1455,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-06 15:41:52
+-- Dump completed on 2023-12-08 10:23:08

@@ -40,9 +40,9 @@
 
 .tab-form .tab-body {
   position: relative;
-  height: 1000px ;
-  /* min-height:fit-content; */
-  /* overflow: hidden; */
+  height: 500px ;
+   /*min-height:fit-content;*/
+   /*overflow: hidden;*/
 }
  
 
