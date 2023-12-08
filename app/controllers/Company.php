@@ -756,6 +756,20 @@ class Company extends Users
                 message(['Invalid Task ID', 'danger']);
                 redirect('company/tasks');
             }
+
+
+            //for post req for close
+            if ($_SERVER['REQUEST_METHOD'] == "POST"){
+                if($_POST['confirm']==='close the task') {
+                    $taskInst->update(['status' => 'closed'], $id);
+                    message('Task closed successfully!');
+                    redirect('company/tasks');
+                }else{
+                    message(['Confirmation Failed','danger']);
+                    redirect('company/tasks');
+                }
+            }
+
             $submissionInst=new Submission();
             $submissions=$submissionInst->innerJoin(['task'],['task.taskID=submission.taskID'],['task.taskID'=>$id],["COUNT(*)"])[0]->{"COUNT(*)"};
             $pendingSubmissions=$submissionInst->innerJoin(['task'],['task.taskID=submission.taskID'],['task.taskID'=>$id,'submission.status'=>'"pendingReview"'],["COUNT(*)"])[0]->{"COUNT(*)"};
