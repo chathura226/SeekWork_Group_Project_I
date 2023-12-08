@@ -120,13 +120,14 @@ class Company extends Users
             $row = $task->getFirstCustom('task', ['taskID' => $id], 'taskID'); //get task details corresponding to the tadsk id
 
 
+
+
             if (!empty($row)) {
                 if ($row->companyID !== Auth::getcompanyID()) {
                     message(['Unauthorized! Task is not yours', 'danger']);
                     redirect('company/tasks');
                 }
                 if (!empty($action)) {
-//TODO:submission view as i did in students
                     if ($action === 'submissions') {
                         if (!empty($id2)) {
                             $submissionInst = new Submission();
@@ -741,4 +742,33 @@ class Company extends Users
 
         $this->view('company/disputes', $data);
     }
+
+    //close task
+    public function close($id = null)
+    {
+        if (!empty($id)){
+            $taskInst=new Task();
+            $task=$taskInst->innerJoin(['category'],['category.categoryID=task.categoryID'],['taskID'=>$id],['*,category.title As categoryTitle']);
+
+//            show($pendingSubmissions);die;
+            if(!empty($task))$task=$task[0];//removing array that comes with innerjoin
+            if(empty($task) || $task->companyID!=Auth::getcompanyID()){
+                message(['Invalid Task ID', 'danger']);
+                redirect('company/tasks');
+            }
+            $submissionInst=new Submission();
+            $submissions=$submissionInst->innerJoin(['task'],['task.taskID=submission.taskID'],['task.taskID'=>$id],["COUNT(*)"])[0]->{"COUNT(*)"};
+            $pendingSubmissions=$submissionInst->innerJoin(['task'],['task.taskID=submission.taskID'],['task.taskID'=>$id,'submission.status'=>'"pendingReview"'],["COUNT(*)"])[0]->{"COUNT(*)"};
+
+
+            $data['submissions'] = $submissions;
+            $data['pendingSubmissions'] = $pendingSubmissions;
+            $data['task'] = $task;
+
+            $data['title'] = "Close the Task";
+            $this->view('company/closeTask', $data);
+
+        }
+    }
+
 }
