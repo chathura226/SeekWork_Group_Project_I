@@ -28,7 +28,7 @@
     </div><!-- End Page Title -->
 
 
-    <div class="form-wrap column-12 row-5">
+    <div class="form-wrap column-12 row-6">
         <div class="tab-form row-4">
 
             <div class="myheader">
@@ -68,6 +68,8 @@
                                 <option value="" selected disabled><?= ucfirst($task->categoryTitle) ?></option>
                             </select>
                         </div>
+                        Total Submissions that are under review : <?=$pendingSubmissions?><br>
+                        Total Submissions : <?=$submissions?><br><br>
                         Confirm Close
                         <hr>
                         <div class="form-input">
