@@ -12,7 +12,7 @@ if [ "$arg1" = "up" ]; then
     echo "phpMyAdmin @ http://localhost:8001"
 elif [ "$arg1" = "down" ]; then
     echo "Exporting the database !............."
-    docker exec -i db mysqldump -uadmin -ppassword SeekWorkDB > ../db/SeekWorkDB.sql
+    docker exec -i db mysqldump -uadmin -ppassword --events SeekWorkDB > ../db/SeekWorkDB.sql
     # Wait for a few seconds to allow the export to complete
     sleep 10
 

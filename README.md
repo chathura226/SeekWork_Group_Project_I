@@ -21,3 +21,4 @@ Features :
  image resize to reduce size
  inner joins using function
  Auditing using triggers
+ Revalidation using events (every 6 month)

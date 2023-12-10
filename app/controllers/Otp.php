@@ -31,7 +31,9 @@ class Otp extends Controller
 
                 if ($expireTime >= $currentTime) { //code is valid
                     $userInst = new User();
-                    $userInst->update(['isOTPVerified' => 1], Auth::getuserID());
+                    $timeStamp = time();
+                    $timeStamp = date('Y-m-d H:i:s', $timeStamp);
+                    $userInst->update(['isOTPVerified' => 1,'lastOTPVerifiedDate'=>$timeStamp], Auth::getuserID());
                     Auth::updateSession(); //to update that the user is verified
                     message('Email Verified Successfully!');
                     redirect(Auth::getrole());
@@ -64,7 +66,7 @@ class Otp extends Controller
             $var['otpCode'] = $randomString;
 
             $timeStamp = time();
-            $var['updatedAt'] = date('Y-m-d H:i:s', $timeStamp);;
+            $var['updatedAt'] = date('Y-m-d H:i:s', $timeStamp);
             $var['expireAt'] = date('Y-m-d H:i:s', $timeStamp + (10 * 60)); //add 10 min to the current time
 
 
