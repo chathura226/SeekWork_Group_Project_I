@@ -1,9 +1,7 @@
 <?php
 
 
-require_once("classes/init.php");
-
-$DB = new Database();
+require_once("init.php");
 
 
 $data = file_get_contents("php://input");

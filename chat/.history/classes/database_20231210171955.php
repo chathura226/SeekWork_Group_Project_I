@@ -8,7 +8,7 @@ class Database
     function __construct()
     {
 
-        $this->con = $this->connect();
+        $this->$con = $this->connect()
 
        
 

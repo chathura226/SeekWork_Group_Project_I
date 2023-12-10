@@ -8,17 +8,12 @@ class Database
     function __construct()
     {
 
-        $this->con = $this->connect();
-
        
 
     }
 
     private function connect()
     {
-
-        $string = "mysql:host=localhost;mychat_db";
-
         try
         {
 
@@ -31,8 +26,6 @@ class Database
             die;
 
         }
-
-        return false;
 
         
     }

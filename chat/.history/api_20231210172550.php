@@ -1,7 +1,7 @@
 <?php
 
 
-require_once("classes/init.php");
+require_once("init.php");
 
 $DB = new Database();
 

@@ -1,14 +1,10 @@
 <?php
 
-
-require_once("classes/init.php");
-
-$DB = new Database();
-
-
 $data = file_get_contents("php://input");
  
 $data = json_decode($data);
+
+require_once("init.php");
 
 /*
 
