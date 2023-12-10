@@ -14,6 +14,7 @@ class User extends Model {
         'role',
         'status',
         'isOTPVerified',
+        'lastOTPVerifiedDate',
     ];
     protected $primaryKey='userID';
      
