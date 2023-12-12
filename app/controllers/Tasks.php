@@ -37,6 +37,14 @@ class Tasks extends Controller{
                 // show($compDetails);
                 // die;
 
+                //if student is viewing, show them whether they have submitted any proposals
+                if(Auth::logged_in() && Auth::is_student()){
+                    $proposalInst=new Proposal();
+                    $row2=$proposalInst->first(['studentID'=>Auth::getstudentID(),'taskID'=>$id]);
+                    if(!empty($row2)){
+                        $data['proposal']=$row2; // to tell that they have already submitted a proposal for this
+                    }
+                }
                 if(!empty($compDetails)){
                     $data['error']="Error fetching data!";
                 }
@@ -112,6 +120,13 @@ class Tasks extends Controller{
             $row = $task->first(['taskID'=>$id]);//get task details corresponding to the tadsk id
 
             if(!empty($row)){
+                $proposalInst=new Proposal();
+                //if student has submitted a proposal, he cant submit again
+                $row2=$proposalInst->first(['studentID'=>Auth::getstudentID(),'taskID'=>$id]);
+                if(!empty($row2)){
+                    message(["You have already submitted a proposal!",'danger']);
+                    redirect('tasks/'.$id);
+                }
                 
                 $company=new CompanyModel();
                 
