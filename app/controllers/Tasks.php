@@ -112,6 +112,13 @@ class Tasks extends Controller{
             $row = $task->first(['taskID'=>$id]);//get task details corresponding to the tadsk id
 
             if(!empty($row)){
+                $proposalInst=new Proposal();
+                //if student has submitted a proposal, he cant submit again
+                $row2=$proposalInst->first(['studentID'=>Auth::getstudentID(),'taskID'=>$id]);
+                if(!empty($row2)){
+                    message(["You have already submitted a proposal!",'danger']);
+                    redirect('tasks/'.$id);
+                }
                 
                 $company=new CompanyModel();
                 
