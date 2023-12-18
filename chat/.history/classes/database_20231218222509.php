@@ -19,7 +19,7 @@ class Database
     private function connect()
     {
 
-        $string = "mysql:host=localhost;dbname=mychat_db";
+        $string = "mysql:host=localhost;mychat_db";
 
         try
         {
@@ -41,11 +41,22 @@ class Database
 
     public function write($query,$data_array = [])
     {
-
         $con = $this->connect();
+
         $statement = $con ->prepare($query);
-        $check = $statement->execute($data_array);
-    
+
+        "select * from user where id =  $id ";
+
+        "select * from user where id =  :id && name = :name ";
+
+
+        foreach($data_array as $key => $value )
+        {
+            $statement->bindparam(':'.$key,$value); 
+        }
+
+        
+        $check = $statement->execute();
 
         if($check)
         {
@@ -57,27 +68,10 @@ class Database
 
     }
 
-    public function generate_id($max)
-    {
-
-        $rand = "";
-        $rand_count = rand(4,$max);
-
-        for ($i=0;$i<$rand_count;$i++){
-
-            $r = rand(0,9);
-
-            $rand .= $r;
-
-        }
-
-        return $rand;
-    }
-
 
 }
 
 
-
+$myclass = new Database();
 
 

@@ -42,9 +42,27 @@ class Database
     public function write($query,$data_array = [])
     {
 
-        $con = $this->connect();
-        $statement = $con ->prepare($query);
-        $check = $statement->execute($data_array);
+        try
+        {
+            $con = $this->connect();
+
+            $statement = $con ->prepare($query);
+
+
+
+            foreach($data_array as $key => $value )
+            {
+                $statement->bindparam(':'.$key,$value); 
+            }
+
+        
+            $check = $statement->execute();
+
+        }catch(PDOException $e){
+
+            echo $e->getMessage();
+
+        }
     
 
         if($check)

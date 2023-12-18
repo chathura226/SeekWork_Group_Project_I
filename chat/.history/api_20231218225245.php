@@ -29,12 +29,12 @@ if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="signup")
     $data['username'] = $DATA_OBJ->username;
     $data['email'] = $DATA_OBJ->email;
     $data['password'] = $DATA_OBJ->password;
-    $data['date'] = date("Y-m-d H:i:s");
+    $data['data'] = data("Y-m-d H:i:s");
 
 
 
-    $query = "insert into users (userid,username,email,password,data) values (:userid,:username,:email,:password,:data)";
-    $result=$DB->write($query,$data);
+    $quary = "insert into users (userid,username,email,password,data) values (:userid,:username,:email,:password,:data)";
+    $result=$DB->write($query);
 
     if($result)
     {

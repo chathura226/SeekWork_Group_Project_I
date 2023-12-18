@@ -44,7 +44,7 @@ class Database
 
         $con = $this->connect();
         $statement = $con ->prepare($query);
-        $check = $statement->execute($data_array);
+        $check = $statement->execute();
     
 
         if($check)
