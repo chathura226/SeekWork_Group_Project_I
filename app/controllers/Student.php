@@ -771,48 +771,5 @@ class Student extends Users
     }
 
 
-    //deleting account
-    public function deleteAccount($method = null)
-    {
-        if (!empty($method) && $method == 'confirm') {
 
-            if ($_SERVER['REQUEST_METHOD'] == "POST") {//confirm deletion
-
-                if (password_verify($_POST['password'], Auth::getpassword())) {
-//                    echo "delete";die;
-                    $studentInst = new StudentModel();
-                    if ($studentInst->deletionValidation()) {//validation passed
-
-                        $userInst = new User();
-                        $userInst->update(['isDeleted' => 1], Auth::getuserID());
-                        Auth::logout();//logout the user
-
-                        $data['title'] = "Successfully Deleted";
-
-                        $this->view('successful-deletion', $data);
-                        return;
-                    } else {//validation failed
-
-                        foreach ($studentInst->errors as $error => $message) {
-                            message([$message, 'danger']);
-                        }
-                        redirect('student/deleteAccount');
-
-                    }
-                } else {
-                    message(['Wrong password!', 'danger']);
-                    redirect('student/deleteAccount');
-                }
-            }
-
-            $data['title'] = "Delete Account";
-
-            $this->view('student/confirmDeleteAccount', $data);
-            return;
-        }
-
-        $data['title'] = "Delete Account";
-
-        $this->view('student/deleteAccount', $data);
-    }
 }

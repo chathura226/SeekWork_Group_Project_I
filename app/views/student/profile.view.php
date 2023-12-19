@@ -1,6 +1,5 @@
 <?php $this->view('student/student-header',$data) ?>
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/profile.styles.css"/>
-<link rel="stylesheet" href="<?=ROOT?>/assets/css/floating-button.styles.css"/>
 
 <div class="pagetitle column-12">
       <h1>Profile</h1>
@@ -56,6 +55,8 @@
 
     </div>
 
+
+<link rel="stylesheet" href="<?=ROOT?>/assets/css/floating-button.styles.css"/>
 <a href="<?=ROOT?>/<?=Auth::getrole()?>/deleteAccount">
     <div class="floating-button">
         <button type="button" class="buttonadd" style="background-color: red;">
