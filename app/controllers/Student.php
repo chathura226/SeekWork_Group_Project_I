@@ -262,11 +262,16 @@ class Student extends Users
 
                                                     //comining jsons for old files and new files
                                                     // Decode JSON strings to PHP arrays
-                                                    $array1 = json_decode($submission->documents, true);
                                                     $array2 = json_decode($jsonDestinations, true);
+                                                    if(!empty($submission->documents)){
+                                                        $array1 = json_decode($submission->documents, true);
 
-                                                    // Merge the arrays
-                                                    $combinedArray = array_merge($array1, $array2);
+                                                        // Merge the arrays
+                                                        $combinedArray = array_merge($array1, $array2);
+                                                    }else{
+                                                        $combinedArray = $array2;
+                                                    }
+
 
                                                     // Encode the merged array back to JSON
                                                     $combinedJSON = json_encode($combinedArray);

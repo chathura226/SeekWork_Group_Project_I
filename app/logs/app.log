@@ -80,3 +80,4 @@
 [2023-12-19T09:07:49.538933+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.22.0.1"} []
 [2023-12-19T09:08:21.102319+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.22.0.1"} []
 [2023-12-19T09:14:05.436923+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.22.0.1"} []
+[2023-12-19T09:22:10.258772+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.23.0.1"} []
