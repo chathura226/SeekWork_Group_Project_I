@@ -56,4 +56,28 @@ class StudentModel extends Model {
         
         return false;
     }
+
+    public function deletionValidation()
+    {
+        $this->errors=[];
+        $userID=Auth::getuserID();
+        $studentID=Auth::getstudentID();
+
+        $taskInst=new Task();
+        $row=$taskInst->first(['status'=>'inProgress','assignedStudentID'=>$studentID]);
+        if(!empty($row)){
+//            show($row);die;
+            $this->errors['tasks']="Finish ongoing tasks before deletion of the account !";
+        }
+
+        //check for any payment pendings
+        //TODO: pending payment check before deletion
+
+        if(empty($this->errors)){
+            return true;
+        }
+
+        return false;
+
+    }
 }
