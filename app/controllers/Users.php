@@ -242,4 +242,52 @@ abstract class Users extends Controller
 
         $this->view($this->controllerRole . '/updateprofile', $data);
     }
+
+
+    //deleting account
+    public function deleteAccount($method = null)
+    {
+        if (!empty($method) && $method == 'confirm') {
+
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {//confirm deletion
+
+                if (password_verify($_POST['password'], Auth::getpassword())) {
+//                    echo "delete";die;
+                    //calling model instance relavant to role
+                    $roleModel = ucfirst($this->controllerRole) . "Model";
+                    $roleModelInst = new $roleModel();
+                    if ($roleModelInst->deletionValidation()) {//validation passed
+
+                        $userInst = new User();
+                        $userInst->update(['isDeleted' => 1], Auth::getuserID());
+                        Auth::logout();//logout the user
+
+                        $data['title'] = "Successfully Deleted";
+
+                        $this->view('successful-deletion', $data);
+                        return;
+                    } else {//validation failed
+
+                        foreach ($roleModelInst->errors as $error => $message) {
+                            message([$message, 'danger']);
+                        }
+                        redirect($this->controllerRole.'/deleteAccount');
+
+                    }
+                } else {
+                    message(['Wrong password!', 'danger']);
+                    redirect($this->controllerRole.'/deleteAccount');
+                }
+            }
+
+            $data['title'] = "Delete Account";
+
+            $this->view($this->controllerRole.'/confirmDeleteAccount', $data);
+            return;
+        }
+
+        $data['title'] = "Delete Account";
+
+        $this->view($this->controllerRole.'/deleteAccount', $data);
+    }
 }

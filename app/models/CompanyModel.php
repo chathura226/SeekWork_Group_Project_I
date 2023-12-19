@@ -75,4 +75,10 @@ class CompanyModel extends Model {
     }
 
 
+    //validation before deltions
+    public function deletionValidation(){
+        //TODO: deletion validation for company
+        return true;
+    }
+
 }

@@ -45,4 +45,11 @@ class ModeratorModel extends Model {
         
         return false;
     }
+
+
+    //validation before deltions
+    public function deletionValidation(){
+        //TODO: deletion validation for moderator
+        return true;
+    }
 }
