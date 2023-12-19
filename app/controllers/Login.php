@@ -18,7 +18,8 @@ class Login extends Controller{
             //if not found, $row will be false
             if($row){
                 
-                
+                //TODO: whether deleted account according to new column isDeleted
+
                 if (password_verify($_POST['password'],$row->password)){
 
                     if($row->status==='deactivated'){
