@@ -769,4 +769,13 @@ class Student extends Users
 
         $this->view('student/disputes', $data);
     }
+
+
+    //deleting account
+    public function deleteAccount()
+    {
+        $data['title'] = "Delete Account";
+
+        $this->view('student/deleteAccount', $data);
+    }
 }

@@ -1,0 +1,14 @@
+.delete-account{
+    display: flex;
+    flex-direction: column;
+}
+
+.delete-account strong{
+    color: red;
+}
+
+.deleteAccountButton {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
