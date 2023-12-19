@@ -33,7 +33,7 @@ if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type =="signup")
 
 
 
-    $query = "insert into users (userid,username,email,password,date) values (:userid,:username,:email,:password,:date)";
+    $query = "insert into users (userid,username,email,password,data) values (:userid,:username,:email,:password,:data)";
     $result=$DB->write($query,$data);
 
     if($result)
