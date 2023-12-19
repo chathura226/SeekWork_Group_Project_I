@@ -16,7 +16,7 @@ class Student extends Users
     public function verification()
     {
 
-        $studentInst=new StudentModel();
+        $studentInst = new StudentModel();
         $data['title'] = "Verification";
 
         $errors = [];
@@ -40,8 +40,8 @@ class Student extends Users
 
                     $destination = $this->uploadFile($_FILES['imageInput'], $folder);
 
-                    $verificationData['qualifications']=$_POST['qualifications'];
-                    $verificationData['description']=$_POST['description'];
+                    $verificationData['qualifications'] = $_POST['qualifications'];
+                    $verificationData['description'] = $_POST['description'];
                     $verificationData['verificationDocuments'] = $destination;
                     $verificationData['status'] = 'verified';
 
@@ -228,8 +228,8 @@ class Student extends Users
                                     if ($action2 === 'delete') { //submission deletion
                                         if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-                                            if($row->status=='closed'){
-                                                message(['Invalid Action. Task is closed!','danger']);
+                                            if ($row->status == 'closed') {
+                                                message(['Invalid Action. Task is closed!', 'danger']);
                                                 redirect('student/tasks');
                                             }
 
@@ -245,8 +245,8 @@ class Student extends Users
                                         redirect('student/tasks/' . $id . '/submissions/' . $id2);
                                     } else if ($action2 === 'modify') { //submission modify
 
-                                        if($row->status=='closed'){
-                                            message(['Invalid Action. Task is closed!','danger']);
+                                        if ($row->status == 'closed') {
+                                            message(['Invalid Action. Task is closed!', 'danger']);
                                             redirect('student/tasks');
                                         }
 
@@ -295,8 +295,8 @@ class Student extends Users
                                         return;
                                     } else if ($action2 === 'deleteFile') { //submission modify - delete file
 
-                                        if($row->status=='closed'){
-                                            message(['Invalid Action. Task is closed!','danger']);
+                                        if ($row->status == 'closed') {
+                                            message(['Invalid Action. Task is closed!', 'danger']);
                                             redirect('student/tasks');
                                         }
 
@@ -355,8 +355,8 @@ class Student extends Users
 
                             $submissionInst = new Submission();
 
-                            if($row->status=='closed'){
-                                message(['Invalid Action. Task is closed!','danger']);
+                            if ($row->status == 'closed') {
+                                message(['Invalid Action. Task is closed!', 'danger']);
                                 redirect('student/tasks');
                             }
 
@@ -772,10 +772,28 @@ class Student extends Users
 
 
     //deleting account
-    public function deleteAccount()
+    public function deleteAccount($method = null)
     {
-        $data['title'] = "Delete Account";
+        if (!empty($method) && $method == 'confirm') {
 
-        $this->view('student/deleteAccount', $data);
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {//confirm deletion
+
+                if (password_verify($_POST['password'], Auth::getpassword())) {
+                    echo "delete";die;
+                }else{
+                    message(['Wrong password!', 'danger']);
+                    redirect('student/deleteAccount');
+                }
+            }
+
+                $data['title'] = "Delete Account";
+
+                $this->view('student/confirmDeleteAccount', $data);
+                return;
+            }
+
+            $data['title'] = "Delete Account";
+
+            $this->view('student/deleteAccount', $data);
+        }
     }
-}
