@@ -78,7 +78,26 @@ class CompanyModel extends Model {
     //validation before deltions
     public function deletionValidation(){
         //TODO: deletion validation for company
-        return true;
+        $this->errors=[];
+        $userID=Auth::getuserID();
+        $companyID=Auth::getcompanyID();
+
+        $taskInst=new Task();
+        $row1=$taskInst->first(['status'=>'inProgress','companyID'=>$companyID]);
+        $row2=$taskInst->first(['status'=>'active','companyID'=>$companyID]);
+        if(!empty($row1) || !empty($row2)){
+//            show($row);die;
+            $this->errors['tasks']="Close ongoing tasks before deletion of the account !";
+        }
+
+        //check for any payment pendings
+        //TODO: pending payment check before deletion
+
+        if(empty($this->errors)){
+            return true;
+        }
+
+        return false;
     }
 
 }
