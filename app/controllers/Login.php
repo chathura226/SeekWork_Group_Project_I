@@ -22,20 +22,19 @@ class Login extends Controller{
 
                 if (password_verify($_POST['password'],$row->password)){
 
+                    //if account is deleted
+                    if($row->isDeleted){
+                        message(['Your account has been deleted! </br>Please contact the administrator!','danger']);
+                        Log::info("Login attempt from a deleted user.",['IP_Address'=>$_SERVER['REMOTE_ADDR']]);
+                        redirect('login');
+                    }
+
                     if($row->status==='deactivated'){
                         message(['Your account has been deactivated! </br>Please contact the administrator!','danger']);
                         Log::info("Login attempt from a deactivated user.",['IP_Address'=>$_SERVER['REMOTE_ADDR']]);
                         redirect('login');
                     }
-                    // //get details of user from relevant table and ake a combined object to store as session data
-                    // $userDetails=$user->getFirstCustom($row->role,['userID'=>$row->userID],$row->role."ID");
 
-                    // //if user is a student put university details too
-                    // if($row->role==='student'){
-                    //     $universityDetails=$user->getFirstCustom('university',['universityID'=>$userDetails->universityID],"universityID");
-                    //     $combinedObject1= (object)array_merge((array)$userDetails, (array)$universityDetails);
-                    //     $combinedObject = (object)array_merge((array)$row, (array)$combinedObject1);
-                    // }else $combinedObject = (object)array_merge((array)$row, (array)$userDetails);
 
 
                     $joiningTables=[$row->role];
