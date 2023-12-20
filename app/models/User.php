@@ -62,8 +62,15 @@ class User extends Model {
         
         if(!filter_var($data['email'],FILTER_VALIDATE_EMAIL)){
             $this->errors['email']="The email is not valid!";
-        }else if($this->where(['email'=>$data['email']])){
-            $this->errors['email']="Email already exists!";
+        }else {
+            $row=$this->first(['email'=>$data['email']]);
+            if (!empty($row)) {
+                if ($row->isDeleted){
+                    $this->errors['email'] = "Email beong to an deleted user!";
+                }else{
+                    $this->errors['email'] = "Email already exists!";
+                }
+            }
         }
         if(empty($data['firstName'])){
             $this->errors['firstName']="First Name is required!";
@@ -132,9 +139,15 @@ class User extends Model {
         
         if(!filter_var($data['email'],FILTER_VALIDATE_EMAIL)){
             $this->errors['email']="The email is not valid!";
-        }else if($this->where(['email'=>$data['email']])){
-            $this->errors['email']="Email already exists!";
-
+        }else {
+            $row=$this->first(['email'=>$data['email']]);
+            if (!empty($row)) {
+                if ($row->isDeleted){
+                    $this->errors['email'] = "Email belongs to a deleted user!";
+                }else{
+                    $this->errors['email'] = "Email already exists!";
+                }
+            }
         }
 
 
