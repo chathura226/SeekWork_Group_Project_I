@@ -1,0 +1,67 @@
+.reviews .overall_rating .num{
+    font-size: 30px;
+    font-weight: bold;
+    color: #F5A624;
+}
+
+.reviews .overall_rating .stars{
+    letter-spacing:3px;
+    font-size: 32px;
+    padding: 0 5px 0 10px;
+    color: #F5A624;
+}
+
+.reviews .overall_rating .total{
+    color:#777777;
+    font-size: 14px;
+}
+
+.reviews .write_review_btn, .reviews .write_review button{
+    display: inline-flex;
+    background-color: #565656;
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 0 0 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 0;
+
+}
+
+.reviews .write_review_btn:hover, .reviews .write_review button:hover{
+    background-color:#636363;
+}
+
+.reviews .con{
+    display: flex;
+    align-items: center;
+}
+
+.reviews .con lable{
+    font-weight: 600;
+    padding: 0 10px;
+    font-size: 14px;
+}
+
+.reviews .con .sort_y{
+    padding: 5px;
+    border:1px solid #eee;
+    border-radius: 5px;
+}
+
+.reviews .write_review{
+    display: none;
+    padding: 20px 0 10px 0;
+}
+
+.reviews .write_review textarea{
+    width: 100%;
+    padding: 10px;
+    border-radius:5px;
+    border: 1px solid #ddd;
+    height: 150px;
+    margin-top: 10px;
+}
+

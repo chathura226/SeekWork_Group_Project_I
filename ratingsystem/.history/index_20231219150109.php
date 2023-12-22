@@ -7,6 +7,13 @@
     </head>
     <body>
 
+        <div class="content home">
+            <div class="reviews"></div>
+            
+
+           
+
+        </div>   
     </body>
 
 </html>    
