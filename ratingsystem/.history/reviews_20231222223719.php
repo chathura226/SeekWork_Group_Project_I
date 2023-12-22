@@ -32,6 +32,43 @@ function time_elapsed_string($datetime, $full = false)
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
+<div class="overall_rating">
+    <span class="num"><?= number_format($reviews_info['overall_rating'], 1) ?></span>
+    <span class="stars"><?= str_repeat('&#9733;', round($reviews_info['overall_rating'])) ?></span>
+    <span class="total"><?= $reviews_info['total_reviews'] ?></span>
+</div>
+
+<div class="con">
+    <a href="#" class="write_review_btn">Write Review</a>
+    <span></span>
+    <label for="sort_by">Sort By</label>
+    <select class="sort_by" id="sort_by">
+        <option value="newest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'newest' ? 'selected ' : '' ?>>Newest</option>
+        <option value="oldest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'oldest' ? 'selected' : '' ?>>Oldest</option>
+        <option value="rating_highest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'rating_highest' ? 'selected' : '' ?>>Rating-High to Low</option>
+        <option value="rating_lowest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'rating_lowest' ? 'selected' : '' ?>>Rating-Low to High</option>
+    </select>
+</div>
+
+<?php foreach ($reviews as $review): ?>
+    <div class="review">
+        <h3 class="name"><?= htmlspecialchars($review['name'], ENT_QUOTES) ?></h3>
+        <div>
+            <span class="rating"><?= str_repeat('&#9733;', $review['rating']) ?></span>
+            <span class="date"><?= time_elapsed_string($review['submit_date']) ?></span>
+        </div>
+        <p class="content"><?= htmlspecialchars($review['content'], ENT_QUOTES) ?></p>
+    </div>
+<?php endforeach; ?>
+
+<?php if ($limit): ?>
+    <div class="pagination">
+        <?php if (isset($_GET['current_pagination_page']) && $_GET['current_pagination_page'] > 1): ?>
+            <a href="#" data-pagination_page="<?= $_GET['current_pagination_page'] + 1 ?>" data-recodes_per_page="<?= $_GET['review_per_pagination_page'] ?>">Next</a>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+
 if (isset($_GET['page_id'])) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['rating'], $_POST['content'])) {
         $stmt = $pdo->prepare('INSERT INTO reviews (page_id, name, content, rating, submit_date) VALUES (?, ?, ?, ?, NOW())');
@@ -74,39 +111,4 @@ if (isset($_GET['page_id'])) {
 }
 ?>
 
-<div class="overall_rating">
-    <span class="num"><?= number_format($reviews_info['overall_rating'], 1) ?></span>
-    <span class="stars"><?= str_repeat('&#9733;', round($reviews_info['overall_rating'])) ?></span>
-    <span class="total"><?= $reviews_info['total_reviews'] ?></span>
-</div>
 
-<div class="con">
-    <a href="#" class="write_review_btn">Write Review</a>
-    <span></span>
-    <label for="sort_by">Sort By</label>
-    <select class="sort_by" id="sort_by">
-        <option value="newest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'newest' ? 'selected ' : '' ?>>Newest</option>
-        <option value="oldest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'oldest' ? 'selected' : '' ?>>Oldest</option>
-        <option value="rating_highest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'rating_highest' ? 'selected' : '' ?>>Rating-High to Low</option>
-        <option value="rating_lowest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'rating_lowest' ? 'selected' : '' ?>>Rating-Low to High</option>
-    </select>
-</div>
-
-<?php foreach ($reviews as $review): ?>
-    <div class="review">
-        <h3 class="name"><?= htmlspecialchars($review['name'], ENT_QUOTES) ?></h3>
-        <div>
-            <span class="rating"><?= str_repeat('&#9733;', $review['rating']) ?></span>
-            <span class="date"><?= time_elapsed_string($review['submit_date']) ?></span>
-        </div>
-        <p class="content"><?= htmlspecialchars($review['content'], ENT_QUOTES) ?></p>
-    </div>
-<?php endforeach; ?>
-
-<?php if ($limit): ?>
-    <div class="pagination">
-        <?php if (isset($_GET['current_pagination_page']) && $_GET['current_pagination_page'] > 1): ?>
-            <a href="#" data-pagination_page="<?= $_GET['current_pagination_page'] + 1 ?>" data-recodes_per_page="<?= $_GET['review_per_pagination_page'] ?>">Next</a>
-        <?php endif; ?>
-    </div>
-<?php endif; ?>

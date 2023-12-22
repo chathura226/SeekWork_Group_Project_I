@@ -41,7 +41,7 @@ if (isset($_GET['page_id'])) {
 
     $limit = isset($_GET['current_pagination_page'], $_GET['review_per_pagination_page']) ? 'LIMIT :current_pagination_page, :review_per_pagination_page' : '';
     
-    $sort_by = 'ORDER BY rating  DESC';
+    $sort_by = 'ORDER BY submit_date  DESC';
     if (isset($_GET['sort_by'])) {
         switch ($_GET['sort_by']) {
             case 'oldest':
