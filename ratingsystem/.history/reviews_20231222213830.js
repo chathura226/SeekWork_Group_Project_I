@@ -4,12 +4,11 @@ class Reviews {
             page_id: 1,
             container: document.querySelector(".reviews"),
             php_file_url: "reviews.php",
-            reviewForm: null,
         };
 
         this.options = Object.assign(defaults, options);
         this.fetchReviews();
-        this.setupEventHandlers();
+        this._eventHandlers();
     }
 
     fetchReviews() {
@@ -22,50 +21,8 @@ class Reviews {
             .then((response) => response.text())
             .then((data) => {
                 this.container.innerHTML = data;
+                this._eventHandlers();
             });
-    }
-
-    setupEventHandlers() {
-        if (this.options.reviewForm) {
-            this.options.reviewForm.addEventListener("submit", (event) => {
-                event.preventDefault();
-                this.submitReview();
-            });
-        }
-
-        this.container.querySelector(".write_review_btn").onclick = (event) => {
-            event.preventDefault();
-            this.container.querySelector(".write_review").style.display = 'block';
-            this.container.querySelector(".write_review input[name='name']").focus();
-        };
-
-        this.container.querySelector(".sort_by").onchange = (event) => {
-            this.sortBy = event.value;
-            this.fetchReviews();
-        };
-
-        if (this.reviewsPerPaginationPage && this.currentPaginationPage) {
-            this.container.querySelectorAll(".pagination a").forEach((a) => {
-                a.onclick = (event) => {
-                    event.preventDefault();
-                    this.currentPaginationPage = event.target.dataset.pagination_page;
-                    this.reviewsPerPaginationPage = event.target.dataset.records_per_page;
-                    this.fetchReviews();
-                };
-            });
-        }
-    }
-
-    submitReview() {
-        fetch(`${this.phpFileUrl}?page_id=${this.page_ID}`, {
-            method: 'POST',
-            body: new FormData(this.options.reviewForm),
-        })
-        .then((response) => response.text())
-        .then((data) => {
-            this.container.querySelector(".write_review").innerHTML = data;
-            this.fetchReviews(); // Refresh reviews after submission
-        });
     }
 
     get reviewsPerPaginationPage() {
@@ -114,5 +71,41 @@ class Reviews {
 
     set sortBy(value) {
         this.options.sort_by = value;
+    }
+
+    _eventHandlers() {
+        this.container.querySelector(".write_review_btn").onclick = (event) => {
+            event.preventDefault();
+            this.container.querySelector(".write_review").style.display = 'block';
+            this.container.querySelector(".write_review input[name='name']").focus();
+        };
+
+        this.container.querySelector(".write_review form").onsubmit = (event) => {
+            event.preventDefault();
+            fetch(`${this.phpFileUrl}?page_id=${this.page_ID}`, {
+                method: 'POST',
+                body: new FormData(this.container.querySelector(".write_review form")),
+            })
+                .then((response) => response.text())
+                .then((data) => {
+                    this.container.querySelector(".write_review").innerHTML = data;
+                });
+
+            this.container.querySelector(".sort_by").onchange = (event) => {
+                this.sortBy = event.value;
+                this.fetchReviews();
+            };
+
+            if (this.reviewsPerPaginationPage && this.currentPaginationPage) {
+                this.container.querySelectorAll(".pagination a").forEach((a) => {
+                    a.onclick = (event) => {
+                        event.preventDefault();
+                        this.currentPaginationPage = event.target.dataset.pagination_page;
+                        this.reviewsPerPaginationPage = event.target.dataset.records_per_page;
+                        this.fetchReviews();
+                    };
+                });
+            }
+        };
     }
 }

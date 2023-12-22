@@ -29,7 +29,7 @@ function time_elapsed_string($datetime, $full = false)
     }
 
     if (!$full) $string = array_slice($string, 0, 1);
-    return $string ? implode(', ', $string) . ' ago' : 'just now';
+    return $string ? implode(',', $string) . ' ago' : 'just now';
 }
 
 if (isset($_GET['page_id'])) {
@@ -41,7 +41,7 @@ if (isset($_GET['page_id'])) {
 
     $limit = isset($_GET['current_pagination_page'], $_GET['review_per_pagination_page']) ? 'LIMIT :current_pagination_page, :review_per_pagination_page' : '';
     
-    $sort_by = 'ORDER BY rating  DESC';
+    $sort_by = 'ORDER BY submit_date DESC';
     if (isset($_GET['sort_by'])) {
         switch ($_GET['sort_by']) {
             case 'oldest':
@@ -81,7 +81,7 @@ if (isset($_GET['page_id'])) {
 </div>
 
 <div class="con">
-    <a href="#" class="write_review_btn">Write Review</a>
+    <a href="index.html" class="write_review_btn">Write Review</a>
     <span></span>
     <label for="sort_by">Sort By</label>
     <select class="sort_by" id="sort_by">
