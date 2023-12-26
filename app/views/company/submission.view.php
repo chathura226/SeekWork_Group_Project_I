@@ -3,6 +3,8 @@
 
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/eachtask.styles.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/tables.styles.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/popup.styles.css">
+    <link href="<?= ROOT ?>/assets/css/company-verification.styles.css" rel="stylesheet">
 
 
     <div class="pagetitle column-12">
@@ -95,6 +97,93 @@
 
         </div>
     </div>
+
+    <div class="price-button c-s-8 c-e-13">
+
+
+        <a><button id="acceptBtn" class="apply" onclick="acceptSubmission(event,<?=$submission->submissionID?>);">Accept</button></a>
+        &nbsp &nbsp
+        <a><button id="rejectBtn" class="apply" onclick="rejectSubmission(event,<?=$submission->submissionID?>);">Reject</button></a>
+        &nbsp &nbsp
+    </div>
+
+    <div id="popup1" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <div class="wrapper">
+                <div class="form-wrap column-12 row-6">
+                    <div class="tab-form row-">
+                        <div class="myheader">
+                            <div class="active-login"><h2 id="popup_header"></h2></div>
+                        </div>
+                        <div class="tab-body ">
+                            <div class="active1">
+                                <form method="post">
+                                    </br>
+
+                                    <input value="" name="status" id="status" hidden>
+
+
+                                    <div class="form-input">
+                                        <label>Comments</label>
+                                        <textarea rows="10" cols="45" id="comments" name="comments"
+                                                  placeholder="Enter  Comments about the submission"
+                                                  required></textarea>
+                                        <br>
+
+                                    </div>
+
+
+
+
+                                    <div class="form-input">
+                                        <button id="popup_button"></button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    var modal = document.getElementById('popup1');
+    var closeBtn = document.getElementsByClassName('close')[0];
+    var popup_header=document.getElementById('popup_header');
+    var status=document.getElementById('status');
+    var popup_button=document.getElementById("popup_button");
+    closeBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    function acceptSubmission(e,submissionID){
+        popup_header.innerHTML="Accept Submission";
+        status.value="accepted";
+        popup_button.innerHTML="Accept";
+        modal.style.display = 'block';
+
+    }
+
+    function rejectSubmission(e,submissionID){
+        popup_header.innerHTML="Reject Submission";
+        status.value="rejected";
+        popup_button.innerHTML="Reject";
+        modal.style.display = 'block';
+
+    }
+
+</script>
+
 
 
 
