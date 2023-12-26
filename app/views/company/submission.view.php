@@ -116,7 +116,7 @@
         </div>
     <?php else: ?>
         <div class="task-details column-5">
-            <h2>Submission Review Report</h2>
+            <h2 style="color: <?=($submission->status=='accepted')?'green':'red'?>;">Submission Review Report</h2>
             <div class="task-description">
 
                 You already <span style="color: <?=($submission->status=='accepted')?'green':'red'?>"><?=$submission->status?></span> this submission on <?=$submission->reviewedDate?>.
