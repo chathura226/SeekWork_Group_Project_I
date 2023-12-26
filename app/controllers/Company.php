@@ -137,6 +137,18 @@ class Company extends Users
                                 redirect('company/tasks/' . $id . '/submissions');
                             }
 
+                            //post request => changing status of submission after reviewing
+                            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                                if(!empty($_POST['comments']) && !empty($_POST['status'])) {
+                                    $_POST['reviewedDate']=date("Y-m-d H:i:s");
+                                    $submissionInst->update($_POST, $id2);
+                                    message(ucfirst($_POST['status']).' successfully!');
+                                }else{
+                                    message(['Error occurred!', 'danger']);
+                                }
+                                redirect('company/tasks/' . $id . '/submissions/'.$id2);
+                            }
+
                             // Decode the JSON string back into an array
                             if (!empty($submission->documents)) {
                                 $array = json_decode($submission->documents, true);
