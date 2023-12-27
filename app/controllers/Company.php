@@ -242,6 +242,15 @@ class Company extends Users
                                 $assignment->insert(['proposalID' => $id2, 'taskID' => $id]);
                                 // $task->update(['acceptedProposalID'=>$id2,'assignedStudentID'=>$proposal->studentID],$row->taskID);
 
+                                //sending email for invitation
+                                $studentInst=new StudentModel();
+                                $student=$studentInst->innerJoin(['user'], ['student.userID=user.userID'],['studentID'=>$proposal->studentID])[0];
+
+
+                                $fullName =$student->firstName . ' ' . $student->lastName;
+                                $content=MailService::prepareNewInvitationEmaik($fullName,$row,$proposal);
+                                MailService::sendMail($student->email, $fullName, 'Task Invitation', $content);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////wasnt sent
                                 message('Invitation for the task sent successfully!');
                                 redirect('company/pendingassignments');
                             }
