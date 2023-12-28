@@ -591,8 +591,17 @@ class Student extends Users
                             $currentDateTime = date('Y-m-d H:i:s');
                             $assignmentInst->update(['status' => 'accepted', 'replyDate' => $currentDateTime], $assignment->assignmentID);
 
+                            //sending invitation acceptance email
+                            $row=$taskInst->innerJoin(['company','user'],['task.companyID=company.companyID','user.userID=company.userID'],['taskID'=>$assignment->taskID],['task.title AS title','task.value AS value','user.email AS email'])[0];
+                            $fullName =Auth::getfirstName() . ' ' . Auth::getlastName();
+                            $assignment->status='accepted';
+                            $content=MailService::prepareNewInvitationAcceptanceEmail($fullName,$assignment,$proposal,$row);
+                            $boom=MailService::sendMail($row->email, $fullName, 'Task Invitation Accepted', $content);
+
                             message('Invitation Accepted Successfully!');
                             redirect('student/tasks'); //redirect to my tasks
+
+
 
                         }
                     }
@@ -607,6 +616,16 @@ class Student extends Users
 
                             $currentDateTime = date('Y-m-d H:i:s');
                             $assignmentInst->update(['status' => 'declined', 'replyDate' => $currentDateTime], $assignment->assignmentID);
+
+                            //sending invitation declined email
+                            $taskInst=new Task();
+                            $row=$taskInst->innerJoin(['company','user','proposal'],['task.companyID=company.companyID','user.userID=company.userID','proposal.taskID=task.taskID'],['proposalID'=>$assignment->proposalID],['task.title AS title','task.value AS value','user.email AS email','proposal.proposedAmount AS proposedAmount'])[0];
+                            $fullName =Auth::getfirstName() . ' ' . Auth::getlastName();
+                            if($row->proposeAmount==null)$row->proposeAmount=$row->value;
+                            $assignment->status='declined';
+                            $content=MailService::prepareNewInvitationAcceptanceEmail($fullName,$assignment,$row,$row);
+                            $boom=MailService::sendMail($row->email, $fullName, 'Task Invitation Declined', $content);
+
 
                             message('Invitation Declined Successfully!');
                             redirect('student/pendinginvites');

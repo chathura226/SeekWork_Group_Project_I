@@ -249,8 +249,8 @@ class Company extends Users
 
                                 $fullName =$student->firstName . ' ' . $student->lastName;
                                 $content=MailService::prepareNewInvitationEmaik($fullName,$row,$proposal);
-                                MailService::sendMail($student->email, $fullName, 'Task Invitation', $content);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////wasnt sent
+                                $boom=MailService::sendMail($student->email, $fullName, 'Task Invitation', $content);
+
                                 message('Invitation for the task sent successfully!');
                                 redirect('company/pendingassignments');
                             }

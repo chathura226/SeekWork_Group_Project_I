@@ -101,3 +101,7 @@
 [2023-12-27T18:53:57.976253+00:00] log.INFO: Failed login attempt from a user. {"IP_Address":"172.28.0.1"} []
 [2023-12-27T18:54:46.511302+00:00] log.INFO: User Logged in Successfully! {"user_id":17,"IP_Address":"172.28.0.1"} []
 [2023-12-27T18:55:46.074037+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.28.0.1"} []
+[2023-12-28T03:16:34.292062+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.29.0.1"} []
+[2023-12-28T03:17:30.020347+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.29.0.1"} []
+[2023-12-28T03:21:01.649989+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.30.0.1"} []
+[2023-12-28T03:21:13.495548+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.30.0.1"} []
