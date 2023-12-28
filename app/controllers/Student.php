@@ -378,6 +378,15 @@ class Student extends Users
                                     }
 
                                     $submissionInst->insert($_POST);
+
+                                    //sending new submission email
+                                    $compInst=new CompanyModel();
+                                    $comp=$compInst->innerJoin(['user'],['user.userID=company.userID'],['companyID'=>$row->companyID],['user.email AS email','company.firstName AS firstName','company.lastName AS lastName'])[0];
+                                    $fullName =$comp->firstName . ' ' . $comp->lastName;
+                                    $content=MailService::prepareNewSubmissionEmail($fullName,$row,(object)['createdAt'=>date('Y-m-d H:i:s')]);
+                                    $boom=MailService::sendMail($comp->email, $fullName, 'New Submission', $content);
+
+
                                     message('Submission Posted Successfully!');
                                     redirect('student/tasks/' . $id . '/submissions');
                                 }
