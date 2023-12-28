@@ -592,8 +592,8 @@ class Student extends Users
                             $assignmentInst->update(['status' => 'accepted', 'replyDate' => $currentDateTime], $assignment->assignmentID);
 
                             //sending invitation acceptance email
-                            $row=$taskInst->innerJoin(['company','user'],['task.companyID=company.companyID','user.userID=company.userID'],['taskID'=>$assignment->taskID],['task.title AS title','task.value AS value','user.email AS email'])[0];
-                            $fullName =Auth::getfirstName() . ' ' . Auth::getlastName();
+                            $row=$taskInst->innerJoin(['company','user'],['task.companyID=company.companyID','user.userID=company.userID'],['taskID'=>$assignment->taskID],['task.title AS title','task.value AS value','user.email AS email','company.firstName AS firstName','company.lastName AS lastName'])[0];
+                            $fullName =$row->firstName . ' ' . $row->lastName;
                             $assignment->status='accepted';
                             $content=MailService::prepareNewInvitationAcceptanceEmail($fullName,$assignment,$proposal,$row);
                             $boom=MailService::sendMail($row->email, $fullName, 'Task Invitation Accepted', $content);
@@ -619,8 +619,8 @@ class Student extends Users
 
                             //sending invitation declined email
                             $taskInst=new Task();
-                            $row=$taskInst->innerJoin(['company','user','proposal'],['task.companyID=company.companyID','user.userID=company.userID','proposal.taskID=task.taskID'],['proposalID'=>$assignment->proposalID],['task.title AS title','task.value AS value','user.email AS email','proposal.proposedAmount AS proposedAmount'])[0];
-                            $fullName =Auth::getfirstName() . ' ' . Auth::getlastName();
+                            $row=$taskInst->innerJoin(['company','user','proposal'],['task.companyID=company.companyID','user.userID=company.userID','proposal.taskID=task.taskID'],['proposalID'=>$assignment->proposalID],['task.title AS title','task.value AS value','user.email AS email','proposal.proposeAmount AS proposeAmount','company.firstName AS firstName','company.lastName AS lastName'])[0];
+                            $fullName =$row->firstName . ' ' . $row->lastName;
                             if($row->proposeAmount==null)$row->proposeAmount=$row->value;
                             $assignment->status='declined';
                             $content=MailService::prepareNewInvitationAcceptanceEmail($fullName,$assignment,$row,$row);
