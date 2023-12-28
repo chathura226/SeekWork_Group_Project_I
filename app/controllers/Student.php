@@ -378,6 +378,15 @@ class Student extends Users
                                     }
 
                                     $submissionInst->insert($_POST);
+
+                                    //sending new submission email
+                                    $compInst=new CompanyModel();
+                                    $comp=$compInst->innerJoin(['user'],['user.userID=company.userID'],['companyID'=>$row->companyID],['user.email AS email','company.firstName AS firstName','company.lastName AS lastName'])[0];
+                                    $fullName =$comp->firstName . ' ' . $comp->lastName;
+                                    $content=MailService::prepareNewSubmissionEmail($fullName,$row,(object)['createdAt'=>date('Y-m-d H:i:s')]);
+                                    $boom=MailService::sendMail($comp->email, $fullName, 'New Submission', $content);
+
+
                                     message('Submission Posted Successfully!');
                                     redirect('student/tasks/' . $id . '/submissions');
                                 }
@@ -591,8 +600,17 @@ class Student extends Users
                             $currentDateTime = date('Y-m-d H:i:s');
                             $assignmentInst->update(['status' => 'accepted', 'replyDate' => $currentDateTime], $assignment->assignmentID);
 
+                            //sending invitation acceptance email
+                            $row=$taskInst->innerJoin(['company','user'],['task.companyID=company.companyID','user.userID=company.userID'],['taskID'=>$assignment->taskID],['task.title AS title','task.value AS value','user.email AS email','company.firstName AS firstName','company.lastName AS lastName'])[0];
+                            $fullName =$row->firstName . ' ' . $row->lastName;
+                            $assignment->status='accepted';
+                            $content=MailService::prepareNewInvitationAcceptanceEmail($fullName,$assignment,$proposal,$row);
+                            $boom=MailService::sendMail($row->email, $fullName, 'Task Invitation Accepted', $content);
+
                             message('Invitation Accepted Successfully!');
                             redirect('student/tasks'); //redirect to my tasks
+
+
 
                         }
                     }
@@ -607,6 +625,16 @@ class Student extends Users
 
                             $currentDateTime = date('Y-m-d H:i:s');
                             $assignmentInst->update(['status' => 'declined', 'replyDate' => $currentDateTime], $assignment->assignmentID);
+
+                            //sending invitation declined email
+                            $taskInst=new Task();
+                            $row=$taskInst->innerJoin(['company','user','proposal'],['task.companyID=company.companyID','user.userID=company.userID','proposal.taskID=task.taskID'],['proposalID'=>$assignment->proposalID],['task.title AS title','task.value AS value','user.email AS email','proposal.proposeAmount AS proposeAmount','company.firstName AS firstName','company.lastName AS lastName'])[0];
+                            $fullName =$row->firstName . ' ' . $row->lastName;
+                            if($row->proposeAmount==null)$row->proposeAmount=$row->value;
+                            $assignment->status='declined';
+                            $content=MailService::prepareNewInvitationAcceptanceEmail($fullName,$assignment,$row,$row);
+                            $boom=MailService::sendMail($row->email, $fullName, 'Task Invitation Declined', $content);
+
 
                             message('Invitation Declined Successfully!');
                             redirect('student/pendinginvites');
