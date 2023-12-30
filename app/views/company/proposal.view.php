@@ -65,7 +65,7 @@
     <div class="price-button c-s-8 c-e-13">
 
 
-                        <a href="<?=ROOT?>/company/tasks/<?=$task->taskID?>/assign/<?=$proposal->proposalID?>"><button class="apply">Assign this Student</button></a>
+                        <a href="<?=ROOT?>/company/tasks/<?=$task->taskID?>/assign/<?=$proposal->proposalID?>"><button class="apply" <?=(!empty($task->assignedStudentID))?'disabled':'';?>>Assign this Student</button></a>
                         &nbsp &nbsp
                         <a href="<?=ROOT?>/company/viewstudents/<?=$student->studentID?>"><button class="apply">View Student Profile</button></a>
                         &nbsp &nbsp

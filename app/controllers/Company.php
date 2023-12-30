@@ -236,6 +236,12 @@ class Company extends Users
                         if (!empty($proposal)) {
                             if ($proposal->taskID == $id) { //proposal is relevant to the same task
 
+                                if(!empty($row->assignedStudentID)){
+                                    message(['You have already assigned a student!','danger']);
+                                    redirect('company/pendingassignments');
+                                }
+
+
                                 //id2 is proposal id
 
                                 $assignment = new Assignment();
@@ -804,6 +810,11 @@ class Company extends Users
             $this->view('company/closeTask', $data);
 
         }
+    }
+
+    public function pendingassignments()
+    {
+        //TODO : pending assignments for showing pending assignment invitation
     }
 
 }
