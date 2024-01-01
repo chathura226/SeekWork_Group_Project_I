@@ -16,3 +16,26 @@
 .table td, .table th {
     text-align: center;
 }
+
+.status-btn-like{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    height: 30px;
+    margin: auto;
+    padding: 10px;
+    border-radius: 20px;
+    width: fit-content;
+}
+
+.status-btn-working{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    height: 45px;
+    margin: auto;
+    padding: 10px;
+    background-color: #98ffad;
+    border-radius: 5px;
+    cursor: pointer;
+}

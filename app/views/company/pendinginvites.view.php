@@ -48,7 +48,7 @@
         </div>
         <div class="content-box">
             <div class="content-box-content" id="all">
-                <h2>All invitations</h2>
+                <h2>All Invitations</h2>
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -61,43 +61,171 @@
                     </tr>
                     </thead>
                     <tbody>
-
+                    <?php foreach ($assignments as $assignment):?>
                         <tr style="height: 70px">
-                            <th>2</th>
-                            <td><?=limitCharacters($$assignments->title,13)?></td>
-                            <td>
-                                csdc
-                            </td>
-                            <td>jnhuuhmu</td>
-                            <td> nhvnhvnv</td>
+                            <th><?=$assignment->assignmentID?></th>
+                            <td><?=limitCharacters($assignment->title,13)?></td>
+                            <td><?=$assignment->assignmentDate?></td>
+                            <?php $statusColor='green'; switch ($assignment->assignmentStatus){
+                                case 'accepted':
+                                    $statusColor='green';
+                                    $textColor='whitesmoke';
+                                    break;
+                                case 'declined':
+                                    $statusColor='red';
+                                    $textColor='whitesmoke';
+                                    break;
+                                default:
+                                    $statusColor='yellow';
+                                    $textColor='var(--text-color)';
+                                    break;
 
-                            <td>mhgmg</td>
+                            };?>
+                            <td><div class="status-btn-like" style="background-color: <?=$statusColor?>;color: <?=$textColor?>"> <?=ucfirst($assignment->assignmentStatus)?></div></td>
+                            <td><?=(!empty($assignment->replyDate))?$assignment->replyDate:'N/A'?></td>
+
+                            <td><a href="<?=ROOT?>/company/tasks/<?=$assignment->taskID?>" style="text-decoration: none;"><button class="status-btn-working">Go to task</button></a></td>
 
                         </tr>
+                    <?php endforeach;?>
 
                     </tbody>
                 </table>
             </div>
             <div class="content-box-content" id="accepted">
-                <h2>About</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad culpa, earum est illo ipsam
-                    ipsum, quidem quis saepe, tempore tenetur veritatis. Debitis illo neque nisi numquam possimus sapiente
-                    totam.
-                </p>
+                <h2>Accepted Invitations</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>InviteID</th>
+                        <th>Task Title</th>
+                        <th>Invited Date</th>
+                        <th>Status</th>
+                        <th>Reply Date</th>
+                        <th>Link</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($assignments as $assignment): if($assignment->assignmentStatus=='accepted'):?>
+                        <tr style="height: 70px">
+                            <th><?=$assignment->assignmentID?></th>
+                            <td><?=limitCharacters($assignment->title,13)?></td>
+                            <td><?=$assignment->assignmentDate?></td>
+                            <?php $statusColor='green'; switch ($assignment->assignmentStatus){
+                                case 'accepted':
+                                    $statusColor='green';
+                                    $textColor='whitesmoke';
+                                    break;
+                                case 'declined':
+                                    $statusColor='red';
+                                    $textColor='whitesmoke';
+                                    break;
+                                default:
+                                    $statusColor='yellow';
+                                    $textColor='var(--text-color)';
+                                    break;
+
+                            };?>
+                            <td><div class="status-btn-like" style="background-color: <?=$statusColor?>;color: <?=$textColor?>"> <?=ucfirst($assignment->assignmentStatus)?></div></td>
+                            <td><?=(!empty($assignment->replyDate))?$assignment->replyDate:'N/A'?></td>
+
+                            <td><a href="<?=ROOT?>/company/tasks/<?=$assignment->taskID?>" style="text-decoration: none;"><button class="status-btn-working">Go to task</button></a></td>
+
+                        </tr>
+                    <?php endif;endforeach;?>
+
+                    </tbody>
+                </table>
             </div>
             <div class="content-box-content" id="declined">
-                <h2>Blogs</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad culpa, earum est illo ipsam
-                    ipsum, quidem quis saepe, tempore tenetur veritatis. Debitis illo neque nisi numquam possimus sapiente
-                    totam.
-                </p>
+                <h2>Declined Invitations</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>InviteID</th>
+                        <th>Task Title</th>
+                        <th>Invited Date</th>
+                        <th>Status</th>
+                        <th>Reply Date</th>
+                        <th>Link</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($assignments as $assignment): if($assignment->assignmentStatus=='declined'):?>
+                        <tr style="height: 70px">
+                            <th><?=$assignment->assignmentID?></th>
+                            <td><?=limitCharacters($assignment->title,13)?></td>
+                            <td><?=$assignment->assignmentDate?></td>
+                            <?php $statusColor='green'; switch ($assignment->assignmentStatus){
+                                case 'accepted':
+                                    $statusColor='green';
+                                    $textColor='whitesmoke';
+                                    break;
+                                case 'declined':
+                                    $statusColor='red';
+                                    $textColor='whitesmoke';
+                                    break;
+                                default:
+                                    $statusColor='yellow';
+                                    $textColor='var(--text-color)';
+                                    break;
+
+                            };?>
+                            <td><div class="status-btn-like" style="background-color: <?=$statusColor?>;color: <?=$textColor?>"> <?=ucfirst($assignment->assignmentStatus)?></div></td>
+                            <td><?=(!empty($assignment->replyDate))?$assignment->replyDate:'N/A'?></td>
+
+                            <td><a href="<?=ROOT?>/company/tasks/<?=$assignment->taskID?>" style="text-decoration: none;"><button class="status-btn-working">Go to task</button></a></td>
+
+                        </tr>
+                    <?php endif;endforeach;?>
+
+                    </tbody>
+                </table>
             </div>
             <div class="content-box-content" id="pending">
-                <h2>Contact us</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad culpa, earum est illo ipsam
-                    ipsum, quidem quis saepe, tempore tenetur veritatis. Debitis illo neque nisi numquam possimus sapiente
-                    totam.
-                </p>
+                <h2>Pending Invitations</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>InviteID</th>
+                        <th>Task Title</th>
+                        <th>Invited Date</th>
+                        <th>Status</th>
+                        <th>Reply Date</th>
+                        <th>Link</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($assignments as $assignment): if($assignment->assignmentStatus=='pending'):?>
+                        <tr style="height: 70px">
+                            <th><?=$assignment->assignmentID?></th>
+                            <td><?=limitCharacters($assignment->title,13)?></td>
+                            <td><?=$assignment->assignmentDate?></td>
+                            <?php $statusColor='green'; switch ($assignment->assignmentStatus){
+                                case 'accepted':
+                                    $statusColor='green';
+                                    $textColor='whitesmoke';
+                                    break;
+                                case 'declined':
+                                    $statusColor='red';
+                                    $textColor='whitesmoke';
+                                    break;
+                                default:
+                                    $statusColor='yellow';
+                                    $textColor='var(--text-color)';
+                                    break;
+
+                            };?>
+                            <td><div class="status-btn-like" style="background-color: <?=$statusColor?>;color: <?=$textColor?>"> <?=ucfirst($assignment->assignmentStatus)?></div></td>
+                            <td><?=(!empty($assignment->replyDate))?$assignment->replyDate:'N/A'?></td>
+
+                            <td><a href="<?=ROOT?>/company/tasks/<?=$assignment->taskID?>" style="text-decoration: none;"><button class="status-btn-working">Go to task</button></a></td>
+
+                        </tr>
+                    <?php endif;endforeach;?>
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
