@@ -141,3 +141,11 @@ function resizeImage($fileName, $maxSize = 700)
 
     return $fileName;
 }
+
+// to limit characters when its too long
+function limitCharacters($string, $limit) {
+    if (strlen($string) > $limit) {
+        $string = substr($string, 0, $limit) . '...'; // Truncate the string to the specified limit
+    }
+    return $string;
+}

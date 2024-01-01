@@ -2,6 +2,7 @@
 <link href="<?=ROOT?>/assets/css/changepassword.styles.css" rel="stylesheet">
     <link href="<?=ROOT?>/assets/css/passwordStrengthForChangePass.styles.css" rel="stylesheet">
     <link href="<?=ROOT?>/assets/css/tab-containers.styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/tables.styles.css">
 
 
 <div class="pagetitle column-12">
@@ -47,12 +48,35 @@
         </div>
         <div class="content-box">
             <div class="content-box-content" id="all">
-                <h2>Home</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad culpa, earum est illo ipsam
-                    ipsum, quidem quis saepe, tempore tenetur veritatis. Debitis illo neque nisi numquam possimus sapiente
-                    totam.
+                <h2>All invitations</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>InviteID</th>
+                        <th>Task Title</th>
+                        <th>Invited Date</th>
+                        <th>Status</th>
+                        <th>Reply Date</th>
+                        <th>Link</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-                </p>
+                        <tr style="height: 70px">
+                            <th>2</th>
+                            <td><?=limitCharacters($$assignments->title,13)?></td>
+                            <td>
+                                csdc
+                            </td>
+                            <td>jnhuuhmu</td>
+                            <td> nhvnhvnv</td>
+
+                            <td>mhgmg</td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
             </div>
             <div class="content-box-content" id="accepted">
                 <h2>About</h2>

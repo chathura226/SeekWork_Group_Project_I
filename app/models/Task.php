@@ -22,7 +22,8 @@ class Task extends Model {
         'assignedStudentID',
         'assignmentID',
         'categoryID',
-        'finishedDate',     
+        'finishedDate',
+        'createdAt',
     ];
 
 
