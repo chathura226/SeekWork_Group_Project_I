@@ -811,10 +811,15 @@ class Company extends Users
 
         }
     }
-
+    //show invites that havent yet answered
     public function pendingassignments()
     {
-        //TODO : pending assignments for showing pending assignment invitation
+        $assignmentInst = new Assignment();
+        $row=$assignmentInst->innerJoin(['task'],['task.taskID=assignment.taskID'],['task.companyID'=>Auth::getcompanyID()],['*,task.status AS taskStatus, assignment.status AS assignmentStatus,assignment.createdAt AS assignmentDate,task.createdAt AS taskDate']);
+
+        $data['title'] = 'Pending Invitations';
+        $data['assignments'] = $row;
+        $this->view('company/pendinginvites', $data);
     }
 
 }
