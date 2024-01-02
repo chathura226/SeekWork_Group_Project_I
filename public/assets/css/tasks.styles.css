@@ -29,6 +29,110 @@
     
 }
 
+
+
+
+.task-title-con{
+    height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    margin: 5px;
+    margin-top: 0;
+    padding: 10px;
+    padding-top: 0;
+
+}
+
+.post-title-profile-img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+}
+
+.comp{
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    justify-content: flex-start;
+}
+.task-con-description{
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin: 10px;
+    margin-bottom: 0;
+    margin-top: 2px;
+    height: 125px;
+    overflow: hidden;
+}
+
+.compName-task{
+    width: 102px;
+    height: 20px;
+    overflow: hidden;
+}
+
+
+
+.apply-btn {
+    font-size: 1rem;
+    align-items: center;
+    height: 40px;
+    width: 110px;
+    border-radius: 0.4rem;
+    font-weight: 600;
+    padding: 0 1.2rem;
+    color: #ddd;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0.5rem 1rem rgba(143, 142, 142, 0.15) !important;
+    background: #000000;
+}
+
+.followers {
+    font-size: 0.8rem;
+    color: #7f7f7f;
+}
+
+.apply-btn:hover {
+    background: #2b2a2a;
+}
+
+.post-val{
+    display: flex;
+    height: 50px;
+    justify-content: space-evenly;
+    padding: 5px;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.task-price-val{
+    display: flex;
+    justify-content: flex-start;
+    width: 179px;
+}
+
+.ratingNew{
+    width: 106px;
+}
+.ratingNew svg{
+    fill: rgb(255, 123, 0);
+    margin: 0;
+    padding: 0;
+
+
+
+
+
+
+
+
+
+
 .task-disc{
     width: 307px;
     height: 255px;
@@ -58,20 +162,12 @@
 .disc-title h4{
     margin-top: 0;
 }
+
 .task-disc img{
     height: 45px;
     width: 45px;
     border-radius: 50%;
 }
-.comp{
-    display: flex;
-    align-items: center;
-    margin-bottom: 0;
-}
-.rating svg{
-    fill: rgb(255, 123, 0);
-    margin: 0;
-    padding: 0;
 }
 .disc-disc{
     margin-top: 0;
