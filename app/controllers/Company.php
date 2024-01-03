@@ -276,6 +276,11 @@ class Company extends Users
                     $submissionInst = new Submission();
                     $data['assignments'] = $assignmentInst->where(['taskID' => $id]);
                     $data['submissions'] = $submissionInst->where(['taskID' => $id]);
+                    //taking number of proposals
+                    $proposalInst=new Proposal();
+                    $nProposals=$proposalInst->count(['taskID'=>$row->taskID])[0]->{"COUNT(*)"};
+                    $row->nProposals=$nProposals;
+
                     $data['task'] = $row;
                     $data['title'] = $row->title;
 
