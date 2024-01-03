@@ -50,7 +50,11 @@ class Tasks extends Controller{
                 }
 
                 $data['company'] = $compDetails;
-                
+                //taking number of proposals
+                $proposalInst=new Proposal();
+                $nProposals=$proposalInst->count(['taskID'=>$row->taskID])[0]->{"COUNT(*)"};
+                $row->nProposals=$nProposals;
+
                 $data['title'] = $row->title;
                 $data['task']=$row;
         
