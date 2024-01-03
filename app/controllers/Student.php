@@ -400,6 +400,10 @@ class Student extends Users
                             return;
                         }
                     }
+                    //taking number of proposals
+                    $proposalInst=new Proposal();
+                    $nProposals=$proposalInst->count(['taskID'=>$row->taskID])[0]->{"COUNT(*)"};
+                    $row->nProposals=$nProposals;
                     $data['task'] = $row;
                     $company = new CompanyModel();
                     $user = new User();
