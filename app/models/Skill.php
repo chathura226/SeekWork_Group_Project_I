@@ -1,6 +1,6 @@
 <?php
 
-//Category class
+//skill class
 class Skill extends Model {
     protected $table="skill";
     public $errors=[];
@@ -10,7 +10,6 @@ class Skill extends Model {
     protected $allowedColumns=[
         'skillID',
         'skill',
-        'skillLevel',
     ];
 
 
