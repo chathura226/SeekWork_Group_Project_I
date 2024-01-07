@@ -179,6 +179,21 @@ abstract class Users extends Controller
         //should implement the validation and procedure
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
+            //if this is for student, use skills
+            if($this->controllerRole=='student'){
+
+                $predefinedSkills=json_decode($_POST['selectedSkills']);
+                $newSkills=json_decode($_POST['newlyAddedSkills']);
+
+                if(!empty($newSkills)){ // creating new skills
+                    echo "new not empty";
+                }
+
+                if(!empty($predefinedSkills)){ // adding the selected skills
+                    echo "predefinde not empty";
+                }
+            }
+
             if (!empty($_FILES['imageInput']['name'])) {
 
                 $allowed = ['image/jpeg', 'image/png'];
@@ -239,6 +254,12 @@ abstract class Users extends Controller
         $data['title'] = "Update Profile";
 
         $data['errors'] = $roleModelInst->errors;
+
+        if($this->controllerRole=='student'){
+
+            $skillInst=new Skill();
+            $data['skills']=$skillInst->getAll();
+        }
 
         $this->view($this->controllerRole . '/updateprofile', $data);
     }

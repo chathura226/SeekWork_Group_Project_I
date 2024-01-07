@@ -102,11 +102,9 @@
                                     <select id="skillsSelect" onchange="checkOtherOption(this)">
                                         <option value="" disabled selected>Select or type skill</option>
                                         <option value="other">Other...</option>
-                                        <option id="1" value="HTML">HTML</option>
-                                        <option id="2" value="CSS">Caa</option>
-                                        <option id="3" value="CSS">CkS</option>
-                                        <option id="4" value="CSS">hmrl</option>
-                                        <!-- Add more predefined options as needed -->
+                                        <?php if(!empty($skills)): foreach ($skills as $skill):?>
+                                        <option id="<?=$skill->skillID?>" value="<?=$skill->skill?>"><?=$skill->skill?></option>
+                                        <?php endforeach;endif;?>
                                     </select>
                                 </div>
                                 <input type="text" id="newSkill" placeholder="Add new skill" style="display: none;">
@@ -198,8 +196,8 @@
                 newSkillInput.style.display = 'none';
 
                 //updating input values
-                newlyAddedSkillsInput.value = newlyAddedSkills.join(',');
-                selectedSkillsInput.value = addedPredefinedSkills.join(',');
+                newlyAddedSkillsInput.value = JSON.stringify(newlyAddedSkills); //names of new skills
+                selectedSkillsInput.value = JSON.stringify(addedPredefinedSkills); //ids of predefined skills
             } else {
                 alert('Skill already added or empty!');
             }
