@@ -41,7 +41,7 @@ class Database{
                 $firstWord = strtolower(explode(" ", $query)[0]);
                 // Retrieve the last inserted ID if the query was an insert query and rows were affected
                 if ($firstWord=='insert' || $firstWord=='update') {
-                    $lastInsertId = $con->lastInsertId();
+                    $lastInsertId = $con->lastInsertId();//in case of multiple row insertion, this will return the id of the first inserted row
                     return $lastInsertId;
                 }
 

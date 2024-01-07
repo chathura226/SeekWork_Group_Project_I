@@ -185,22 +185,46 @@ abstract class Users extends Controller
                 $predefinedSkills=json_decode($_POST['selectedSkills']);
                 $newSkills=json_decode($_POST['newlyAddedSkills']);
 
+                //id array for selected skills
+                $allIDs=[];
+
                 if(!empty($newSkills)){ // creating new skills
 
                     // Convert to an array of arrays with 'skill' as the key
-                    $skillsObjectsArray = [];
+                    $skillsArrayOfArrays = [];
                     foreach ($newSkills as $value) {
-                        $skillsObjectsArray[] = ['skill' => $value];
+                        $skillsArrayOfArrays[] = ['skill' => $value];
                     }
 
                     $skillInst=new Skill();
-                    $ids=$skillInst->insertBatch($skillsObjectsArray);
-                    show($ids);
-                    die;
+                    $firstInsertedID=$skillInst->insertBatch($skillsArrayOfArrays); //this will return the id of the first row that was inserted
+
+                    //calculating and adding the inserted skill ids for the selected ID list
+                    $allIDs[]=$firstInsertedID;
+                    if(count($skillsArrayOfArrays)>1) {
+                        for($i=1;$i<count($skillsArrayOfArrays);$i++) {//since id generation is squential,ids are calculated for all insertions
+                            $allIDs[] = $allIDs[count($allIDs)-1] + 1;
+                        }
+                    }
+
                 }
 
                 if(!empty($predefinedSkills)){ // adding the selected skills
-                    echo "predefinde not empty";
+                    $allIDs=array_merge($allIDs,$predefinedSkills);
+                }
+
+                //if the selected and newly added skills are not empty-> insert to skillstudent table
+                if(!empty($allIDs)){
+                    // Convert to an array of arrays with 'skillID' and studentID as the key
+                    $finalSkillStudentData = [];
+                    foreach ($allIDs as $value) {
+                        $finalSkillStudentData[] = ['skillID' => $value,'studentID'=>Auth::getstudentID()];
+                    }
+
+                    //inserting into skill-student table
+                    $skillStudentInst=new Student_Skill();
+                    $skillStudentInst->insertBatch($finalSkillStudentData);
+
                 }
             }
 
