@@ -81,7 +81,7 @@
         <button type="button" class="btn" onclick="openPopup()">Add Review</button>
         <div class="popup" id="popup">
             <div class="submit_review">
-                <form id="reviewForm" action="review.php" method="post" onsubmit="showPopupNew()">
+                <form id="reviewForm" action="review.php" method="post" onsubmit="submitForm(event)">
                     <h2>Add Review</h2>
                     <label for="name">Name:</label>
                     <br>
@@ -148,18 +148,17 @@
             popupnew.classList.add("open-popup");
         }
 
-        
-        /*function form() {
+        //function submitForm(event) {
+            //event.preventDefault();
 
             // Perform form submission logic (you might want to use AJAX to submit the form data)
 
             // Assuming the form submission is successful, show the success message
-            showPopupNew();
+            //showPopupNew();
 
             // Clear the form fields
-            reviewForm.reset();
-        }*/
-        
+            //reviewForm.reset();
+        //}
     </script>
 </body>
 </html>
