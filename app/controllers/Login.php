@@ -47,6 +47,12 @@ class Login extends Controller{
                     //use innerjoin and take first element
                     $combinedObject = $user->innerJoin($joiningTables,$joinConditions,['user.userID'=>$row->userID])[0];
 
+                    //get skills related to student
+                    if($row->role==='student'){
+                        $skillInst=new Skill();
+                        $res=$skillInst->innerJoin(['student_skill'],['skill.skillID=student_skill.skillID'],['studentID'=>$combinedObject->studentID]);
+                        $combinedObject->skills=$res;
+                    }
                     // show($combinedObject);
                     // die;
                     //authenticate (this will be a static class)

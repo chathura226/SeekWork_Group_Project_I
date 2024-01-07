@@ -23,7 +23,7 @@
     </div><!-- End Page Title -->
 
     <div class="form-wrap column-12 row-10">
-        <div class="tab-form row-4">
+        <div class="tab-form row-4" style="width: 1000px;max-width: 1000px;min-width: 400px;">
             <div class="myheader">
                 <div class="active-login"><h2>Update Profile Details</h2></div>
             </div>
@@ -96,6 +96,11 @@
                                    class="" type="text" name="qualifications" id="qualifications" placeholder="">
                         </div>
                         <div class="form-input">
+                            <div>Current Skills :</div> <div class="skill-wrapper">
+                                <?php if(!empty(Auth::getskills())): foreach (Auth::getskills() as $skill):?>
+                                    <div class="skill" data-id="<?=$skill->skillID?>"><?=$skill->skill?><button class="tag-close-btn">&times;</button></div>
+                                <?php endforeach; endif;?>
+                            </div>
                             <div class="drop-input-container">
                                 <label for="skills">Select or Add Skills:</label>
                                 <div class="drop-input-group">

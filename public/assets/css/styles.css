@@ -592,13 +592,17 @@ footer{
     flex-wrap: wrap;
 }
 
-
+.tag-close-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #999;
+    margin-left: 5px;
+}
 
 
 .drop-input-container {
-    font-family: Arial, sans-serif;
-    max-width: 400px;
-    margin: 20px auto;
 }
 
 .drop-input-group {
