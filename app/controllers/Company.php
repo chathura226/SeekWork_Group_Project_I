@@ -426,7 +426,6 @@ class Company extends Users
 
             //if the method is post->update task
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
                 if (!empty($_FILES['documents']['name'])) {//checking for a file upload
 
                     if ($_FILES['documents']['error'] == 0) {
@@ -445,6 +444,11 @@ class Company extends Users
                                 $destination = $this->uploadFile($_FILES['documents'], $folder);
                                 $_POST['documents'] = $destination;
                                 $task->update($_POST, $id);//updating task
+
+                                //adding modified list of skills
+                                //there can be skills to be deleted. => second param is false
+                                $this->skillsRelatedToTask($id,false);
+
                                 message("Task modified successfully!");
                                 redirect('company/tasks/' . $id);
                             } else {
@@ -462,6 +466,10 @@ class Company extends Users
                     if ($task->validate($_POST)) {
                         $task->update($_POST, $id);
 
+                        //adding modified list of skills
+                        //there can be skills to be deleted. => second param is false
+                        $this->skillsRelatedToTask($id,false);
+
                         message('Task Modified Successfully!');
                         redirect('company/tasks/' . $id);
                     }
@@ -477,6 +485,12 @@ class Company extends Users
                     $category = new Category();
                     $row2 = $category->getAll();
                     $data['categories'] = $row2;
+
+                    $skillInst = new Skill();
+                    $data['skills'] = $skillInst->getAll();
+
+                    $taskSkillInst=new Task_Skill();
+                    $data['taskSkills']=$taskSkillInst->innerJoin(['skill'],['skill.skillID=task_skill.skillID'],['taskID'=>$id]);
 
                     $data['task'] = $row;
                     $data['title'] = "Modify - " . $row->title;
@@ -834,11 +848,25 @@ class Company extends Users
     }
 
     /**
+     * THis is for adding skills for tasks
      * @param $insertedID
+     * @param bool $isDeletedEmpty // this shoes whether theres skills to be deleted
      * @return void
      */
-    public function skillsRelatedToTask($insertedID)
+    public function skillsRelatedToTask($insertedID,$isDeletedEmpty=true)
     {
+
+        //if theres skills to be deleted
+        if(!$isDeletedEmpty) {
+            $deletedSkills = json_decode($_POST['deletedSkills']);
+
+            if (!empty($deletedSkills)) {//removing skills
+                //deleting from skill-student table
+                $taskSkillInst = new Task_Skill();
+                $taskSkillInst->deleteBatch($deletedSkills);
+            }
+        }
+
         $predefinedSkills = json_decode($_POST['selectedSkills']);
         $newSkills = json_decode($_POST['newlyAddedSkills']);//these are not skill ids. these are task-skillID
 

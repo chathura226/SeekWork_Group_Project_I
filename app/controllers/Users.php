@@ -235,9 +235,9 @@ abstract class Users extends Controller
                     //if this is for student, use skills
                     if($this->controllerRole=='student'){
 
-                        $deletedSkills=json_decode($_POST['deletedSkills']);
                         $predefinedSkills=json_decode($_POST['selectedSkills']);
                         $newSkills=json_decode($_POST['newlyAddedSkills']);//these are not skill ids. these are student-skillID
+                        $deletedSkills=json_decode($_POST['deletedSkills']);
 
                         if(!empty($deletedSkills)){//removing skills
                             //deleting from skill-student table
