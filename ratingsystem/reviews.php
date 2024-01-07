@@ -81,8 +81,6 @@ if (isset($_GET['page_id'])) {
 </div>
 
 <div class="con">
-    <a href="#" class="write_review_btn">Write Review</a>
-    <span></span>
     <label for="sort_by">Sort By</label>
     <select class="sort_by" id="sort_by">
         <option value="newest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'newest' ? 'selected ' : '' ?>>Newest</option>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reviews System</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="reviews.css">
+</head>
+<body>
+    <nav class="navtop">
+        <div>
+            <h1>Reviews System in PHP With MySql Database</h1>
+        </div>
+    </nav>
+
+    <div class="submit_review">
+        <h2>Submit a Review</h2>
+        <form id="reviewForm" action="#" method="post">
+            <label for="name">Name:</label>
+            <input type="text" name="name" required>
+
+            <label for="rating">Rating:</label>
+            <input type="number" name="rating" min="1" max="5" required>
+
+            <label for="content">Review:</label>
+            <textarea name="content" rows="4" required></textarea>
+
+            <button class =" submit_btn" type="submit">Submit Review</button>
+        </form>
+    </div>
+
+    <div class="content home">
+        <h2>Add Reviews to your Your website</h2>
+        <div class="reviews"></div>
+        <script src="reviews.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const reviewForm = document.getElementById("reviewForm");
+                new Reviews({
+                    page_id: 1,
+                    reviews_per_pagination_page: 5,
+                    current_pagination_page: 1,
+                    reviewForm: reviewForm,
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
