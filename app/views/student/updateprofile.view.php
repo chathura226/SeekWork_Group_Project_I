@@ -95,28 +95,39 @@
                             <input value="<?= (isset($_POST['qualifications'])) ? set_value('qualifications') : Auth::getqualifications() ?>"
                                    class="" type="text" name="qualifications" id="qualifications" placeholder="">
                         </div>
+                        <div>Current Skills :</div>
+                        <div class="skill-wrapper">
+                            <?php if (!empty(Auth::getskills())): foreach (Auth::getskills() as $skill): ?>
+                                <div style="margin: 5px !important;" class="skill"
+                                     data-id="<?= $skill->studentSkillID ?>"><?= $skill->skill ?>
+                                    <button class="tag-close-btn">&times;</button>
+                                </div>
+                            <?php endforeach; else: ?>
+                                No Skills added!
+                            <?php endif;?>
+                        </div>
                         <div class="form-input">
-                            <div>Current Skills :</div> <div class="skill-wrapper">
-                                <?php if(!empty(Auth::getskills())): foreach (Auth::getskills() as $skill):?>
-                                    <div class="skill" data-id="<?=$skill->skillID?>"><?=$skill->skill?><button class="tag-close-btn">&times;</button></div>
-                                <?php endforeach; endif;?>
-                            </div>
+
                             <div class="drop-input-container">
                                 <label for="skills">Select or Add Skills:</label>
                                 <div class="drop-input-group">
                                     <select id="skillsSelect" onchange="checkOtherOption(this)">
                                         <option value="" disabled selected>Select or type skill</option>
                                         <option value="other">Other...</option>
-                                        <?php if(!empty($skills)): foreach ($skills as $skill):?>
-                                        <option id="<?=$skill->skillID?>" value="<?=$skill->skill?>"><?=$skill->skill?></option>
-                                        <?php endforeach;endif;?>
+                                        <?php if (!empty($skills)): foreach ($skills as $skill): ?>
+                                            <option id="<?= $skill->skillID ?>"
+                                                    value="<?= $skill->skill ?>"><?= $skill->skill ?></option>
+                                        <?php endforeach;endif; ?>
                                     </select>
                                 </div>
                                 <input type="text" id="newSkill" placeholder="Add new skill" style="display: none;">
-                                <button onclick="addSkill(event)" style="margin-bottom: 5px; width:100px; background-color: black;color: white;">Add</button>
+                                <button onclick="addSkill(event)"
+                                        style="margin-bottom: 5px; width:100px; background-color: black;color: white;">
+                                    Add
+                                </button>
                                 <div class="horizontal-list">
-                                Added Skills:
-                                <ul id="skillList" ></ul>
+                                    Added Skills:
+                                    <ul id="skillList"></ul>
                                 </div>
                             </div>
                         </div>
@@ -133,6 +144,7 @@
                         </div>
                         <input type="hidden" name="newlyAddedSkills" id="newlyAddedSkills"/>
                         <input type="hidden" name="selectedSkills" id="selectedSkills"/>
+                        <input type="hidden" name="deletedSkills" id="deletedSkills"/>
                         <div class="form-input">
                             <button>Update</button>
                         </div>
@@ -148,10 +160,13 @@
     <script>
         var selectedSkillsInput = document.getElementById("selectedSkills");
         var newlyAddedSkillsInput = document.getElementById("newlyAddedSkills");
+        var deletedSkillsInput = document.getElementById("deletedSkills"); //these are not skill ids. these are student-skillID
+
 
         let newlyAddedSkills = [];
         let addedPredefinedSkills = [];
         let addedSkills = []; // Array to store added skills
+        let deletedSkills = []; // Array to store removing skills. //these are not skill ids. these are student-skillID
 
         function checkOtherOption(selectElement) {
             const newSkillInput = document.getElementById('newSkill');
@@ -216,6 +231,20 @@
             // For simplicity, here's a basic example using a timestamp:
             return 'new_skill_' + Date.now(); // This generates an ID like 'new_skill_1641708497296'
         }
+
+
+        //remove skills, adding event listners for each close btn
+        $skilltags = document.querySelectorAll(".tag-close-btn");
+        $skilltags.forEach((tag) => {
+            tag.addEventListener('click', (e) => {
+                tag=tag.parentNode;
+                e.preventDefault();
+                let DeletingID = tag.getAttribute('data-id');
+                deletedSkills.push(DeletingID);
+                deletedSkillsInput.value = JSON.stringify(deletedSkills);
+                tag.style.display = 'none';
+            })
+        });
 
 
     </script>

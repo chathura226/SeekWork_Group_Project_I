@@ -226,6 +226,23 @@ class Model extends Database
     }
 
 
+    //delete bacth form database
+    public function deleteBatch($idArray): bool
+    {
+        $query = "DELETE FROM " . $this->table . " WHERE " . $this->primaryKey . " IN (";
+
+        foreach ($idArray as $id){
+            $query.="?,";
+        }
+        //removing additional ","
+        $query = trim($query, ",");
+        $query.=");";
+
+        $this->query($query,$idArray);
+        return true;
+    }
+
+
     //to check and get from databse 'where' as arry of objects
     public function where($data)
     {

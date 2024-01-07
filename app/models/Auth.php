@@ -168,6 +168,13 @@ class Auth{
             //use innerjoin and take first element
             $combinedObject = $user->innerJoin($joiningTables,$joinConditions,['user.userID'=>Auth::getuserID()])[0];
 
+            //get skills related to student
+            if(Auth::getrole()==='student'){
+                $skillInst=new Skill();
+                $res=$skillInst->innerJoin(['student_skill'],['skill.skillID=student_skill.skillID'],['studentID'=>$combinedObject->studentID]);
+                $combinedObject->skills=$res;
+            }
+
             Auth::authenticate($combinedObject);
         }
     }

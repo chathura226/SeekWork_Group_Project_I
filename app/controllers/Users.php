@@ -182,8 +182,15 @@ abstract class Users extends Controller
             //if this is for student, use skills
             if($this->controllerRole=='student'){
 
+                $deletedSkills=json_decode($_POST['deletedSkills']);
                 $predefinedSkills=json_decode($_POST['selectedSkills']);
-                $newSkills=json_decode($_POST['newlyAddedSkills']);
+                $newSkills=json_decode($_POST['newlyAddedSkills']);//these are not skill ids. these are student-skillID
+
+                if(!empty($deletedSkills)){//removing skills
+                    //deleting from skill-student table
+                    $skillStudentInst=new Student_Skill();
+                    $skillStudentInst->deleteBatch($deletedSkills);
+                }
 
                 //id array for selected skills
                 $allIDs=[];
@@ -226,6 +233,8 @@ abstract class Users extends Controller
                     $skillStudentInst->insertBatch($finalSkillStudentData);
 
                 }
+                Auth::updateSession();
+
             }
 
             if (!empty($_FILES['imageInput']['name'])) {
