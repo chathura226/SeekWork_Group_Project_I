@@ -39,7 +39,7 @@ class Company extends Users
 
     public function verification()
     {
-        $verificationInst=new Moderator_Verifies_Company();
+        $verificationInst = new Moderator_Verifies_Company();
 
         $companyInst = new CompanyModel();
         $data['title'] = "Verification";
@@ -83,7 +83,7 @@ class Company extends Users
 
         }
 
-        $rows=$verificationInst->where(['companyID'=>Auth::getcompanyID()]);
+        $rows = $verificationInst->where(['companyID' => Auth::getcompanyID()]);
         $data['verifications'] = $rows;
 
 
@@ -120,8 +120,6 @@ class Company extends Users
             $row = $task->getFirstCustom('task', ['taskID' => $id], 'taskID'); //get task details corresponding to the tadsk id
 
 
-
-
             if (!empty($row)) {
                 if ($row->companyID !== Auth::getcompanyID()) {
                     message(['Unauthorized! Task is not yours', 'danger']);
@@ -139,14 +137,14 @@ class Company extends Users
 
                             //post request => changing status of submission after reviewing
                             if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                                if(!empty($_POST['comments']) && !empty($_POST['status'])) {
-                                    $_POST['reviewedDate']=date("Y-m-d H:i:s");
+                                if (!empty($_POST['comments']) && !empty($_POST['status'])) {
+                                    $_POST['reviewedDate'] = date("Y-m-d H:i:s");
                                     $submissionInst->update($_POST, $id2);
-                                    message(ucfirst($_POST['status']).' successfully!');
-                                }else{
+                                    message(ucfirst($_POST['status']) . ' successfully!');
+                                } else {
                                     message(['Error occurred!', 'danger']);
                                 }
-                                redirect('company/tasks/' . $id . '/submissions/'.$id2);
+                                redirect('company/tasks/' . $id . '/submissions/' . $id2);
                             }
 
                             // Decode the JSON string back into an array
@@ -236,8 +234,8 @@ class Company extends Users
                         if (!empty($proposal)) {
                             if ($proposal->taskID == $id) { //proposal is relevant to the same task
 
-                                if(!empty($row->assignedStudentID)){
-                                    message(['You have already assigned a student!','danger']);
+                                if (!empty($row->assignedStudentID)) {
+                                    message(['You have already assigned a student!', 'danger']);
                                     redirect('company/pendingassignments');
                                 }
 
@@ -249,13 +247,13 @@ class Company extends Users
                                 // $task->update(['acceptedProposalID'=>$id2,'assignedStudentID'=>$proposal->studentID],$row->taskID);
 
                                 //sending email for invitation
-                                $studentInst=new StudentModel();
-                                $student=$studentInst->innerJoin(['user'], ['student.userID=user.userID'],['studentID'=>$proposal->studentID])[0];
+                                $studentInst = new StudentModel();
+                                $student = $studentInst->innerJoin(['user'], ['student.userID=user.userID'], ['studentID' => $proposal->studentID])[0];
 
 
-                                $fullName =$student->firstName . ' ' . $student->lastName;
-                                $content=MailService::prepareNewInvitationEmaik($fullName,$row,$proposal);
-                                $boom=MailService::sendMail($student->email, $fullName, 'Task Invitation', $content);
+                                $fullName = $student->firstName . ' ' . $student->lastName;
+                                $content = MailService::prepareNewInvitationEmaik($fullName, $row, $proposal);
+                                $boom = MailService::sendMail($student->email, $fullName, 'Task Invitation', $content);
 
                                 message('Invitation for the task sent successfully!');
                                 redirect('company/pendingassignments');
@@ -277,9 +275,13 @@ class Company extends Users
                     $data['assignments'] = $assignmentInst->where(['taskID' => $id]);
                     $data['submissions'] = $submissionInst->where(['taskID' => $id]);
                     //taking number of proposals
-                    $proposalInst=new Proposal();
-                    $nProposals=$proposalInst->count(['taskID'=>$row->taskID])[0]->{"COUNT(*)"};
-                    $row->nProposals=$nProposals;
+                    $proposalInst = new Proposal();
+                    $nProposals = $proposalInst->count(['taskID' => $row->taskID])[0]->{"COUNT(*)"};
+                    $row->nProposals = $nProposals;
+
+                    $taskSkillInst=new Task_Skill();
+                    $data['skills']=$taskSkillInst->innerJoin(['skill'],['skill.skillID=task_skill.skillID'],['taskID'=>$id]);
+
 
                     $data['task'] = $row;
                     $data['title'] = $row->title;
@@ -352,7 +354,6 @@ class Company extends Users
 
         //if the method is post->creatre task
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
             if (!empty($_FILES['documents']['name'])) {//checking for a file upload
 
                 if ($_FILES['documents']['error'] == 0) {
@@ -370,9 +371,11 @@ class Company extends Users
 
                             $fileLoc['documents'] = $destination;
                             $task->update($fileLoc, $insertedID);//updating file location
+
+                            //skills related to task
+                            $this->skillsRelatedToTask($insertedID);
                             message('Task Posted Successfully!');
                             redirect('company/tasks');
-
                         } else {//didnt inserted to db
                             message(['Error occurred while posting! Try again', "danger"]);
                             redirect('company/tasks');
@@ -388,8 +391,11 @@ class Company extends Users
                 if (empty($_POST['deadline'])) unset($_POST['deadline']);
                 if ($task->validate($_POST)) {//validate task details
 
-                    $task->insert($_POST);
+                    $insertedID=$task->insert($_POST);
 
+
+                    //skills related to task
+                    $this->skillsRelatedToTask($insertedID);
                     message('Task Posted Successfully!');
                     redirect('company/tasks');
                 }
@@ -399,6 +405,9 @@ class Company extends Users
         $category = new Category();
         $row = $category->getAll();
         $data['categories'] = $row;
+
+        $skillInst = new Skill();
+        $data['skills'] = $skillInst->getAll();
 
         $data['title'] = "Post Task";
         $data['errors'] = $task->errors;
@@ -421,7 +430,6 @@ class Company extends Users
 
             //if the method is post->update task
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
                 if (!empty($_FILES['documents']['name'])) {//checking for a file upload
 
                     if ($_FILES['documents']['error'] == 0) {
@@ -440,6 +448,11 @@ class Company extends Users
                                 $destination = $this->uploadFile($_FILES['documents'], $folder);
                                 $_POST['documents'] = $destination;
                                 $task->update($_POST, $id);//updating task
+
+                                //adding modified list of skills
+                                //there can be skills to be deleted. => second param is false
+                                $this->skillsRelatedToTask($id,false);
+
                                 message("Task modified successfully!");
                                 redirect('company/tasks/' . $id);
                             } else {
@@ -457,6 +470,10 @@ class Company extends Users
                     if ($task->validate($_POST)) {
                         $task->update($_POST, $id);
 
+                        //adding modified list of skills
+                        //there can be skills to be deleted. => second param is false
+                        $this->skillsRelatedToTask($id,false);
+
                         message('Task Modified Successfully!');
                         redirect('company/tasks/' . $id);
                     }
@@ -472,6 +489,12 @@ class Company extends Users
                     $category = new Category();
                     $row2 = $category->getAll();
                     $data['categories'] = $row2;
+
+                    $skillInst = new Skill();
+                    $data['skills'] = $skillInst->getAll();
+
+                    $taskSkillInst=new Task_Skill();
+                    $data['taskSkills']=$taskSkillInst->innerJoin(['skill'],['skill.skillID=task_skill.skillID'],['taskID'=>$id]);
 
                     $data['task'] = $row;
                     $data['title'] = "Modify - " . $row->title;
@@ -778,33 +801,33 @@ class Company extends Users
     //close task
     public function close($id = null)
     {
-        if (!empty($id)){
-            $taskInst=new Task();
-            $task=$taskInst->innerJoin(['category'],['category.categoryID=task.categoryID'],['taskID'=>$id],['*,category.title As categoryTitle']);
+        if (!empty($id)) {
+            $taskInst = new Task();
+            $task = $taskInst->innerJoin(['category'], ['category.categoryID=task.categoryID'], ['taskID' => $id], ['*,category.title As categoryTitle']);
 
 //            show($pendingSubmissions);die;
-            if(!empty($task))$task=$task[0];//removing array that comes with innerjoin
-            if(empty($task) || $task->companyID!=Auth::getcompanyID()){
+            if (!empty($task)) $task = $task[0];//removing array that comes with innerjoin
+            if (empty($task) || $task->companyID != Auth::getcompanyID()) {
                 message(['Invalid Task ID', 'danger']);
                 redirect('company/tasks');
             }
 
 
             //for post req for close
-            if ($_SERVER['REQUEST_METHOD'] == "POST"){
-                if($_POST['confirm']==='close the task') {
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                if ($_POST['confirm'] === 'close the task') {
                     $taskInst->update(['status' => 'closed'], $id);
                     message('Task closed successfully!');
                     redirect('company/tasks');
-                }else{
-                    message(['Confirmation Failed','danger']);
+                } else {
+                    message(['Confirmation Failed', 'danger']);
                     redirect('company/tasks');
                 }
             }
 
-            $submissionInst=new Submission();
-            $submissions=$submissionInst->innerJoin(['task'],['task.taskID=submission.taskID'],['task.taskID'=>$id],["COUNT(*)"])[0]->{"COUNT(*)"};
-            $pendingSubmissions=$submissionInst->innerJoin(['task'],['task.taskID=submission.taskID'],['task.taskID'=>$id,'submission.status'=>'"pendingReview"'],["COUNT(*)"])[0]->{"COUNT(*)"};
+            $submissionInst = new Submission();
+            $submissions = $submissionInst->innerJoin(['task'], ['task.taskID=submission.taskID'], ['task.taskID' => $id], ["COUNT(*)"])[0]->{"COUNT(*)"};
+            $pendingSubmissions = $submissionInst->innerJoin(['task'], ['task.taskID=submission.taskID'], ['task.taskID' => $id, 'submission.status' => '"pendingReview"'], ["COUNT(*)"])[0]->{"COUNT(*)"};
 
 
             $data['submissions'] = $submissions;
@@ -816,15 +839,85 @@ class Company extends Users
 
         }
     }
+
     //show invites that havent yet answered
     public function pendingassignments()
     {
         $assignmentInst = new Assignment();
-        $row=$assignmentInst->innerJoin(['task'],['task.taskID=assignment.taskID'],['task.companyID'=>Auth::getcompanyID()],['*,task.status AS taskStatus, assignment.status AS assignmentStatus,assignment.createdAt AS assignmentDate,task.createdAt AS taskDate']);
+        $row = $assignmentInst->innerJoin(['task'], ['task.taskID=assignment.taskID'], ['task.companyID' => Auth::getcompanyID()], ['*,task.status AS taskStatus, assignment.status AS assignmentStatus,assignment.createdAt AS assignmentDate,task.createdAt AS taskDate']);
 
         $data['title'] = 'Pending Invitations';
         $data['assignments'] = $row;
         $this->view('company/pendinginvites', $data);
+    }
+
+    /**
+     * THis is for adding skills for tasks
+     * @param $insertedID
+     * @param bool $isDeletedEmpty // this shoes whether theres skills to be deleted
+     * @return void
+     */
+    public function skillsRelatedToTask($insertedID,$isDeletedEmpty=true)
+    {
+
+        //if theres skills to be deleted
+        if(!$isDeletedEmpty) {
+            $deletedSkills = json_decode($_POST['deletedSkills']);
+
+            if (!empty($deletedSkills)) {//removing skills
+                //deleting from skill-student table
+                $taskSkillInst = new Task_Skill();
+                $taskSkillInst->deleteBatch($deletedSkills);
+            }
+        }
+
+        $predefinedSkills = json_decode($_POST['selectedSkills']);
+        $newSkills = json_decode($_POST['newlyAddedSkills']);//these are not skill ids. these are task-skillID
+
+
+        //id array for selected skills
+        $allIDs = [];
+
+        if (!empty($newSkills)) { // creating new skills
+
+            // Convert to an array of arrays with 'skill' as the key
+            $skillsArrayOfArrays = [];
+            foreach ($newSkills as $value) {
+                $skillsArrayOfArrays[] = ['skill' => $value];
+            }
+
+            $skillInst = new Skill();
+            $firstInsertedID = $skillInst->insertBatch($skillsArrayOfArrays); //this will return the id of the first row that was inserted
+
+            //calculating and adding the inserted skill ids for the selected ID list
+            $allIDs[] = $firstInsertedID;
+            if (count($skillsArrayOfArrays) > 1) {
+                for ($i = 1; $i < count($skillsArrayOfArrays); $i++) {//since id generation is squential,ids are calculated for all insertions
+                    $allIDs[] = $allIDs[count($allIDs) - 1] + 1;
+                }
+            }
+
+        }
+
+        if (!empty($predefinedSkills)) { // adding the selected skills
+            $allIDs = array_merge($allIDs, $predefinedSkills);
+        }
+
+        //if the selected and newly added skills are not empty-> insert to skillstudent table
+        if (!empty($allIDs)) {
+            // Convert to an array of arrays with 'skillID' and taskID as the key
+            $finalTaskSkillData = [];
+            foreach ($allIDs as $value) {
+                $finalTaskSkillData[] = ['skillID' => $value, 'taskID' => $insertedID];
+            }
+
+            //inserting into skill-task table
+            $skillTaskInst = new Task_Skill();
+            $skillTaskInst->insertBatch($finalTaskSkillData);
+
+        }
+
+
     }
 
 }

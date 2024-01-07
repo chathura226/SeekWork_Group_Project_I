@@ -179,63 +179,7 @@ abstract class Users extends Controller
         //should implement the validation and procedure
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-            //if this is for student, use skills
-            if($this->controllerRole=='student'){
 
-                $deletedSkills=json_decode($_POST['deletedSkills']);
-                $predefinedSkills=json_decode($_POST['selectedSkills']);
-                $newSkills=json_decode($_POST['newlyAddedSkills']);//these are not skill ids. these are student-skillID
-
-                if(!empty($deletedSkills)){//removing skills
-                    //deleting from skill-student table
-                    $skillStudentInst=new Student_Skill();
-                    $skillStudentInst->deleteBatch($deletedSkills);
-                }
-
-                //id array for selected skills
-                $allIDs=[];
-
-                if(!empty($newSkills)){ // creating new skills
-
-                    // Convert to an array of arrays with 'skill' as the key
-                    $skillsArrayOfArrays = [];
-                    foreach ($newSkills as $value) {
-                        $skillsArrayOfArrays[] = ['skill' => $value];
-                    }
-
-                    $skillInst=new Skill();
-                    $firstInsertedID=$skillInst->insertBatch($skillsArrayOfArrays); //this will return the id of the first row that was inserted
-
-                    //calculating and adding the inserted skill ids for the selected ID list
-                    $allIDs[]=$firstInsertedID;
-                    if(count($skillsArrayOfArrays)>1) {
-                        for($i=1;$i<count($skillsArrayOfArrays);$i++) {//since id generation is squential,ids are calculated for all insertions
-                            $allIDs[] = $allIDs[count($allIDs)-1] + 1;
-                        }
-                    }
-
-                }
-
-                if(!empty($predefinedSkills)){ // adding the selected skills
-                    $allIDs=array_merge($allIDs,$predefinedSkills);
-                }
-
-                //if the selected and newly added skills are not empty-> insert to skillstudent table
-                if(!empty($allIDs)){
-                    // Convert to an array of arrays with 'skillID' and studentID as the key
-                    $finalSkillStudentData = [];
-                    foreach ($allIDs as $value) {
-                        $finalSkillStudentData[] = ['skillID' => $value,'studentID'=>Auth::getstudentID()];
-                    }
-
-                    //inserting into skill-student table
-                    $skillStudentInst=new Student_Skill();
-                    $skillStudentInst->insertBatch($finalSkillStudentData);
-
-                }
-                Auth::updateSession();
-
-            }
 
             if (!empty($_FILES['imageInput']['name'])) {
 
@@ -287,6 +231,66 @@ abstract class Users extends Controller
                     $methodName = 'get' . $this->controllerRole . 'ID';
                     $roleModelInst->update($_POST, Auth::$methodName());
                     Auth::updateSession();
+
+                    //if this is for student, use skills
+                    if($this->controllerRole=='student'){
+
+                        $predefinedSkills=json_decode($_POST['selectedSkills']);
+                        $newSkills=json_decode($_POST['newlyAddedSkills']);//these are not skill ids. these are student-skillID
+                        $deletedSkills=json_decode($_POST['deletedSkills']);
+
+                        if(!empty($deletedSkills)){//removing skills
+                            //deleting from skill-student table
+                            $skillStudentInst=new Student_Skill();
+                            $skillStudentInst->deleteBatch($deletedSkills);
+                        }
+
+                        //id array for selected skills
+                        $allIDs=[];
+
+                        if(!empty($newSkills)){ // creating new skills
+
+                            // Convert to an array of arrays with 'skill' as the key
+                            $skillsArrayOfArrays = [];
+                            foreach ($newSkills as $value) {
+                                $skillsArrayOfArrays[] = ['skill' => $value];
+                            }
+
+                            $skillInst=new Skill();
+                            $firstInsertedID=$skillInst->insertBatch($skillsArrayOfArrays); //this will return the id of the first row that was inserted
+
+                            //calculating and adding the inserted skill ids for the selected ID list
+                            $allIDs[]=$firstInsertedID;
+                            if(count($skillsArrayOfArrays)>1) {
+                                for($i=1;$i<count($skillsArrayOfArrays);$i++) {//since id generation is squential,ids are calculated for all insertions
+                                    $allIDs[] = $allIDs[count($allIDs)-1] + 1;
+                                }
+                            }
+
+                        }
+
+                        if(!empty($predefinedSkills)){ // adding the selected skills
+                            $allIDs=array_merge($allIDs,$predefinedSkills);
+                        }
+
+                        //if the selected and newly added skills are not empty-> insert to skillstudent table
+                        if(!empty($allIDs)){
+                            // Convert to an array of arrays with 'skillID' and studentID as the key
+                            $finalSkillStudentData = [];
+                            foreach ($allIDs as $value) {
+                                $finalSkillStudentData[] = ['skillID' => $value,'studentID'=>Auth::getstudentID()];
+                            }
+
+                            //inserting into skill-student table
+                            $skillStudentInst=new Student_Skill();
+                            $skillStudentInst->insertBatch($finalSkillStudentData);
+
+                        }
+                        Auth::updateSession();
+
+                    }
+
+
                     // show($_SESSION['USER_DATA']);
                     // die;
                     message("Profile updated successfully!");

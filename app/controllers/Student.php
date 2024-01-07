@@ -415,6 +415,9 @@ class Student extends Users
                     $data['company'] = $combinedObj;
                     $data['title'] = $row->title;
 
+                    $taskSkillInst=new Task_Skill();
+                    $data['skills']=$taskSkillInst->innerJoin(['skill'],['skill.skillID=task_skill.skillID'],['taskID'=>$row->taskID]);
+
                     $this->view('student/task', $data);
                     return;
                 } else {

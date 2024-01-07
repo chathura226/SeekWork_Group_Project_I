@@ -104,7 +104,7 @@
                                 </div>
                             <?php endforeach; else: ?>
                                 No Skills added!
-                            <?php endif;?>
+                            <?php endif; ?>
                         </div>
                         <div class="form-input">
 
@@ -237,7 +237,7 @@
         $skilltags = document.querySelectorAll(".tag-close-btn");
         $skilltags.forEach((tag) => {
             tag.addEventListener('click', (e) => {
-                tag=tag.parentNode;
+                tag = tag.parentNode;
                 e.preventDefault();
                 let DeletingID = tag.getAttribute('data-id');
                 deletedSkills.push(DeletingID);

@@ -57,7 +57,11 @@ class Tasks extends Controller{
 
                 $data['title'] = $row->title;
                 $data['task']=$row;
-        
+
+                $taskSkillInst=new Task_Skill();
+                $data['skills']=$taskSkillInst->innerJoin(['skill'],['skill.skillID=task_skill.skillID'],['taskID'=>$row->taskID]);
+
+
                 $this->view('task/task',$data);
 
             }else{
