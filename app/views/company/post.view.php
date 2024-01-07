@@ -91,7 +91,31 @@
                         <div class="text-error"><small><?=$errors['description']?></small></div>
                     <?php endif;?>
                 </div>
-
+              <div class="form-input">
+                  Required or preferred skills:
+                  <div class="drop-input-container">
+                      <label for="skills">Select or Add Skills:</label>
+                      <div class="drop-input-group">
+                          <select id="skillsSelect" onchange="checkOtherOption(this)">
+                              <option value="" disabled selected>Select or type skill</option>
+                              <option value="other">Other...</option>
+                              <?php if (!empty($skills)): foreach ($skills as $skill): ?>
+                                  <option id="<?= $skill->skillID ?>"
+                                          value="<?= $skill->skill ?>"><?= $skill->skill ?></option>
+                              <?php endforeach;endif; ?>
+                          </select>
+                      </div>
+                      <input type="text" id="newSkill" placeholder="Add new skill" style="display: none;">
+                      <button onclick="addSkill(event)"
+                              style="margin-bottom: 5px; width:100px; background-color: black;color: white;">
+                          Add
+                      </button>
+                      <div class="horizontal-list">
+                          Added Skills:
+                          <ul id="skillList"></ul>
+                      </div>
+                  </div>
+              </div>
               <div class="form-input">
                   <label>Any Related Document</label>
                   <small>If there are more than one file, Zip the files before upload</small>
@@ -116,7 +140,8 @@
                         <div class="text-error"><small><?=$errors['deadline']?></small></div>
                     <?php endif;?>
                 </div>
-
+              <input type="hidden" name="newlyAddedSkills" id="newlyAddedSkills"/>
+              <input type="hidden" name="selectedSkills" id="selectedSkills"/>
 
 
 
@@ -131,6 +156,83 @@
 </div>
 
 </div>
+<script>
+    var selectedSkillsInput = document.getElementById("selectedSkills");
+    var newlyAddedSkillsInput = document.getElementById("newlyAddedSkills");
 
+
+    let newlyAddedSkills = [];
+    let addedPredefinedSkills = [];
+    let addedSkills = []; // Array to store added skills
+
+    function checkOtherOption(selectElement) {
+        const newSkillInput = document.getElementById('newSkill');
+        newSkillInput.style.display = selectElement.value === 'other' ? 'block' : 'none';
+    }
+
+    function isSkillAdded(skillId) {
+        return addedSkills.some(existingSkill => existingSkill.id === skillId);
+    }
+
+    function addSkill(e) {
+        e.preventDefault();
+        const select = document.getElementById('skillsSelect');
+        const newSkillInput = document.getElementById('newSkill');
+        const skillList = document.getElementById('skillList');
+
+        const selectedOption = select.options[select.selectedIndex];
+        const enteredSkill = newSkillInput.value.trim();
+
+        let skillId = '';
+// console.log(selectedOption.value )
+        if (selectedOption.value !== '' && selectedOption.value !== 'other') {//if its a predefined skill
+            skillId = selectedOption.id; // Use the ID attribute of the selected option as the skill ID
+            if (!isSkillAdded(skillId)) {
+                addedPredefinedSkills.push(skillId);
+            }
+        } else if (enteredSkill !== '') {
+            skillId = generateSkillId(); // Generate a unique ID for the new skill
+            newlyAddedSkills.push(enteredSkill)
+        }
+
+        const skillName = (selectedOption.value !== '' && selectedOption.value !== 'other') ? selectedOption.value : enteredSkill;
+
+        if (skillId !== '' && skillName !== '' && !isSkillAdded(skillId)) {
+            const skillObject = {id: skillId, name: skillName}; // Create an object with ID and skill name
+
+            addedSkills.push(skillObject); // Add the skill object to the array of added skills
+
+            const listItem = document.createElement('li');
+            listItem.textContent = skillName;
+            listItem.dataset.skillId = skillId; // Store the ID as a data attribute
+            skillList.appendChild(listItem);
+
+            // Clear inputs after adding skill
+            select.selectedIndex = 0;
+            newSkillInput.value = '';
+            newSkillInput.style.display = 'none';
+
+            //updating input values
+            newlyAddedSkillsInput.value = JSON.stringify(newlyAddedSkills); //names of new skills
+            selectedSkillsInput.value = JSON.stringify(addedPredefinedSkills); //ids of predefined skills
+        } else {
+            alert('Skill already added or empty!');
+        }
+
+        // console.log(addedPredefinedSkills)
+        // console.log(newlyAddedSkills)
+    }
+
+    function generateSkillId() {
+        // This function should generate a unique ID for each new skill
+        // For simplicity, here's a basic example using a timestamp:
+        return 'new_skill_' + Date.now(); // This generates an ID like 'new_skill_1641708497296'
+    }
+
+
+
+
+
+</script>
 
 <?php $this->view('company/company-footer',$data) ?>
