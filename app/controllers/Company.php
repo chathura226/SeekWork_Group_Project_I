@@ -279,6 +279,10 @@ class Company extends Users
                     $nProposals = $proposalInst->count(['taskID' => $row->taskID])[0]->{"COUNT(*)"};
                     $row->nProposals = $nProposals;
 
+                    $taskSkillInst=new Task_Skill();
+                    $data['skills']=$taskSkillInst->innerJoin(['skill'],['skill.skillID=task_skill.skillID'],['taskID'=>$id]);
+
+
                     $data['task'] = $row;
                     $data['title'] = $row->title;
 

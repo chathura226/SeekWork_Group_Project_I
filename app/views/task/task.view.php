@@ -42,17 +42,17 @@
                     No files uploaded for this task!<br>
                 <?php endif; ?>
                 <br>
-                <h4>Relavant Tags : </h4>
-                <div class="tags-wrapper">
-
-                    <div class="tags">Logo</div>
-                    <div class="tags">Graphic</div>
-                    <div class="tags">Photoshop</div>
-                    <div class="tags">Illustrator</div>
-                    <div class="tags">Desiging</div>
-                    <div class="tags">Arwork</div>
-
-                </div>
+                <h4>Required or Preferred Skills : </h4>
+                <?php if (!empty($skills)): ?>
+                    <div class="skill-wrapper" style="padding: 0px !important; margin-top: 0px !important;">
+                        <?php foreach ($skills as $skill): ?>
+                            <div class="skill" style="margin: 5px !important;"><?= $skill->skill ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else:?>
+                N/A
+                <?php endif;?>
             </div>
             <div class="about-task">
                 <h2>About the task</h2>
