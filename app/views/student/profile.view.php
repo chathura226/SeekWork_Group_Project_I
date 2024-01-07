@@ -1,5 +1,6 @@
 <?php $this->view('student/student-header',$data) ?>
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/profile.styles.css"/>
+<link rel="stylesheet" href="<?=ROOT?>/assets/css/eachtask.styles.css"/>
 
 <div class="pagetitle column-12">
       <h1>Profile</h1>
@@ -46,6 +47,13 @@
       <div>Status: <?=ucfirst(Auth::getstatus())?></div>
       <div>First Name : <?=ucfirst(Auth::getfirstName())?></div>
       <div>Last Name : <?=ucfirst(Auth::getlastName())?></div>
+    <div>Skills :</div> <div class="skill-wrapper">
+
+            <div class="skill">Logo</div>
+            <div class="skill">Graphic</div>
+            <div class="skill">Photoshop</div>
+            <div class="skill">Illustrator</div>
+        </div>
       <div>Contact Number : <?=ucfirst(Auth::getcontactNo())?></div>
       <div>Address : <?=ucfirst(Auth::getaddress())?></div>
       <div>NIC : <?=Auth::getNIC()?></div>
