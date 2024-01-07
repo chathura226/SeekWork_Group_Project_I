@@ -32,6 +32,43 @@ class Model extends Database
         // show($data);
     }
 
+    //inserting batch of data.
+    //input data array should be a array of array of data for each row
+    //eg: [[skill=>dsds,id=>2],[skill=>dcdscsd,id=>4]]
+    //all vaues will be flan=tenned to [dsds,2,dcdscsd,4] before sending to execution of query
+    //use placeholder '?'
+    public function insertBatch($dataArray)
+    {
+        if (empty($dataArray)) {
+            return false; // No data to insert
+        }
+
+        // Assuming all arrays in $dataArray have the same keys
+        $keys = array_keys($dataArray[0]);
+        $query = "INSERT INTO " . $this->table . " (" . implode(",", $keys) . ") VALUES ";
+
+        // Flatten the $dataArray for binding values to the query
+        $flattenedData = [];
+        foreach ($dataArray as $data) {
+            $query.="(";
+            foreach ($data as $value) {
+                $flattenedData[] = $value;
+                $query .="?,";
+            }
+            //remove the additional ','
+            $query = trim($query, ",");
+            $query.="),";
+        }
+
+        //remove the additional ','
+        $query = trim($query, ",");
+        $query.=";";
+
+        // Execute the query with the flattened data array
+        return $this->query($query, $flattenedData);
+    }
+
+
     //count
     //    //to check and get from databse 'where' as arry of objects
     public function count($data,$select='*')

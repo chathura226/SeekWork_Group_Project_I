@@ -186,7 +186,17 @@ abstract class Users extends Controller
                 $newSkills=json_decode($_POST['newlyAddedSkills']);
 
                 if(!empty($newSkills)){ // creating new skills
-                    echo "new not empty";
+
+                    // Convert to an array of arrays with 'skill' as the key
+                    $skillsObjectsArray = [];
+                    foreach ($newSkills as $value) {
+                        $skillsObjectsArray[] = ['skill' => $value];
+                    }
+
+                    $skillInst=new Skill();
+                    $ids=$skillInst->insertBatch($skillsObjectsArray);
+                    show($ids);
+                    die;
                 }
 
                 if(!empty($predefinedSkills)){ // adding the selected skills
