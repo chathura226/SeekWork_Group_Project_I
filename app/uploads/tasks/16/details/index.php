@@ -1,1 +1,0 @@
-<?php //Access Denied
