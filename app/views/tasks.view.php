@@ -15,11 +15,11 @@
     <div class="tab-container c-s-1 c-e-13 " style="grid-row-end: span 1; height: fit-content; margin-top: 20px;">
         <div class="tab-radio-inputs">
             <label class="tab-radio-btn">
-                <input type="radio" name="radioForTab" value="all" checked="">
+                <input id="all-tab-radio" type="radio" name="radioForTab" value="all">
                 <span class="name">All</span>
             </label>
             <label class="tab-radio-btn">
-                <input type="radio" name="radioForTab" value="recommended">
+                <input id="recommended-tab-radio" type="radio" name="radioForTab" value="recommended">
                 <span class="name">Recommended Tasks</span>
             </label>
 
@@ -94,7 +94,7 @@
 
                             <a class="prev page-numbers" href="?tab=all&page=<?= ($pageNum - 1) ?>">prev</a>
                             <?php for ($i = -4; $i <= 5; $i++): ?>
-                                <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>"
+                                <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>" <?= ($i == 0) ? 'aria-current="page"' : '' ?>
                                    href="?tab=all&page=<?= ($pageNum + $i) ?>"><?= ($pageNum + $i) ?></a>
                             <?php endfor; ?>
                             <a class="next page-numbers" href="?tab=all&page=<?= ($pageNum + 1) ?>">next</a>
@@ -104,7 +104,7 @@
                             <!-- if page number is less than  or equal 5-->
                             <?php if($pageNum!=1):?><a class="prev page-numbers" href="?tab=all&page=<?= ($pageNum - 1) ?>">prev</a><?php endif;?>
                             <?php for ($i = 1-$pageNum; $i <= 10-$pageNum; $i++): ?>
-                                <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>"
+                                <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>" <?= ($i == 0) ? 'aria-current="page"' : '' ?>
                                    href="?tab=all&page=<?= ($pageNum + $i) ?>"><?= ($pageNum + $i) ?></a>
                             <?php endfor; ?>
                             <a class="next page-numbers" href="?tab=all&page=<?= ($pageNum + 1) ?>">next</a>
@@ -114,35 +114,62 @@
                 </div>
 
             </div>
-
+        </divrecommended
+        <div class="content-box">
             <div class="content-box-content" id="recommended">
-
                 <div style="margin-left:20px "><h2>Recommended Tasks</h2></div>
 
-                <div id="recommended-pagination" class="pagination-wrapper">
+                <div class="task-wrapper column-12">
+
+
+
+
+
+                </div>
+
+                <div id="all-pagination" class="pagination-wrapper">
                     <div class="pagination">
-                        <a class="prev page-numbers" href="javascript:;">prev</a>
-                        <a class="page-numbers" href="javascript:;">1</a>
-                        <a class="page-numbers" href="javascript:;">2</a>
-                        <a class="page-numbers" href="javascript:;">3</a>
-                        <a class="page-numbers current" href="javascript:;">4</a>
-                        <a class="page-numbers" href="javascript:;">5</a>
-                        <a class="page-numbers" href="javascript:;">6</a>
-                        <a class="page-numbers" href="javascript:;">7</a>
-                        <a class="page-numbers" href="javascript:;">8</a>
-                        <a class="page-numbers" href="javascript:;">9</a>
-                        <a class="page-numbers" href="javascript:;">10</a>
-                        <a class="next page-numbers" href="javascript:;">next</a>
+                        <!--if page number is greater than 5-->
+                        <?php if ($pageNum > 5): ?>
+
+                            <a class="prev page-numbers" href="?tab=recommended&page=<?= ($pageNum - 1) ?>">prev</a>
+                            <?php for ($i = -4; $i <= 5; $i++): ?>
+                                <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>" <?= ($i == 0) ? 'aria-current="page"' : '' ?>
+                                   href="?tab=recommended&page=<?= ($pageNum + $i) ?>"><?= ($pageNum + $i) ?></a>
+                            <?php endfor; ?>
+                            <a class="next page-numbers" href="?tab=recommended&page=<?= ($pageNum + 1) ?>">next</a>
+
+                        <?php else: ?>
+
+                            <!-- if page number is less than  or equal 5-->
+                            <?php if($pageNum!=1):?><a class="prev page-numbers" href="?tab=recommended&page=<?= ($pageNum - 1) ?>">prev</a><?php endif;?>
+                            <?php for ($i = 1-$pageNum; $i <= 10-$pageNum; $i++): ?>
+                                <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>" <?= ($i == 0) ? 'aria-current="page"' : '' ?>
+                                   href="?tab=recommended&page=<?= ($pageNum + $i) ?>"><?= ($pageNum + $i) ?></a>
+                            <?php endfor; ?>
+                            <a class="next page-numbers" href="?tab=recommended&page=<?= ($pageNum + 1) ?>">next</a>
+
+                        <?php endif; ?>
                     </div>
                 </div>
 
             </div>
-
         </div>
+
+
+
+
+
     </div>
 
 
+
+    <!--    for search param search and check the active tab-->
     <script>
+
+
+
+
         // Get all radio buttons by their name
         const radioButtons = document.getElementsByName("radioForTab");
 
@@ -153,6 +180,7 @@
 
         // Attach click event listener to each radio button
         for (const radioButton of radioButtons) {
+
             radioButton.addEventListener("click", radioButtonClicked);
         }
 
@@ -164,6 +192,10 @@
                 if (radioButton.checked) {
                     // Get the value of the checked radio button
                     const selectedValue = radioButton.value;
+
+                    //setting search param to the correct tab
+                    setSearchParam('tab',radioButton.value);
+
                     // console.log(`Selected option: ${selectedValue}`);
                     contentBoxes.forEach((box) => {
                         box.style.display = 'none'
@@ -173,7 +205,68 @@
             }
         }
 
+
+
+
+        var recommended_tab_radio=document.getElementById("recommended-tab-radio");
+        var all_tab_radio=document.getElementById("all-tab-radio");
+
+        // Function to get search parameters from URL
+        function getSearchParams() {
+            // Get the URL search parameters
+            const urlSearchParams = new URLSearchParams(window.location.search);
+
+            // Create an object to store the parameters
+            const params = {};
+
+            // Loop through the search parameters and store them in the object
+            for (const [key, value] of urlSearchParams) {
+                params[key] = value;
+            }
+
+            return params;
+        }
+
+        //get search params
+        const searchParams = getSearchParams();
+
+        // Check if a  parameter exists and its value
+        if (searchParams.hasOwnProperty('tab')) {
+            const paramValue = searchParams['tab'];
+            console.log(paramValue)
+            if(paramValue=='all') {
+                all_tab_radio.click();
+            }else if(paramValue=="recommended") {
+                console.log("sxdsxsdsdxs")
+                recommended_tab_radio.click();
+            }
+        } else {
+            all_tab_radio.click();
+        }
+
+        function setSearchParam(paramName, paramValue) {
+            // Get the current URL
+            let currentUrl = window.location.href;
+
+            // Create a URLSearchParams object from the current URL
+            let searchParams = new URLSearchParams(window.location.search);
+
+            // Set or update the parameter
+            searchParams.set(paramName, paramValue);
+
+            // Replace the current query string with the updated one
+            currentUrl = currentUrl.split('?')[0] + '?' + searchParams.toString();
+
+            // Update the URL in the browser
+            window.history.replaceState({}, '', currentUrl);
+        }
+
+
+
     </script>
+
+
+
 
 <?php $this->view("includes/footer", $data);
     

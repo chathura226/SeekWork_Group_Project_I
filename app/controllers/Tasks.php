@@ -18,7 +18,8 @@ class Tasks extends Controller{
         $data['tasks']=$row;
         
         //TODO:pagination
-        $data['pageNum']=$_GET['page'];
+            if(!empty($_GET['page'])) $data['pageNum']=$_GET['page'];
+            else $data['pageNum']=1;
 
         $this->view('tasks',$data);
 
