@@ -4,7 +4,8 @@
 class Tasks extends Controller{
 
     public function index($id=null){
-        
+
+
         if(empty($id)){
 
         $data['title'] = "Tasks";
@@ -16,6 +17,8 @@ class Tasks extends Controller{
         // die;
         $data['tasks']=$row;
         
+        //TODO:pagination
+        $data['pageNum']=$_GET['page'];
 
         $this->view('tasks',$data);
 

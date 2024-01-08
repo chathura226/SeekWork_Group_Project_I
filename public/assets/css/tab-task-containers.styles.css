@@ -1,0 +1,82 @@
+
+.tab-container{
+    width: 100%;
+    background-color: white;
+    padding: 2px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.1);
+    border-radius: 20px;
+}
+
+.tab-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 2px solid rgba(229,229,229);
+
+}
+
+.tab-box .tab-btn{
+    font-size: 18px;
+    font-weight: 600;
+    color: #919191;
+    background: none;
+    padding: 10px;
+    cursor: pointer;
+}
+.active-tab-btn{
+    color: #7360ff !important;
+}
+.content-box{
+    padding-top: 20px;
+    padding-left: 0px;
+    padding-right: 0px;
+
+}
+.content-box .content-box-content{
+    display: none;
+    height: fit-content;
+    /*max-height: 300vh;*/
+}
+.content-box .content-box-content h2{
+    margin-bottom: 10px;
+}
+
+.tab-radio-inputs {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: #EEE;
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: 100%;
+    font-size: 14px;
+}
+
+.tab-radio-inputs .tab-radio-btn {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.tab-radio-inputs .tab-radio-btn input {
+    display: none;
+}
+
+.tab-radio-inputs .tab-radio-btn .name {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: none;
+    padding: .5rem 0;
+    color: rgba(51, 65, 85, 1);
+    transition: all .15s ease-in-out;
+}
+
+.tab-radio-inputs .tab-radio-btn input:checked + .name {
+    background-color: #fff;
+    font-weight: 600;
+}
