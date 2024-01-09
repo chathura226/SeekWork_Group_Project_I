@@ -53,8 +53,8 @@ class Tasks extends Controller
                 $query = "SELECT DISTINCT t.`taskID`, `title`, `taskType`, `description`, `deadline`, `value`, `status`, `documents`, `companyID`, `assignedStudentID`, `assignmentID`, `categoryID`, `finishedDate`, `createdAt` FROM task t JOIN task_skill ts ON t.taskID = ts.taskID WHERE ts.skillID IN ( SELECT student_skill.skillID FROM student_skill WHERE student_skill.studentID = :studentID )  ORDER BY t.createdAt ASC LIMIT " . $tasksPerPage . " OFFSET " . $tasksPerPage * ($data['pageNum'] - 1) . ";";
                 $row2 = $task->query($query, ['studentID' => Auth::getstudentID()]);
                 $data['recommendedTasks'] = $row2;
-                //  show($row2);
-                //  die;
+//                  show($row2);
+//                  die;
             }
 
             $data['title'] = "Tasks";

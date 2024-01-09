@@ -201,29 +201,17 @@
                 } ?>
                 <div id="recommended-pagination" class="pagination-wrapper">
                     <div class="pagination">
-                        <!--if page number is greater than 5-->
-                        <?php if ($pageNumNew > 5): ?>
 
-                            <a class="prev page-numbers" href="?tab=recommended&page=<?= ($pageNumNew - 1) ?>">prev</a>
-                            <?php for ($i = -4; $i <= 5; $i++): ?>
-                                <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>" <?= ($i == 0) ? 'aria-current="page"' : '' ?>
-                                   href="?tab=recommended&page=<?= ($pageNumNew + $i) ?>"><?= ($pageNumNew + $i) ?></a>
-                            <?php endfor; ?>
-                            <a class="next page-numbers" href="?tab=recommended&page=<?= ($pageNumNew + 1) ?>">next</a>
+                        <a class="prev page-numbers <?=($pageNumNew == 1)?'disabled':'';?>"
+                           href="?tab=recommended&page=<?= ($pageNumNew - 1) ?>">
+                            prev</a>
+                        <?php for ($i = max(1, $pageNumNew - 5); $i <= min($pageNumNew + 5, $recommendedTasksPageCount); $i++): ?>
+                            <a class="page-numbers <?= ($i == $pageNumNew) ? 'current' : '' ?>" <?= ($i == $pageNumNew) ? 'aria-current="page"' : '' ?>
+                               href="?tab=recommended&page=<?= ($i) ?>"><?= ($i) ?></a>
+                        <?php endfor; ?>
+                        <a class="next page-numbers <?=($pageNumNew + 1>$recommendedTasksPageCount)?'disabled':'';?>" href="?tab=recommended&page=<?= ($pageNumNew + 1) ?>">
+                            next</a>
 
-                        <?php else: ?>
-
-                            <!-- if page number is less than  or equal 5-->
-                            <?php if ($pageNumNew != 1): ?><a class="prev page-numbers"
-                                                              href="?tab=recommended&page=<?= ($pageNumNew - 1) ?>">
-                                    prev</a><?php endif; ?>
-                            <?php for ($i = 1 - $pageNumNew; $i <= 10 - $pageNumNew; $i++): ?>
-                                <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>" <?= ($i == 0) ? 'aria-current="page"' : '' ?>
-                                   href="?tab=recommended&page=<?= ($pageNumNew + $i) ?>"><?= ($pageNumNew + $i) ?></a>
-                            <?php endfor; ?>
-                            <a class="next page-numbers" href="?tab=recommended&page=<?= ($pageNumNew + 1) ?>">next</a>
-
-                        <?php endif; ?>
                     </div>
                 </div>
 
