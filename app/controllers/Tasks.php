@@ -14,7 +14,7 @@ class Tasks extends Controller
             //TODO:pagination
             // What happens when reach database end
             // send 24 by 24
-            $tasksPerPage=2;
+            $tasksPerPage = 2;
             if (!empty($_GET['page'])) $data['pageNum'] = $_GET['page'];
             else $data['pageNum'] = 1;
             if (!empty($_GET['tab'])) $data['tab'] = $_GET['tab'];
@@ -29,8 +29,13 @@ class Tasks extends Controller
 
 
             // recommended tasks
-            $data['recommendedTasks']=[];
-
+            if (Auth::is_student()) {
+                $query = "SELECT DISTINCT t.`taskID`, `title`, `taskType`, `description`, `deadline`, `value`, `status`, `documents`, `companyID`, `assignedStudentID`, `assignmentID`, `categoryID`, `finishedDate`, `createdAt` FROM task t JOIN task_skill ts ON t.taskID = ts.taskID WHERE ts.skillID IN ( SELECT student_skill.skillID FROM student_skill WHERE student_skill.studentID = :studentID );";
+                $row2 = $task->query($query, ['studentID' => Auth::getstudentID()]);
+                $data['recommendedTasks'] = $row2;
+//                show($row2);
+//                die;
+            }
 
             $data['title'] = "Tasks";
             $this->view('tasks', $data);
