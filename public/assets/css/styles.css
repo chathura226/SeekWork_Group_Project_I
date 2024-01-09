@@ -656,3 +656,9 @@ li {
     background-color: #f0f0f0;
     margin-right: 10px; /* Adjust as needed */
 }
+
+
+a.disabled {
+    pointer-events: none;
+    color: gray;
+}
