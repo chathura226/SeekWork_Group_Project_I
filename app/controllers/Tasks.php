@@ -18,8 +18,12 @@ class Tasks extends Controller{
         $data['tasks']=$row;
         
         //TODO:pagination
-            if(!empty($_GET['page'])) $data['pageNum']=$_GET['page'];
-            else $data['pageNum']=1;
+        // send 24 by 24
+
+        if(!empty($_GET['page'])) $data['pageNum']=$_GET['page'];
+        else $data['pageNum']=1;
+        if(!empty($_GET['tab'])) $data['tab']=$_GET['tab'];
+        else $data['tab']="all";
 
         $this->view('tasks',$data);
 

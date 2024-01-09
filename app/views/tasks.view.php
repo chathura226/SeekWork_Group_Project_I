@@ -87,34 +87,35 @@
 
                 </div>
 
+                <?php if($tab=="all") {$pageNumNew=$pageNum; }else{$pageNumNew=1;}?>
                 <div id="all-pagination" class="pagination-wrapper">
                     <div class="pagination">
                         <!--if page number is greater than 5-->
-                        <?php if ($pageNum > 5): ?>
+                        <?php if ($pageNumNew > 5): ?>
 
-                            <a class="prev page-numbers" href="?tab=all&page=<?= ($pageNum - 1) ?>">prev</a>
+                            <a class="prev page-numbers" href="?tab=all&page=<?= ($pageNumNew - 1) ?>">prev</a>
                             <?php for ($i = -4; $i <= 5; $i++): ?>
                                 <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>" <?= ($i == 0) ? 'aria-current="page"' : '' ?>
-                                   href="?tab=all&page=<?= ($pageNum + $i) ?>"><?= ($pageNum + $i) ?></a>
+                                   href="?tab=all&page=<?= ($pageNumNew + $i) ?>"><?= ($pageNumNew + $i) ?></a>
                             <?php endfor; ?>
-                            <a class="next page-numbers" href="?tab=all&page=<?= ($pageNum + 1) ?>">next</a>
+                            <a class="next page-numbers" href="?tab=all&page=<?= ($pageNumNew + 1) ?>">next</a>
 
                         <?php else: ?>
 
                             <!-- if page number is less than  or equal 5-->
-                            <?php if($pageNum!=1):?><a class="prev page-numbers" href="?tab=all&page=<?= ($pageNum - 1) ?>">prev</a><?php endif;?>
-                            <?php for ($i = 1-$pageNum; $i <= 10-$pageNum; $i++): ?>
+                            <?php if($pageNumNew!=1):?><a class="prev page-numbers" href="?tab=all&page=<?= ($pageNumNew - 1) ?>">prev</a><?php endif;?>
+                            <?php for ($i = 1-$pageNumNew; $i <= 10-$pageNumNew; $i++): ?>
                                 <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>" <?= ($i == 0) ? 'aria-current="page"' : '' ?>
-                                   href="?tab=all&page=<?= ($pageNum + $i) ?>"><?= ($pageNum + $i) ?></a>
+                                   href="?tab=all&page=<?= ($pageNumNew + $i) ?>"><?= ($pageNumNew + $i) ?></a>
                             <?php endfor; ?>
-                            <a class="next page-numbers" href="?tab=all&page=<?= ($pageNum + 1) ?>">next</a>
+                            <a class="next page-numbers" href="?tab=all&page=<?= ($pageNumNew + 1) ?>">next</a>
 
                         <?php endif; ?>
                     </div>
                 </div>
 
             </div>
-        </divrecommended
+        </div>
         <div class="content-box">
             <div class="content-box-content" id="recommended">
                 <div style="margin-left:20px "><h2>Recommended Tasks</h2></div>
@@ -126,28 +127,28 @@
 
 
                 </div>
-
-                <div id="all-pagination" class="pagination-wrapper">
+                <?php if($tab=="recommended") {$pageNumNew=$pageNum; }else{$pageNumNew=1;}?>
+                <div id="recommended-pagination" class="pagination-wrapper">
                     <div class="pagination">
                         <!--if page number is greater than 5-->
-                        <?php if ($pageNum > 5): ?>
+                        <?php if ($pageNumNew > 5): ?>
 
-                            <a class="prev page-numbers" href="?tab=recommended&page=<?= ($pageNum - 1) ?>">prev</a>
+                            <a class="prev page-numbers" href="?tab=recommended&page=<?= ($pageNumNew - 1) ?>">prev</a>
                             <?php for ($i = -4; $i <= 5; $i++): ?>
                                 <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>" <?= ($i == 0) ? 'aria-current="page"' : '' ?>
-                                   href="?tab=recommended&page=<?= ($pageNum + $i) ?>"><?= ($pageNum + $i) ?></a>
+                                   href="?tab=recommended&page=<?= ($pageNumNew + $i) ?>"><?= ($pageNumNew + $i) ?></a>
                             <?php endfor; ?>
-                            <a class="next page-numbers" href="?tab=recommended&page=<?= ($pageNum + 1) ?>">next</a>
+                            <a class="next page-numbers" href="?tab=recommended&page=<?= ($pageNumNew + 1) ?>">next</a>
 
                         <?php else: ?>
 
                             <!-- if page number is less than  or equal 5-->
-                            <?php if($pageNum!=1):?><a class="prev page-numbers" href="?tab=recommended&page=<?= ($pageNum - 1) ?>">prev</a><?php endif;?>
-                            <?php for ($i = 1-$pageNum; $i <= 10-$pageNum; $i++): ?>
+                            <?php if($pageNumNew!=1):?><a class="prev page-numbers" href="?tab=recommended&page=<?= ($pageNumNew - 1) ?>">prev</a><?php endif;?>
+                            <?php for ($i = 1-$pageNumNew; $i <= 10-$pageNumNew; $i++): ?>
                                 <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>" <?= ($i == 0) ? 'aria-current="page"' : '' ?>
-                                   href="?tab=recommended&page=<?= ($pageNum + $i) ?>"><?= ($pageNum + $i) ?></a>
+                                   href="?tab=recommended&page=<?= ($pageNumNew + $i) ?>"><?= ($pageNumNew + $i) ?></a>
                             <?php endfor; ?>
-                            <a class="next page-numbers" href="?tab=recommended&page=<?= ($pageNum + 1) ?>">next</a>
+                            <a class="next page-numbers" href="?tab=recommended&page=<?= ($pageNumNew + 1) ?>">next</a>
 
                         <?php endif; ?>
                     </div>
@@ -195,6 +196,11 @@
 
                     //setting search param to the correct tab
                     setSearchParam('tab',radioButton.value);
+                    //getting current page value
+                    // var currPageWrapper=document.getElementById(radioButton.value+"-pagination");
+                    var currentPage=document.querySelector('#'+radioButton.value+'-pagination .current').textContent;
+                    // console.log(currentPage)
+                    setSearchParam('page',currentPage);
 
                     // console.log(`Selected option: ${selectedValue}`);
                     contentBoxes.forEach((box) => {
