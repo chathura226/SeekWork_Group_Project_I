@@ -87,7 +87,11 @@
 
                 </div>
 
-                <?php if($tab=="all") {$pageNumNew=$pageNum; }else{$pageNumNew=1;}?>
+                <?php if ($tab == "all") {
+                    $pageNumNew = $pageNum;
+                } else {
+                    $pageNumNew = 1;
+                } ?>
                 <div id="all-pagination" class="pagination-wrapper">
                     <div class="pagination">
                         <!--if page number is greater than 5-->
@@ -103,8 +107,10 @@
                         <?php else: ?>
 
                             <!-- if page number is less than  or equal 5-->
-                            <?php if($pageNumNew!=1):?><a class="prev page-numbers" href="?tab=all&page=<?= ($pageNumNew - 1) ?>">prev</a><?php endif;?>
-                            <?php for ($i = 1-$pageNumNew; $i <= 10-$pageNumNew; $i++): ?>
+                            <?php if ($pageNumNew != 1): ?><a class="prev page-numbers"
+                                                              href="?tab=all&page=<?= ($pageNumNew - 1) ?>">
+                                    prev</a><?php endif; ?>
+                            <?php for ($i = 1 - $pageNumNew; $i <= 10 - $pageNumNew; $i++): ?>
                                 <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>" <?= ($i == 0) ? 'aria-current="page"' : '' ?>
                                    href="?tab=all&page=<?= ($pageNumNew + $i) ?>"><?= ($pageNumNew + $i) ?></a>
                             <?php endfor; ?>
@@ -120,14 +126,32 @@
             <div class="content-box-content" id="recommended">
                 <div style="margin-left:20px "><h2>Recommended Tasks</h2></div>
 
-                <div class="task-wrapper column-12">
+
+                <?php if (!Auth::logged_in()): ?>
+                    <!-- not logged in-->
+                    <h3 style="color: red;margin-left: 20px;">You have to be logged in to see recommended tasks!</h3>
+                <?php elseif (!Auth::is_student()): ?>
+                    <!-- not a student-->
+                    <h3 style="color: red;margin-left: 20px;">You have to be a student to see recommended tasks!</h3>
+                <?php elseif (empty($recommendedTasks)): ?>
+                    <!-- not recommende tasks-->
+                    <h3 style="color: red;margin-left: 20px;">No recommended tasks! Add more skills to see tasks</h3>
+                <?php else: ?>
+                    <!-- recommende tasks-->
+                    <div class="task-wrapper column-12">
+
+                    </div>
+                <?php endif; ?>
 
 
 
 
 
-                </div>
-                <?php if($tab=="recommended") {$pageNumNew=$pageNum; }else{$pageNumNew=1;}?>
+                <?php if ($tab == "recommended") {
+                    $pageNumNew = $pageNum;
+                } else {
+                    $pageNumNew = 1;
+                } ?>
                 <div id="recommended-pagination" class="pagination-wrapper">
                     <div class="pagination">
                         <!--if page number is greater than 5-->
@@ -143,8 +167,10 @@
                         <?php else: ?>
 
                             <!-- if page number is less than  or equal 5-->
-                            <?php if($pageNumNew!=1):?><a class="prev page-numbers" href="?tab=recommended&page=<?= ($pageNumNew - 1) ?>">prev</a><?php endif;?>
-                            <?php for ($i = 1-$pageNumNew; $i <= 10-$pageNumNew; $i++): ?>
+                            <?php if ($pageNumNew != 1): ?><a class="prev page-numbers"
+                                                              href="?tab=recommended&page=<?= ($pageNumNew - 1) ?>">
+                                    prev</a><?php endif; ?>
+                            <?php for ($i = 1 - $pageNumNew; $i <= 10 - $pageNumNew; $i++): ?>
                                 <a class="page-numbers <?= ($i == 0) ? 'current' : '' ?>" <?= ($i == 0) ? 'aria-current="page"' : '' ?>
                                    href="?tab=recommended&page=<?= ($pageNumNew + $i) ?>"><?= ($pageNumNew + $i) ?></a>
                             <?php endfor; ?>
@@ -158,17 +184,11 @@
         </div>
 
 
-
-
-
     </div>
-
 
 
     <!--    for search param search and check the active tab-->
     <script>
-
-
 
 
         // Get all radio buttons by their name
@@ -195,12 +215,12 @@
                     const selectedValue = radioButton.value;
 
                     //setting search param to the correct tab
-                    setSearchParam('tab',radioButton.value);
+                    setSearchParam('tab', radioButton.value);
                     //getting current page value
                     // var currPageWrapper=document.getElementById(radioButton.value+"-pagination");
-                    var currentPage=document.querySelector('#'+radioButton.value+'-pagination .current').textContent;
+                    var currentPage = document.querySelector('#' + radioButton.value + '-pagination .current').textContent;
                     // console.log(currentPage)
-                    setSearchParam('page',currentPage);
+                    setSearchParam('page', currentPage);
 
                     // console.log(`Selected option: ${selectedValue}`);
                     contentBoxes.forEach((box) => {
@@ -212,10 +232,8 @@
         }
 
 
-
-
-        var recommended_tab_radio=document.getElementById("recommended-tab-radio");
-        var all_tab_radio=document.getElementById("all-tab-radio");
+        var recommended_tab_radio = document.getElementById("recommended-tab-radio");
+        var all_tab_radio = document.getElementById("all-tab-radio");
 
         // Function to get search parameters from URL
         function getSearchParams() {
@@ -240,9 +258,9 @@
         if (searchParams.hasOwnProperty('tab')) {
             const paramValue = searchParams['tab'];
             console.log(paramValue)
-            if(paramValue=='all') {
+            if (paramValue == 'all') {
                 all_tab_radio.click();
-            }else if(paramValue=="recommended") {
+            } else if (paramValue == "recommended") {
                 console.log("sxdsxsdsdxs")
                 recommended_tab_radio.click();
             }
@@ -268,10 +286,7 @@
         }
 
 
-
     </script>
-
-
 
 
 <?php $this->view("includes/footer", $data);

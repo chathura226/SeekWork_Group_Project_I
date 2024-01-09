@@ -98,7 +98,8 @@ class Model extends Database
     //$selectColumns= columns that they need. SHoould not be ambiguous =  ['lastName','user.userID']
     //NOTE: Where clause is expanaded in here. not using key value pairs for PDO using $key=:$key. 
     // There for no need to send the $data to PDO
-    public function innerJoin($tables = [], $joinConditions = [], $data = [], $selectColumns = ['*'])
+    //$order=[orderCol,ASC] or$order=[orderCol,DESC]
+    public function innerJoin($tables = [], $joinConditions = [], $data = [], $selectColumns = ['*'],$order=[],$limit=-1,$offset=-1)
     {
         if (count($tables) < 1 && count($tables) == count($joinConditions)) {
             return false; // Need atleast one more table than $this->table to use innerjoin
@@ -124,6 +125,18 @@ class Model extends Database
 
             //remove the additional '&&' 
             $query = trim($query, "&& ");
+        }
+
+        if(!empty($order)){//custom order
+            $query.=" ORDER BY ".$order[0]." ".$order[1];
+        }
+
+        if($limit!=-1){//custom limit
+            $query.=" LIMIT ".$limit;
+        }
+
+        if($offset!=-1){//custom offset
+            $query.=" OFFSET ".$offset;
         }
 //         show($query);
 //         show($data);
