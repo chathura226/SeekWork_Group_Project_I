@@ -78,6 +78,7 @@
 </head>
 <body>
     <div class="container">
+        <h2>Reviews and Ratings</h2>
         <button type="button" class="btn" onclick="openPopup()">Add Review</button>
         <div class="popup" id="popup">
             <div class="submit_review">
@@ -101,13 +102,12 @@
         <div class="popupnew" id="popupnew">
             <img src="tick.png" alt="tick picture">
             <h2>Thank You!</h2>
-            <p>Your review has been successfully submitted. Thank You!</p>
+            <p>Your review has been successfully submitted.</p>
             <button type="button" onclick="closePopupnew()">OK</button>
         </div>
     </div>
 
     <div class="content home">
-        <h2>Reviews and Ratings</h2>
         <div class="reviews"></div>
         <script src="reviews.js"></script>
 
@@ -147,18 +147,7 @@
         function showPopupNew() {
             popupnew.classList.add("open-popup");
         }
-
         
-        /*function form() {
-
-            // Perform form submission logic (you might want to use AJAX to submit the form data)
-
-            // Assuming the form submission is successful, show the success message
-            showPopupNew();
-
-            // Clear the form fields
-            reviewForm.reset();
-        }*/
         
     </script>
 </body>
