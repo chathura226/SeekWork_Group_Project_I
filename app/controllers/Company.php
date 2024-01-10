@@ -92,6 +92,32 @@ class Company extends Users
         $this->view('company/verification', $data);
     }
 
+    public function payments(){
+        $data['merchantID']=MERCHANT_ID;
+        $data['order_id']="659e56e822830";
+        $data['items']="For posting task";
+        $data['currency']="LKR";
+        $data['amount']=3000;
+        $data['first_name']=Auth::getfirstName();
+        $data['last_name']=Auth::getlastName();
+        $data['email']=Auth::getemail();
+        $data['phone']=Auth::getcontactNo();
+        $data['address']=Auth::getaddress();
+        $data['country']="Sri Lanka";
+        $hash = strtoupper(
+            md5(
+                $data['merchantID'] .
+                $data['order_id'] .
+                number_format($data['amount'], 2, '.', '') .
+                $data['currency'] .
+                strtoupper(md5(MERCHANT_SECRET))
+            )
+        );
+        $data['hash']=$hash;
+        $data['title'] = "Payments";
+
+        $this->view('company/payments', $data);
+    }
 
     public function tasks($id = null, $action = null, $id2 = null)
     {
