@@ -3,9 +3,9 @@
 <body>
 <form method="post" action="https://sandbox.payhere.lk/pay/checkout">
     <input type="hidden" name="merchant_id" value="<?=$merchantID?>">    <!-- Replace your Merchant ID -->
-    <input type="hidden" name="return_url" value="<?=ROOT?>/home">
-    <input type="hidden" name="cancel_url" value="http://sample.com/cancel">
-    <input type="hidden" name="notify_url" value="https://e54f-212-104-236-10.ngrok-free.app/public/payment">
+    <input type="hidden" name="return_url" value="<?=ROOT?>/company/payments">
+    <input type="hidden" name="cancel_url" value="<?=ROOT?>/company/payments">
+    <input type="hidden" name="notify_url" value="https://17a7-212-104-237-129.ngrok-free.app/public/payment">
     </br></br>Item Details</br>
     <input type="text" name="order_id" value="<?=$order_id?>">
     <input type="text" name="items" value="<?=$items?>">

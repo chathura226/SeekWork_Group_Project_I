@@ -624,7 +624,7 @@ class Student extends Users
                             $payment['paymentStatus'] = 'outstanding';
                             $payment['taskID'] = $assignment->taskID;
                             $payment['paymentDescription'] = "Payment for Task - ".$resul->title;
-                            $payment['amount'] = $price+COMMISSION;paymentDescription
+                            $payment['amount'] = $price+COMMISSION;
                             $paymentInst = new PaymentModel();
                             $paymentInst->insert($payment);
 

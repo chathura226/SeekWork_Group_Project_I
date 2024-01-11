@@ -92,28 +92,47 @@ class Company extends Users
         $this->view('company/verification', $data);
     }
 
-    public function payments(){
-//        $data['merchantID']=MERCHANT_ID;
-//        $data['order_id']="659e56e822830";
-//        $data['items']="For posting task";
-//        $data['currency']="LKR";
-//        $data['amount']=3000;
-//        $data['first_name']=Auth::getfirstName();
-//        $data['last_name']=Auth::getlastName();
-//        $data['email']=Auth::getemail();
-//        $data['phone']=Auth::getcontactNo();
-//        $data['address']=Auth::getaddress();
-//        $data['country']="Sri Lanka";
-//        $hash = strtoupper(
-//            md5(
-//                $data['merchantID'] .
-//                $data['order_id'] .
-//                number_format($data['amount'], 2, '.', '') .
-//                $data['currency'] .
-//                strtoupper(md5(MERCHANT_SECRET))
-//            )
-//        );
-//        $data['hash']=$hash;
+    public function payments($id=null){
+
+        //for individual payment
+        if(!empty($id)){
+            //getting payment details related to the id
+            $paymentInst=new PaymentModel();
+            $row1=$paymentInst->innerJoin(['task'],['task.taskID=payment.taskID'],['paymentID'=>"'".$id."'"])[0];
+
+            //checking the status of the payment and redirecting
+            if($row1->paymentStatus=='outstanding'){
+                        $data['merchantID'] = MERCHANT_ID;
+                $data['order_id'] = $id;
+                $data['items'] = "For posting task - ".$row1->title;
+                $data['currency'] = "LKR";
+                $data['amount'] = $row1->amount;
+                $data['first_name'] = Auth::getfirstName();
+                $data['last_name'] = Auth::getlastName();
+                $data['email'] = Auth::getemail();
+                $data['phone'] = Auth::getcontactNo();
+                $data['address'] = Auth::getaddress();
+                $data['country'] = "Sri Lanka";
+                $hash = strtoupper(
+                    md5(
+                        $data['merchantID'] .
+                        $data['order_id'] .
+                        number_format($data['amount'], 2, '.', '') .
+                        $data['currency'] .
+                        strtoupper(md5(MERCHANT_SECRET))
+                    )
+                );
+                $data['hash'] = $hash;
+                $data['title'] = "Payment";
+
+                $this->view('company/payment', $data);
+                return;
+            }else{
+                message('Payment is already completed!');
+                redirect('company/payments');
+            }
+        }
+
 
 
         //getting payment details regarding tasks of the company
