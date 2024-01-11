@@ -149,3 +149,5 @@
 [2024-01-10T08:14:15.091647+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.18.0.1"} []
 [2024-01-11T13:44:41.390803+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.18.0.1"} []
 [2024-01-11T13:56:05.933363+00:00] log.INFO: Payment Successful! [] []
+[2024-01-11T14:54:43.597557+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.18.0.1"} []
+[2024-01-11T14:55:05.778638+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.18.0.1"} []
