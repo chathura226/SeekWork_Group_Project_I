@@ -116,7 +116,7 @@ class Company extends Users
         $data['hash']=$hash;
         $data['title'] = "Payments";
 
-        $this->view('company/payments', $data);
+        $this->view('company/payment', $data);
     }
 
     public function tasks($id = null, $action = null, $id2 = null)
