@@ -55,6 +55,8 @@ class Tasks extends Controller
                 $data['recommendedTasks'] = $row2;
 //                  show($row2);
 //                  die;
+            }else{//if not a student
+                $data['recommendedTasksPageCount']=1;
             }
 
             $data['title'] = "Tasks";
