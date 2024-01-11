@@ -48,3 +48,7 @@ define('MAILER_PASS','fiqslttijzawoyut');
 //for payhere ( these are for my personal email address)
 define('MERCHANT_ID',1224435);
 define('MERCHANT_SECRET','MzY1NTkxMzIwMTQ4NDU3NzM5MTQwNTU0MjI0MTIxODQ2NjQ0NTU1');
+
+
+//seekwork commision for each task
+define('COMMISSION',500);

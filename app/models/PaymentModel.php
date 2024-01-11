@@ -10,10 +10,12 @@ class PaymentModel extends Model {
     //fields that can be updated
     protected $allowedColumns=[
         'paymentID',//should be unique string
+        'paymentDescription',
         'paymentStatus',
         'taskID',
         'amount',
         'createdAt',
+        'paidDate',
     ];
 
 }

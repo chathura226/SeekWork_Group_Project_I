@@ -616,14 +616,15 @@ class Student extends Users
 
                             //create payment id for the task
                             $price = $proposal->proposeAmount;
+                            $resul = $taskInst->first(['taskID' => $assignment->taskID]);
                             if (empty($price)) {
-                                $resul = $taskInst->first(['taskID' => $assignment->taskID]);
                                 $price = $resul->value;
                             }
                             $payment['paymentID'] = uniqid();
                             $payment['paymentStatus'] = 'outstanding';
                             $payment['taskID'] = $assignment->taskID;
-                            $payment['amount'] = $price;
+                            $payment['paymentDescription'] = "Payment for Task - ".$resul->title;
+                            $payment['amount'] = $price+COMMISSION;paymentDescription
                             $paymentInst = new PaymentModel();
                             $paymentInst->insert($payment);
 

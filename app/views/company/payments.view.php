@@ -1,8 +1,8 @@
-<?php $this->view('company/company-header',$data) ?>
-    <link href="<?=ROOT?>/assets/css/changepassword.styles.css" rel="stylesheet">
-    <link href="<?=ROOT?>/assets/css/passwordStrengthForChangePass.styles.css" rel="stylesheet">
-    <link href="<?=ROOT?>/assets/css/tab-containers.styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/tables.styles.css">
+<?php $this->view('company/company-header', $data) ?>
+    <link href="<?= ROOT ?>/assets/css/changepassword.styles.css" rel="stylesheet">
+    <link href="<?= ROOT ?>/assets/css/passwordStrengthForChangePass.styles.css" rel="stylesheet">
+    <link href="<?= ROOT ?>/assets/css/tab-containers.styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/tables.styles.css">
 
 
     <div class="pagetitle column-12">
@@ -11,10 +11,10 @@
 
             <ul class="breadcrumbs">
                 <li class="breadcrumbs__item">
-                    <a href="<?=ROOT?>" class="breadcrumbs__link">Home</a>
+                    <a href="<?= ROOT ?>" class="breadcrumbs__link">Home</a>
                 </li>
                 <li class="breadcrumbs__item">
-                    <a href="<?=ROOT?>/<?=Auth::getrole()?>" class="breadcrumbs__link">Dashboard</a>
+                    <a href="<?= ROOT ?>/<?= Auth::getrole() ?>" class="breadcrumbs__link">Dashboard</a>
                 </li>
 
                 <li class="breadcrumbs__item">
@@ -40,7 +40,6 @@
             </label>
 
 
-
         </div>
         <div class="content-box">
             <div class="content-box-content" id="all">
@@ -56,33 +55,55 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($assignments as $assignment):?>
+                    <?php foreach ($payments as $payment): ?>
                         <tr style="height: 70px">
-                            <th><?=$assignment->assignmentID?></th>
-                            <td><?=limitCharacters($assignment->title,13)?></td>
-                            <td><?=$assignment->assignmentDate?></td>
-                            <?php $statusColor='green'; switch ($assignment->assignmentStatus){
-                                case 'accepted':
-                                    $statusColor='green';
-                                    $textColor='whitesmoke';
+                            <th><?= $payment->paymentID ?></th>
+                            <td><?= limitCharacters($payment->paymentDescription, 13) ?></td>
+                            <!--                            <td>-->
+                            <?php //=ucfirst($payment->paymentStatus)?><!--</td>-->
+                            <?php $statusColor = 'yellow';
+                            switch ($payment->paymentStatus) {
+                                case 'completed':
+                                    $statusColor = 'green';
+                                    $textColor = 'whitesmoke';
                                     break;
-                                case 'declined':
-                                    $statusColor='red';
-                                    $textColor='whitesmoke';
+                                case 'outstanding':
+                                    $statusColor = 'yellow';
+                                    $textColor = 'var(--text-color)';
                                     break;
                                 default:
-                                    $statusColor='yellow';
-                                    $textColor='var(--text-color)';
+                                    $statusColor = 'yellow';
+                                    $textColor = 'var(--text-color)';
                                     break;
 
-                            };?>
-                            <td><div class="status-btn-like" style="background-color: <?=$statusColor?>;color: <?=$textColor?>"> <?=ucfirst($assignment->assignmentStatus)?></div></td>
-                            <td><?=(!empty($assignment->replyDate))?$assignment->replyDate:'N/A'?></td>
-
-                            <td><a href="<?=ROOT?>/company/tasks/<?=$assignment->taskID?>" style="text-decoration: none;"><button class="status-btn-working">Go to task</button></a></td>
-
+                            }; ?>
+                            <td>
+                                <div class="status-btn-like"
+                                     style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($payment->paymentStatus) ?></div>
+                            </td>
+                            <td><?= (!empty($payment->paidDate)) ? $payment->paidDate : 'N/A' ?></td>
+                            <?php if ($payment->paymentStatus == 'outstanding'): ?>
+                                <td>
+                                    <div class="flex"
+                                         style="margin: auto;justify-content: center;align-items: center;gap: 20px">
+                                        <a href="<?= ROOT ?>/company/payments/<?= $payment->paymentID ?>"
+                                           style="text-decoration: none;">
+                                            <button class="status-btn-working">Pay Now</button>
+                                        </a>
+                                        <a href="<?= ROOT ?>/company/tasks/<?= $payment->taskID ?>"
+                                           style="text-decoration: none;">
+                                            <button class="status-btn-working">Go to Task</button>
+                                        </a>
+                                    </div>
+                                </td>
+                            <?php else: ?>
+                                <td><a href="<?= ROOT ?>/company/tasks/<?= $payment->taskID ?>"
+                                       style="text-decoration: none;">
+                                        <button class="status-btn-working">Go to Task</button>
+                                    </a></td>
+                            <?php endif; ?>
                         </tr>
-                    <?php endforeach;?>
+                    <?php endforeach; ?>
 
                     </tbody>
                 </table>
@@ -100,7 +121,57 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <?php foreach ($payments as $payment): ?>
+                        <?php if ($payment->paymentStatus == 'outstanding'): ?>
+                            <tr style="height: 70px">
+                                <th><?= $payment->paymentID ?></th>
+                                <td><?= limitCharacters($payment->paymentDescription, 13) ?></td>
+                                <!--                            <td>-->
+                                <?php //=ucfirst($payment->paymentStatus)?><!--</td>-->
+                                <?php $statusColor = 'yellow';
+                                switch ($payment->paymentStatus) {
+                                    case 'completed':
+                                        $statusColor = 'green';
+                                        $textColor = 'whitesmoke';
+                                        break;
+                                    case 'outstanding':
+                                        $statusColor = 'yellow';
+                                        $textColor = 'var(--text-color)';
+                                        break;
+                                    default:
+                                        $statusColor = 'yellow';
+                                        $textColor = 'var(--text-color)';
+                                        break;
 
+                                }; ?>
+                                <td>
+                                    <div class="status-btn-like"
+                                         style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($payment->paymentStatus) ?></div>
+                                </td>
+                                <td><?= (!empty($payment->paidDate)) ? $payment->paidDate : 'N/A' ?></td>
+                                <?php if ($payment->paymentStatus == 'outstanding'): ?>
+                                    <td>
+                                        <div class="flex"
+                                             style="margin: auto;justify-content: center;align-items: center;gap: 20px">
+                                            <a href="<?= ROOT ?>/company/payments/<?= $payment->paymentID ?>"
+                                               style="text-decoration: none;">
+                                                <button class="status-btn-working">Pay Now</button>
+                                            </a>
+                                            <a href="<?= ROOT ?>/company/tasks/<?= $payment->taskID ?>"
+                                               style="text-decoration: none;">
+                                                <button class="status-btn-working">Go to Task</button>
+                                            </a>
+                                        </div>
+                                    </td>
+                                <?php else: ?>
+                                    <td><a href="<?= ROOT ?>/company/tasks/<?= $payment->taskID ?>"
+                                           style="text-decoration: none;">
+                                            <button class="status-btn-working">Go to Task</button>
+                                        </a></td>
+                                <?php endif; ?>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
 
                     </tbody>
                 </table>
@@ -119,7 +190,57 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <?php foreach ($payments as $payment): ?>
+                        <?php if ($payment->paymentStatus == 'completed'): ?>
+                            <tr style="height: 70px">
+                                <th><?= $payment->paymentID ?></th>
+                                <td><?= limitCharacters($payment->paymentDescription, 13) ?></td>
+                                <!--                            <td>-->
+                                <?php //=ucfirst($payment->paymentStatus)?><!--</td>-->
+                                <?php $statusColor = 'yellow';
+                                switch ($payment->paymentStatus) {
+                                    case 'completed':
+                                        $statusColor = 'green';
+                                        $textColor = 'whitesmoke';
+                                        break;
+                                    case 'outstanding':
+                                        $statusColor = 'yellow';
+                                        $textColor = 'var(--text-color)';
+                                        break;
+                                    default:
+                                        $statusColor = 'yellow';
+                                        $textColor = 'var(--text-color)';
+                                        break;
 
+                                }; ?>
+                                <td>
+                                    <div class="status-btn-like"
+                                         style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($payment->paymentStatus) ?></div>
+                                </td>
+                                <td><?= (!empty($payment->paidDate)) ? $payment->paidDate : 'N/A' ?></td>
+                                <?php if ($payment->paymentStatus == 'outstanding'): ?>
+                                    <td>
+                                        <div class="flex"
+                                             style="margin: auto;justify-content: center;align-items: center;gap: 20px">
+                                            <a href="<?= ROOT ?>/company/payments/<?= $payment->paymentID ?>"
+                                               style="text-decoration: none;">
+                                                <button class="status-btn-working">Pay Now</button>
+                                            </a>
+                                            <a href="<?= ROOT ?>/company/tasks/<?= $payment->taskID ?>"
+                                               style="text-decoration: none;">
+                                                <button class="status-btn-working">Go to Task</button>
+                                            </a>
+                                        </div>
+                                    </td>
+                                <?php else: ?>
+                                    <td><a href="<?= ROOT ?>/company/tasks/<?= $payment->taskID ?>"
+                                           style="text-decoration: none;">
+                                            <button class="status-btn-working">Go to Task</button>
+                                        </a></td>
+                                <?php endif; ?>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
 
                     </tbody>
                 </table>
@@ -133,15 +254,16 @@
         // Get all radio buttons by their name
         const radioButtons = document.getElementsByName("radioForTab");
 
-        const contentBoxes=document.querySelectorAll(".content-box-content")
+        const contentBoxes = document.querySelectorAll(".content-box-content")
 
         //default one
-        contentBoxes[0].style.display='block'
+        contentBoxes[0].style.display = 'block'
 
         // Attach click event listener to each radio button
         for (const radioButton of radioButtons) {
             radioButton.addEventListener("click", radioButtonClicked);
         }
+
         // Function to handle radio button click event
         function radioButtonClicked() {
             // Loop through all radio buttons
@@ -151,11 +273,13 @@
                     // Get the value of the checked radio button
                     const selectedValue = radioButton.value;
                     // console.log(`Selected option: ${selectedValue}`);
-                    contentBoxes.forEach((box)=>{box.style.display='none'})
-                    var x=document.getElementById(selectedValue).style.display ='block';
+                    contentBoxes.forEach((box) => {
+                        box.style.display = 'none'
+                    })
+                    var x = document.getElementById(selectedValue).style.display = 'block';
                 }
             }
         }
 
     </script>
-<?php $this->view('company/company-footer',$data) ?>
+<?php $this->view('company/company-footer', $data) ?>
