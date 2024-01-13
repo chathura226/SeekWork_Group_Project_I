@@ -48,10 +48,10 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>PaymentID</th>
-                        <th>Payment Description</th>
+                        <th>TransactionID</th>
+                        <th>Earning Description</th>
                         <th>Status</th>
-                        <th>Payment Date</th>
+                        <th>Transaction Date</th>
                         <th>Link</th>
                     </tr>
                     </thead>
@@ -65,10 +65,10 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>PaymentID</th>
-                        <th>Payment Description</th>
+                        <th>TransactionID</th>
+                        <th>Earning Description</th>
                         <th>Status</th>
-                        <th>Payment Date</th>
+                        <th>Transaction Date</th>
                         <th>Link</th>
                     </tr>
                     </thead>
@@ -83,10 +83,10 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>PaymentID</th>
-                        <th>Payment Description</th>
+                        <th>TransactionID</th>
+                        <th>Earning Description</th>
                         <th>Status</th>
-                        <th>Payment Date</th>
+                        <th>Transaction Date</th>
                         <th>Link</th>
                     </tr>
                     </thead>

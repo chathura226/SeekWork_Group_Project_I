@@ -579,6 +579,35 @@ INSERT INTO `dispute` VALUES (1,'first dispute','dejdedmedmed enjed','2023-10-24
 UNLOCK TABLES;
 
 --
+-- Table structure for table `earnings`
+--
+
+DROP TABLE IF EXISTS `earnings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `earnings` (
+  `transactionID` varchar(32) NOT NULL,
+  `earningDescription` text NOT NULL,
+  `earningStatus` enum('available','withdrawn','requested') NOT NULL DEFAULT 'available',
+  `transactionDate` datetime DEFAULT NULL,
+  `taskID` int NOT NULL,
+  `amount` double NOT NULL,
+  PRIMARY KEY (`transactionID`),
+  KEY `earning-task` (`taskID`),
+  CONSTRAINT `earning-task` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `earnings`
+--
+
+LOCK TABLES `earnings` WRITE;
+/*!40000 ALTER TABLE `earnings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `earnings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `moderator`
 --
 
@@ -1515,4 +1544,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-11 16:26:54
+-- Dump completed on 2024-01-13 14:46:54
