@@ -10,7 +10,7 @@ class Earning extends Model {
     //fields that can be updated
     protected $allowedColumns=[
         'transactionID',//should be unique string
-        'earningDescription	',
+        'earningDescription',
         'earningStatus',
         'transactionDate',
         'taskID',
