@@ -828,6 +828,13 @@ class Student extends Users
 
     public function earnings()
     {
+        $earningInst=new Earning();
+        $row=$earningInst->innerJoin(['task'],['task.taskID=earnings.taskID'],['assignedStudentID'=>Auth::getstudentID()]);
+
+
+        $data['earnings']=$row;
+
+
         $data['title'] = "Earnings";
 
         $this->view('student/earnings', $data);
