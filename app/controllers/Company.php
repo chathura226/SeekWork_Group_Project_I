@@ -869,6 +869,24 @@ class Company extends Users
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 if ($_POST['confirm'] === 'close the task') {
                     $taskInst->update(['status' => 'closed'], $id);
+
+                    //new earnigng for the assigned student
+                    $earningInst=new Earning();
+                    $proposalInst=new Proposal();
+                    $proposal=$proposalInst->innerJoin(['assignment'],['assignment.proposalID=proposal.proposalID'],['assignmentID'=>$task->assignmentID])[0];
+                    $price = $proposal->proposeAmount;
+                    if(empty($price)){//fixed price
+                        $price=$task->value;
+                    }
+
+                    $payment['transactionID'] = uniqid();
+                    $payment['earningStatus'] = 'available';
+                    $payment['taskID'] = $id;
+                    $payment['earningDescription'] = "Earning by the Task - ".$task->title;
+                    $payment['amount'] = $price;
+                    $earningInst->insert($payment);
+
+
                     message('Task closed successfully!');
                     redirect('company/tasks');
                 } else {
