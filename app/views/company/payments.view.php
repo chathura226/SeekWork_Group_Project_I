@@ -43,7 +43,7 @@
         </div>
         <div class="content-box">
             <div class="content-box-content" id="all">
-                <h2>All Invitations</h2>
+                <h2>All Payments</h2>
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -58,7 +58,7 @@
                     <?php foreach ($payments as $payment): ?>
                         <tr style="height: 70px">
                             <th><?= $payment->paymentID ?></th>
-                            <td><?= limitCharacters($payment->paymentDescription, 13) ?></td>
+                            <td><?= limitCharacters($payment->paymentDescription, 25) ?></td>
                             <!--                            <td>-->
                             <?php //=ucfirst($payment->paymentStatus)?><!--</td>-->
                             <?php $statusColor = 'yellow';
@@ -125,7 +125,7 @@
                         <?php if ($payment->paymentStatus == 'outstanding'): ?>
                             <tr style="height: 70px">
                                 <th><?= $payment->paymentID ?></th>
-                                <td><?= limitCharacters($payment->paymentDescription, 13) ?></td>
+                                <td><?= limitCharacters($payment->paymentDescription, 25) ?></td>
                                 <!--                            <td>-->
                                 <?php //=ucfirst($payment->paymentStatus)?><!--</td>-->
                                 <?php $statusColor = 'yellow';
@@ -194,7 +194,7 @@
                         <?php if ($payment->paymentStatus == 'completed'): ?>
                             <tr style="height: 70px">
                                 <th><?= $payment->paymentID ?></th>
-                                <td><?= limitCharacters($payment->paymentDescription, 13) ?></td>
+                                <td><?= limitCharacters($payment->paymentDescription, 25) ?></td>
                                 <!--                            <td>-->
                                 <?php //=ucfirst($payment->paymentStatus)?><!--</td>-->
                                 <?php $statusColor = 'yellow';
