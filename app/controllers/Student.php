@@ -826,5 +826,11 @@ class Student extends Users
         $this->view('student/disputes', $data);
     }
 
+    public function earnings()
+    {
+        $data['title'] = "Earnings";
+
+        $this->view('student/earnings', $data);
+    }
 
 }
