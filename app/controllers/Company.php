@@ -13,25 +13,17 @@ class Company extends Users
     }
 
 
-    public function chats($id = null)
+    public
+    function chats()
     {
 
 
-        if (!empty($id)) { //req a particular chat
-            //implement chat connection with db
 
-
-            $data['title'] = "Chat";
-
-            $this->view('company/chat', $data);
-
-            return;
-        }
-
+//        show($_SESSION);die;
 
         $data['title'] = "Chats";
 
-        $this->view('company/chats', $data);
+        $this->view('company/chat', $data);
     }
 
 

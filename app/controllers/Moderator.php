@@ -246,5 +246,18 @@ class Moderator extends Users
         $this->view('moderator/toverify', $data);
     }
 
+    public
+    function chats()
+    {
+
+
+
+//        show($_SESSION);die;
+
+        $data['title'] = "Chats";
+
+        $this->view('moderator/chat', $data);
+    }
+
 
 }
