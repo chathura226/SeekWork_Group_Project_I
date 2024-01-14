@@ -820,16 +820,6 @@ class Student extends Users
         $this->view('student/earnings', $data);
     }
 
-    public
-    function chats($id=null)
-    {
 
-        if(!empty($id)){
-            $data['userID']=$id;
-        }
-        $data['title'] = "Chats";
-
-        $this->view('student/chat', $data);
-    }
 
 }

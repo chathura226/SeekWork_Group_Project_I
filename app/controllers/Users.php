@@ -358,4 +358,31 @@ abstract class Users extends Controller
 
         $this->view($this->controllerRole.'/deleteAccount', $data);
     }
+
+    public
+    function chats($id=null)
+    {
+
+        if(!empty($id)){
+            //if no connections before inserrt the connection
+            $chatConnecInst=new Chat_connections();
+            $row1=$chatConnecInst->where(['person1'=>$id,'person2'=>Auth::getuserID()]);
+            $row2=$chatConnecInst->where(['person2'=>$id,'person1'=>Auth::getuserID()]);
+            if(empty($row1) && empty($row2)){//if no connections before, add connecton
+                $res=$chatConnecInst->query('CALL getCombinedUserDetailsForChatPerGivenUserName('.$id.')');
+                if(!empty($res)) {
+                    $res=$res[0];
+                    $chatConnecInst->insert(['person1' => Auth::getuserID(), 'person2' => $id, 'person1_role' => Auth::getrole(), 'person2_role' => $res->role]);
+                }else{
+                    message(['Invalid userID!', 'danger']);
+                    redirect($this->controllerRole.'/chats');
+                }
+            }
+
+            $data['userID']=$id;
+        }
+        $data['title'] = "Chats";
+
+        $this->view($this->controllerRole.'/chat', $data);
+    }
 }

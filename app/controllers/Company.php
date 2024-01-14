@@ -13,18 +13,7 @@ class Company extends Users
     }
 
 
-    public
-    function chats()
-    {
 
-
-
-//        show($_SESSION);die;
-
-        $data['title'] = "Chats";
-
-        $this->view('company/chat', $data);
-    }
 
 
 //TODO:implement verification status view with verification doc download

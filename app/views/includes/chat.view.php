@@ -52,6 +52,8 @@
 
 
 <script type="text/javascript">
+    //clickcount keep that count of clicks when a userid is specified in the url to avoid recurring clicks
+    var clickCount=0;
 
     var sentAudio = new Audio("<?=ROOT?>/assets/audio/message_sent.mp3");
     var receivedAudio = new Audio("<?=ROOT?>/assets/audio/message_received.mp3");
@@ -126,7 +128,7 @@
                         inner_right_panel.innerHTML = '';
                         inner_left_panel.innerHTML = obj.message;
                         let passedUserID=<?=(!empty($userID))?$userID:'null'?>;
-                        if(passedUserID!='null'){
+                        if(passedUserID!='null' && clickCount==0){
                             clicOnUserIDContact(passedUserID);
                         }
                         break;
@@ -519,6 +521,7 @@
 <script>
 
     function clicOnUserIDContact(userX) {
+
         // Get the div with ID "inner_left_panel"
         var innerLeftPanelNew = document.getElementById('inner_left_panel').querySelector('div');
         // Loop through each div inside innerLeftPanel
@@ -527,8 +530,8 @@
 
             // Check if the current div has the attribute "user-id" with value 20
             if (currentDiv.getAttribute('userid') == userX) {
-                console.log(currentDiv)
-
+                // console.log(currentDiv)
+                clickCount++;
                 // Found the div, simulate a click event
                 currentDiv.click();
                 break; // Exit the loop once found
