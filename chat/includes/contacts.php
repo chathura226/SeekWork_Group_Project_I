@@ -1,18 +1,44 @@
 <?php
-$myID=$_SESSION['USER_DATA']->userID;
-$query = "SELECT u.userID, u.userName, u.image, u.gender, COUNT(m.id) AS unread_count
-FROM user u
-LEFT JOIN (
-    SELECT *
-    FROM messages
-    WHERE received IS NULL AND receiver=:userID
-) AS m ON u.userID = m.sender
-WHERE u.userID != :userID
-GROUP BY u.userID, u.userName, u.image, u.gender;
-";
+$myID = $_SESSION['USER_DATA']->userID;
 
+$result=array();
 
-$result = $DB->read($query, ['userID'=>$myID]);
+//for all perosn1 ehen perosn2 = logged user
+$query = "SELECT * FROM chat_connections WHERE person2=:userID";
+$people = $DB->read($query, ['userID' => $myID]);
+if (!empty($people)) {
+    foreach ($people as $person) {
+
+        $query = "SELECT  u.userID, r.firstName,r.lastName, r.profilePic, u.gender, COUNT(m.id) AS unread_count FROM user u LEFT JOIN " . $person->person1_role . " r ON r.userID=u.userID LEFT JOIN (
+                        SELECT *
+                        FROM messages
+                WHERE received IS NULL AND receiver=:loggedUser
+            ) AS m ON u.userID = m.sender WHERE u.userID=:userID
+            GROUP BY u.userID, r.firstName,r.lastName, r.profilePic, u.gender";
+
+        $row = $DB->read($query, ['userID' => $person->person1, 'loggedUser' => $myID]);
+        $result[]=$row[0];
+    }
+}
+
+//for all perosn2 ehen perosn1 = logged user
+$query = "SELECT * FROM chat_connections WHERE person1=:userID";
+$people = $DB->read($query, ['userID' => $myID]);
+if (!empty($people)) {
+    foreach ($people as $person) {
+
+        $query = "SELECT  u.userID, r.firstName,r.lastName, r.profilePic, u.gender, COUNT(m.id) AS unread_count FROM user u LEFT JOIN " . $person->person2_role . " r ON r.userID=u.userID LEFT JOIN (
+                        SELECT *
+                        FROM messages
+                WHERE received IS NULL AND receiver=:loggedUser
+            ) AS m ON u.userID = m.sender WHERE u.userID=:userID
+            GROUP BY u.userID, r.firstName,r.lastName, r.profilePic, u.gender";
+
+        $row = $DB->read($query, ['userID' => $person->person2, 'loggedUser' => $myID]);
+        $result[]=$row[0];
+    }
+}
+
 
 if (is_array($result)) {
     $mydata = '
@@ -43,25 +69,28 @@ if (is_array($result)) {
 </div>';
 
     foreach ($result as $user) {
+//        print_r($result);die;
+        $user->userName=$user->firstName." ".$user->lastName;
+        $user->image=$user->profilePic;
         $image = "";
         if (!empty($user->image) && file_exists($user->image)) {//when image is set and exists
             $image = $user->image;
-        }else{//when image is not set
-            if($user->gender=='male'){//for male users with no image
-                $image="ui/images/male.jpg";
-            }else{//for female users with no image
-                $image="ui/images/female.png";
+        } else {//when image is not set
+            if ($user->gender == 'male') {//for male users with no image
+                $image = "ui/images/male.jpg";
+            } else {//for female users with no image
+                $image = "ui/images/female.png";
             }
         }
 
-        $mydata .= '    <div id="contact" style="position:relative;" userID="'.$user->userID.'" onclick="startChat(event)">
-        <img src="' . $image . '">
+        $mydata .= '    <div id="contact" style="position:relative;" userID="' . $user->userID . '" onclick="startChat(event)">
+        <img src="'.ROOT.'/' . $image . '">
         <br>' . ucfirst($user->userName);
 
-        if($user->unread_count>0) {
-            $mydata .= '<div style="width: 20px;height: 20px;border-radius: 50%;background-color: orange;color: white;position: absolute;left: -5px;top: -5px;">'.$user->unread_count.'</div>';
+        if ($user->unread_count > 0) {
+            $mydata .= '<div style="width: 20px;height: 20px;border-radius: 50%;background-color: orange;color: white;position: absolute;left: -5px;top: -5px;">' . $user->unread_count . '</div>';
         }
-        $mydata.='</div>';
+        $mydata .= '</div>';
     }
 
     $mydata .= '</div>';
