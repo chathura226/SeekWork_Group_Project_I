@@ -142,7 +142,7 @@
                         let username = _("username");
                         let email = _("useremail");
                         let profileImage = _("profileImg");
-                        profileImage.src = obj.image;
+                        profileImage.src = "<?=ROOT?>/"+obj.image;
                         username.innerHTML = capitalizeFirstLetter(obj.userName);
                         email.innerHTML = obj.email;
                         break;

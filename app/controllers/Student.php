@@ -826,7 +826,7 @@ class Student extends Users
 
 
 
-
+//        show($_SESSION);die;
 
         $data['title'] = "Chats";
 
