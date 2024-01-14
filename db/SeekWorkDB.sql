@@ -670,7 +670,7 @@ CREATE TABLE `messages` (
 
 LOCK TABLES `messages` WRITE;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-INSERT INTO `messages` VALUES (1,28,26,'sweew',NULL,'ee11122','2024-01-14 13:32:15',NULL,NULL,0,0),(2,26,28,'x,mxlkwmdxwl',NULL,'ee11122','2024-01-14 13:32:15',NULL,NULL,0,0),(3,26,27,'cwdw',NULL,'dwedw22','2024-01-14 13:33:12',NULL,NULL,0,0),(4,27,26,'cwdwedw',NULL,'dwedw22','2024-01-14 13:33:12',NULL,NULL,0,0);
+INSERT INTO `messages` VALUES (1,28,26,'sweew',NULL,'ee11122','2024-01-14 13:32:15',NULL,'2024-01-14 14:21:29',0,0),(2,26,28,'x,mxlkwmdxwl',NULL,'ee11122','2024-01-14 13:32:15',NULL,NULL,0,0),(3,26,27,'cwdw',NULL,'dwedw22','2024-01-14 13:33:12',NULL,NULL,0,0),(4,27,26,'cwdwedw',NULL,'dwedw22','2024-01-14 13:33:12',NULL,NULL,0,0);
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1602,6 +1602,42 @@ END */ ;;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;;
 DELIMITER ;
 /*!50106 SET TIME_ZONE= @save_time_zone */ ;
+
+--
+-- Dumping routines for database 'SeekWorkDB'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `getCombinedUserDetailsForChatPerGivenUserName` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`admin`@`%` PROCEDURE `getCombinedUserDetailsForChatPerGivenUserName`(IN p_userID INT)
+BEGIN
+    DECLARE role_name VARCHAR(255);
+    DECLARE dynamic_query VARCHAR(1000);
+
+    -- Get user details based on userID
+    SELECT role INTO role_name FROM user WHERE userID = p_userID;
+
+        -- Build the dynamic query based on the role_name
+        SET @dynamic_query = CONCAT('SELECT * FROM user u INNER JOIN ', role_name,' r ON u.userID=r.userID WHERE u.userID=',p_userID);
+
+        -- Prepare and execute the dynamic query
+        PREPARE stmt FROM @dynamic_query;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1612,4 +1648,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-14 13:47:05
+-- Dump completed on 2024-01-14 14:56:06

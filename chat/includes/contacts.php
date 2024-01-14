@@ -3,6 +3,7 @@ $myID = $_SESSION['USER_DATA']->userID;
 
 $result=array();
 
+
 //for all perosn1 ehen perosn2 = logged user
 $query = "SELECT * FROM chat_connections WHERE person2=:userID";
 $people = $DB->read($query, ['userID' => $myID]);
