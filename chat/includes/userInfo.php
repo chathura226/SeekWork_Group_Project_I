@@ -4,7 +4,7 @@ $info=(object)[];
 
 
 //getting userID from session
-$data['userID']=$_SESSION['userID'];
+$data['userID']=$_SESSION['USER_DATA']->userID;
 
 
 if($error=="") {

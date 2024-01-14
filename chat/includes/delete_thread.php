@@ -7,7 +7,7 @@ if (isset($DATA_OBJ->find->userID)) {
 }
 
 //setting userID of logged user
-$arr['myUserID'] = $_SESSION['userID'];
+$arr['myUserID'] = $_SESSION['USER_DATA']->userID;
 
 $query = "UPDATE messages
 SET 

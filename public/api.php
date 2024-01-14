@@ -23,7 +23,7 @@ if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType == "chats_refresh") {
 }
 
 //check if logged in
-if (!isset($_SESSION['userID'])) {
+if (!isset($_SESSION['USER_DATA'])) {
     if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType != "login" && $DATA_OBJ->dataType != "signup") {
         $info->logged_in = false;
         echo json_encode($info);
@@ -37,37 +37,37 @@ $error = "";
 if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType == "signup") {
 
     //signup
-    include("includes/signup.php");
+    include("../chat/includes/signup.php");
 } else if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType == "login") {
     //login
-    include("includes/login.php");
+    include("../chat/includes/login.php");
 } else if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType == "logout") {
     //logout
-    include("includes/logout.php");
+    include("../chat/includes/logout.php");
 } else if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType == "user_info") {
     //userInfo
-    include("includes/userInfo.php");
+    include("../chat/includes/userInfo.php");
 } else if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType == "contacts") {
     //contacts
-    include("includes/contacts.php");
+    include("../chat/includes/contacts.php");
 } else if (isset($DATA_OBJ->dataType) && ($DATA_OBJ->dataType == "chats" || $DATA_OBJ->dataType == "chats_refresh")) {
     //chats
-    include("includes/chats.php");
+    include("../chat/includes/chats.php");
 } else if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType == "settings") {
     //settings
-    include("includes/settings.php");
+    include("../chat/includes/settings.php");
 } else if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType == "save_settings") {
     //save_settings
-    include("includes/save_settings.php");
+    include("../chat/includes/save_settings.php");
 } else if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType == "send_message") {
     //send_message
-    include("includes/send_message.php");
+    include("../chat/includes/send_message.php");
 } else if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType == "delete_message") {
     //delete_message
-    include("includes/delete_message.php");
+    include("../chat/includes/delete_message.php");
 } else if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType == "delete_thread") {
     //delete_thread
-    include("includes/delete_thread.php");
+    include("../chat/includes/delete_thread.php");
 }
 
 
@@ -156,7 +156,7 @@ function updateSession()
 {
 
     $query = "SELECT * FROM user WHERE userID=:userID limit 1 ";
-    $result = $DB->read($query, ['userID' => $_SESSION['userID']]);
+    $result = $DB->read($query, ['userID' => $_SESSION['USER_DATA']]);
     if (is_array($result)) {
         $result = $result[0];
         //decision abt the image

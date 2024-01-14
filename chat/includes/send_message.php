@@ -19,7 +19,7 @@ if (is_array($result)) {
     //arr array to store data for prepared statement
     $arr['message']=$DATA_OBJ->find->message;
     $arr['date']=date("Y-m-d H:i:s");
-    $arr['sender']=$_SESSION['userID'];
+    $arr['sender']=$_SESSION['USER_DATA']->userID;
     $arr['receiver']=$DATA_OBJ->find->userID;
     $arr['msgID']=getRandomStringMax(60);
 
@@ -73,7 +73,7 @@ if (is_array($result)) {
                 WHERE messages.receiver = :userID AND messages.deleted_receiver=0
                 GROUP BY messages.sender, user.userName, user.image, user.online, user.gender;
                 ";
-    $msgFromDB = $DB->read($query, ['userID' => $_SESSION['userID']]);
+    $msgFromDB = $DB->read($query, ['userID' => $_SESSION['USER_DATA']->userID]);
     if (is_array($msgFromDB)) {
         foreach ($msgFromDB as $data) {
             $data->image = decision_about_image($data);
@@ -101,10 +101,10 @@ if (is_array($result)) {
     //reading from db
     $msgID=$arr['msgID'];
     $query = "SELECT * FROM messages WHERE (msgID=:msgID && receiver=:userID && deleted_receiver=0) || (msgID=:msgID && sender=:userID && deleted_sender=0) ORDER BY id ASC";
-    $msgFromDB = $DB->read($query,['msgID'=>$msgID,'userID'=>$_SESSION['userID']]);
+    $msgFromDB = $DB->read($query,['msgID'=>$msgID,'userID'=>$_SESSION['USER_DATA']->userID]);
     if(is_array($msgFromDB)){
         foreach ($msgFromDB as $data){
-            if($data->sender==$_SESSION['userID']){//when the msg was sent by the logged user
+            if($data->sender==$_SESSION['USER_DATA']->userID){//when the msg was sent by the logged user
                 $messages.=message_right($data,$_SESSION['user']);//using user obj in session for user data of logged user
             }else{//when msg is sent by the chatting user
                 $messages.=message_left($data,$user);

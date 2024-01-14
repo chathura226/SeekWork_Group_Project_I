@@ -121,12 +121,12 @@
         data.find = find;
         data.dataType = type;
         data = JSON.stringify(data)
-        xml.open("POST", "api.php", true);
+        xml.open("POST", "<?=ROOT?>/api.php", true);
         xml.send(data);
     }
 
     function handleResult(result, type) {
-        // console.log(result);
+        console.log(result);
         if (result.trim() != "") {
             let obj = JSON.parse(result);
 
@@ -346,7 +346,7 @@
         let data_string = JSON.stringify(data);//converting to string
         //sending
         //true for asynchronous
-        xml.open("POST", "api.php", true);
+        xml.open("POST", "<?=ROOT?>/api.php", true);
         xml.send(data_string);
 
     }

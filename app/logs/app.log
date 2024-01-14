@@ -9,3 +9,4 @@
 [2024-01-13T15:21:10.910716+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.19.0.1"} []
 [2024-01-13T15:26:02.641047+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.20.0.1"} []
 [2024-01-13T15:26:34.447351+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.20.0.1"} []
+[2024-01-14T11:57:52.257697+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.19.0.1"} []

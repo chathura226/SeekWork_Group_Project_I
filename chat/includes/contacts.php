@@ -1,5 +1,5 @@
 <?php
-$myID=$_SESSION['userID'];
+$myID=$_SESSION['USER_DATA']->userID;
 $query = "SELECT u.userID, u.userName, u.image, u.gender, COUNT(m.id) AS unread_count
 FROM user u
 LEFT JOIN (
