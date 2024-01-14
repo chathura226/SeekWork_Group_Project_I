@@ -1,0 +1,395 @@
+
+@font-face {
+    font-family: headerFont;
+    src: url("ui/fonts/Summer-Vibes-OTF.otf");
+}
+
+@font-face {
+    font-family: myFont;
+    src: url("ui/fonts/OpenSans-Regular.ttf");
+}
+
+#wrapper {
+    max-width: 900px;
+    min-height: 500px;
+    max-height: 700px;
+    display: flex;
+    margin: auto;
+    color: white;
+    font-family: myFont;
+    font-size: 13px;
+}
+
+#left_panel {
+    height: 700px;
+    background-color: #27344b;
+    flex: 1;
+    text-align: center;
+
+}
+
+#profileImg {
+    width: 50%;
+    border: solid thin white;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+#left_panel label {
+    width: 100%;
+    height: 20px;
+    display: block;
+    background-color: #404b56;
+    border-bottom: solid thin #ffffff55;
+    cursor: pointer;
+    padding: 5px;
+    transition: all 1s ease;
+}
+
+#left_panel label:hover {
+    background-color: #778593;
+}
+
+#left_panel label img {
+    float: right;
+    width: 25px;
+}
+
+
+#right_panel {
+    height: 700px;
+    background-color: white;
+    flex: 4;
+    text-align: center;
+    border: grey solid thin;
+}
+
+#header {
+    background-color: #485b6c;
+    height: 70px;
+    font-size: 40px;
+    font-family: headerFont;
+    text-align: center;
+    position: relative;
+}
+
+#container {
+    display: flex;
+}
+
+#inner_left_panel {
+    background-color: white;
+    flex: 1;
+    height: 700px;
+    border-right: grey solid thin;
+    border-bottom: grey solid thin;
+    color: black;
+}
+
+#inner_right_panel {
+    background-color: white;
+    flex: 2;
+    height: 650px;
+    transition: all 1.5s ease;
+}
+
+/*symbol ~ is for sibling*/
+#radio_chat:not(:checked) ~ #inner_right_panel {
+    flex: 0;
+}
+
+
+#contact{
+    width: 100px;
+    height: 120px;
+    margin: 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#contact img{
+    width: 100px;
+    height: 100px;
+
+}
+
+#active_contact{
+    height: 70px;
+    margin: 10px;
+    border: solid thin #aaa;
+    padding: 5px;
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    border-radius: 9px;
+}
+
+#active_contact img{
+    width: 60px;
+    height: 60px;
+    float: left;
+    margin: 2px;
+    border-radius: 5px;
+}
+
+#notActive_contact{
+    height: 70px;
+    margin: 10px;
+    border: solid thin #aaa;
+    padding: 5px;
+    background-color: white;
+    color: #444;
+    cursor: pointer;
+    border-radius: 9px;
+}
+#notActive_contact img{
+    width: 60px;
+    height: 60px;
+    float: left;
+    margin: 2px;
+    border-radius: 5px;
+}
+.loader-on{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    margin-left: 10px;
+    width: 30%;
+    height: 70px;
+}
+
+.loader-on img{
+    width: 60px;
+}
+
+.loader-off{
+    display: none;
+}
+
+
+/*//messages*/
+#message_left{
+    /*height: 70px;*/
+    margin: 10px;
+    padding: 2px;
+    padding-right: 8px;
+    background-color: #aa88ee;
+    color: white;
+    float: left;
+    box-shadow: 0px 0px 10px #aaa;
+    /*border-top-left-radius: 50%;*/
+    border-bottom-left-radius:50%;
+    border-top-right-radius:30%;
+    position: relative;
+    width: 60%;
+    min-width: 200px;
+}
+#message_left .profileImage{
+    width: 60px;
+    height: 60px;
+    float: left;
+    margin: 2px;
+    border-radius: 50%;
+    border: solid 2px white;
+}
+
+#message_left div{
+    position: absolute;
+    /*left: -5px;*/
+    /*top: -5px;*/
+    left: -10px;
+    top: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: #34474f;
+    border: solid 2px white;
+    border-radius: 50%;
+}
+
+#message_left #trash{
+
+    position: absolute;
+    bottom: 5px;
+    right: -20px;
+    cursor: pointer;
+}
+
+
+#message_right{
+    /*height: 70px;*/
+    margin: 10px;
+    padding: 2px;
+    padding-right: 8px;
+    background-color: #fbffee ;
+    color: #444;
+    float: right;
+    box-shadow: 0px 0px 10px #aaa;
+    /*border-top-left-radius: 50%;*/
+    border-bottom-right-radius:50%;
+    border-top-left-radius:30%;
+    position: relative;
+    width: 60%;
+    min-width: 200px;
+}
+#message_right .profileImage{
+    width: 60px;
+    height: 60px;
+    float: left;
+    margin: 2px;
+    border-radius: 50%;
+    border: solid 2px white;
+}
+
+#message_right div{
+    position: absolute;
+    /*left: -5px;*/
+    /*top: -5px;*/
+    right: -10px;
+    top: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: #34474f;
+    border: solid 2px white;
+    border-radius: 50%;
+}
+#message_right #trash{
+
+    position: absolute;
+    bottom: 5px;
+    left: -20px;
+    cursor: pointer;
+}
+
+#messages_container{
+    /*border: solid thin #888;*/
+    display: inline-flex;
+    flex-direction: column;
+    height: 578px;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+#messages_container_wrapper{
+    /*border: solid thin #888;*/
+    height: 100%;
+}
+
+.alert{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 20px;
+    border: 1px solid #d4edda;
+    border-radius: 10px;
+    font-size: 18px;
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    left: 50vw;
+    top:50px;
+    transform: translate(-50%, -50%);
+    max-height: 50px;
+}
+
+.alert-success{
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    padding: 20px;
+    background-color: #dff0d8;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+    border-radius: 10px;
+    font-size: 18px;
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    left: 50vw;
+    top:50px;
+    transform: translate(-50%, -50%);
+    max-height: 50px;
+}
+
+.imageViewer_on{
+    position:fixed;
+    height: 400px;
+    width: 400px;
+    margin: auto;
+    background-color: black;
+    z-index: 100;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    cursor: pointer;
+
+}
+
+.imageViewer_off{
+    display: none;
+}
+
+
+/*new styles...............................................*/
+.newMessage-left{
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+    color: black;
+    margin: 10px;
+
+}
+.newMessage-right{
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+    color: black;
+    float: right;
+    margin: 10px;
+    justify-content: flex-end;
+}
+.profilePic{
+    margin-top: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 8.333px;
+    /* background: lightgray 50% / cover no-repeat; */
+}
+
+.eachMsg{
+    display: flex;
+    padding: 8px 16px;
+    align-items: flex-start;
+    gap: 10px;
+    background-color: #F1F1F1;
+    color: black;
+    width: fit-content;
+    border-radius: 9px;
+    max-width: 300px;
+    margin: 3px;
+}
+
+#chat_header{
+    height: 50px;
+    background-color: white;
+    color: black !important;
+    border: grey solid thin;
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.delete_thread{
+    position: absolute;
+    right: 20px;
+}
