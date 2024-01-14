@@ -1,4 +1,4 @@
-
+/*this is styles for chat*/
 @font-face {
     font-family: headerFont;
     src: url("ui/fonts/Summer-Vibes-OTF.otf");
@@ -9,7 +9,8 @@
     src: url("ui/fonts/OpenSans-Regular.ttf");
 }
 
-#wrapper {
+#chat-wrapper {
+    width: 100%;
     max-width: 900px;
     min-height: 500px;
     max-height: 700px;
@@ -18,6 +19,9 @@
     color: white;
     font-family: myFont;
     font-size: 13px;
+}
+#chat-wrapper * {
+    box-sizing: content-box !important;
 }
 
 #left_panel {

@@ -1,27 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Chat</title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link href="<?=ROOT?>/assets/css/main.styles.css" rel="stylesheet">
-
-
-</head>
-
-<body>
+<link href="<?=ROOT?>/assets/css/main.styles.css" rel="stylesheet">
 <div class=" alert-success" id="success_alert">
     <h3></h3>
 </div>
 <div class=" alert alert-danger" id="error_alert">
     <h3></h3>
 </div>
-<div id="wrapper">
+<div id="chat-wrapper">
     <div id="left_panel">
         <div id="user_info" style="padding: 10px;">
             <img id="profileImg" src="<?=ROOT?>/" alt="User Image" style="width: 80px; height: 80px;">
@@ -64,8 +49,7 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+
 
 <script type="text/javascript">
 
@@ -117,7 +101,7 @@
     }
 
     function handleResult(result, type) {
-        console.log(result);
+        // console.log(result);
         if (result.trim() != "") {
             let obj = JSON.parse(result);
 

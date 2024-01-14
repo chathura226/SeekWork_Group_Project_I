@@ -830,7 +830,7 @@ class Student extends Users
 
         $data['title'] = "Chats";
 
-        $this->view('chat', $data);
+        $this->view('student/chat', $data);
     }
 
 }
