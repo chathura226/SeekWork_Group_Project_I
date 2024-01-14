@@ -125,6 +125,10 @@
                         SEEN_STATUS = "0";
                         inner_right_panel.innerHTML = '';
                         inner_left_panel.innerHTML = obj.message;
+                        let passedUserID=<?=(!empty($userID))?$userID:'null'?>;
+                        if(passedUserID!='null'){
+                            clicOnUserIDContact(passedUserID);
+                        }
                         break;
                     case "send_message":
                         sentAudio.play();
@@ -507,5 +511,28 @@
         var image=e.target.src;
         imageViewer.innerHTML="<img src='<?=ROOT?>/"+image+"' style='width:100%' />"
         imageViewer.className="imageViewer_on";
+    }
+</script>
+
+
+<!--if a userID is passed from original app to specify a user-->
+<script>
+
+    function clicOnUserIDContact(userX) {
+        // Get the div with ID "inner_left_panel"
+        var innerLeftPanelNew = document.getElementById('inner_left_panel').querySelector('div');
+        // Loop through each div inside innerLeftPanel
+        for (var i = 0; i < innerLeftPanelNew.children.length; i++) {
+            var currentDiv = innerLeftPanelNew.children[i];
+
+            // Check if the current div has the attribute "user-id" with value 20
+            if (currentDiv.getAttribute('userid') == userX) {
+                console.log(currentDiv)
+
+                // Found the div, simulate a click event
+                currentDiv.click();
+                break; // Exit the loop once found
+            }
+        }
     }
 </script>

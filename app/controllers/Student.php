@@ -821,13 +821,12 @@ class Student extends Users
     }
 
     public
-    function chats()
+    function chats($id=null)
     {
 
-
-
-//        show($_SESSION);die;
-
+        if(!empty($id)){
+            $data['userID']=$id;
+        }
         $data['title'] = "Chats";
 
         $this->view('student/chat', $data);
