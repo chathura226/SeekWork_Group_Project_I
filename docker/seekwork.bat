@@ -11,7 +11,7 @@ if "%arg1%" == "up" (
     echo "phpMyAdmin @ http://localhost:8001"
 )else if "%arg1%" == "down" (
     echo "Exporting the database !............."
-    docker exec -i db mysqldump -uadmin -ppassword --events SeekWorkDB > ../db/SeekWorkDB.sql
+    docker exec -i db mysqldump -uadmin -ppassword --events --routines SeekWorkDB > ../db/SeekWorkDB.sql
     rem Wait for a few seconds to allow the export to complete
     timeout /t 10 /nobreak
 

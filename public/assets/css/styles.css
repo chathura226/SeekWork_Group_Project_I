@@ -60,7 +60,10 @@ body{
     /* text-align: center; */
 }
 /* ...........................................image upload rendering............................ */
-
+.sidebar svg {
+    fill: #ffffff !important;
+    padding-right: 10px;
+}
 
 .image-container {
     max-width: 200px;

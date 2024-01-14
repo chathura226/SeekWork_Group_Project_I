@@ -13,26 +13,7 @@ class Company extends Users
     }
 
 
-    public function chats($id = null)
-    {
 
-
-        if (!empty($id)) { //req a particular chat
-            //implement chat connection with db
-
-
-            $data['title'] = "Chat";
-
-            $this->view('company/chat', $data);
-
-            return;
-        }
-
-
-        $data['title'] = "Chats";
-
-        $this->view('company/chats', $data);
-    }
 
 
 //TODO:implement verification status view with verification doc download

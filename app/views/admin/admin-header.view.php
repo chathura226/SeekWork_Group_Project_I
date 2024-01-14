@@ -38,7 +38,7 @@
             <div class="right-menu">
                 <svg height="1em" viewBox="0 0 512 512">
                     <style>
-                        svg {
+                        .right-menu svg {
                             fill: #ffffff;
                             padding-right: 10px;
                         }

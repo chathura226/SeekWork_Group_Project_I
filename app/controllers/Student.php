@@ -696,27 +696,7 @@ class Student extends Users
     }
 
 
-    public
-    function chats($id = null)
-    {
 
-
-        if (!empty($id)) { //req a particular chat
-            //implement chat connection with db
-
-
-            $data['title'] = "Chat";
-
-            $this->view('student/chat', $data);
-
-            return;
-        }
-
-
-        $data['title'] = "Chats";
-
-        $this->view('student/chats', $data);
-    }
 
 
     public
@@ -839,5 +819,7 @@ class Student extends Users
 
         $this->view('student/earnings', $data);
     }
+
+
 
 }
