@@ -10,8 +10,8 @@ $DATA_OBJ=json_decode($DATA_RAW);//make object form stringified data
 
 
 //check if logged in
-if(!isset($_SESSION['userID'])){
-    if(isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType!="login" && $DATA_OBJ->dataType!="signup") {
+if (!isset($_SESSION['USER_DATA'])) {
+    if (isset($DATA_OBJ->dataType) && $DATA_OBJ->dataType != "login" && $DATA_OBJ->dataType != "signup") {
         $info->logged_in = false;
         echo json_encode($info);
         die;
@@ -23,7 +23,7 @@ if(isset($_POST['dataType'])){
     $dataType=$_POST['dataType'];
 }
 
-require_once("./classes/initialize.php");
+require_once("../chat/classes/initialize.php");
 
 $DB=new Database();
 
@@ -60,7 +60,7 @@ if($dataType=="change_profile_image"){
     //arr array to store data for prepared statement
     $arr['message']="";
     $arr['date']=date("Y-m-d H:i:s");
-    $arr['sender']=$_SESSION['userID'];
+    $arr['sender']=$_SESSION['USER_DATA']->userID;
     $arr['receiver']=$_POST['userID'];
     $arr['msgID']=getRandomStringMax(60);
     $arr['file']=$destination;

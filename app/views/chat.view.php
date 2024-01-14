@@ -34,12 +34,10 @@
             <br>
             <div>
                 <label id="label_chat" for="radio_chat">Chat <img src="<?=ROOT?>/ui/icons/chat.png" alt="Chat"></label>
-                <label id="label_contacts" for="radio_contacts">Contacts <img src="<?=ROOT?>/ui/icons/contacts.png"
+                <label id="label_contacts" for="radio_contacts">All Chat Users <img src="<?=ROOT?>/ui/icons/contacts.png"
                                                                               alt="Contacts"></label>
-                <label id="label_settings" for="radio_settings">Settings <img src="<?=ROOT?>/ui/icons/settings.png"
-                                                                              alt="Settings"></label>
-                <label id="logout" for="radio_logout">Logout <img src="<?=ROOT?>/ui/icons/logout.png"
-                                                                  alt="logout"></label>
+
+
             </div>
         </div>
 
@@ -71,8 +69,8 @@
 
 <script type="text/javascript">
 
-    var sentAudio = new Audio("message_sent.mp3");
-    var receivedAudio = new Audio("message_received.mp3");
+    var sentAudio = new Audio("<?=ROOT?>/assets/audio/message_sent.mp3");
+    var receivedAudio = new Audio("<?=ROOT?>/assets/audio/message_received.mp3");
 
     //global variables
     var CURRENT_CHAT_USER = "";
@@ -90,14 +88,7 @@
     //loader
     let loaderContainer = _("loader-con");
 
-    //logout functionality
-    let logout = _("logout");
-    logout.addEventListener("click", () => {
-        let ans = confirm("Are you sure you want to logout?");
-        if (ans) {
-            get_data({}, "logout");
-        }
-    })
+
 
 
     //get user data on loading the page
@@ -236,12 +227,7 @@
         get_data({}, 'chats');
     })
 
-    //get settings
-    let settingsLabel = _("label_settings");
-    settingsLabel.addEventListener("click", (e) => {
-        CURRENT_CHAT_USER="";//to stop setInterval function that req new messages every 5 sec
-        get_data({}, 'settings');
-    })
+
 
     //to get contact data
     let contactLabel = _("label_contacts");
@@ -387,7 +373,7 @@
         myForm.append('dataType', "change_profile_image");
         //sending
         //true for asynchronous
-        xml.open("POST", "uploader.php", true);
+        xml.open("POST", "<?=ROOT?>/uploader.php", true);
         xml.send(myForm);
     }
 </script>
@@ -517,7 +503,7 @@
         myForm.append('dataType', "send_image");
         //sending
         //true for asynchronous
-        xml.open("POST", "uploader.php", true);
+        xml.open("POST", "<?=ROOT?>/uploader.php", true);
         xml.send(myForm);
 
 
