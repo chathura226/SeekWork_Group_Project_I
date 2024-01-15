@@ -55,6 +55,23 @@
                     <div class="text-error"><small><?=$errors['lastName']?></small></div>
                     <?php endif;?>
                 </div>
+              <div class="form-input">
+                  <label>Gender</label>
+                  <div class="flex">
+                      <div class="flex" style="gap: 20px; margin: 10px;justify-items: center;align-items:baseline;">
+                          <input id="male" type="radio" name="gender" value="male" <?=(set_value('gender')=='male')?'checked':''?>>
+                          <label for="male">Male</label>
+                      </div>
+                      <div class="flex" style="gap: 20px;margin: 10px; justify-items: center;align-items:baseline;">
+                          <input id="female" type="radio" name="gender" value="female" <?=(set_value('gender')=='female')?'checked':''?>>
+                          <label for="female">Female</label>
+                      </div>
+                  </div>
+
+                  <?php if (!empty($errors['gender'])) : ?>
+                      <div class="text-error"><small><?= $errors['gender'] ?></small></div>
+                  <?php endif; ?>
+              </div>
                 <div class="form-input">
                     <label>Address</label>
                     <input value="<?= set_value('address')?>" class="<?= !empty($errors['address']) ? 'error-border' : '' ?>" type="text" name="address" id="address" placeholder="Enter admin's address">

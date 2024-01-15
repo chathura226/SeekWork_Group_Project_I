@@ -10,8 +10,8 @@ class Signup extends Controller
         $data['errors'] = [];
         $user = new User();
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            // print_r($_POST);
-            // die;
+//             print_r($_POST);
+//             die;
 
             //validating student data and inserting to database
             if ($_POST['form_id'] === 'student') {
