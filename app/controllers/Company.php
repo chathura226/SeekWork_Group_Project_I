@@ -849,6 +849,18 @@ class Company extends Users
             //for post req for close
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 if ($_POST['confirm'] === 'close the task') {
+
+                    //checking whether the payment is made before closing the task
+                    $paymentInst=new PaymentModel();
+                    $pay=$paymentInst->first(['taskID'=>$id]);
+                    if(empty($pay)){
+                        message(['Please make the payment for the task before closing!', 'danger']);
+                        redirect('company/payments');
+                    }else if($pay->paymentStatus!='completed'){
+                        message(['Please make the payment for the task before closing!', 'danger']);
+                        redirect('company/payments');
+                    }
+
                     $taskInst->update(['status' => 'closed'], $id);
 
                     //new earnigng for the assigned student
