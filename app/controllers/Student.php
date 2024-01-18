@@ -430,7 +430,7 @@ class Student extends Users
                 redirect('student/tasks');
             }
         }
-        $row = $task->where(['assignedStudentID' => Auth::getstudentID()]);
+        $row = $task->where(['assignedStudentID' => Auth::getstudentID(),'isDeleted'=>0]);
 
         if (empty($row)) {
             message('You have no tasks assigned!');
@@ -719,7 +719,7 @@ class Student extends Users
                     redirect('student/disputes');
                 }
                 $taskInst = new Task();
-                $tasks = $taskInst->where(['assignedStudentID' => Auth::getstudentID()]);
+                $tasks = $taskInst->where(['assignedStudentID' => Auth::getstudentID(),'isDeleted'=>0]);
                 $data['tasks'] = $tasks;
                 $data['title'] = "New Dispute";
 
@@ -741,7 +741,7 @@ class Student extends Users
                     }
 
                     $taskInst = new Task();
-                    $tasks = $taskInst->where(['assignedStudentID' => Auth::getstudentID()]);
+                    $tasks = $taskInst->where(['assignedStudentID' => Auth::getstudentID(),'isDeleted'=>0]);
                     $data['tasks'] = $tasks;
 
                     $disputeInst = new Dispute();
@@ -781,7 +781,7 @@ class Student extends Users
 
         //get alll tasks related to the company
         $taskInst = new Task();
-        $tasks = $taskInst->where(['assignedStudentID' => Auth::getstudentID()]);
+        $tasks = $taskInst->where(['assignedStudentID' => Auth::getstudentID(),'isDeleted'=>0]);
 
         $disputeInst = new Dispute();
         $res = [];

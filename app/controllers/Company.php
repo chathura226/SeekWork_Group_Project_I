@@ -135,7 +135,7 @@ class Company extends Users
             //TODO: implemet number of proposals query for tasks list
 
             $task = new Task();
-            $row = $task->where(['companyID' => Auth::getcompanyID()]);
+            $row = $task->where(['companyID' => Auth::getcompanyID(),'isDeleted'=>0]);
 
             if (empty($row)) {
                 message(['You have no tasks posted!', 'danger']);
@@ -721,7 +721,7 @@ class Company extends Users
 
         $data['title'] = "Tasks in-progress";
         $tasksInst = new Task();
-        $tasks = $tasksInst->where(['companyID' => Auth::getcompanyID(), 'status' => 'inProgress']);
+        $tasks = $tasksInst->where(['companyID' => Auth::getcompanyID(), 'status' => 'inProgress','isDeleted'=>0]);
 
         $data['tasks'] = $tasks;
         $this->view('company/tasks-inprogress', $data);
@@ -747,7 +747,7 @@ class Company extends Users
                     redirect('company/disputes');
                 }
                 $taskInst = new Task();
-                $tasks = $taskInst->where(['companyID' => Auth::getcompanyID()]);
+                $tasks = $taskInst->where(['companyID' => Auth::getcompanyID(),'isDeleted'=>0]);
                 $data['tasks'] = $tasks;
                 $data['title'] = "New Dispute";
 
@@ -769,7 +769,7 @@ class Company extends Users
                     }
 
                     $taskInst = new Task();
-                    $tasks = $taskInst->where(['companyID' => Auth::getcompanyID()]);
+                    $tasks = $taskInst->where(['companyID' => Auth::getcompanyID(),'isDeleted'=>0]);
                     $data['tasks'] = $tasks;
 
                     $disputeInst = new Dispute();
@@ -809,7 +809,7 @@ class Company extends Users
 
         //get alll tasks related to the company
         $taskInst = new Task();
-        $tasks = $taskInst->where(['companyID' => Auth::getcompanyID()]);
+        $tasks = $taskInst->where(['companyID' => Auth::getcompanyID(),'isDeleted'=>0]);
 
         $disputeInst = new Dispute();
         $res = [];
