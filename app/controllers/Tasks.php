@@ -20,11 +20,11 @@ class Tasks extends Controller
 
             $task = new Task();
             //totalNumber of page count for the tasks
-            $all_rows = "SELECT DISTINCT COUNT(task.taskID) AS all_rows FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active';";
+            $all_rows = "SELECT DISTINCT COUNT(task.taskID) AS all_rows FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' AND task.isDeleted=0;";
             $row4 = $task->query($all_rows, []);
             $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
 
-            $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'"], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
+            $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'",'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
             $data['tasks'] = $row;// this is for all tasks
 
 
@@ -38,7 +38,7 @@ class Tasks extends Controller
                         SELECT DISTINCT t.`taskID`, `title`, `taskType`, `description`, `deadline`, `value`, `status`, `documents`, `companyID`, `assignedStudentID`, `assignmentID`, `categoryID`, `finishedDate`, `createdAt` 
                         FROM task t 
                         JOIN task_skill ts ON t.taskID = ts.taskID 
-                        WHERE ts.skillID IN ( 
+                        WHERE  t.isDeleted=0 AND ts.skillID IN ( 
                             SELECT student_skill.skillID 
                             FROM student_skill 
                             WHERE student_skill.studentID = :studentID 
@@ -50,7 +50,7 @@ class Tasks extends Controller
 //                  show($data['recommendedTasksPageCount']);
 //                  die;
 
-                $query = "SELECT DISTINCT t.`taskID`, `title`, `taskType`, `description`, `deadline`, `value`, `status`, `documents`, `companyID`, `assignedStudentID`, `assignmentID`, `categoryID`, `finishedDate`, `createdAt` FROM task t JOIN task_skill ts ON t.taskID = ts.taskID WHERE ts.skillID IN ( SELECT student_skill.skillID FROM student_skill WHERE student_skill.studentID = :studentID )  ORDER BY t.createdAt ASC LIMIT " . $tasksPerPage . " OFFSET " . $tasksPerPage * ($data['pageNum'] - 1) . ";";
+                $query = "SELECT DISTINCT t.`taskID`, `title`, `taskType`, `description`, `deadline`, `value`, `status`, `documents`, `companyID`, `assignedStudentID`, `assignmentID`, `categoryID`, `finishedDate`, `createdAt` FROM task t JOIN task_skill ts ON t.taskID = ts.taskID WHERE t.isDeleted=0 AND ts.skillID IN ( SELECT student_skill.skillID FROM student_skill WHERE student_skill.studentID = :studentID )  ORDER BY t.createdAt ASC LIMIT " . $tasksPerPage . " OFFSET " . $tasksPerPage * ($data['pageNum'] - 1) . ";";
                 $row2 = $task->query($query, ['studentID' => Auth::getstudentID()]);
                 $data['recommendedTasks'] = $row2;
 //                  show($row2);

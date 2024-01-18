@@ -24,6 +24,7 @@ class Task extends Model {
         'categoryID',
         'finishedDate',
         'createdAt',
+        'isDeleted'
     ];
 
 

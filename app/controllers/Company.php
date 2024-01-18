@@ -559,7 +559,8 @@ class Company extends Users
                 $row = $task->first(['taskID' => $id]);
                 if (!empty($row)) {
                     if ($row->companyID === Auth::getcompanyID()) {
-                        $task->delete($id);
+//                        $task->delete($id);
+                        $task->update(['isDeleted'=>1],$id);
                         message('Task Deleted Successfully!');
                         redirect('company/tasks');
                     }
