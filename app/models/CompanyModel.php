@@ -83,8 +83,8 @@ class CompanyModel extends Model {
         $companyID=Auth::getcompanyID();
 
         $taskInst=new Task();
-        $row1=$taskInst->first(['status'=>'inProgress','companyID'=>$companyID]);
-        $row2=$taskInst->first(['status'=>'active','companyID'=>$companyID]);
+        $row1=$taskInst->first(['status'=>'inProgress','companyID'=>$companyID,'isDeleted'=>0]);
+        $row2=$taskInst->first(['status'=>'active','companyID'=>$companyID,'isDeleted'=>0]);
         if(!empty($row1) || !empty($row2)){
 //            show($row);die;
             $this->errors['tasks']="Close ongoing tasks before deletion of the account !";

@@ -161,7 +161,7 @@ class Moderator extends Users
                         $row = $category->first(['categoryID' => $id]);
                         if (!empty($row)) {
                             $taskInst = new Task();
-                            $tasks = $taskInst->first(['categoryID' => $row->categoryID]);
+                            $tasks = $taskInst->first(['categoryID' => $row->categoryID,'isDeleted'=>0]);
                             if (!empty($tasks)) {
                                 message(['Category Cannot be Deleted while tasks are there from that category!', 'danger']);
                                 redirect('moderator/category');
@@ -190,7 +190,7 @@ class Moderator extends Users
 
         $task = new Task();
         for ($i = 0; $i < count($categories); $i++) {
-            $countTasks = $task->where(['categoryID' => $categories[$i]->categoryID, 'status' => 'active']);
+            $countTasks = $task->where(['categoryID' => $categories[$i]->categoryID, 'status' => 'active','isDeleted'=>0]);
             if (!empty($countTasks)) $categories[$i]->taskCount = count($countTasks);
             else $categories[$i]->taskCount = 0;
         }

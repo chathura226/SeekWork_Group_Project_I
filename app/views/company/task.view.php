@@ -86,7 +86,7 @@
                 <button class="apply">Modify Task</button>
             </a>
             &nbsp &nbsp
-            <a>
+            <a href="<?= ROOT ?>/company/delete/<?= $task->taskID ?>">
                 <button id="deleteButton" class="apply">Delete Task</button>
             </a>
             &nbsp &nbsp
@@ -144,19 +144,19 @@
 
 
     <script>
-        const deleteButton = document.getElementById("deleteButton");
-
-        deleteButton.addEventListener("click", function () {
-            const confirmDelete = confirm("Are you sure you want to delete?");
-
-            if (confirmDelete) {
-                const action = "delete"; // Define the action here
-                // Send the action to the current URL
-                sendActionToCurrentURL(action);
-            } else {
-                alert("Deletion canceled!");
-            }
-        });
+        // const deleteButton = document.getElementById("deleteButton");
+        //
+        // deleteButton.addEventListener("click", function () {
+        //     const confirmDelete = confirm("Are you sure you want to delete?");
+        //
+        //     if (confirmDelete) {
+        //         const action = "delete"; // Define the action here
+        //         // Send the action to the current URL
+        //         sendActionToCurrentURL(action);
+        //     } else {
+        //         alert("Deletion canceled!");
+        //     }
+        // });
 
         function sendActionToCurrentURL(action) {
             // Create a form dynamically

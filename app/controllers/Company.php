@@ -13,9 +13,6 @@ class Company extends Users
     }
 
 
-
-
-
 //TODO:implement verification status view with verification doc download
 
     public function verification()
@@ -73,19 +70,20 @@ class Company extends Users
         $this->view('company/verification', $data);
     }
 
-    public function payments($id=null){
+    public function payments($id = null)
+    {
 
         //for individual payment
-        if(!empty($id)){
+        if (!empty($id)) {
             //getting payment details related to the id
-            $paymentInst=new PaymentModel();
-            $row1=$paymentInst->innerJoin(['task'],['task.taskID=payment.taskID'],['paymentID'=>"'".$id."'"])[0];
+            $paymentInst = new PaymentModel();
+            $row1 = $paymentInst->innerJoin(['task'], ['task.taskID=payment.taskID'], ['paymentID' => "'" . $id . "'"])[0];
 
             //checking the status of the payment and redirecting
-            if($row1->paymentStatus=='outstanding'){
-                        $data['merchantID'] = MERCHANT_ID;
+            if ($row1->paymentStatus == 'outstanding') {
+                $data['merchantID'] = MERCHANT_ID;
                 $data['order_id'] = $id;
-                $data['items'] = "For posting task - ".$row1->title;
+                $data['items'] = "For posting task - " . $row1->title;
                 $data['currency'] = "LKR";
                 $data['amount'] = $row1->amount;
                 $data['first_name'] = Auth::getfirstName();
@@ -108,17 +106,16 @@ class Company extends Users
 
                 $this->view('company/payment', $data);
                 return;
-            }else{
+            } else {
                 message('Payment is already completed!');
                 redirect('company/payments');
             }
         }
 
 
-
         //getting payment details regarding tasks of the company
-        $paymentInst=new PaymentModel();
-        $row=$paymentInst->innerJoin(['task'],['task.taskID=payment.taskID'],['task.companyID'=>Auth::getcompanyID()]);
+        $paymentInst = new PaymentModel();
+        $row = $paymentInst->innerJoin(['task'], ['task.taskID=payment.taskID'], ['task.companyID' => Auth::getcompanyID()]);
 
         $data['payments'] = $row;
         $data['title'] = "Payments";
@@ -135,7 +132,7 @@ class Company extends Users
             //TODO: implemet number of proposals query for tasks list
 
             $task = new Task();
-            $row = $task->where(['companyID' => Auth::getcompanyID()]);
+            $row = $task->where(['companyID' => Auth::getcompanyID(), 'isDeleted' => 0]);
 
             if (empty($row)) {
                 message(['You have no tasks posted!', 'danger']);
@@ -312,8 +309,8 @@ class Company extends Users
                     $nProposals = $proposalInst->count(['taskID' => $row->taskID])[0]->{"COUNT(*)"};
                     $row->nProposals = $nProposals;
 
-                    $taskSkillInst=new Task_Skill();
-                    $data['skills']=$taskSkillInst->innerJoin(['skill'],['skill.skillID=task_skill.skillID'],['taskID'=>$id]);
+                    $taskSkillInst = new Task_Skill();
+                    $data['skills'] = $taskSkillInst->innerJoin(['skill'], ['skill.skillID=task_skill.skillID'], ['taskID' => $id]);
 
 
                     $data['task'] = $row;
@@ -424,7 +421,7 @@ class Company extends Users
                 if (empty($_POST['deadline'])) unset($_POST['deadline']);
                 if ($task->validate($_POST)) {//validate task details
 
-                    $insertedID=$task->insert($_POST);
+                    $insertedID = $task->insert($_POST);
 
 
                     //skills related to task
@@ -484,7 +481,7 @@ class Company extends Users
 
                                 //adding modified list of skills
                                 //there can be skills to be deleted. => second param is false
-                                $this->skillsRelatedToTask($id,false);
+                                $this->skillsRelatedToTask($id, false);
 
                                 message("Task modified successfully!");
                                 redirect('company/tasks/' . $id);
@@ -505,7 +502,7 @@ class Company extends Users
 
                         //adding modified list of skills
                         //there can be skills to be deleted. => second param is false
-                        $this->skillsRelatedToTask($id,false);
+                        $this->skillsRelatedToTask($id, false);
 
                         message('Task Modified Successfully!');
                         redirect('company/tasks/' . $id);
@@ -526,8 +523,8 @@ class Company extends Users
                     $skillInst = new Skill();
                     $data['skills'] = $skillInst->getAll();
 
-                    $taskSkillInst=new Task_Skill();
-                    $data['taskSkills']=$taskSkillInst->innerJoin(['skill'],['skill.skillID=task_skill.skillID'],['taskID'=>$id]);
+                    $taskSkillInst = new Task_Skill();
+                    $data['taskSkills'] = $taskSkillInst->innerJoin(['skill'], ['skill.skillID=task_skill.skillID'], ['taskID' => $id]);
 
                     $data['task'] = $row;
                     $data['title'] = "Modify - " . $row->title;
@@ -550,25 +547,51 @@ class Company extends Users
     //delete tasks
     public function delete($id = null)
     {
+        if (!empty($id)) {
 
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-
-            if (!empty($id)) {
-                $task = new Task();
-                $row = $task->first(['taskID' => $id]);
-                if (!empty($row)) {
-                    if ($row->companyID === Auth::getcompanyID()) {
-                        $task->delete($id);
-                        message('Task Deleted Successfully!');
-                        redirect('company/tasks');
-                    }
-                    message(['Unauthorized !', 'danger']);
-                    redirect('company/tasks');
-                }
-                message(['Error Fetching!', 'danger']);
+            $taskInst = new Task();
+            $task = $taskInst->innerJoin(['category'], ['category.categoryID=task.categoryID'], ['taskID' => $id], ['*,category.title As categoryTitle']);
+            if (!empty($task)) $task = $task[0];//removing array that comes with innerjoin
+            if (empty($task) || $task->companyID != Auth::getcompanyID()) {
+                message(['Invalid Task ID', 'danger']);
                 redirect('company/tasks');
             }
+
+
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                if ($_POST['confirm'] === 'delete the task') {
+
+
+                    if($task->status=='closed' || empty($task->assignedStudentID)){
+                        //if task is closed OR if task is not assigned
+                        $taskInst->update(['isDeleted' => 1], $id);
+                    }else{
+                        //if task if assigned but not closed
+                        message(['Please close the task before deleting!','danger']);
+                        redirect('company/tasks');
+                    }
+
+                    message('Task Deleted Successfully!');
+                    redirect('company/tasks');
+                    
+                } else {
+                    message(['Confirmation Failed', 'danger']);
+                    redirect('company/tasks/' . $id);
+                }
+
+
+            }
+
+
+            $submissionInst = new Submission();
+            $submissions = $submissionInst->innerJoin(['task'], ['task.taskID=submission.taskID'], ['task.taskID' => $id], ["COUNT(*)"])[0]->{"COUNT(*)"};
+            $pendingSubmissions = $submissionInst->innerJoin(['task'], ['task.taskID=submission.taskID'], ['task.taskID' => $id, 'submission.status' => '"pendingReview"'], ["COUNT(*)"])[0]->{"COUNT(*)"};
+            $data['submissions'] = $submissions;
+            $data['pendingSubmissions'] = $pendingSubmissions;
+            $data['task'] = $task;
+
+            $data['title'] = "Delete task";
+            $this->view('company/deleteTask', $data);
         }
     }
 
@@ -720,7 +743,7 @@ class Company extends Users
 
         $data['title'] = "Tasks in-progress";
         $tasksInst = new Task();
-        $tasks = $tasksInst->where(['companyID' => Auth::getcompanyID(), 'status' => 'inProgress']);
+        $tasks = $tasksInst->where(['companyID' => Auth::getcompanyID(), 'status' => 'inProgress', 'isDeleted' => 0]);
 
         $data['tasks'] = $tasks;
         $this->view('company/tasks-inprogress', $data);
@@ -746,7 +769,7 @@ class Company extends Users
                     redirect('company/disputes');
                 }
                 $taskInst = new Task();
-                $tasks = $taskInst->where(['companyID' => Auth::getcompanyID()]);
+                $tasks = $taskInst->where(['companyID' => Auth::getcompanyID(), 'isDeleted' => 0]);
                 $data['tasks'] = $tasks;
                 $data['title'] = "New Dispute";
 
@@ -768,7 +791,7 @@ class Company extends Users
                     }
 
                     $taskInst = new Task();
-                    $tasks = $taskInst->where(['companyID' => Auth::getcompanyID()]);
+                    $tasks = $taskInst->where(['companyID' => Auth::getcompanyID(), 'isDeleted' => 0]);
                     $data['tasks'] = $tasks;
 
                     $disputeInst = new Dispute();
@@ -808,7 +831,7 @@ class Company extends Users
 
         //get alll tasks related to the company
         $taskInst = new Task();
-        $tasks = $taskInst->where(['companyID' => Auth::getcompanyID()]);
+        $tasks = $taskInst->where(['companyID' => Auth::getcompanyID(), 'isDeleted' => 0]);
 
         $disputeInst = new Dispute();
         $res = [];
@@ -851,12 +874,12 @@ class Company extends Users
                 if ($_POST['confirm'] === 'close the task') {
 
                     //checking whether the payment is made before closing the task
-                    $paymentInst=new PaymentModel();
-                    $pay=$paymentInst->first(['taskID'=>$id]);
-                    if(empty($pay)){
+                    $paymentInst = new PaymentModel();
+                    $pay = $paymentInst->first(['taskID' => $id]);
+                    if (empty($pay)) {
                         message(['Please make the payment for the task before closing!', 'danger']);
                         redirect('company/payments');
-                    }else if($pay->paymentStatus!='completed'){
+                    } else if ($pay->paymentStatus != 'completed') {
                         message(['Please make the payment for the task before closing!', 'danger']);
                         redirect('company/payments');
                     }
@@ -864,18 +887,18 @@ class Company extends Users
                     $taskInst->update(['status' => 'closed'], $id);
 
                     //new earnigng for the assigned student
-                    $earningInst=new Earning();
-                    $proposalInst=new Proposal();
-                    $proposal=$proposalInst->innerJoin(['assignment'],['assignment.proposalID=proposal.proposalID'],['assignmentID'=>$task->assignmentID])[0];
+                    $earningInst = new Earning();
+                    $proposalInst = new Proposal();
+                    $proposal = $proposalInst->innerJoin(['assignment'], ['assignment.proposalID=proposal.proposalID'], ['assignmentID' => $task->assignmentID])[0];
                     $price = $proposal->proposeAmount;
-                    if(empty($price)){//fixed price
-                        $price=$task->value;
+                    if (empty($price)) {//fixed price
+                        $price = $task->value;
                     }
 
                     $payment['transactionID'] = uniqid();
                     $payment['earningStatus'] = 'available';
                     $payment['taskID'] = $id;
-                    $payment['earningDescription'] = "Earning by the Task - ".$task->title;
+                    $payment['earningDescription'] = "Earning by the Task - " . $task->title;
                     $payment['amount'] = $price;
                     $earningInst->insert($payment);
 
@@ -920,11 +943,11 @@ class Company extends Users
      * @param bool $isDeletedEmpty // this shoes whether theres skills to be deleted
      * @return void
      */
-    public function skillsRelatedToTask($insertedID,$isDeletedEmpty=true)
+    public function skillsRelatedToTask($insertedID, $isDeletedEmpty = true)
     {
 
         //if theres skills to be deleted
-        if(!$isDeletedEmpty) {
+        if (!$isDeletedEmpty) {
             $deletedSkills = json_decode($_POST['deletedSkills']);
 
             if (!empty($deletedSkills)) {//removing skills

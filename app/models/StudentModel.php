@@ -64,7 +64,7 @@ class StudentModel extends Model {
         $studentID=Auth::getstudentID();
 
         $taskInst=new Task();
-        $row=$taskInst->first(['status'=>'inProgress','assignedStudentID'=>$studentID]);
+        $row=$taskInst->first(['status'=>'inProgress','assignedStudentID'=>$studentID,'isDeleted'=>0]);
         if(!empty($row)){
 //            show($row);die;
             $this->errors['tasks']="Finish ongoing tasks before deletion of the account !";
