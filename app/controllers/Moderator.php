@@ -247,6 +247,12 @@ class Moderator extends Users
     }
 
 
+    //disputes dashboard page
+    public function disputes()
+    {
+        $data['title'] = "Disputes";
+        $this->view( 'moderator/disputes', $data);
+    }
 
 
 }
