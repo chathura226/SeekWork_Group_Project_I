@@ -248,21 +248,34 @@ class Moderator extends Users
 
 
     //disputes dashboard page
-    public function disputes($id=null)
+    public function disputes($id = null)
     {
 
         $disputeInst = new Dispute();
 
-        if(!empty($id)){
-            $res = $disputeInst->first(['disputeID'=>$id]);
+        if (!empty($id)) {
 
-            if(!empty($res)){
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                if (!empty($_POST['moderatorComment']) && !empty($_POST['status'])) {
+                    $_POST['resolvedDate'] = date("Y-m-d H:i:s");
+                    $disputeInst->update($_POST, $id);
+                    message(ucfirst($_POST['status']) . ' successfully!');
+                } else {
+                    message(['Error occurred!', 'danger']);
+                }
+                redirect('moderator/disputes/' . $id );
+            }
+
+
+            $res = $disputeInst->first(['disputeID' => $id]);
+
+            if (!empty($res)) {
                 $data['dispute'] = $res;
                 $data['title'] = "Dispute Details";
                 $this->view('moderator/dispute', $data);
                 return;
             }
-            message(['Invalid dispute ID!','danger']);
+            message(['Invalid dispute ID!', 'danger']);
             redirect('moderator/category');
 
         }

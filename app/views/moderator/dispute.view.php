@@ -82,30 +82,23 @@
         </div>
     </div>
 
-    <?php if ($dispute->status == 'pendingReview'): ?>
+    <?php if ($dispute->status != 'resolved'): ?>
         <div class="price-button c-s-8 c-e-13">
 
             <a>
                 <button id="acceptBtn" class="apply"
-                        onclick="acceptSubmission(event,<?= $dispute->submissionID ?>);">Accept
+                        onclick="resolvedDispute(event,<?= $dispute->disputeID ?>);">Mark as resolved
                 </button>
             </a>
-            &nbsp &nbsp
-            <a>
-                <button id="rejectBtn" class="apply"
-                        onclick="rejectSubmission(event,<?= $dispute->submissionID ?>);">Reject
-                </button>
-            </a>
-            &nbsp &nbsp
         </div>
     <?php else: ?>
         <div class="task-details column-5">
-            <h2 style="color: <?= ($dispute->status == 'accepted') ? 'green' : 'red' ?>;">Submission Review Report</h2>
+            <h2 style="color: <?= ($dispute->status == 'accepted') ? 'green' : 'red' ?>;">Dispute Review Report</h2>
             <div class="task-description">
 
                 You already <span
-                        style="color: <?= ($dispute->status == 'accepted') ? 'green' : 'red' ?>"><?= $dispute->status ?></span>
-                this submission on <?= $dispute->resolvedDate ?>.
+                        style="color: <?= ($dispute->status == 'resolved') ? 'green' : 'red' ?>">resolved</span>
+                this dispute on <?= $dispute->resolvedDate ?>.
                 <br>
 
             </div>
@@ -114,7 +107,7 @@
 
             <h2>Comments:</h2>
             <div class="task-description">
-                <?= $dispute->comments ?>
+                <?= $dispute->moderatorComment ?>
                 </br>
             </div>
 
@@ -140,8 +133,8 @@
 
                                     <div class="form-input">
                                         <label>Comments</label>
-                                        <textarea rows="10" cols="45" id="comments" name="comments"
-                                                  placeholder="Enter  Comments about the submission"
+                                        <textarea rows="10" cols="45" id="moderatorComment" name="moderatorComment"
+                                                  placeholder="Enter  Comments about the dispute"
                                                   required></textarea>
                                         <br>
 
@@ -177,21 +170,15 @@
             }
         });
 
-        function acceptSubmission(e, submissionID) {
-            popup_header.innerHTML = "Accept Submission";
-            document.getElementById("status").value = "accepted";
-            popup_button.innerHTML = "Accept";
+        function resolvedDispute(e, submissionID) {
+            popup_header.innerHTML = "Resolve Dispute";
+            document.getElementById("status").value = "resolved";
+            popup_button.innerHTML = "Resolve";
             modal.style.display = 'block';
 
         }
 
-        function rejectSubmission(e, submissionID) {
-            popup_header.innerHTML = "Reject Submission";
-            document.getElementById("status").value = "rejected";
-            popup_button.innerHTML = "Reject";
-            modal.style.display = 'block';
 
-        }
 
     </script>
 
