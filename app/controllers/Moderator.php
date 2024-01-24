@@ -250,6 +250,11 @@ class Moderator extends Users
     //disputes dashboard page
     public function disputes()
     {
+
+        $disputeInst = new Dispute();
+        $data['disputes']=$disputeInst->getAll();
+
+
         $data['title'] = "Disputes";
         $this->view( 'moderator/disputes', $data);
     }
