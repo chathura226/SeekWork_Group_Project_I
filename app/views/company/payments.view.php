@@ -55,7 +55,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($payments as $payment): ?>
+                    <?php if(!empty($payments)): foreach ($payments as $payment): ?>
                         <tr style="height: 70px">
                             <th><?= $payment->paymentID ?></th>
                             <td><?= limitCharacters($payment->paymentDescription, 25) ?></td>
@@ -103,7 +103,7 @@
                                     </a></td>
                             <?php endif; ?>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endforeach; endif; ?>
 
                     </tbody>
                 </table>
@@ -121,7 +121,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($payments as $payment): ?>
+                    <?php if(!empty($payments)): foreach ($payments as $payment): ?>
                         <?php if ($payment->paymentStatus == 'outstanding'): ?>
                             <tr style="height: 70px">
                                 <th><?= $payment->paymentID ?></th>
@@ -171,7 +171,8 @@
                                 <?php endif; ?>
                             </tr>
                         <?php endif; ?>
-                    <?php endforeach; ?>
+                    <?php endforeach; endif; ?>
+
 
                     </tbody>
                 </table>
@@ -190,7 +191,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($payments as $payment): ?>
+                    <?php if(!empty($payments)): foreach ($payments as $payment): ?>
                         <?php if ($payment->paymentStatus == 'completed'): ?>
                             <tr style="height: 70px">
                                 <th><?= $payment->paymentID ?></th>
@@ -240,7 +241,7 @@
                                 <?php endif; ?>
                             </tr>
                         <?php endif; ?>
-                    <?php endforeach; ?>
+                    <?php endforeach; endif;?>
 
                     </tbody>
                 </table>
