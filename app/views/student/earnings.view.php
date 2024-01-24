@@ -62,7 +62,7 @@
                     </thead>
                     <tbody>
 
-                    <?php foreach ($earnings as $earning): ?>
+                    <?php if(!empty($earnings)): foreach ($earnings as $earning): ?>
                         <tr style="height: 70px">
                             <th><?= $earning->transactionID ?></th>
                             <td><?= limitCharacters($earning->earningDescription, 25) ?></td>
@@ -110,7 +110,7 @@
                                     </a></td>
                             <?php endif; ?>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endforeach; endif; ?>
 
                     </tbody>
                 </table>
@@ -129,7 +129,7 @@
                     </thead>
                     <tbody>
 
-                    <?php foreach ($earnings as $earning): ?>
+                    <?php if(!empty($earnings)): foreach ($earnings as $earning): ?>
                         <?php if ($earning->earningStatus == 'available'): ?>
                             <tr style="height: 70px">
                                 <th><?= $earning->transactionID ?></th>
@@ -179,7 +179,7 @@
                                 <?php endif; ?>
                             </tr>
                         <?php endif; ?>
-                    <?php endforeach; ?>
+                    <?php endforeach; endif; ?>
 
                     </tbody>
                 </table>
@@ -199,7 +199,7 @@
                     </thead>
                     <tbody>
 
-                    <?php foreach ($earnings as $earning): ?>
+                    <?php if(!empty($earnings)): foreach ($earnings as $earning): ?>
                         <?php if ($earning->earningStatus == 'withdrawn'): ?>
                             <tr style="height: 70px">
                                 <th><?= $earning->transactionID ?></th>
@@ -249,7 +249,7 @@
                                 <?php endif; ?>
                             </tr>
                         <?php endif; ?>
-                    <?php endforeach; ?>
+                    <?php endforeach; endif; ?>
 
                     </tbody>
                 </table>
@@ -271,7 +271,7 @@
                     </thead>
                     <tbody>
 
-                    <?php foreach ($earnings as $earning): ?>
+                    <?php if(!empty($earnings)): foreach ($earnings as $earning): ?>
                         <?php if ($earning->earningStatus == 'requested'): ?>
                             <tr style="height: 70px">
                                 <th><?= $earning->transactionID ?></th>
@@ -321,7 +321,7 @@
                                 <?php endif; ?>
                             </tr>
                         <?php endif; ?>
-                    <?php endforeach; ?>
+                    <?php endforeach; endif; ?>
 
                     </tbody>
                 </table>
