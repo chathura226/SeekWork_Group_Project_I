@@ -110,6 +110,7 @@
     margin: 8px;
     display: flex;
     align-items: center;
+     gap: 10px;
   }
 
 
@@ -180,4 +181,18 @@
 .likeBtn:active .leftContainer svg {
   transform: scale(1.15);
   transform-origin: top;
+}
+
+
+
+
+.status-btn-like-for-desc{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    height: 30px;
+    /*margin: auto;*/
+    padding: 10px;
+    border-radius: 20px;
+    width: fit-content;
 }

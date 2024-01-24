@@ -1,5 +1,6 @@
 <?php
 require_once 'Users.php';
+
 //Moderator class
 class Moderator extends Users
 {
@@ -115,7 +116,6 @@ class Moderator extends Users
     {
 
 
-
         if (!empty($action)) {
             if ($action === "post") { //for new category
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -161,7 +161,7 @@ class Moderator extends Users
                         $row = $category->first(['categoryID' => $id]);
                         if (!empty($row)) {
                             $taskInst = new Task();
-                            $tasks = $taskInst->first(['categoryID' => $row->categoryID,'isDeleted'=>0]);
+                            $tasks = $taskInst->first(['categoryID' => $row->categoryID, 'isDeleted' => 0]);
                             if (!empty($tasks)) {
                                 message(['Category Cannot be Deleted while tasks are there from that category!', 'danger']);
                                 redirect('moderator/category');
@@ -190,7 +190,7 @@ class Moderator extends Users
 
         $task = new Task();
         for ($i = 0; $i < count($categories); $i++) {
-            $countTasks = $task->where(['categoryID' => $categories[$i]->categoryID, 'status' => 'active','isDeleted'=>0]);
+            $countTasks = $task->where(['categoryID' => $categories[$i]->categoryID, 'status' => 'active', 'isDeleted' => 0]);
             if (!empty($countTasks)) $categories[$i]->taskCount = count($countTasks);
             else $categories[$i]->taskCount = 0;
         }
@@ -204,43 +204,43 @@ class Moderator extends Users
     //toverify - verify companies
     public function toverify($action = null)
     {
-        $verificationInst=new Moderator_Verifies_Company();
+        $verificationInst = new Moderator_Verifies_Company();
 
-        if(!empty($action)){
-            if($action=='reviewed'){
-                $reviewed=$verificationInst->innerJoin(['company','user'],['Moderator_Verifies_Company.companyID=company.companyID','company.userID=user.userID'],['Moderator_Verifies_Company.status'=>'"reviewed"'],['user.userID','Moderator_Verifies_Company.documents','Moderator_Verifies_Company.verificationID','company.companyName','Moderator_Verifies_Company.status']);
-                $data['reviewed']=$reviewed;
+        if (!empty($action)) {
+            if ($action == 'reviewed') {
+                $reviewed = $verificationInst->innerJoin(['company', 'user'], ['Moderator_Verifies_Company.companyID=company.companyID', 'company.userID=user.userID'], ['Moderator_Verifies_Company.status' => '"reviewed"'], ['user.userID', 'Moderator_Verifies_Company.documents', 'Moderator_Verifies_Company.verificationID', 'company.companyName', 'Moderator_Verifies_Company.status']);
+                $data['reviewed'] = $reviewed;
                 $data['title'] = "Reviewed Verifications";
                 $this->view('moderator/reviewedVerifications', $data);
                 return;
 
-            }else if($action='underverification'){
+            } else if ($action = 'underverification') {
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                    if(!empty($_POST['verificationID'])){
-                        $_POST['moderatorID']=Auth::getmoderatorID();
-                        $verificationInst->update($_POST,$_POST['verificationID']);
-                        if($_POST['status']=='reviewed'){
-                            $row=$verificationInst->first(['verificationID'=>$_POST['verificationID']]);
-                            $companyInst=new CompanyModel();
-                            $companyID=$companyInst->update(['status'=>'verified'],$row->companyID);
+                    if (!empty($_POST['verificationID'])) {
+                        $_POST['moderatorID'] = Auth::getmoderatorID();
+                        $verificationInst->update($_POST, $_POST['verificationID']);
+                        if ($_POST['status'] == 'reviewed') {
+                            $row = $verificationInst->first(['verificationID' => $_POST['verificationID']]);
+                            $companyInst = new CompanyModel();
+                            $companyID = $companyInst->update(['status' => 'verified'], $row->companyID);
                         }
 
                         message('Submitted Successfully');
                         redirect('moderator/toverify/underverification');
                     }
                 }
-                $underReviews=$verificationInst->innerJoin(['company','user'],['Moderator_Verifies_Company.companyID=company.companyID','company.userID=user.userID'],['Moderator_Verifies_Company.status'=>'"underReview"'],['user.userID','Moderator_Verifies_Company.documents','Moderator_Verifies_Company.verificationID','company.companyName','Moderator_Verifies_Company.status']);
-                $data['underReviews']=$underReviews;
+                $underReviews = $verificationInst->innerJoin(['company', 'user'], ['Moderator_Verifies_Company.companyID=company.companyID', 'company.userID=user.userID'], ['Moderator_Verifies_Company.status' => '"underReview"'], ['user.userID', 'Moderator_Verifies_Company.documents', 'Moderator_Verifies_Company.verificationID', 'company.companyName', 'Moderator_Verifies_Company.status']);
+                $data['underReviews'] = $underReviews;
                 $data['title'] = "Reviewed Under Verification";
                 $this->view('moderator/underverification', $data);
                 return;
             }
         }
 
-        $reviewedCount=$verificationInst->count(['status'=>'reviewed'])[0]->{"COUNT(*)"};
-        $underReviewCount=$verificationInst->count(['status'=>'underReview'])[0]->{"COUNT(*)"};
-        $data['reviewed']=$reviewedCount;
-        $data['underReview']=$underReviewCount;
+        $reviewedCount = $verificationInst->count(['status' => 'reviewed'])[0]->{"COUNT(*)"};
+        $underReviewCount = $verificationInst->count(['status' => 'underReview'])[0]->{"COUNT(*)"};
+        $data['reviewed'] = $reviewedCount;
+        $data['underReview'] = $underReviewCount;
 
         $data['title'] = "To Verify";
         $this->view('moderator/toverify', $data);
@@ -248,10 +248,68 @@ class Moderator extends Users
 
 
     //disputes dashboard page
-    public function disputes()
+    public function disputes($id = null)
     {
+
+        $disputeInst = new Dispute();
+
+        if (!empty($id)) {
+
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                if (!empty($_POST['moderatorComment']) && !empty($_POST['status'])) {
+                    $_POST['resolvedDate'] = date("Y-m-d H:i:s");
+                    $disputeInst->update($_POST, $id);
+                    message(ucfirst($_POST['status']) . ' successfully!');
+                } else {
+                    message(['Error occurred!', 'danger']);
+                }
+                redirect('moderator/disputes/' . $id );
+            }
+
+
+            $res = $disputeInst->first(['disputeID' => $id]);
+
+            if (!empty($res)) {
+                $taskInst=new Task();
+
+                $task=$taskInst->first(['taskID'=>$res->taskID]);
+                $res->task=$task;
+
+                //geting details of users
+                $compinst=new CompanyModel();
+                $detailsOfCompany=$compinst->innerJoin(['user'],['company.userID=user.userID'],['company.companyID'=>$res->task->companyID])[0];
+                $studentInst=new StudentModel();
+                $detailsOfStudent=$studentInst->innerJoin(['user'],['student.userID=user.userID'],['student.studentID'=>$res->task->assignedStudentID])[0];
+
+                //getting initiated party data and set res accordignly
+                if($res->initiatedParty=='company'){
+                    //when initiated party is company
+
+                    $res->complainer=$detailsOfCompany;
+                    $res->target=$detailsOfStudent;
+
+                }else{
+                    //when initiated party is student
+                    $res->complainer=$detailsOfStudent;
+                    $res->target=$detailsOfCompany;
+                }
+
+                $data['dispute'] = $res;
+                $data['title'] = "Dispute Details";
+                $this->view('moderator/dispute', $data);
+                return;
+            }
+            message(['Invalid dispute ID!', 'danger']);
+            redirect('moderator/category');
+
+        }
+
+
+        $data['disputes'] = $disputeInst->getAll();
+
+
         $data['title'] = "Disputes";
-        $this->view( 'moderator/disputes', $data);
+        $this->view('moderator/disputes', $data);
     }
 
 

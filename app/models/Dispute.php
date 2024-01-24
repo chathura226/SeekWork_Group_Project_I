@@ -12,6 +12,7 @@ class Dispute extends Model {
         'subject',
         'description',
         'createdAt',
+        'resolvedDate',
         'status',
         'type',
         'initiatedParty',

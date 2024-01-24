@@ -31,8 +31,8 @@
                 <span class="name">All</span>
             </label>
             <label class="tab-radio-btn">
-                <input type="radio" name="radioForTab" value="outstanding">
-                <span class="name">Outstanding Disputes</span>
+                <input type="radio" name="radioForTab" value="pending">
+                <span class="name">Pending Disputes</span>
             </label>
             <label class="tab-radio-btn">
                 <input type="radio" name="radioForTab" value="resolved">
@@ -52,6 +52,7 @@
                             <th>Dispute Description</th>
                             <th>Status</th>
                             <th>Dispute Date</th>
+                            <th>Initiated Party</th>
                             <th>Link</th>
                         </tr>
                         </thead>
@@ -59,16 +60,16 @@
                         <?php if (!empty($disputes)): foreach ($disputes as $dispute): ?>
                             <tr style="height: 70px">
                                 <th><?= $dispute->disputeID ?></th>
-                                <td><?= limitCharacters($dispute->disputeDescription, 25) ?></td>
+                                <td><?= limitCharacters($dispute->subject, 25) ?></td>
                                 <!--                            <td>-->
-                                <?php //=ucfirst($dispute->disputeStatus)?><!--</td>-->
+                                <?php //=ucfirst($dispute->status)?><!--</td>-->
                                 <?php $statusColor = 'yellow';
-                                switch ($dispute->disputeStatus) {
+                                switch ($dispute->status) {
                                     case 'resolved':
                                         $statusColor = 'green';
                                         $textColor = 'whitesmoke';
                                         break;
-                                    case 'outstanding':
+                                    case 'pending':
                                         $statusColor = 'yellow';
                                         $textColor = 'var(--text-color)';
                                         break;
@@ -80,29 +81,21 @@
                                 }; ?>
                                 <td>
                                     <div class="status-btn-like"
-                                         style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($dispute->disputeStatus) ?></div>
+                                         style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($dispute->status) ?></div>
                                 </td>
-                                <td><?= (!empty($dispute->paidDate)) ? $dispute->paidDate : 'N/A' ?></td>
-                                <?php if ($dispute->disputeStatus == 'outstanding'): ?>
-                                    <td>
-                                        <div class="flex"
-                                             style="margin: auto;justify-content: center;align-items: center;gap: 20px">
-                                            <a href="<?= ROOT ?>/moderator/disputes/<?= $dispute->disputeID ?>"
-                                               style="text-decoration: none;">
-                                                <button class="status-btn-working">Pay Now</button>
-                                            </a>
-                                            <a href="<?= ROOT ?>/moderator/tasks/<?= $dispute->taskID ?>"
-                                               style="text-decoration: none;">
-                                                <button class="status-btn-working">Go to Task</button>
-                                            </a>
-                                        </div>
-                                    </td>
-                                <?php else: ?>
-                                    <td><a href="<?= ROOT ?>/moderator/tasks/<?= $dispute->taskID ?>"
+                                <td><?= $dispute->createdAt ?></td>
+                                <td><?= ucfirst($dispute->initiatedParty) ?></td>
+                                <td>
+                                    <div class="flex"
+                                         style="margin: auto;justify-content: center;align-items: center;gap: 20px">
+                                        <a href="<?= ROOT ?>/moderator/disputes/<?= $dispute->disputeID ?>"
                                            style="text-decoration: none;">
-                                            <button class="status-btn-working">Go to Task</button>
-                                        </a></td>
-                                <?php endif; ?>
+                                            <button class="status-btn-working">Details</button>
+                                        </a>
+
+                                    </div>
+                                </td>
+
                             </tr>
                         <?php endforeach; ?>
                         <?php endif; ?>
@@ -112,8 +105,8 @@
                 <?php else: ?>
                     <h2>No disputes</h2> <?php endif; ?>
             </div>
-            <div class="content-box-content" id="outstanding">
-                <h2>Outstanding Disputes</h2>
+            <div class="content-box-content" id="pending">
+                <h2>Pending Disputes</h2>
                 <?php if (!empty($disputes)): ?>
                     <table class="table table-striped">
                         <thead>
@@ -122,24 +115,25 @@
                             <th>Dispute Description</th>
                             <th>Status</th>
                             <th>Dispute Date</th>
+                            <th>Initiated Party</th>
                             <th>Link</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php if (!empty($disputes)): foreach ($disputes as $dispute): ?>
-                            <?php if ($dispute->disputeStatus == 'outstanding'): ?>
+                            <?php if ($dispute->status == 'pending'): ?>
                                 <tr style="height: 70px">
                                     <th><?= $dispute->disputeID ?></th>
-                                    <td><?= limitCharacters($dispute->disputeDescription, 25) ?></td>
+                                    <td><?= limitCharacters($dispute->subject, 25) ?></td>
                                     <!--                            <td>-->
-                                    <?php //=ucfirst($dispute->disputeStatus)?><!--</td>-->
+                                    <?php //=ucfirst($dispute->status)?><!--</td>-->
                                     <?php $statusColor = 'yellow';
-                                    switch ($dispute->disputeStatus) {
+                                    switch ($dispute->status) {
                                         case 'resolved':
                                             $statusColor = 'green';
                                             $textColor = 'whitesmoke';
                                             break;
-                                        case 'outstanding':
+                                        case 'pending':
                                             $statusColor = 'yellow';
                                             $textColor = 'var(--text-color)';
                                             break;
@@ -151,29 +145,21 @@
                                     }; ?>
                                     <td>
                                         <div class="status-btn-like"
-                                             style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($dispute->disputeStatus) ?></div>
+                                             style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($dispute->status) ?></div>
                                     </td>
-                                    <td><?= (!empty($dispute->paidDate)) ? $dispute->paidDate : 'N/A' ?></td>
-                                    <?php if ($dispute->disputeStatus == 'outstanding'): ?>
-                                        <td>
-                                            <div class="flex"
-                                                 style="margin: auto;justify-content: center;align-items: center;gap: 20px">
-                                                <a href="<?= ROOT ?>/moderator/disputes/<?= $dispute->disputeID ?>"
-                                                   style="text-decoration: none;">
-                                                    <button class="status-btn-working">Pay Now</button>
-                                                </a>
-                                                <a href="<?= ROOT ?>/moderator/tasks/<?= $dispute->taskID ?>"
-                                                   style="text-decoration: none;">
-                                                    <button class="status-btn-working">Go to Task</button>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    <?php else: ?>
-                                        <td><a href="<?= ROOT ?>/moderator/tasks/<?= $dispute->taskID ?>"
+                                    <td><?= $dispute->createdAt ?></td>
+                                    <td><?= ucfirst($dispute->initiatedParty) ?></td>
+                                    <td>
+                                        <div class="flex"
+                                             style="margin: auto;justify-content: center;align-items: center;gap: 20px">
+                                            <a href="<?= ROOT ?>/moderator/disputes/<?= $dispute->disputeID ?>"
                                                style="text-decoration: none;">
-                                                <button class="status-btn-working">Go to Task</button>
-                                            </a></td>
-                                    <?php endif; ?>
+                                                <button class="status-btn-working">Details</button>
+                                            </a>
+
+                                        </div>
+                                    </td>
+
                                 </tr>
                             <?php endif; ?>
                         <?php endforeach; ?>
@@ -196,24 +182,25 @@
                             <th>Dispute Description</th>
                             <th>Status</th>
                             <th>Dispute Date</th>
+                            <th>Initiated Party</th>
                             <th>Link</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php if (!empty($disputes)): foreach ($disputes as $dispute): ?>
-                            <?php if ($dispute->disputeStatus == 'resolved'): ?>
+                            <?php if ($dispute->status == 'resolved'): ?>
                                 <tr style="height: 70px">
                                     <th><?= $dispute->disputeID ?></th>
-                                    <td><?= limitCharacters($dispute->disputeDescription, 25) ?></td>
+                                    <td><?= limitCharacters($dispute->subject, 25) ?></td>
                                     <!--                            <td>-->
-                                    <?php //=ucfirst($dispute->disputeStatus)?><!--</td>-->
+                                    <?php //=ucfirst($dispute->status)?><!--</td>-->
                                     <?php $statusColor = 'yellow';
-                                    switch ($dispute->disputeStatus) {
+                                    switch ($dispute->status) {
                                         case 'resolved':
                                             $statusColor = 'green';
                                             $textColor = 'whitesmoke';
                                             break;
-                                        case 'outstanding':
+                                        case 'pending':
                                             $statusColor = 'yellow';
                                             $textColor = 'var(--text-color)';
                                             break;
@@ -225,29 +212,21 @@
                                     }; ?>
                                     <td>
                                         <div class="status-btn-like"
-                                             style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($dispute->disputeStatus) ?></div>
+                                             style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($dispute->status) ?></div>
                                     </td>
-                                    <td><?= (!empty($dispute->paidDate)) ? $dispute->paidDate : 'N/A' ?></td>
-                                    <?php if ($dispute->disputeStatus == 'outstanding'): ?>
-                                        <td>
-                                            <div class="flex"
-                                                 style="margin: auto;justify-content: center;align-items: center;gap: 20px">
-                                                <a href="<?= ROOT ?>/moderator/disputes/<?= $dispute->disputeID ?>"
-                                                   style="text-decoration: none;">
-                                                    <button class="status-btn-working">Pay Now</button>
-                                                </a>
-                                                <a href="<?= ROOT ?>/moderator/tasks/<?= $dispute->taskID ?>"
-                                                   style="text-decoration: none;">
-                                                    <button class="status-btn-working">Go to Task</button>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    <?php else: ?>
-                                        <td><a href="<?= ROOT ?>/moderator/tasks/<?= $dispute->taskID ?>"
+                                    <td><?= $dispute->createdAt ?></td>
+                                    <td><?= ucfirst($dispute->initiatedParty) ?></td>
+                                    <td>
+                                        <div class="flex"
+                                             style="margin: auto;justify-content: center;align-items: center;gap: 20px">
+                                            <a href="<?= ROOT ?>/moderator/disputes/<?= $dispute->disputeID ?>"
                                                style="text-decoration: none;">
-                                                <button class="status-btn-working">Go to Task</button>
-                                            </a></td>
-                                    <?php endif; ?>
+                                                <button class="status-btn-working">Details</button>
+                                            </a>
+
+                                        </div>
+                                    </td>
+
                                 </tr>
                             <?php endif; ?>
                         <?php endforeach; ?>
