@@ -92,10 +92,7 @@
                                            style="text-decoration: none;">
                                             <button class="status-btn-working">Details</button>
                                         </a>
-                                        <a href="<?= ROOT ?>/moderator/tasks/<?= $dispute->taskID ?>"
-                                           style="text-decoration: none;">
-                                            <button class="status-btn-working">Go to Task</button>
-                                        </a>
+
                                     </div>
                                 </td>
 
@@ -159,10 +156,7 @@
                                                style="text-decoration: none;">
                                                 <button class="status-btn-working">Details</button>
                                             </a>
-                                            <a href="<?= ROOT ?>/moderator/tasks/<?= $dispute->taskID ?>"
-                                               style="text-decoration: none;">
-                                                <button class="status-btn-working">Go to Task</button>
-                                            </a>
+
                                         </div>
                                     </td>
 
@@ -229,10 +223,7 @@
                                                style="text-decoration: none;">
                                                 <button class="status-btn-working">Details</button>
                                             </a>
-                                            <a href="<?= ROOT ?>/moderator/tasks/<?= $dispute->taskID ?>"
-                                               style="text-decoration: none;">
-                                                <button class="status-btn-working">Go to Task</button>
-                                            </a>
+
                                         </div>
                                     </td>
 
