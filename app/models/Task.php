@@ -18,6 +18,7 @@ class Task extends Model {
         'value',
         'status',
         'documents',
+        'isPdfRequiredProposal',
         'companyID',
         'assignedStudentID',
         'assignmentID',
