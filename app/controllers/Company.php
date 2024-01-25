@@ -384,6 +384,14 @@ class Company extends Users
 
         //if the method is post->creatre task
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+            //chaning the field of is pdf reuired accordignly
+            if(!empty($_POST['isPdfRequiredProposal'])){
+                if($_POST['isPdfRequiredProposal']=='on'){
+                    $_POST['isPdfRequiredProposal']=1;
+                }
+            }
+
             if (!empty($_FILES['documents']['name'])) {//checking for a file upload
 
                 if ($_FILES['documents']['error'] == 0) {
@@ -460,6 +468,13 @@ class Company extends Users
 
             //if the method is post->update task
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+                //chaning the field of is pdf reuired accordignly
+                if(!empty($_POST['isPdfRequiredProposal'])){
+                    if($_POST['isPdfRequiredProposal']=='on'){
+                        $_POST['isPdfRequiredProposal']=1;
+                    }
+                }
                 if (!empty($_FILES['documents']['name'])) {//checking for a file upload
 
                     if ($_FILES['documents']['error'] == 0) {

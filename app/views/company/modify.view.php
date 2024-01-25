@@ -173,6 +173,17 @@
                                 <div class="text-error"><small><?= $errors['deadline'] ?></small></div>
                             <?php endif; ?>
                         </div>
+                        <div class="form-input" style="display: flex;gap: 5px;">
+                            <label for="isPdfRequiredProposal">Is document required to be submitted along with the
+                                proposal?
+                                (check if true) :</label>
+                            <input style="width: fit-content;" type="checkbox" id="isPdfRequiredProposal"
+                                   name="isPdfRequiredProposal" <?php if (isset($_POST['isPdfRequiredProposal'])) {
+                                if ($_POST['isPdfRequiredProposal']) echo 'checked';
+                            } else if ($task->isPdfRequiredProposal) {
+                                echo 'checked';
+                            } ?>>
+                        </div>
 
                         <input type="hidden" name="newlyAddedSkills" id="newlyAddedSkills"/>
                         <input type="hidden" name="selectedSkills" id="selectedSkills"/>
