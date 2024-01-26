@@ -854,6 +854,33 @@ INSERT INTO `moderator_audit_log` VALUES (3,'INSERT','2023-11-29 09:41:51',NULL,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification` (
+  `notificationID` int NOT NULL AUTO_INCREMENT,
+  `content` json NOT NULL COMMENT 'ideally {msg:"",url:""}',
+  `userID` int NOT NULL COMMENT 'receiving userID',
+  `seen` tinyint NOT NULL,
+  PRIMARY KEY (`notificationID`),
+  KEY `user-notification` (`userID`),
+  CONSTRAINT `user-notification` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification`
+--
+
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `otp`
 --
 
@@ -1653,4 +1680,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-25 12:40:54
+-- Dump completed on 2024-01-26 10:42:51
