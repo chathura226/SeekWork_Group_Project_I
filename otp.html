@@ -1,41 +1,100 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        .closeable-box {
-            position: relative;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            margin-bottom: 15px;
-        }
+      /* Basic styles for the Bootstrap dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
 
-        .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: transparent;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            color: #999;
-        }
+.dropdown-toggle::after {
+  content: '\25BC'; /* Downward arrow character */
+  margin-left: 5px;
+}
+
+/* Dropdown menu styles */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  min-width: 160px;
+  z-index: 1000;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Style for individual dropdown items */
+.dropdown-item {
+  display: block;
+  padding: 8px 12px;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+/* Hover effect on dropdown items */
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* Active state for selected item */
+.dropdown-item.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Additional styling for disabled items */
+.dropdown-item:disabled {
+  color: #6c757d;
+  background-color: #f8f9fa;
+}
+
+/* Optional: Style the dropdown toggle button */
+.dropdown-toggle {
+  cursor: pointer;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background-color: #fff;
+}
 
     </style>
+    <title>Notification Dropdown</title>
 </head>
+
 <body>
-<div class="closeable-box">
-    <p>This is a closeable box. Click the button to close it.</p>
-    <button class="close-btn">&times;</button>
-</div>
+
+    <div class="dropdown">
+        <a class="me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
+        role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-bell"></i>
+            <span class="badge rounded-pill badge-notification bg-danger">1</span>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li>
+                <a class="dropdown-item" href="#">Some news</a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="#">Another news</a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </li>
+        </ul>
+    </div>
+
 
 </body>
-<script>
-</script>
+
 </html>

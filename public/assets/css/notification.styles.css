@@ -1,0 +1,56 @@
+.notif-dropdown-content {
+    display: none;
+    /*font-size: 13px;*/
+    position: absolute;
+    z-index: 1;
+    min-width: 600px;
+    max-width: 600px;
+    background-color: white;
+    border: 2px solid var(--secondary-color);
+    border-radius: 0px 15px 15px 15px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.notif-dropdown-content a {
+    width: 100%;
+    display: inline-flex;
+    flex-wrap: wrap;
+    min-height: 50px;
+    max-height: 50px;
+    color: var(--text-color);
+    padding: 8px 10px 8px 10px;
+    text-decoration: none;
+    /*display: block;*/
+    transition: 0.1s;
+    overflow: hidden;
+    border: #dad9d9 solid thin;
+
+}
+
+.notif-dropdown-content a:hover {
+    background-color: #dad9d9;
+    /*color: var(--secondary-color);*/
+}
+
+.notif-dropdown-content a:focus {
+    background-color: #dad9d9;
+}
+
+.newNotifyIcon {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: red;
+    top: 0;
+    right: -2px;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1px;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
