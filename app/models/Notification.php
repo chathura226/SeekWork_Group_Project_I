@@ -9,7 +9,8 @@ class Notification extends Model {
     //fields that can be updated
     protected $allowedColumns=[
         'notificationID',
-        'content',//json with {msg:"",url:""}
+        'msg',
+        'url',
         'userID',//receving useriD
         'seen',
     ];

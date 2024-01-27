@@ -862,13 +862,14 @@ DROP TABLE IF EXISTS `notification`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notification` (
   `notificationID` int NOT NULL AUTO_INCREMENT,
-  `content` json NOT NULL COMMENT 'ideally {msg:"",url:""}',
+  `msg` varchar(255) NOT NULL,
+  `url` varchar(1024) NOT NULL,
   `userID` int NOT NULL COMMENT 'receiving userID',
   `seen` tinyint NOT NULL,
   PRIMARY KEY (`notificationID`),
   KEY `user-notification` (`userID`),
   CONSTRAINT `user-notification` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1680,4 +1681,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-26 10:42:51
+-- Dump completed on 2024-01-27  4:27:37

@@ -72,9 +72,9 @@
                         </svg>
                     </button>
                     <div style="position: absolute; top:100%;" class="notif-dropdown-content" id="notificationContent">
-                        <a href="#">Designing</a>
-                        <a  href="#">Web Development</a>
-                        <a href="#">Programming</a>
+                        <a>mxbsdjncjkdscd</a>
+                        <a>mxbsdjncjkdscd</a>
+                        <a>mxbsdjncjkdscd</a>
                     </div>
 
 
@@ -218,6 +218,7 @@
 
 
             <script>
+                var rootURL="<?=ROOT?>";
                 notificationContent=document.getElementById("notificationContent");
                 notifyBttn=document.getElementById("notifyBttn");
                 var isNotificationOpen=false;
@@ -227,17 +228,54 @@
                     if(isNotificationOpen){
                         notificationContent.style.display = "none";
                         isNotificationOpen = false;
+
                     }else {
                         notificationContent.style.display = "block";
                         isNotificationOpen = true;
+
                     }
                 }
 
                 //to track other clicks to close notification drop
-                document.addEventListener('click', (event) => {
-                    if (!notificationContent.contains(event.target) && !notifyBttn.contains(event.target)) {
-                        console.log("erd");
-                        notificationClick(event);
-                    }
-                });
+                // document.addEventListener('click', (event) => {
+                //     if (!notificationContent.contains(event.target) && !notifyBttn.contains(event.target)) {
+                //         console.log("erd");
+                //         notificationClick(event);
+                //     }
+                // });
+
+
+                //get all notifications
+                function getAllNotifications() {
+                    var xhr = new XMLHttpRequest();
+
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            var data = JSON.parse(xhr.responseText);
+                            console.log(data);
+                            // adding the notifications to the drop down
+                            data.forEach(element=>{
+                                console.log(element)
+                                obj=JSON.parse(element);
+                                var anchorTag = document.createElement('a');
+
+                                // Set the href attribute of the anchor tag
+                                anchorTag.href = rootURL+"/"+obj.url;
+
+                                // Set the text content of the anchor tag
+                                anchorTag.textContent = obj.msg;
+                                notificationContent.appendChild(anchorTag);
+
+
+                            })
+                        }
+                    };
+
+                    // Specify the type of request and the URL
+                    xhr.open('GET', '<?=ROOT?>/notifications/getALl', true);
+
+                    // Send the request
+                    xhr.send();
+                }
+                getAllNotifications();
             </script>
