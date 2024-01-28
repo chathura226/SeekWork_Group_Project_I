@@ -280,7 +280,7 @@ class Company extends Users
                                 $studentInst = new StudentModel();
                                 $student = $studentInst->innerJoin(['user'], ['student.userID=user.userID'], ['studentID' => $proposal->studentID])[0];
 
-
+                                Notification::newNotification("You have a new task invitation!","student/pendinginvites/",$student->userID);
                                 $fullName = $student->firstName . ' ' . $student->lastName;
                                 $content = MailService::prepareNewInvitationEmaik($fullName, $row, $proposal);
                                 $boom = MailService::sendMail($student->email, $fullName, 'Task Invitation', $content);

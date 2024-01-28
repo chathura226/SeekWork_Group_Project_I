@@ -76,7 +76,7 @@
                     </svg>
                     <div id="notificationCount" class="newNotifyIcon"></div>
                 </button>
-                <div style="position: absolute; top:100%;" class="notif-dropdown-content" id="notificationContent">
+                <div class="notif-dropdown-content" id="notificationContent">
 
                 </div>
 
@@ -210,6 +210,10 @@
     <!-- ------------------scripts---------------- -->
     <label for="role" hidden><?= Auth::getrole(); ?></label>
     <script src="<?= ROOT ?>/assets/js/admin-header.js"></script>
+    <script>//tis is needed to import before notificaiton js snce it uses root URL
+        var rootURL = "<?=ROOT?>";
+    </script>
+    <script src="<?= ROOT ?>/assets/js/notifications.js"></script>
 
 
     <div class="content-wrapper wrapper grid-gap-20">
@@ -222,140 +226,3 @@
         <?php endif; ?>
 
 
-        <script>
-            var data;//to store notifications
-            var rootURL = "<?=ROOT?>";
-            var newNotificationCount = 0;
-            var newNotifyIcon = document.getElementById("notificationCount");
-            notificationContent = document.getElementById("notificationContent");
-            notifyBttn = document.getElementById("notifyBttn");
-            var isNotificationOpen = false;
-
-            //to open notification drop
-            function notificationClick(e) {
-                e.preventDefault();
-                if (isNotificationOpen) {
-                    notificationContent.style.display = "none";
-                    isNotificationOpen = false;
-
-                } else {
-                    notificationContent.style.display = "block";
-                    isNotificationOpen = true;
-
-
-                    //marking unseen notifications as seen
-                    setNotificationsSeen()
-
-
-                }
-                displayNewCount();
-            }
-
-            //to track other clicks to close notification drop
-            // document.addEventListener('click', (event) => {
-            //     if (!notificationContent.contains(event.target) && !notifyBttn.contains(event.target)) {
-            //         console.log("erd");
-            //         notificationClick(event);
-            //     }
-            // });
-
-
-            //get all notifications
-            function getAllNotifications() {
-                var xhr = new XMLHttpRequest();
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        data = JSON.parse(xhr.responseText);
-                        console.log(data);
-                        // adding the notifications to the drop down
-                        data.forEach(obj => {
-                            if (!obj.seen) {
-                                newNotificationCount++;
-                            }
-                            var anchorTag = document.createElement('a');
-
-                            // Set the href attribute of the anchor tag
-                            anchorTag.href = rootURL + "/" + obj.url;
-
-                            // Set the text content of the anchor tag
-                            anchorTag.textContent = obj.msg;
-                            notificationContent.appendChild(anchorTag);
-
-
-                        })
-                        displayNewCount();
-                    }
-                };
-
-                // Specify the type of request and the URL
-                xhr.open('GET', '<?=ROOT?>/notifications/getALl', true);
-
-                // Send the request
-                xhr.send();
-            }
-
-            getAllNotifications();
-
-            //to display where theres a new notification
-            function displayNewCount() {
-                if (!newNotificationCount) {//no new notifications
-                    newNotifyIcon.style.display = 'none';
-                } else {//there are new notifications
-                    newNotifyIcon.style.display = 'flex';
-                }
-            }
-
-
-            //marking unseen notifications as seen
-            function setNotificationsSeen() {
-                unseen = [];
-                data.forEach(element => {
-                    if (!element.seen) {
-                        //apending notificationIDs of unseen notifications
-                        unseen.push(element.notificationID);
-                    }
-                })
-                if (unseen.length > 0) {
-                    //sending post request
-                    // Create a form dynamically
-                    var form = document.createElement("form");
-                    form.method = "POST";
-                    form.action = "<?= ROOT ?>/notifications/markseen"; // Use the current URL
-                    form.style.display = "none"; // Hide the form
-
-                    // Create an input element for the action parameter
-                    var actionInput = document.createElement("input");
-                    actionInput.type = "hidden";
-                    actionInput.name = "ids";
-                    actionInput.value = JSON.stringify(unseen);
-
-                    // Append the input element to the form
-                    form.appendChild(actionInput);
-
-                    // Append the form to the document body
-                    document.body.appendChild(form);
-
-// Add a submit event listener to the form
-                    form.addEventListener("submit", function (event) {
-                        // Prevent the default form submission behavior (which causes a page refresh)
-                        event.preventDefault();
-
-                        // Perform any additional actions if needed
-
-                        // Submit the form using AJAX or any other method you prefer
-                        // Example using fetch:
-                        fetch(form.action, {
-                            method: form.method,
-                            body: new FormData(form)
-                        })
-
-                    });
-
-                    // Submit the form
-                    form.submit();
-
-                }
-            }
-
-        </script>
