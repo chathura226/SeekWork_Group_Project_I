@@ -224,6 +224,7 @@
 
         <script>
             var data;//to store notifications
+            var preNotificationsIds = [];//to store notifications that are currently here
             var rootURL = "<?=ROOT?>";
             var newNotificationCount = 0;
             var newNotifyIcon = document.getElementById("notificationCount");
@@ -260,6 +261,10 @@
             // });
 
 
+            // Set up the interval to run the getAll notification every 10 seconds
+            const intervalId = setInterval(getAllNotifications, 10000);
+
+
             //get all notifications
             function getAllNotifications() {
                 var xhr = new XMLHttpRequest();
@@ -267,25 +272,32 @@
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         data = JSON.parse(xhr.responseText);
-                        console.log(data);
-                        // adding the notifications to the drop down
-                        data.forEach(obj => {
-                            if (!obj.seen) {
-                                newNotificationCount++;
-                            }
-                            var anchorTag = document.createElement('a');
 
-                            // Set the href attribute of the anchor tag
-                            anchorTag.href = rootURL + "/" + obj.url;
+                            // adding the notifications to the drop down
+                            data.forEach(obj => {
+                                if(!preNotificationsIds.includes(obj.notificationID)) {
+                                    if (!obj.seen) {
+                                        newNotificationCount++;
+                                    }
+                                    var anchorTag = document.createElement('a');
 
-                            // Set the text content of the anchor tag
-                            anchorTag.textContent = obj.msg;
-                            notificationContent.appendChild(anchorTag);
+                                    // Set the href attribute of the anchor tag
+                                    anchorTag.href = rootURL + "/" + obj.url;
 
+                                    // Set the text content of the anchor tag
+                                    anchorTag.textContent = obj.msg;
+                                    notificationContent.appendChild(anchorTag);
 
-                        })
-                        displayNewCount();
+                                    //adding id of notification to the list
+                                    preNotificationsIds.push(obj.notificationID);
+                                }
+
+                            })
+                            displayNewCount();
+
                     }
+
+
                 };
 
                 // Specify the type of request and the URL
@@ -320,7 +332,8 @@
                     //sending post request
                     // Create a form dynamically
                     send_ids(unseen);
-
+                    newNotificationCount = 0;
+                    displayNewCount();
                 }
             }
 
@@ -340,5 +353,6 @@
                 xml.open("POST", "<?= ROOT ?>/notifications/markseen", true);
                 xml.send(data);
             }
+
 
         </script>
