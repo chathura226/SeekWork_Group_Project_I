@@ -13,14 +13,18 @@ class Notifications extends Controller
     public function markseen()
     {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            if(!empty($_POST['ids'])) {
-                $ids = json_decode($_POST['ids']);
+            $json_data = file_get_contents("php://input");
+            $data = json_decode($json_data, true);
+
+
+            if(!empty($data['ids'])) {
+                $ids=$data['ids'];
                 $notificationInst=new Notification();
                 foreach ($ids as $id){
                     $notificationInst->update(['seen'=>1],$id);
                 }
             }
-            die;
+            echo "marked as seen";
         }
     }
 }

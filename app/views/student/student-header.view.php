@@ -319,43 +319,26 @@
                 if (unseen.length > 0) {
                     //sending post request
                     // Create a form dynamically
-                    var form = document.createElement("form");
-                    form.method = "POST";
-                    form.action = "<?= ROOT ?>/notifications/markseen"; // Use the current URL
-                    form.style.display = "none"; // Hide the form
-
-                    // Create an input element for the action parameter
-                    var actionInput = document.createElement("input");
-                    actionInput.type = "hidden";
-                    actionInput.name = "ids";
-                    actionInput.value = JSON.stringify(unseen);
-
-                    // Append the input element to the form
-                    form.appendChild(actionInput);
-
-                    // Append the form to the document body
-                    document.body.appendChild(form);
-
-// Add a submit event listener to the form
-                    form.addEventListener("submit", function (event) {
-                        // Prevent the default form submission behavior (which causes a page refresh)
-                        event.preventDefault();
-
-                        // Perform any additional actions if needed
-
-                        // Submit the form using AJAX or any other method you prefer
-                        // Example using fetch:
-                        fetch(form.action, {
-                            method: form.method,
-                            body: new FormData(form)
-                        })
-
-                    });
-
-                    // Submit the form
-                    form.submit();
+                    send_ids(unseen);
 
                 }
+            }
+
+
+            function send_ids(idList) {
+                let xml = new XMLHttpRequest();
+
+                xml.onload = function () {
+                    if (xml.readyState == 4 || xml.status == 200) {
+                        console.log(xml.responseText);
+                    }
+                }
+
+                let data = {};
+                data.ids = idList;
+                data = JSON.stringify(data)
+                xml.open("POST", "<?= ROOT ?>/notifications/markseen", true);
+                xml.send(data);
             }
 
         </script>
