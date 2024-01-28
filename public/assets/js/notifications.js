@@ -86,6 +86,7 @@ function getAllNotifications() {
 }
 
 getAllNotifications();
+displayNewCount();
 
 //to display where theres a new notification
 function displayNewCount() {

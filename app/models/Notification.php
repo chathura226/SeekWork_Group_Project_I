@@ -15,5 +15,10 @@ class Notification extends Model {
         'seen',
     ];
 
+    //to add new notification
+    public static function newNotification($msg,$url,$userID){
+        $newObj=new self();
+        $newObj->insert(['msg'=>$msg,'url'=>$url,'userID'=>$userID,'seen'=>0]);
+    }
 
 }

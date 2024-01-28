@@ -1,1 +1,7 @@
 [2024-01-28T05:33:33.273183+00:00] log.INFO:  notify {"post":{"ids":[2]}} []
+[2024-01-28T07:10:10.732805+00:00] log.INFO: User Logged in Successfully! {"user_id":25,"IP_Address":"172.18.0.1"} []
+[2024-01-28T07:12:10.911472+00:00] log.INFO: User Logged in Successfully! {"user_id":28,"IP_Address":"172.18.0.1"} []
+[2024-01-28T07:12:22.173079+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.18.0.1"} []
+[2024-01-28T07:41:09.875313+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.18.0.1"} []
+[2024-01-28T07:43:36.716626+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.19.0.1"} []
+[2024-01-28T07:44:56.307202+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.19.0.1"} []
