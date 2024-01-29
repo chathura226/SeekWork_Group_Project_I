@@ -923,6 +923,7 @@ CREATE TABLE `payment` (
   `paymentDescription` text,
   `paymentStatus` enum('outstanding','completed') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `taskID` int NOT NULL,
+  `commission` double NOT NULL DEFAULT '0',
   `amount` double NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `paidDate` datetime DEFAULT NULL,
@@ -938,7 +939,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES ('65a001972c3b3','Payment For Task - Task3','outstanding',6,45,'2024-01-11 14:56:23',NULL);
+INSERT INTO `payment` VALUES ('65a001972c3b3','Payment For Task - Task3','outstanding',6,22,244,'2024-01-11 14:56:23',NULL);
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1681,4 +1682,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-27  4:27:37
+-- Dump completed on 2024-01-29 10:23:30

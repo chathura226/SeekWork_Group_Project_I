@@ -159,7 +159,7 @@
                         <div class="form-input">
                             <label>Price <small>(If the task is for bidding, enter the starting value)</small></label>
                             <input value="<?= (isset($_POST['value'])) ? set_value('value') : $task->value ?>"
-                                   type="number" name="value" id="value" placeholder="Enter the price" required>
+                                   type="number" name="value" id="value" placeholder="Enter the price" <?=($task->status=='inProgress')?'readonly':'required'?>>
                             <?php if (!empty($errors['value'])) : ?>
                                 <div class="text-error"><small><?= $errors['value'] ?></small></div>
                             <?php endif; ?>
