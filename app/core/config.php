@@ -7,6 +7,8 @@ define('APP_DESC','Freelancing platform for undergraduates');
 
 
 
+define('SERVERNAME','db');
+define('PORT','3306');
 
 //database configs..........................................
 
@@ -16,8 +18,7 @@ if($_SERVER['SERVER_NAME']=='localhost'){
     //THESE CONFIGS ARE ACCORDING TO THE DOCKER COMPOSE 
     //IF USING SOFT LIKE XAMPP , THESE SHOULD BE CHANGED
     //..................................
-    define('SERVERNAME','db');
-    define('PORT','3306');
+
     define('DBNAME','SeekWorkDB');
     define('DBUSER','admin');
     define('DBPASS','password');

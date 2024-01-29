@@ -40,7 +40,7 @@
                     <input type="hidden" name="return_url" value="<?= ROOT ?>/company/payments">
                     <input type="hidden" name="cancel_url" value="<?= ROOT ?>/company/payments">
                     <input type="hidden" name="notify_url"
-                           value="https://17a7-212-104-237-129.ngrok-free.app/public/payment">
+                           value="<?=ROOT?>/payment">
 
                     </br>
                     <h3>Item Details</h3>
