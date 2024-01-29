@@ -622,12 +622,14 @@ class Student extends Users
                             if (empty($price)) {
                                 $price = $resul->value;
                             }
+
+                            $paymentInst = new PaymentModel();
                             $payment['paymentID'] = uniqid();
                             $payment['paymentStatus'] = 'outstanding';
                             $payment['taskID'] = $assignment->taskID;
                             $payment['paymentDescription'] = "Payment for Task - " . $resul->title;
-                            $payment['amount'] = $price + COMMISSION;
-                            $paymentInst = new PaymentModel();
+                            $payment['commission']=$paymentInst->calculateCommision($price);
+                            $payment['amount'] = $price + $paymentInst->calculateCommision($price);
                             $paymentInst->insert($payment);
 
                             //sending notification for the company

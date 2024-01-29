@@ -63,7 +63,17 @@
 
                     </div>
                     <div class="form-input">
-                        <label>Amount</label>
+                        <label>Task Value</label>
+                        <input type="text" name="taskVal" value="<?= $taskVal ?>" readonly>
+
+                    </div>
+                    <div class="form-input">
+                        <label>Commission</label>
+                        <input type="text" name="commission" value="<?= $commission ?>" readonly>
+
+                    </div>
+                    <div class="form-input">
+                        <label>Total Amount</label>
                         <input type="text" name="amount" value="<?= $amount ?>" readonly>
 
                     </div>

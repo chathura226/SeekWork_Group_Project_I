@@ -92,6 +92,10 @@ class Company extends Users
                 $data['phone'] = Auth::getcontactNo();
                 $data['address'] = Auth::getaddress();
                 $data['country'] = "Sri Lanka";
+
+                $data['commission'] = $row1->commission;
+                $data['taskVal'] = $row1->value;
+
                 $hash = strtoupper(
                     md5(
                         $data['merchantID'] .

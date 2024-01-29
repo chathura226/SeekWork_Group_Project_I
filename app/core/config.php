@@ -51,5 +51,5 @@ define('MERCHANT_ID',1224435);
 define('MERCHANT_SECRET','MzY1NTkxMzIwMTQ4NDU3NzM5MTQwNTU0MjI0MTIxODQ2NjQ0NTU1');
 
 
-//seekwork commision for each task
-define('COMMISSION',500);
+////seekwork commision for each task
+//define('COMMISSION',500);
