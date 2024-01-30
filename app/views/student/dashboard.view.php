@@ -33,49 +33,41 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <!-- Custom JS -->
+<!--    // contains fetch req function-->
+    <script src="<?=ROOT?>/assets/js/charts.js"></script>
     <script>
 
         const ctx = document.getElementById('myChart');
 
-        //getting data from backend
-        fetch('<?=ROOT?>/charts/monthlyearnings')
-            .then(response => {
-                // Check if the request was successful (status code 2xx)
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                // console.log(response.text())
 
-                // Parse the response as JSON
-                return response.json();
-            })
-            .then(data => {
-                console.log(data)
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: data.labels,
-                        datasets: [{
-                            label: data.label,
-                            data: data.data,
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
+        lastearnings=data => {
+            console.log(data)
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: data.label,
+                        data: data.data,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
-                });
-
-            })
-            .catch(error => {
-                // Handle any errors that occurred during the fetch
-                console.error('Fetch error:', error);
+                }
             });
+
+        }
+
+        //getting last earning data
+        monthlyEarnings='<?=ROOT?>/charts/monthlyearnings';
+        fetchChartData(monthlyEarnings,lastearnings);
+
 
 
 
@@ -83,8 +75,7 @@
     </script>
 
 
-    <!-- Custom JS -->
-    <script src="<?=ROOT?>/assets/js/charts.js"></script>
+
 
 
 
