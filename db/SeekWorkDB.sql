@@ -623,6 +623,7 @@ CREATE TABLE `earnings` (
   `transactionDate` datetime DEFAULT NULL,
   `taskID` int NOT NULL,
   `amount` double NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`transactionID`),
   KEY `earning-task` (`taskID`),
   CONSTRAINT `earning-task` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`)
@@ -635,6 +636,7 @@ CREATE TABLE `earnings` (
 
 LOCK TABLES `earnings` WRITE;
 /*!40000 ALTER TABLE `earnings` DISABLE KEYS */;
+INSERT INTO `earnings` VALUES ('','xss','available',NULL,3,3333,'2023-12-04 15:22:02'),('m','ws`','available',NULL,6,2222,'2023-10-09 15:26:04');
 /*!40000 ALTER TABLE `earnings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1682,4 +1684,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-29 10:23:30
+-- Dump completed on 2024-01-30 15:51:00
