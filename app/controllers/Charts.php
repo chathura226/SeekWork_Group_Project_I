@@ -57,7 +57,7 @@ class Charts extends Controller
                 $last12Months[] = $year . " " . $monthNames[$month - 1];
                 $earnings[] = $count;
             }
-            $label = 'Earnings per month for last 12 months (Rs.)';
+            $label = 'Earnings per month (Rs.)';
 
             $obj['data'] = $earnings;
             $obj['label'] = $label;
@@ -69,6 +69,23 @@ class Charts extends Controller
 
     }
 
+    function setgoal()
+    {
+        if (Auth::logged_in() && Auth::is_student()) {
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                $json_data = file_get_contents("php://input");
+                $data = json_decode($json_data, true);
+                $earningGoalInst = new Earning_Goal();
+                $query="INSERT INTO earning_goal (goal, studentID)
+                    VALUES (".$data['goal'].",".Auth::getstudentID().")
+                    ON DUPLICATE KEY UPDATE
+                    goal =".$data['goal'].";";
+//                show($query);
+
+                $earningGoalInst->query($query);
+            }
+        }
+    }
 
     function earninggoal()
     {
@@ -81,7 +98,7 @@ class Charts extends Controller
                 $goal = $res->goal;
             }
 
-            $monthEarnings=0;
+            $monthEarnings = 0;
             //getting earnings for this month
             $earningInst = new Earning();
             $rows = $earningInst->query("SELECT * FROM earnings WHERE YEAR(createdAt) = :year AND MONTH(createdAt) = :month;",
@@ -90,19 +107,19 @@ class Charts extends Controller
                     'month' => date('n'),
                 ]);
 
-            if(!empty($rows)){
-                foreach ($rows as $row){
-                    $monthEarnings+=$row->amount;
+            if (!empty($rows)) {
+                foreach ($rows as $row) {
+                    $monthEarnings += $row->amount;
                 }
             }
 
-            $toEarn=$goal-$monthEarnings;
-            if($toEarn<0)$toEarn=0;
+            $toEarn = $goal - $monthEarnings;
+            if ($toEarn < 0) $toEarn = 0;
 
-            $obj['data'] = [$monthEarnings,$toEarn];
-            $obj['label'] = "Earning goal for this month (Current Goal is ".$goal.")";
-            $obj['labels'] = ['Total Earnings for this month : Rs.'.$monthEarnings,'Needed amount to reach the goal : Rs.'.$toEarn];
-
+            $obj['data'] = [$monthEarnings, $toEarn];
+            $obj['label'] = "Earning goal for this month (Current Goal is " . $goal . ")";
+            $obj['labels'] = ['Total Earnings for this month : Rs.' . $monthEarnings, 'Needed amount to reach the goal : Rs.' . $toEarn];
+            $obj['currentGoal'] = $goal;
             echo json_encode($obj);
 
         }

@@ -617,13 +617,12 @@ DROP TABLE IF EXISTS `earning_goal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `earning_goal` (
-  `earningGoalID` int NOT NULL AUTO_INCREMENT,
   `goal` double NOT NULL,
   `studentID` int NOT NULL,
-  PRIMARY KEY (`earningGoalID`),
+  PRIMARY KEY (`studentID`),
   KEY `fk_goal_student` (`studentID`),
   CONSTRAINT `fk_goal_student` FOREIGN KEY (`studentID`) REFERENCES `student` (`studentID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -632,7 +631,7 @@ CREATE TABLE `earning_goal` (
 
 LOCK TABLES `earning_goal` WRITE;
 /*!40000 ALTER TABLE `earning_goal` DISABLE KEYS */;
-INSERT INTO `earning_goal` VALUES (1,200,14);
+INSERT INTO `earning_goal` VALUES (6000,14);
 /*!40000 ALTER TABLE `earning_goal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1711,4 +1710,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-31 11:08:03
+-- Dump completed on 2024-01-31 13:19:43

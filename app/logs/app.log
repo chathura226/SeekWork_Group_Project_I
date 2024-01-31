@@ -14,3 +14,4 @@
 [2024-01-30T23:05:24.342561+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.19.0.1"} []
 [2024-01-31T07:23:51.783540+00:00] log.INFO: Failed login attempt from a user. {"IP_Address":"172.18.0.1"} []
 [2024-01-31T07:23:59.419600+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.18.0.1"} []
+[2024-01-31T11:09:47.163508+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.19.0.1"} []
