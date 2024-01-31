@@ -6,7 +6,7 @@ class Charts extends Controller
 
     public function monthlyearnings()
     {
-        if (Auth::logged_in() && Auth::is_student()) { //if not logged in redirect to login page
+        if (Auth::logged_in() && Auth::is_student()) {
 
             $monthNames = [
                 'January',
@@ -23,8 +23,8 @@ class Charts extends Controller
                 'December',
             ];
 
-            $currentMonth=date('n');
-            $currentYear=date('Y');
+            $currentMonth = date('n');
+            $currentYear = date('Y');
 
             //getting last 12 months
             $currentDate = new DateTime();
@@ -35,8 +35,8 @@ class Charts extends Controller
 
             for ($i = 12; $i >= 1; $i--) {
 
-                $month=($currentMonth-$i+12)%12+1;
-                $year=$currentYear-(($currentMonth-$i+12)>=12?0:1);
+                $month = ($currentMonth - $i + 12) % 12 + 1;
+                $year = $currentYear - (($currentMonth - $i + 12) >= 12 ? 0 : 1);
                 $count = 0;
 //                $lastMonth = clone $currentDate;
 //
@@ -54,20 +54,58 @@ class Charts extends Controller
                 }
 
                 // Format the result ('F Y') and add it to the array
-                $last12Months[] = $year." ".$monthNames[$month-1];
+                $last12Months[] = $year . " " . $monthNames[$month - 1];
                 $earnings[] = $count;
             }
+            $label = 'Earnings per month for last 12 months (Rs.)';
+
+            $obj['data'] = $earnings;
+            $obj['label'] = $label;
+            $obj['labels'] = $last12Months;
+
+            echo json_encode($obj);
         }
 
-        $label = 'Earnings per month for last 12 months (Rs.)';
 
-        $obj['data'] = $earnings;
-        $obj['label'] = $label;
-        $obj['labels'] = $last12Months;
-
-        echo json_encode($obj);
+    }
 
 
+    function earninggoal()
+    {
+        if (Auth::logged_in() && Auth::is_student()) {
+            //this is the default goal
+            $goal = 5000;
+            $earningGoalInst = new Earning_Goal();
+            $res = $earningGoalInst->first(['studentID' => Auth::getstudentID()]);
+            if (!empty($res)) {
+                $goal = $res->goal;
+            }
+
+            $monthEarnings=0;
+            //getting earnings for this month
+            $earningInst = new Earning();
+            $rows = $earningInst->query("SELECT * FROM earnings WHERE YEAR(createdAt) = :year AND MONTH(createdAt) = :month;",
+                [
+                    'year' => date('Y'),
+                    'month' => date('n'),
+                ]);
+
+            if(!empty($rows)){
+                foreach ($rows as $row){
+                    $monthEarnings+=$row->amount;
+                }
+            }
+
+            $toEarn=$goal-$monthEarnings;
+            if($toEarn<0)$toEarn=0;
+
+            $obj['data'] = [$monthEarnings,$toEarn];
+            $obj['label'] = "Earning goal for this month (Current Goal is ".$goal.")";
+            $obj['labels'] = ['Total Earnings for this month : Rs.'.$monthEarnings,'Needed amount to reach the goal : Rs.'.$toEarn];
+
+            echo json_encode($obj);
+
+        }
     }
 
 }
