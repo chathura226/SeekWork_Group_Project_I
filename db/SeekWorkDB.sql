@@ -610,6 +610,32 @@ INSERT INTO `dispute` VALUES (1,'first dispute','dejdedmedmed enjed','2023-10-24
 UNLOCK TABLES;
 
 --
+-- Table structure for table `earning_goal`
+--
+
+DROP TABLE IF EXISTS `earning_goal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `earning_goal` (
+  `goal` double NOT NULL,
+  `studentID` int NOT NULL,
+  PRIMARY KEY (`studentID`),
+  KEY `fk_goal_student` (`studentID`),
+  CONSTRAINT `fk_goal_student` FOREIGN KEY (`studentID`) REFERENCES `student` (`studentID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `earning_goal`
+--
+
+LOCK TABLES `earning_goal` WRITE;
+/*!40000 ALTER TABLE `earning_goal` DISABLE KEYS */;
+INSERT INTO `earning_goal` VALUES (6000,14);
+/*!40000 ALTER TABLE `earning_goal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `earnings`
 --
 
@@ -623,6 +649,7 @@ CREATE TABLE `earnings` (
   `transactionDate` datetime DEFAULT NULL,
   `taskID` int NOT NULL,
   `amount` double NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`transactionID`),
   KEY `earning-task` (`taskID`),
   CONSTRAINT `earning-task` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`)
@@ -635,6 +662,7 @@ CREATE TABLE `earnings` (
 
 LOCK TABLES `earnings` WRITE;
 /*!40000 ALTER TABLE `earnings` DISABLE KEYS */;
+INSERT INTO `earnings` VALUES ('','xss','available',NULL,3,100000,'2023-12-04 15:22:02'),('m','ws`','available',NULL,6,2222,'2024-01-17 15:26:04');
 /*!40000 ALTER TABLE `earnings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1682,4 +1710,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-29 10:23:30
+-- Dump completed on 2024-01-31 13:19:43

@@ -15,6 +15,7 @@ class Earning extends Model {
         'transactionDate',
         'taskID',
         'amount',
+        'createdAt',
     ];
 
 }
