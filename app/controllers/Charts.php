@@ -125,4 +125,44 @@ class Charts extends Controller
         }
     }
 
+    function taskprogress()
+    {
+        if (Auth::logged_in() && Auth::is_student()) {
+            $taskInst=new Task();
+            $query="SELECT
+    status,
+    COUNT(*) AS status_count
+FROM
+    task
+WHERE
+    status IN ('inProgress', 'closed')
+GROUP BY
+    status;
+";
+            $row=$taskInst->query($query);
+            $inProgress=0;
+            $closed=0;
+            if(!empty($row)){
+                foreach ($row as $rowElement){
+                    if($rowElement->status=='inProgress'){
+                        $inProgress=$rowElement->status_count;
+                    }else if($rowElement->status=='closed'){
+                        $closed=$rowElement->status_count;
+                    }
+                }
+            }
+
+            if($inProgress==0 && $closed==0){
+                $obj['isFine'] = 0;
+            }else{
+                $obj['data'] = [$inProgress, $closed];
+                $obj['label'] = "Tasks inProgress vs completed";
+                $obj['labels'] = ['In progress','completed'];
+                $obj['isFine'] = 1;
+            }
+            echo json_encode($obj);
+
+        }
+    }
+
 }
