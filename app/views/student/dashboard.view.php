@@ -131,7 +131,7 @@
             <div class="card">
                 <div class="card-inner" style="padding-left: 10px;">
                     <h3>Account Balance</h3>
-                    <h1><?=$accBalance?></h1>
+                    <h3>Rs.<?=$accBalance?></h3>
 
                 </div>
                 <div style="padding:3px;display: flex;flex-direction: row; align-items: center justify-content:center;gap: 20px;row-2;">

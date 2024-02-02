@@ -21,7 +21,7 @@ class Student extends Users
         $latestDeadline = 'N/A';
 
         $taskInst=new Task();
-        $ongoing=$taskInst->query("SELECT COUNT(*) as count FROM task WHERE assignedStudentID=:studentID AND status=:status ORDER BY deadline DESC limit 1;",['studentID'=>Auth::getstudentID(),'status'=>'inProgress'])[0]->count;
+        $ongoing=$taskInst->query("SELECT COUNT(*) as count FROM task WHERE assignedStudentID=:studentID AND status=:status;",['studentID'=>Auth::getstudentID(),'status'=>'inProgress'])[0]->count;
         $completedTasksCount=$taskInst->query("SELECT COUNT(*) as count FROM task WHERE assignedStudentID=:studentID AND status=:status ORDER BY deadline DESC limit 1;",['studentID'=>Auth::getstudentID(),'status'=>'closed'])[0]->count;
         $row=$taskInst->query("SELECT * FROM task WHERE assignedStudentID=:studentID AND status=:status ORDER BY deadline DESC limit 1;",['studentID'=>Auth::getstudentID(),'status'=>'inProgress']);
         if(!empty($row)){
@@ -39,7 +39,7 @@ class Student extends Users
         $data['completedTasksCount']=$completedTasksCount;
         $data['ongoing']=$ongoing;
         $data['title'] = "Dashboard";
-        $this->view($this->controllerRole . '/dashboard', $data);
+        $this->view( 'student/dashboard', $data);
     }
 
     public function verification()
