@@ -44,9 +44,9 @@
         <div class="main-cards">
 
             <div class="card">
-                <div class="card-inner" style="padding-left: 5px;">
-                    <h3>Ongoing Tasks</h3>
-                    <h1>111</h1>
+                <div class="card-inner"  style="padding-left: 10px;">
+                    <h3>Ongoing Tasks     </h3>
+                    <h1><?=$ongoing?></h1>
                 </div>
                 <div style="padding:3px;display: flex;flex-direction: row; align-items: center justify-content:center;gap: 20px;row-2;">
                     <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" width="905.71938" height="561.28166"
@@ -129,9 +129,9 @@
             </div>
 
             <div class="card">
-                <div class="card-inner">
+                <div class="card-inner" style="padding-left: 10px;">
                     <h3>Account Balance</h3>
-                    <h1>25</h1>
+                    <h1><?=$accBalance?></h1>
 
                 </div>
                 <div style="padding:3px;display: flex;flex-direction: row; align-items: center justify-content:center;gap: 20px;row-2;">
@@ -252,9 +252,9 @@
             </div>
 
             <div class="card">
-                <div class="card-inner">
-                    <h3>Students</h3>
-                    <h1>1500</h1>
+                <div class="card-inner" style="padding-left: 10px;">
+                    <h3>Completed Tasks</h3>
+                    <h1><?=$completedTasksCount?></h1>
 
                 </div>
                 <div style="padding:3px;display: flex;flex-direction: row; align-items: center justify-content:center;gap: 20px;row-2;">
@@ -318,9 +318,9 @@
             </div>
 
             <div class="card">
-                <div class="card-inner">
+                <div class="card-inner" style="padding-left: 10px;">
                     <h3>Latest Deadline</h3>
-                    <h1>56</h1>
+                    <h3><?=$latestDeadline?></h3>
 
                 </div>
                 <div style="padding:3px;display: flex;flex-direction: row; align-items: center justify-content:center;gap: 20px;row-2;">
@@ -369,7 +369,8 @@
 
         </div>
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;  width: 100%;color: var(--secondary-color);">
-            <div  class="c-s-7 c-e-13 row-5" style="display: flex;flex:1; flex-direction: column;align-items: center; margin: 20px;max-height: 650px;min-width: 350px;">
+            <div class="c-s-7 c-e-13 row-5"
+                 style="display: flex;flex:1; flex-direction: column;align-items: center; margin: 20px;max-height: 650px;min-width: 350px;">
                 <h2>This month's earning goal</h2><br>
 
                 <canvas id="earningGoal"></canvas>
@@ -384,13 +385,11 @@
                 </button>
             </div>
 
-
-
             <div class="c-s-1 c-e-7 row-5" style="flex:1;margin: 20px;min-width: 350px;">
                 <h2>Task Progress</h2><br>
                 <canvas id="progressChart"></canvas>
             </div>
-            <div class="c-s-1 c-e-7 row-5"  style="flex:1;margin: 20px;min-width: 350px;">
+            <div class="c-s-1 c-e-7 row-5" style="flex:1;margin: 20px;min-width: 350px;">
                 <h2>Earnings per month for last 12 months</h2><br>
                 <canvas id="monthlyEarningChart"></canvas>
             </div>
