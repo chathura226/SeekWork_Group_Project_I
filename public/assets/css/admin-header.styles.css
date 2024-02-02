@@ -8,11 +8,12 @@
 /* ------------------sidebar and content wrapper------------------ */
 .sidebar-content-wrapper{
   display: flex;
-  
+  height: 100%;
 }
 .content-wrapper{
   margin: 10px;
   flex: 1;
+    overflow-y: scroll;
 }
  /* --------------------------------------side bar--------------------------------------- */
 
@@ -25,7 +26,7 @@
     /* right: auto; */
     /* width: 240px; */
     width: 100px;
-    height:100vh;
+    height:100%;
     padding: 0 1rem;
     color: var(--text-color-white);
     overflow: hidden;
