@@ -12,9 +12,35 @@ class Company extends Users
         parent::__construct('company');
     }
 
+    public function index()
+    {
 
-//TODO:implement verification status view with verification doc download
 
+        $ongoing = 0;
+        $pendingPayments = 0;
+        $closedTasks = 0;
+        $newSubmissions = 0;
+        $activeTasks=0;
+
+        $taskInst=new Task();
+        $ongoing=$taskInst->query("SELECT COUNT(*) as count FROM task WHERE companyID=:companyID AND status=:status;",['companyID'=>Auth::getcompanyID(),'status'=>'inProgress'])[0]->count;
+        $closedTasks=$taskInst->query("SELECT COUNT(*) as count FROM task WHERE companyID=:companyID AND status=:status;",['companyID'=>Auth::getcompanyID(),'status'=>'closed'])[0]->count;
+        $activeTasks=$taskInst->query("SELECT COUNT(*) as count FROM task WHERE companyID=:companyID AND status=:status;",['companyID'=>Auth::getcompanyID(),'status'=>'active'])[0]->count;
+        $paymentInst=new PaymentModel();
+        $pendingPayments=$paymentInst->query("SELECT sum(payment.amount) as sum FROM payment INNER JOIN task on task.taskID=payment.taskID WHERE task.companyID=:companyID AND payment.paymentStatus=:status; ",['companyID'=>Auth::getcompanyID(),'status'=>'outstanding'])[0]->sum;
+
+
+        $submissionInst=new Submission();
+        $newSubmissions=$submissionInst->query("SELECT COUNT(*) as count FROM submission INNER JOIN task on task.taskID=submission.taskID WHERE task.companyID=:companyID AND submission.status=:status;",['companyID'=>Auth::getcompanyID(),'status'=>'pendingReview'])[0]->count;
+
+        $data['newSubmissions']=$newSubmissions;
+        $data['pendingPayments']=$pendingPayments;
+        $data['closedTasks']=$closedTasks;
+        $data['ongoing']=$ongoing;
+        $data['activeTasks']=$activeTasks;
+        $data['title'] = "Dashboard";
+        $this->view( 'company/dashboard', $data);
+    }
     public function verification()
     {
         $verificationInst = new Moderator_Verifies_Company();

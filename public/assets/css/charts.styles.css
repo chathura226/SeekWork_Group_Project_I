@@ -22,16 +22,20 @@
   }
   
   .card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 25px;
-    max-height: 90px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-auto-rows: minmax(auto,100px);
+    grid-auto-flow: row;
+    /*justify-content: space-around;*/
+    padding: 5px;
+    max-height: 500px;
     flex-wrap: wrap;
+    min-width: 181px;
     border-radius: 5px;
+    /*overflow: hidden;*/
   }
   .card svg{
-    width: 110px;
+    width: 100%;
     height: auto;
   }
   .card:first-child {
@@ -55,6 +59,7 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    gap:5px;
   }
   
   .card-inner > .material-icons-outlined {

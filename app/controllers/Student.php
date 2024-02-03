@@ -11,7 +11,36 @@ class Student extends Users
         parent::__construct('student');
     }
 
-//TODO:auto update verification status
+    public function index()
+    {
+
+
+        $ongoing = 0;
+        $accBalance = 0;
+        $completedTasksCount = 0;
+        $latestDeadline = 'N/A';
+
+        $taskInst=new Task();
+        $ongoing=$taskInst->query("SELECT COUNT(*) as count FROM task WHERE assignedStudentID=:studentID AND status=:status;",['studentID'=>Auth::getstudentID(),'status'=>'inProgress'])[0]->count;
+        $completedTasksCount=$taskInst->query("SELECT COUNT(*) as count FROM task WHERE assignedStudentID=:studentID AND status=:status ORDER BY deadline DESC limit 1;",['studentID'=>Auth::getstudentID(),'status'=>'closed'])[0]->count;
+        $row=$taskInst->query("SELECT * FROM task WHERE assignedStudentID=:studentID AND status=:status ORDER BY deadline DESC limit 1;",['studentID'=>Auth::getstudentID(),'status'=>'inProgress']);
+        if(!empty($row)){
+            $latestDeadline=$row[0]->deadline;
+        }else{
+            $latestDeadline="N/A";
+        }
+
+
+        $earningInst=new Earning();
+        $accBalance=$earningInst->query("SELECT sum(earnings.amount) as sum FROM earnings INNER JOIN task on task.taskID=earnings.taskID WHERE task.assignedStudentID=:studentID AND earnings.earningStatus=:status; ",['studentID'=>Auth::getstudentID(),'status'=>'available'])[0]->sum;
+
+        $data['accBalance']=$accBalance;
+        $data['latestDeadline']=$latestDeadline;
+        $data['completedTasksCount']=$completedTasksCount;
+        $data['ongoing']=$ongoing;
+        $data['title'] = "Dashboard";
+        $this->view( 'student/dashboard', $data);
+    }
 
     public function verification()
     {
@@ -381,13 +410,13 @@ class Student extends Users
 
                                     //sending new submission email
                                     $compInst = new CompanyModel();
-                                    $comp = $compInst->innerJoin(['user'], ['user.userID=company.userID'], ['companyID' => $row->companyID], ['user.email AS email', 'company.firstName AS firstName', 'company.lastName AS lastName','user.userID as userID' ])[0];
+                                    $comp = $compInst->innerJoin(['user'], ['user.userID=company.userID'], ['companyID' => $row->companyID], ['user.email AS email', 'company.firstName AS firstName', 'company.lastName AS lastName', 'user.userID as userID'])[0];
                                     $fullName = $comp->firstName . ' ' . $comp->lastName;
                                     $content = MailService::prepareNewSubmissionEmail($fullName, $row, (object)['createdAt' => date('Y-m-d H:i:s')]);
                                     $boom = MailService::sendMail($comp->email, $fullName, 'New Submission', $content);
 
                                     //notification for company about new submission
-                                    Notification::newNotification("New submission for a task!","company/tasks/" . $row->taskID . "/submissions",$comp->userID);
+                                    Notification::newNotification("New submission for a task!", "company/tasks/" . $row->taskID . "/submissions", $comp->userID);
 
                                     message('Submission Posted Successfully!');
                                     redirect('student/tasks/' . $id . '/submissions');
@@ -610,7 +639,7 @@ class Student extends Users
                             $assignmentInst->update(['status' => 'accepted', 'replyDate' => $currentDateTime], $assignment->assignmentID);
 
                             //sending invitation acceptance email
-                            $row = $taskInst->innerJoin(['company', 'user'], ['task.companyID=company.companyID', 'user.userID=company.userID'], ['taskID' => $assignment->taskID], ['task.title AS title', 'task.value AS value', 'user.email AS email', 'company.firstName AS firstName', 'company.lastName AS lastName','user.userID as userID'])[0];
+                            $row = $taskInst->innerJoin(['company', 'user'], ['task.companyID=company.companyID', 'user.userID=company.userID'], ['taskID' => $assignment->taskID], ['task.title AS title', 'task.value AS value', 'user.email AS email', 'company.firstName AS firstName', 'company.lastName AS lastName', 'user.userID as userID'])[0];
                             $fullName = $row->firstName . ' ' . $row->lastName;
                             $assignment->status = 'accepted';
                             $content = MailService::prepareNewInvitationAcceptanceEmail($fullName, $assignment, $proposal, $row);
@@ -628,7 +657,7 @@ class Student extends Users
                             $payment['paymentStatus'] = 'outstanding';
                             $payment['taskID'] = $assignment->taskID;
                             $payment['paymentDescription'] = "Payment for Task - " . $resul->title;
-                            $payment['commission']=$paymentInst->calculateCommision($price);
+                            $payment['commission'] = $paymentInst->calculateCommision($price);
                             $payment['amount'] = $price + $paymentInst->calculateCommision($price);
                             $paymentInst->insert($payment);
 
@@ -655,7 +684,7 @@ class Student extends Users
 
                             //sending invitation declined email
                             $taskInst = new Task();
-                            $row = $taskInst->innerJoin(['company', 'user', 'proposal'], ['task.companyID=company.companyID', 'user.userID=company.userID', 'proposal.taskID=task.taskID'], ['proposalID' => $assignment->proposalID], ['task.title AS title', 'task.value AS value', 'user.email AS email', 'proposal.proposeAmount AS proposeAmount', 'company.firstName AS firstName', 'company.lastName AS lastName','user.userID as userID'])[0];
+                            $row = $taskInst->innerJoin(['company', 'user', 'proposal'], ['task.companyID=company.companyID', 'user.userID=company.userID', 'proposal.taskID=task.taskID'], ['proposalID' => $assignment->proposalID], ['task.title AS title', 'task.value AS value', 'user.email AS email', 'proposal.proposeAmount AS proposeAmount', 'company.firstName AS firstName', 'company.lastName AS lastName', 'user.userID as userID'])[0];
                             $fullName = $row->firstName . ' ' . $row->lastName;
                             if ($row->proposeAmount == null) $row->proposeAmount = $row->value;
                             $assignment->status = 'declined';
