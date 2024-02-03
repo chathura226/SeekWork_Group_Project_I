@@ -233,8 +233,8 @@
 
             <div class="card">
                 <div class="card-inner" style="padding-left: 10px;">
-                    <h3>Closed Tasks</h3>
-                    <h1><?=$closedTasks?></h1>
+                    <h3>Active Tasks</h3>
+                    <h1><?=$activeTasks?></h1>
 
                 </div>
                 <div style="padding:3px;display: flex;flex-direction: row; align-items: center justify-content:center;gap: 20px;row-2;">
@@ -349,30 +349,21 @@
 
         </div>
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;  width: 100%;color: var(--secondary-color);">
-            <div class="c-s-7 c-e-13 row-5"
-                 style="display: flex;flex:1; flex-direction: column;align-items: center; margin: 20px;max-height: 650px;min-width: 350px;">
-                <h2>This month's earning goal</h2><br>
-
-                <canvas id="earningGoal"></canvas>
-                Current Goal: Rs. <span id="currentGoalSpan"></span>
-                Want to set the goal?<br><br>
-                <button style="margin-left: 5px;" class="pushable" onclick="showpopup(event)">
-                    <span class="shadow"></span>
-                    <span class="edge"></span>
-                    <span style="padding: 6px 11px;" class="front">
-                    Set Goal
-                  </span>
-                </button>
+            <div class="c-s-1 c-e-7 row-5" style="flex:1;margin: 20px;min-width: 350px;">
+                <h2>Tasks posted in last 12 months</h2><br>
+                <canvas id="monthlyEarningChart"></canvas>
             </div>
+
 
             <div class="c-s-1 c-e-7 row-5" style="flex:1;margin: 20px;min-width: 350px;">
                 <h2>Task Progress</h2><br>
                 <canvas id="progressChart"></canvas>
             </div>
             <div class="c-s-1 c-e-7 row-5" style="flex:1;margin: 20px;min-width: 350px;">
-                <h2>Earnings per month for last 12 months</h2><br>
-                <canvas id="monthlyEarningChart"></canvas>
+                <h2>Task vs Categories</h2><br>
+                <canvas id="taskcategory"></canvas>
             </div>
+
         </div>
 
     </main>
@@ -386,13 +377,14 @@
         const monthlyEarningChart = document.getElementById('monthlyEarningChart');
         const earningGoal = document.getElementById('earningGoal');
         const progressChart = document.getElementById('progressChart');
+        const taskcategory = document.getElementById('taskcategory');
 
         var mychart;//for earning goal
 
         lastearnings = data => {
             // console.log(data)
             new Chart(monthlyEarningChart, {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels: data.labels,
                     datasets: [{
@@ -440,40 +432,13 @@
             });
 
         }
-        myEarnings = data => {
 
-            // console.log(data)
-            document.getElementById("currentGoalSpan").textContent = data.currentGoal;
-            mychart = new Chart(earningGoal, {
-                type: 'doughnut',
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        label: data.label,
-                        data: data.data,
-                        backgroundColor: [
-                            'rgb(255, 99, 132)',
-                            'rgb(54, 162, 235)',
-                        ],
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-
-        }
 
         progress = data => {
             if (data.isFine != 0) {
                 // console.log(data)
                 mychart = new Chart(progressChart, {
-                    type: 'pie',
+                    type: 'polarArea',
                     data: {
                         labels: data.labels,
                         datasets: [{
@@ -481,7 +446,8 @@
                             data: data.data,
                             backgroundColor: [
                                 'rgb(255, 205, 86)',
-                                'rgb(54, 162, 235)'
+                                'rgb(54, 162, 235)',
+                                'rgb(255, 162, 235)'
                             ],
                             hoverOffset: 4
                         }]
@@ -495,47 +461,46 @@
 
         }
 
+        taskVsCategory = data => {
+            if (data.isFine != 0) {
+                // console.log(data)
+                mychart = new Chart(taskcategory, {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: data.label,
+                            data: data.data,
+                            backgroundColor: [
+                                'rgb(255, 205, 86)',
+                                'rgb(54, 162, 235)',
+                                'rgb(255, 162, 235)'
+                            ],
+                            hoverOffset: 4
+                        }]
+                    },
+
+                });
+            } else {
+
+                taskcategory.parentElement.innerHTML = "<h2>Tasks vs Categories</h2><h3>Oops! No data to show!</h3>"
+            }
+
+        }
+
         //getting last earning data
-        monthlyEarnings = '<?=ROOT?>/charts/monthlyearnings';
+        monthlyEarnings = '<?=ROOT?>/charts/myactivity';
         fetchChartData(monthlyEarnings, lastearnings);
 
-        //getting earning goal
-        earningGoalChartData = '<?=ROOT?>/charts/earninggoal';
-        fetchChartData(earningGoalChartData, myEarnings);
+        //getting task vs category
+        taskVsCategoryData = '<?=ROOT?>/charts/tasksvscategory';
+        fetchChartData(taskVsCategoryData, taskVsCategory);
 
         //getting task progress
         progressChartData = '<?=ROOT?>/charts/taskprogress';
         fetchChartData(progressChartData, progress);
 
-        //setting goal
-        function setgoal(e) {
-            e.preventDefault();
-            var goalText = document.getElementById("goal").value;
-            let xml = new XMLHttpRequest();
 
-            xml.onload = function () {
-                if (xml.readyState == 4 || xml.status == 200) {
-                    console.log(xml.responseText);
-                    mychart.destroy();
-                    fetchChartData(earningGoalChartData, myEarnings);
-                    goalPopup.style.display = "none";
-
-                }
-            }
-
-            let data = {};
-            data.goal = goalText;
-            data = JSON.stringify(data)
-            xml.open("POST", "<?=ROOT?>/charts/setgoal", true);
-            xml.send(data);
-
-
-        }
-
-        function showpopup(e) {
-            e.preventDefault();
-            goalPopup.style.display = "flex";
-        }
     </script>
 
 
