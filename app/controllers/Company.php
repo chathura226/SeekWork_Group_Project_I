@@ -41,6 +41,8 @@ class Company extends Users
         $data['title'] = "Dashboard";
         $this->view( 'company/dashboard', $data);
     }
+
+
     public function verification()
     {
         $verificationInst = new Moderator_Verifies_Company();
