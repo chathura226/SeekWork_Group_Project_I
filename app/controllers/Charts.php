@@ -70,7 +70,7 @@ class Charts extends Controller
     }
     public function paymentsthroughsite()
     {
-        if (Auth::logged_in() && Auth::is_admin()) {
+        if (Auth::logged_in() && (Auth::is_admin() || Auth::is_moderator())) {
 
             $monthNames = [
                 'January',
@@ -168,7 +168,7 @@ GROUP BY
             $obj['labels'] = $categories;
 
             echo json_encode($obj);
-        }else if (Auth::logged_in() && Auth::is_admin()) {
+        }else if (Auth::logged_in() && (Auth::is_admin() || Auth::is_moderator())) {
 
             $taskInst=new Task();
             $row=$taskInst->query("SELECT
@@ -406,7 +406,7 @@ GROUP BY
 
     public function alltaskstatus()
     {
-        if (Auth::logged_in() && Auth::is_admin()) {
+        if (Auth::logged_in() && (Auth::is_admin() || Auth::is_moderator())) {
             $taskInst=new Task();
             $query="SELECT
     status,
