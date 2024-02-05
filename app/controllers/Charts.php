@@ -68,6 +68,70 @@ class Charts extends Controller
 
 
     }
+    public function paymentsthroughsite()
+    {
+        if (Auth::logged_in() && (Auth::is_admin() || Auth::is_moderator())) {
+
+            $monthNames = [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December',
+            ];
+
+            $currentMonth = date('n');
+            $currentYear = date('Y');
+
+            //getting last 12 months
+            $currentDate = new DateTime();
+            $last12Months = [];
+            $earnings = [];
+            $paymentInst = new PaymentModel();
+            $row = $paymentInst->query("SELECT createdAt FROM payment WHERE paymentStatus='completed'");
+
+            for ($i = 12; $i >= 1; $i--) {
+
+                $month = ($currentMonth - $i + 12) % 12 + 1;
+                $year = $currentYear - (($currentMonth - $i + 12) >= 12 ? 0 : 1);
+                $count = 0;
+//                $lastMonth = clone $currentDate;
+//
+//                // Subtract $i months
+//                $lastMonth->sub(new DateInterval('P' . $i . 'M'));
+//                $lastMonthInt = $lastMonth->format('m');
+//                $lastMonthYearInt = $lastMonth->format('y');
+                if (!empty($row)) {
+                    foreach ($row as $item) {
+                        $dateTimeMySQL = new DateTime($item->createdAt);
+                        if ($month == $dateTimeMySQL->format('m') && $year == $dateTimeMySQL->format('Y')) {
+                            $count += 1;
+                        }
+                    }
+                }
+
+                // Format the result ('F Y') and add it to the array
+                $last12Months[] = $year . " " . $monthNames[$month - 1];
+                $earnings[] = $count;
+            }
+            $label = "Payments Through the Site";
+
+            $obj['data'] = $earnings;
+            $obj['label'] = $label;
+            $obj['labels'] = $last12Months;
+
+            echo json_encode($obj);
+        }
+
+
+    }
 
 
     public function tasksvscategory()
@@ -84,6 +148,36 @@ WHERE
     companyID=:companyID
 GROUP BY
     task.categoryID;",['companyID'=>Auth::getcompanyID()]);
+
+            $categories=[];
+            $taskCount=[];
+            if(!empty($row)){
+                foreach ($row as $rowElement){
+                    $categories[]=$rowElement->title;
+                    $taskCount[]=$rowElement->task_count;
+                }
+                $obj['isFine']=1;
+            }else{
+                $obj['isFine']=0;
+            }
+
+            $label = "Tasks vs Categories";
+
+            $obj['data'] = $taskCount;
+            $obj['label'] = $label;
+            $obj['labels'] = $categories;
+
+            echo json_encode($obj);
+        }else if (Auth::logged_in() && (Auth::is_admin() || Auth::is_moderator())) {
+
+            $taskInst=new Task();
+            $row=$taskInst->query("SELECT
+    category.title as title,
+    COUNT(*) AS task_count
+FROM
+    task INNER JOIN category ON task.categoryID=category.categoryID
+GROUP BY
+    task.categoryID;");
 
             $categories=[];
             $taskCount=[];
@@ -301,6 +395,51 @@ GROUP BY
             }else{
                 $obj['data'] = [$inProgress, $closed,$active];
                 $obj['label'] = "Tasks inProgress vs completed vs active";
+                $obj['labels'] = ['In progress','completed','active'];
+                $obj['isFine'] = 1;
+            }
+            echo json_encode($obj);
+
+        }
+    }
+
+
+    public function alltaskstatus()
+    {
+        if (Auth::logged_in() && (Auth::is_admin() || Auth::is_moderator())) {
+            $taskInst=new Task();
+            $query="SELECT
+    status,
+    COUNT(*) AS status_count
+FROM
+    task
+WHERE
+    status IN ('inProgress', 'closed','active') AND isDeleted='0'
+GROUP BY
+    status;
+";
+            $row=$taskInst->query($query);
+            $inProgress=0;
+            $closed=0;
+            $active=0;
+            if(!empty($row)){
+                foreach ($row as $rowElement){
+                    if($rowElement->status=='inProgress'){
+                        $inProgress=$rowElement->status_count;
+                    }else if($rowElement->status=='closed'){
+                        $closed=$rowElement->status_count;
+                    }else{
+                        $active=$rowElement->status_count;
+
+                    }
+                }
+            }
+
+            if($inProgress==0 && $closed==0 && $active==0){
+                $obj['isFine'] = 0;
+            }else{
+                $obj['data'] = [$inProgress, $closed,$active];
+                $obj['label'] = "Tasks Analysis";
                 $obj['labels'] = ['In progress','completed','active'];
                 $obj['isFine'] = 1;
             }

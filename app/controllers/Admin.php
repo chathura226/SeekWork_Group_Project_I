@@ -1,5 +1,6 @@
 <?php
 require_once 'Users.php';
+
 //Admin class
 class Admin extends Users
 {
@@ -9,6 +10,43 @@ class Admin extends Users
     public function __construct()
     {
         parent::__construct('admin');
+    }
+
+    public function index()
+    {
+        $taskInst = new Task();
+        $activeTotal = $taskInst->query("SELECT count(*) as count FROM task where status IN ('inProgress', 'active');")[0]->count;
+
+        $userModel = new User();
+        $row = $userModel->query("SELECT
+    role,
+    COUNT(*) AS roleCount
+FROM
+    user
+WHERE
+    role IN ('student', 'company') AND status='active'
+GROUP BY
+    role;");
+        $companies = $students = 0;
+        foreach ($row as $elements) {
+            if ($elements->role == 'company') {
+                $companies = $elements->roleCount;
+            } else {
+                $students = $elements->roleCount;
+            }
+        }
+
+        $disputeInst = new Dispute();
+        $disputes = $disputeInst->query("SELECT count(*) as count from dispute where status='pending';")[0]->count;
+
+
+        $data['disputes'] = $disputes;
+        $data['activeTotal'] = $activeTotal;
+        $data['companies'] = $companies;
+        $data['students'] = $students;
+        $data['title'] = "Dashboard";
+        $this->view('admin/dashboard', $data);
+
     }
 
     public function managemoderators($action = null, $id = null)
@@ -110,7 +148,6 @@ class Admin extends Users
 
     public function manageadmins($action = null, $id = null)
     {
-
 
 
         if (!empty($action)) {
