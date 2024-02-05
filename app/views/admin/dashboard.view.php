@@ -24,9 +24,9 @@
         <div class="main-cards">
 
             <div class="card">
-                <div class="card-inner"  style="padding-left: 10px;">
-                    <h3>Ongoing Tasks     </h3>
-                    <h1><?=$ongoing?></h1>
+                <div class="card-inner" style="padding-left: 10px;">
+                    <h3>Active Tasks</h3>
+                    <h1><?= $activeTotal ?></h1>
                 </div>
                 <div style="padding:3px;display: flex;flex-direction: row; align-items: center justify-content:center;gap: 20px;row-2;">
                     <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" width="905.71938" height="561.28166"
@@ -110,8 +110,8 @@
 
             <div class="card">
                 <div class="card-inner" style="padding-left: 10px;">
-                    <h3>Pending payments</h3>
-                    <h3>Rs.<?=$pendingPayments?></h3>
+                    <h3>Active Companies</h3>
+                    <h1><?= $companies ?></h1>
 
                 </div>
                 <div style="padding:3px;display: flex;flex-direction: row; align-items: center justify-content:center;gap: 20px;row-2;">
@@ -233,8 +233,8 @@
 
             <div class="card">
                 <div class="card-inner" style="padding-left: 10px;">
-                    <h3>Active Tasks</h3>
-                    <h1><?=$activeTasks?></h1>
+                    <h3>Active Students</h3>
+                    <h1><?= $students ?></h1>
 
                 </div>
                 <div style="padding:3px;display: flex;flex-direction: row; align-items: center justify-content:center;gap: 20px;row-2;">
@@ -299,8 +299,8 @@
 
             <div class="card">
                 <div class="card-inner" style="padding-left: 10px;">
-                    <h3>Submissions to Review</h3>
-                    <h1><?=$newSubmissions?></h1>
+                    <h3>Active Disputes</h3>
+                    <h1><?= $disputes ?></h1>
 
                 </div>
                 <div style="padding:3px;display: flex;flex-direction: row; align-items: center justify-content:center;gap: 20px;row-2;">
@@ -350,13 +350,13 @@
         </div>
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;  width: 100%;color: var(--secondary-color);">
             <div class="c-s-1 c-e-7 row-5" style="flex:1;margin: 20px;min-width: 350px;">
-                <h2>Tasks posted in last 12 months</h2><br>
-                <canvas id="monthlyEarningChart"></canvas>
+                <h2>Tasks Analysis</h2><br>
+                <canvas id="taskStatus"></canvas>
             </div>
 
 
             <div class="c-s-1 c-e-7 row-5" style="flex:1;margin: 20px;min-width: 350px;">
-                <h2>Task Progress</h2><br>
+                <h2>Payments Through Site</h2><br>
                 <canvas id="progressChart"></canvas>
             </div>
             <div class="c-s-1 c-e-7 row-5" style="flex:1;margin: 20px;min-width: 350px;">
@@ -374,49 +374,31 @@
     <script src="<?= ROOT ?>/assets/js/charts.js"></script>
     <script>
         const goalPopup = document.getElementById("goalPopup");
-        const monthlyEarningChart = document.getElementById('monthlyEarningChart');
+        const taskStatus = document.getElementById('taskStatus');
         const earningGoal = document.getElementById('earningGoal');
         const progressChart = document.getElementById('progressChart');
         const taskcategory = document.getElementById('taskcategory');
 
         var mychart;//for earning goal
 
-        lastearnings = data => {
+        taskStatusChart = data => {
             // console.log(data)
-            new Chart(monthlyEarningChart, {
-                type: 'line',
+            new Chart(taskStatus, {
+                type: 'doughnut',
                 data: {
                     labels: data.labels,
                     datasets: [{
                         label: data.label,
                         data: data.data,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 205, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(0, 255, 255, 0.2)',
-                            'rgba(201, 203, 207, 0.2)',
-                            'rgba(255, 0, 0, 0.2)',
-                            'rgba(0, 255, 0, 0.2)',
-                            'rgba(0, 0, 255, 0.2)',
-                            'rgba(128, 0, 128, 0.2)' // Purple color added as an alternative
+                            'rgb(255, 205, 86)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 162, 235)'
                         ],
                         borderColor: [
-                            'rgb(255, 99, 132)',
-                            'rgb(255, 159, 64)',
                             'rgb(255, 205, 86)',
-                            'rgb(75, 192, 192)',
                             'rgb(54, 162, 235)',
-                            'rgb(153, 102, 255)',
-                            'rgb(255, 255, 0)',
-                            'rgb(201, 203, 207)',
-                            'rgb(255, 0, 0)',
-                            'rgb(0, 255, 0)',
-                            'rgb(0, 0, 255)',
-                            'rgb(128, 0, 128)' // Purple color added as an alternative
+                            'rgb(255, 162, 235)'
                         ],
 
                         borderWidth: 1
@@ -438,25 +420,22 @@
             if (data.isFine != 0) {
                 // console.log(data)
                 mychart = new Chart(progressChart, {
-                    type: 'polarArea',
+                    type: 'line',
                     data: {
                         labels: data.labels,
                         datasets: [{
                             label: data.label,
                             data: data.data,
-                            backgroundColor: [
-                                'rgb(255, 205, 86)',
-                                'rgb(54, 162, 235)',
-                                'rgb(255, 162, 235)'
-                            ],
-                            hoverOffset: 4
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
                         }]
                     },
 
                 });
             } else {
 
-                progressChart.parentElement.innerHTML = "<h2>Task Progress</h2><h3>Oops! No data to show!</h3>"
+                progressChart.parentElement.innerHTML = "<h2>Payments through site</h2><h3>Oops! No data to show!</h3>"
             }
 
         }
@@ -471,11 +450,7 @@
                         datasets: [{
                             label: data.label,
                             data: data.data,
-                            backgroundColor: [
-                                'rgb(255, 205, 86)',
-                                'rgb(54, 162, 235)',
-                                'rgb(255, 162, 235)'
-                            ],
+                            backgroundColor: generateColors(data.label.length),
                             hoverOffset: 4
                         }]
                     },
@@ -488,18 +463,29 @@
 
         }
 
-        //getting last earning data
-        monthlyEarnings = '<?=ROOT?>/charts/myactivity';
-        fetchChartData(monthlyEarnings, lastearnings);
+        //getting all task status
+        taskStatusUrl = '<?=ROOT?>/charts/alltaskstatus';
+        fetchChartData(taskStatusUrl, taskStatusChart);
 
         //getting task vs category
         taskVsCategoryData = '<?=ROOT?>/charts/tasksvscategory';
         fetchChartData(taskVsCategoryData, taskVsCategory);
 
         //getting task progress
-        progressChartData = '<?=ROOT?>/charts/taskprogress';
+        progressChartData = '<?=ROOT?>/charts/paymentsthroughsite';
         fetchChartData(progressChartData, progress);
 
+        function generateColors(numColors) {
+            const colors = [];
+
+            for (let i = 0; i < numColors; i++) {
+                const hue = (360 / numColors) * i;
+                const color = `hsl(${hue}, 70%, 50%)`;
+                colors.push(color);
+            }
+
+            return colors;
+        }
 
     </script>
 
