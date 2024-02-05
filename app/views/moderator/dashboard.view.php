@@ -356,7 +356,7 @@
 
 
             <div class="c-s-1 c-e-7 row-5" style="flex:1;margin: 20px;min-width: 350px;">
-                <h2>Payments Through Site</h2><br>
+                <h2>Payments Through Site (in Rs.)</h2><br>
                 <canvas id="progressChart"></canvas>
             </div>
             <div class="c-s-1 c-e-7 row-5" style="flex:1;margin: 20px;min-width: 350px;">
@@ -429,7 +429,14 @@
                             fill: false,
                             borderColor: 'rgb(75, 192, 192)',
                             tension: 0.1
-                        }]
+                        },
+                            {
+                                label: data.label2,
+                                data: data.data2,
+                                fill: false,
+                                borderColor: 'rgb(25,252,1)',
+                                tension: 0.1
+                            }]
                     },
 
                 });

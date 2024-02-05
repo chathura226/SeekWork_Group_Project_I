@@ -93,15 +93,15 @@ class Charts extends Controller
             //getting last 12 months
             $currentDate = new DateTime();
             $last12Months = [];
-            $earnings = [];
+            $earnings =$commissions= [];
             $paymentInst = new PaymentModel();
-            $row = $paymentInst->query("SELECT createdAt FROM payment WHERE paymentStatus='completed'");
-
+            $row = $paymentInst->query("SELECT createdAt,amount,commission FROM payment WHERE paymentStatus='completed'");
+            $count = 0;
+            $count2=0;
             for ($i = 12; $i >= 1; $i--) {
 
                 $month = ($currentMonth - $i + 12) % 12 + 1;
                 $year = $currentYear - (($currentMonth - $i + 12) >= 12 ? 0 : 1);
-                $count = 0;
 //                $lastMonth = clone $currentDate;
 //
 //                // Subtract $i months
@@ -112,7 +112,8 @@ class Charts extends Controller
                     foreach ($row as $item) {
                         $dateTimeMySQL = new DateTime($item->createdAt);
                         if ($month == $dateTimeMySQL->format('m') && $year == $dateTimeMySQL->format('Y')) {
-                            $count += 1;
+                            $count +=$item->amount ;
+                            $count2 +=$item->commission ;
                         }
                     }
                 }
@@ -120,10 +121,13 @@ class Charts extends Controller
                 // Format the result ('F Y') and add it to the array
                 $last12Months[] = $year . " " . $monthNames[$month - 1];
                 $earnings[] = $count;
+                $commissions[] = $count2;
             }
             $label = "Payments Through the Site";
 
             $obj['data'] = $earnings;
+            $obj['data2'] = $commissions;
+            $obj['label2'] = "Commissions";
             $obj['label'] = $label;
             $obj['labels'] = $last12Months;
 
