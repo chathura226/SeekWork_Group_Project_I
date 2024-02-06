@@ -605,7 +605,7 @@ CREATE TABLE `dispute` (
 
 LOCK TABLES `dispute` WRITE;
 /*!40000 ALTER TABLE `dispute` DISABLE KEYS */;
-INSERT INTO `dispute` VALUES (1,'first dispute','dejdedmedmed enjed','2023-10-24 23:34:57',NULL,'pending','payment','company',10,NULL,NULL),(4,'Regarding payment on nov 1st','Haven\'t got my milestone payment','2023-10-30 23:38:14',NULL,'pending','payment','student',10,NULL,NULL),(7,'dede','eddeed','2023-10-31 00:21:00',NULL,'pending','payment','student',9,NULL,NULL),(8,'dede','eddeed','2023-10-31 00:21:23',NULL,'resolved','payment','student',9,NULL,NULL),(10,'fcr','refe','2023-10-31 06:37:47',NULL,'pending','other','company',9,NULL,NULL);
+INSERT INTO `dispute` VALUES (1,'first dispute','dejdedmedmed enjed','2023-10-24 23:34:57','2024-02-06 09:05:07','resolved','payment','company',10,NULL,'cs'),(4,'Regarding payment on nov 1st','Haven\'t got my milestone payment','2023-10-30 23:38:14',NULL,'pending','payment','student',10,NULL,NULL),(7,'dede','eddeed','2023-10-31 00:21:00',NULL,'pending','payment','student',9,NULL,NULL),(8,'dede','eddeed','2023-10-31 00:21:23',NULL,'resolved','payment','student',9,NULL,NULL),(10,'fcr','refe','2023-10-31 06:37:47',NULL,'pending','other','company',9,NULL,NULL);
 /*!40000 ALTER TABLE `dispute` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -967,7 +967,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES ('65a001972c3b3','Payment For Task - Task3','outstanding',6,22,244,'2024-01-11 14:56:23',NULL);
+INSERT INTO `payment` VALUES ('65a001972c3b3','Payment For Task - Task3','completed',6,22,244,'2024-01-11 14:56:23',NULL),('frjncrejnce','rebe','completed',10,60,400,'2024-02-05 23:21:49',NULL);
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1348,6 +1348,37 @@ INSERT INTO `submission` VALUES (1,'2023-10-05 05:37:02','wswsw','pendingReview'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `support`
+--
+
+DROP TABLE IF EXISTS `support`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `support` (
+  `supportID` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `subject` varchar(50) NOT NULL,
+  `comment` text NOT NULL,
+  `status` enum('pending','resolved') NOT NULL DEFAULT 'pending',
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `resolvedDate` datetime DEFAULT NULL,
+  `moderatorComment` text,
+  PRIMARY KEY (`supportID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `support`
+--
+
+LOCK TABLES `support` WRITE;
+/*!40000 ALTER TABLE `support` DISABLE KEYS */;
+INSERT INTO `support` VALUES (2,'chathura','chathuralakshan226@gmail.com','Account locked','my account locked.','resolved','2024-02-06 09:11:12','2024-02-06 10:06:39','done');
+/*!40000 ALTER TABLE `support` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `task`
 --
 
@@ -1710,4 +1741,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-31 13:19:43
+-- Dump completed on 2024-02-06 10:07:10

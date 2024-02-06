@@ -348,5 +348,48 @@ GROUP BY
         $this->view('moderator/disputes', $data);
     }
 
+    //customer support dashboard page
+    public function support($id = null)
+    {
+
+        $supportInst = new SupportModel();
+
+        if (!empty($id)) {
+
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                if (!empty($_POST['moderatorComment']) && !empty($_POST['status'])) {
+                    $_POST['resolvedDate'] = date("Y-m-d H:i:s");
+                    $supportInst->update($_POST, $id);
+                    message(ucfirst($_POST['status']) . ' successfully!');
+                } else {
+                    message(['Error occurred!', 'danger']);
+                }
+                redirect('moderator/support/' . $id );
+            }
+
+
+            $res = $supportInst->first(['supportID' => $id]);
+
+            if (!empty($res)) {
+
+
+                $data['support'] = $res;
+                $data['title'] = "Support Request Details";
+                $this->view('moderator/support', $data);
+                return;
+            }
+            message(['Invalid support ID!', 'danger']);
+            redirect('moderator/supports');
+
+        }
+
+
+        $data['supports'] = $supportInst->getAll();
+
+
+        $data['title'] = "Support";
+        $this->view('moderator/supports', $data);
+    }
+
 
 }
