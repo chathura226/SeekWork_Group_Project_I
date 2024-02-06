@@ -117,7 +117,7 @@
 <div class="c-s-2 c-e-12">
     <h1>Frequently Asked Questions</h1>
     <div class="faq-container">
-        <div class="faq active">
+        <div class="faq">
             <h3 class="faq-title">Why shouldn't we trust atoms?</h3>
             <p class="faq-text">They make up everything</p>
             <button class="faq-toggle" onclick="toggleFaq(event)">
@@ -143,13 +143,22 @@
 
         if(e.currentTarget.parentElement.classList.contains("active")) {
             faqs.forEach(item => {
-                if(item.classList.contains("active")) item.classList.remove("active");
+                if(item.classList.contains("active")) {
+                    console.log("dcsd")
+                    console.log(item.querySelector('.chevron-down'))
+                    console.log("dcsd")
+
+                    item.querySelector('.chevron-down').style.transform="rotate(45deg)"
+                    item.classList.remove("active");
+                }
             })
         }else{
             faqs.forEach(item => {
                 if(item.classList.contains("active")) item.classList.remove("active");
             })
             e.currentTarget.parentElement.classList.add("active");
+            e.currentTarget.parentElement.querySelector('.chevron-down').style.transform="rotate(135deg)"
+
         }
     }
 </script>
