@@ -1,0 +1,4 @@
+#to redirect to the correct pblic folder
+RewriteEngine On
+
+RewriteRule ^([^/]*)$ /$1/public [L]
