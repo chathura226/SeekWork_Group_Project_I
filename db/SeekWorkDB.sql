@@ -967,7 +967,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES ('65a001972c3b3','Payment For Task - Task3','outstanding',6,22,244,'2024-01-11 14:56:23',NULL);
+INSERT INTO `payment` VALUES ('65a001972c3b3','Payment For Task - Task3','completed',6,22,244,'2024-01-11 14:56:23',NULL),('frjncrejnce','rebe','completed',10,60,400,'2024-02-05 23:21:49',NULL);
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1348,6 +1348,32 @@ INSERT INTO `submission` VALUES (1,'2023-10-05 05:37:02','wswsw','pendingReview'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `support`
+--
+
+DROP TABLE IF EXISTS `support`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `support` (
+  `supportID` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `comment` text NOT NULL,
+  `status` enum('pending','resolved') NOT NULL DEFAULT 'pending',
+  PRIMARY KEY (`supportID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `support`
+--
+
+LOCK TABLES `support` WRITE;
+/*!40000 ALTER TABLE `support` DISABLE KEYS */;
+/*!40000 ALTER TABLE `support` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `task`
 --
 
@@ -1710,4 +1736,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-31 13:19:43
+-- Dump completed on 2024-02-06  8:51:43
