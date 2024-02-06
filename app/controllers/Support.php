@@ -12,7 +12,10 @@ class Support extends Controller{
     public function help(){
 
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
+            $supportInstance=new SupportModel();
+            $supportInstance->insert($_POST);
+            message("Support request sent successfully!");
+            redirect('support');
         }
         $data['title'] = "Contact Us";
 

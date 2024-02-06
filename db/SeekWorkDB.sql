@@ -605,7 +605,7 @@ CREATE TABLE `dispute` (
 
 LOCK TABLES `dispute` WRITE;
 /*!40000 ALTER TABLE `dispute` DISABLE KEYS */;
-INSERT INTO `dispute` VALUES (1,'first dispute','dejdedmedmed enjed','2023-10-24 23:34:57',NULL,'pending','payment','company',10,NULL,NULL),(4,'Regarding payment on nov 1st','Haven\'t got my milestone payment','2023-10-30 23:38:14',NULL,'pending','payment','student',10,NULL,NULL),(7,'dede','eddeed','2023-10-31 00:21:00',NULL,'pending','payment','student',9,NULL,NULL),(8,'dede','eddeed','2023-10-31 00:21:23',NULL,'resolved','payment','student',9,NULL,NULL),(10,'fcr','refe','2023-10-31 06:37:47',NULL,'pending','other','company',9,NULL,NULL);
+INSERT INTO `dispute` VALUES (1,'first dispute','dejdedmedmed enjed','2023-10-24 23:34:57','2024-02-06 09:05:07','resolved','payment','company',10,NULL,'cs'),(4,'Regarding payment on nov 1st','Haven\'t got my milestone payment','2023-10-30 23:38:14',NULL,'pending','payment','student',10,NULL,NULL),(7,'dede','eddeed','2023-10-31 00:21:00',NULL,'pending','payment','student',9,NULL,NULL),(8,'dede','eddeed','2023-10-31 00:21:23',NULL,'resolved','payment','student',9,NULL,NULL),(10,'fcr','refe','2023-10-31 06:37:47',NULL,'pending','other','company',9,NULL,NULL);
 /*!40000 ALTER TABLE `dispute` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1358,10 +1358,12 @@ CREATE TABLE `support` (
   `supportID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
+  `subject` varchar(50) NOT NULL,
   `comment` text NOT NULL,
   `status` enum('pending','resolved') NOT NULL DEFAULT 'pending',
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`supportID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1370,6 +1372,7 @@ CREATE TABLE `support` (
 
 LOCK TABLES `support` WRITE;
 /*!40000 ALTER TABLE `support` DISABLE KEYS */;
+INSERT INTO `support` VALUES (2,'chathura','chathuralakshan226@gmail.com','Account locked','my account locked.','pending','2024-02-06 09:11:12');
 /*!40000 ALTER TABLE `support` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1736,4 +1739,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-06  8:51:43
+-- Dump completed on 2024-02-06  9:11:29

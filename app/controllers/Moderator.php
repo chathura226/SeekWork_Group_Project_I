@@ -348,5 +348,70 @@ GROUP BY
         $this->view('moderator/disputes', $data);
     }
 
+    //customer support dashboard page
+    public function support($id = null)
+    {
+
+        $supportInst = new SupportModel();
+
+//        if (!empty($id)) {
+//
+//            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+//                if (!empty($_POST['moderatorComment']) && !empty($_POST['status'])) {
+//                    $_POST['resolvedDate'] = date("Y-m-d H:i:s");
+//                    $disputeInst->update($_POST, $id);
+//                    message(ucfirst($_POST['status']) . ' successfully!');
+//                } else {
+//                    message(['Error occurred!', 'danger']);
+//                }
+//                redirect('moderator/disputes/' . $id );
+//            }
+//
+//
+//            $res = $disputeInst->first(['disputeID' => $id]);
+//
+//            if (!empty($res)) {
+//                $taskInst=new Task();
+//
+//                $task=$taskInst->first(['taskID'=>$res->taskID]);
+//                $res->task=$task;
+//
+//                //geting details of users
+//                $compinst=new CompanyModel();
+//                $detailsOfCompany=$compinst->innerJoin(['user'],['company.userID=user.userID'],['company.companyID'=>$res->task->companyID])[0];
+//                $studentInst=new StudentModel();
+//                $detailsOfStudent=$studentInst->innerJoin(['user'],['student.userID=user.userID'],['student.studentID'=>$res->task->assignedStudentID])[0];
+//
+//                //getting initiated party data and set res accordignly
+//                if($res->initiatedParty=='company'){
+//                    //when initiated party is company
+//
+//                    $res->complainer=$detailsOfCompany;
+//                    $res->target=$detailsOfStudent;
+//
+//                }else{
+//                    //when initiated party is student
+//                    $res->complainer=$detailsOfStudent;
+//                    $res->target=$detailsOfCompany;
+//                }
+//
+//                $data['dispute'] = $res;
+//                $data['title'] = "Dispute Details";
+//                $this->view('moderator/dispute', $data);
+//                return;
+//            }
+//            message(['Invalid dispute ID!', 'danger']);
+//            redirect('moderator/category');
+//
+//        }
+
+
+        $data['supports'] = $supportInst->getAll();
+
+
+        $data['title'] = "Support";
+        $this->view('moderator/supports', $data);
+    }
+
 
 }

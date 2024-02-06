@@ -13,6 +13,8 @@ class SupportModel extends Model {
         'email',
         'comment',
         'status',
+        'createdAt',
+        'subject',
     ];
 
      

@@ -113,6 +113,10 @@
                 <label for="email">Email</label>
             </div>
             <div class="group">
+                <input placeholder="" type="text" id="subject" name="subject" required="">
+                <label for="subject">Subject</label>
+            </div>
+            <div class="group">
                 <textarea placeholder="" id="comment" name="comment" rows="5" required=""></textarea>
                 <label for="comment">Describe your problem...</label>
             </div>
