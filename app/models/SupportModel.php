@@ -15,6 +15,8 @@ class SupportModel extends Model {
         'status',
         'createdAt',
         'subject',
+        'resolvedDate',
+        'moderatorComment',
     ];
 
      

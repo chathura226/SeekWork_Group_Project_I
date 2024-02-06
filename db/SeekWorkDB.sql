@@ -1362,6 +1362,8 @@ CREATE TABLE `support` (
   `comment` text NOT NULL,
   `status` enum('pending','resolved') NOT NULL DEFAULT 'pending',
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `resolvedDate` datetime DEFAULT NULL,
+  `moderatorComment` text,
   PRIMARY KEY (`supportID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1372,7 +1374,7 @@ CREATE TABLE `support` (
 
 LOCK TABLES `support` WRITE;
 /*!40000 ALTER TABLE `support` DISABLE KEYS */;
-INSERT INTO `support` VALUES (2,'chathura','chathuralakshan226@gmail.com','Account locked','my account locked.','pending','2024-02-06 09:11:12');
+INSERT INTO `support` VALUES (2,'chathura','chathuralakshan226@gmail.com','Account locked','my account locked.','resolved','2024-02-06 09:11:12','2024-02-06 10:06:39','done');
 /*!40000 ALTER TABLE `support` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1739,4 +1741,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-06  9:11:29
+-- Dump completed on 2024-02-06 10:07:10

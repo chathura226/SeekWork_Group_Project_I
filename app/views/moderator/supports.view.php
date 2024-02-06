@@ -6,7 +6,7 @@
 
 
     <div class="pagetitle column-12">
-        <h1>Disputes</h1>
+        <h1>Support Requests</h1>
         <nav>
 
             <ul class="breadcrumbs">
@@ -43,28 +43,27 @@
         </div>
         <div class="content-box">
             <div class="content-box-content" id="all">
-                <h2>All Disputes</h2>
-                <?php if (!empty($disputes)): ?>
+                <h2>All Support Requests</h2>
+                <?php if (!empty($supports)): ?>
                     <table class="table table-striped">
                         <thead>
                         <tr>
                             <th>SupportID</th>
-                            <th>Support  Description</th>
+                            <th>Subject</th>
                             <th>Status</th>
-                            <th>Dispute Date</th>
-                            <th>Initiated Party</th>
+                            <th>Request Date</th>
                             <th>Link</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php if (!empty($disputes)): foreach ($disputes as $dispute): ?>
+                        <?php if (!empty($supports)): foreach ($supports as $support): ?>
                             <tr style="height: 70px">
-                                <th><?= $dispute->disputeID ?></th>
-                                <td><?= limitCharacters($dispute->subject, 25) ?></td>
+                                <th><?= $support->supportID ?></th>
+                                <td><?= limitCharacters($support->subject, 25) ?></td>
                                 <!--                            <td>-->
                                 <?php //=ucfirst($dispute->status)?><!--</td>-->
                                 <?php $statusColor = 'yellow';
-                                switch ($dispute->status) {
+                                switch ($support->status) {
                                     case 'resolved':
                                         $statusColor = 'green';
                                         $textColor = 'whitesmoke';
@@ -81,14 +80,13 @@
                                 }; ?>
                                 <td>
                                     <div class="status-btn-like"
-                                         style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($dispute->status) ?></div>
+                                         style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($support->status) ?></div>
                                 </td>
-                                <td><?= $dispute->createdAt ?></td>
-                                <td><?= ucfirst($dispute->initiatedParty) ?></td>
+                                <td><?= $support->createdAt ?></td>
                                 <td>
                                     <div class="flex"
                                          style="margin: auto;justify-content: center;align-items: center;gap: 20px">
-                                        <a href="<?= ROOT ?>/moderator/disputes/<?= $dispute->disputeID ?>"
+                                        <a href="<?= ROOT ?>/moderator/support/<?= $support->supportID ?>"
                                            style="text-decoration: none;">
                                             <button class="status-btn-working">Details</button>
                                         </a>
@@ -103,139 +101,129 @@
                         </tbody>
                     </table>
                 <?php else: ?>
-                    <h2>No disputes</h2> <?php endif; ?>
+                    <h2>No support requests</h2> <?php endif; ?>
             </div>
             <div class="content-box-content" id="pending">
-                <h2>Pending Disputes</h2>
-                <?php if (!empty($disputes)): ?>
+                <h2>Pending Support Requests</h2>
+                <?php if (!empty($supports)): ?>
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>DisputeID</th>
-                            <th>Dispute Description</th>
+                            <th>SupportID</th>
+                            <th>Subject</th>
                             <th>Status</th>
-                            <th>Dispute Date</th>
-                            <th>Initiated Party</th>
+                            <th>Request Date</th>
                             <th>Link</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php if (!empty($disputes)): foreach ($disputes as $dispute): ?>
-                            <?php if ($dispute->status == 'pending'): ?>
-                                <tr style="height: 70px">
-                                    <th><?= $dispute->disputeID ?></th>
-                                    <td><?= limitCharacters($dispute->subject, 25) ?></td>
-                                    <!--                            <td>-->
-                                    <?php //=ucfirst($dispute->status)?><!--</td>-->
-                                    <?php $statusColor = 'yellow';
-                                    switch ($dispute->status) {
-                                        case 'resolved':
-                                            $statusColor = 'green';
-                                            $textColor = 'whitesmoke';
-                                            break;
-                                        case 'pending':
-                                            $statusColor = 'yellow';
-                                            $textColor = 'var(--text-color)';
-                                            break;
-                                        default:
-                                            $statusColor = 'yellow';
-                                            $textColor = 'var(--text-color)';
-                                            break;
+                        <?php if (!empty($supports)): foreach ($supports as $support):if($support->status=='pending'): ?>
+                            <tr style="height: 70px">
+                                <th><?= $support->supportID ?></th>
+                                <td><?= limitCharacters($support->subject, 25) ?></td>
+                                <!--                            <td>-->
+                                <?php //=ucfirst($dispute->status)?><!--</td>-->
+                                <?php $statusColor = 'yellow';
+                                switch ($support->status) {
+                                    case 'resolved':
+                                        $statusColor = 'green';
+                                        $textColor = 'whitesmoke';
+                                        break;
+                                    case 'pending':
+                                        $statusColor = 'yellow';
+                                        $textColor = 'var(--text-color)';
+                                        break;
+                                    default:
+                                        $statusColor = 'yellow';
+                                        $textColor = 'var(--text-color)';
+                                        break;
 
-                                    }; ?>
-                                    <td>
-                                        <div class="status-btn-like"
-                                             style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($dispute->status) ?></div>
-                                    </td>
-                                    <td><?= $dispute->createdAt ?></td>
-                                    <td><?= ucfirst($dispute->initiatedParty) ?></td>
-                                    <td>
-                                        <div class="flex"
-                                             style="margin: auto;justify-content: center;align-items: center;gap: 20px">
-                                            <a href="<?= ROOT ?>/moderator/disputes/<?= $dispute->disputeID ?>"
-                                               style="text-decoration: none;">
-                                                <button class="status-btn-working">Details</button>
-                                            </a>
+                                }; ?>
+                                <td>
+                                    <div class="status-btn-like"
+                                         style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($support->status) ?></div>
+                                </td>
+                                <td><?= $support->createdAt ?></td>
+                                <td>
+                                    <div class="flex"
+                                         style="margin: auto;justify-content: center;align-items: center;gap: 20px">
+                                        <a href="<?= ROOT ?>/moderator/support/<?= $support->supportID ?>"
+                                           style="text-decoration: none;">
+                                            <button class="status-btn-working">Details</button>
+                                        </a>
 
-                                        </div>
-                                    </td>
+                                    </div>
+                                </td>
 
-                                </tr>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
+                            </tr>
+                        <?php endif; endforeach; ?>
                         <?php endif; ?>
-
                         </tbody>
                     </table>
                 <?php else: ?>
-                    <h2>No disputes</h2><?php endif; ?>
+                    <h2>No support requests</h2><?php endif; ?>
 
             </div>
 
             <div class="content-box-content" id="resolved">
-                <h2>Resolved Disputes</h2>
+                <h2>Resolved Support Requests</h2>
                 <?php if (!empty($disputes)): ?>
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>DisputeID</th>
-                            <th>Dispute Description</th>
+                            <th>SupportID</th>
+                            <th>Subject</th>
                             <th>Status</th>
-                            <th>Dispute Date</th>
-                            <th>Initiated Party</th>
+                            <th>Request Date</th>
                             <th>Link</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php if (!empty($disputes)): foreach ($disputes as $dispute): ?>
-                            <?php if ($dispute->status == 'resolved'): ?>
-                                <tr style="height: 70px">
-                                    <th><?= $dispute->disputeID ?></th>
-                                    <td><?= limitCharacters($dispute->subject, 25) ?></td>
-                                    <!--                            <td>-->
-                                    <?php //=ucfirst($dispute->status)?><!--</td>-->
-                                    <?php $statusColor = 'yellow';
-                                    switch ($dispute->status) {
-                                        case 'resolved':
-                                            $statusColor = 'green';
-                                            $textColor = 'whitesmoke';
-                                            break;
-                                        case 'pending':
-                                            $statusColor = 'yellow';
-                                            $textColor = 'var(--text-color)';
-                                            break;
-                                        default:
-                                            $statusColor = 'yellow';
-                                            $textColor = 'var(--text-color)';
-                                            break;
+                        <?php if (!empty($supports)): foreach ($supports as $support):if($support->status=='pending'): ?>
+                            <tr style="height: 70px">
+                                <th><?= $support->supportID ?></th>
+                                <td><?= limitCharacters($support->subject, 25) ?></td>
+                                <!--                            <td>-->
+                                <?php //=ucfirst($dispute->status)?><!--</td>-->
+                                <?php $statusColor = 'yellow';
+                                switch ($support->status) {
+                                    case 'resolved':
+                                        $statusColor = 'green';
+                                        $textColor = 'whitesmoke';
+                                        break;
+                                    case 'pending':
+                                        $statusColor = 'yellow';
+                                        $textColor = 'var(--text-color)';
+                                        break;
+                                    default:
+                                        $statusColor = 'yellow';
+                                        $textColor = 'var(--text-color)';
+                                        break;
 
-                                    }; ?>
-                                    <td>
-                                        <div class="status-btn-like"
-                                             style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($dispute->status) ?></div>
-                                    </td>
-                                    <td><?= $dispute->createdAt ?></td>
-                                    <td><?= ucfirst($dispute->initiatedParty) ?></td>
-                                    <td>
-                                        <div class="flex"
-                                             style="margin: auto;justify-content: center;align-items: center;gap: 20px">
-                                            <a href="<?= ROOT ?>/moderator/disputes/<?= $dispute->disputeID ?>"
-                                               style="text-decoration: none;">
-                                                <button class="status-btn-working">Details</button>
-                                            </a>
+                                }; ?>
+                                <td>
+                                    <div class="status-btn-like"
+                                         style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($support->status) ?></div>
+                                </td>
+                                <td><?= $support->createdAt ?></td>
+                                <td>
+                                    <div class="flex"
+                                         style="margin: auto;justify-content: center;align-items: center;gap: 20px">
+                                        <a href="<?= ROOT ?>/moderator/support/<?= $support->supportID ?>"
+                                           style="text-decoration: none;">
+                                            <button class="status-btn-working">Details</button>
+                                        </a>
 
-                                        </div>
-                                    </td>
+                                    </div>
+                                </td>
 
-                                </tr>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
+                            </tr>
+                        <?php endif; endforeach; ?>
                         <?php endif; ?>
-
                         </tbody>
                     </table>
                 <?php else: ?>
-                    <h2>No disputes</h2> <?php endif; ?>
+                    <h2>No support requests</h2> <?php endif; ?>
 
             </div>
 
