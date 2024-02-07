@@ -44,6 +44,8 @@ if (!empty($nStars)) {
     $correctRatingID=$rounded*2;
 //    show($nStars);
 //    show($correctRatingID);
+}else{
+    $correctRatingID=10;
 } ?>
 <div style="display: flex; align-items: center;">
 <fieldset class="rateNew">
@@ -72,5 +74,5 @@ if (!empty($nStars)) {
                                                                                                         for="rating1"
                                                                                                         title="1/2 star"></label>
 </fieldset>
-<span style="padding-top: 8px;">(<?=$nReviews?>)</span>
+<span style="padding-top: 8px;">(<?=(empty($nReviews))?'0':$nReviews?>)</span>
 </div>

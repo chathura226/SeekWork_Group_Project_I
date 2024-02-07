@@ -88,7 +88,7 @@
 
         <?php endif; ?>
     </div>
-    <?php $this->view('includes/companyDetail', (array)$company) ?>
+    <?php  $this->view('includes/companyDetail', (array)$company) ?>
 
 </div>
 
