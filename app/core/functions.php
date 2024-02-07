@@ -149,3 +149,8 @@ function limitCharacters($string, $limit) {
     }
     return $string;
 }
+
+//for half star ratings
+function roundToNearestHalf($number) {
+    return round($number * 2) / 2;
+}
