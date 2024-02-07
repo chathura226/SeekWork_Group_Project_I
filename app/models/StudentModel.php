@@ -22,6 +22,9 @@ class StudentModel extends Model {
         'profilePic',
         'userID',
         'universityID',
+        'final_rating',
+        'nReviews',
+        'nTasks',
     ];
 
      

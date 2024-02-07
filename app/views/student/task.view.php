@@ -88,21 +88,7 @@
 
         <?php endif; ?>
     </div>
-    <div class="comp-details c-s-8 c-e-13">
-        <h2>About the company</h2>
-        <div class="comp-img">
-            <img src="<?= ROOT ?><?= (!empty($company->profilePic)) ? "/" . $company->profilePic : "/assets/images/noImage.png" ?>" alt="Profile Picture">
-        </div>
-        <h3><?= ucfirst($company->companyName) ?> <small>(2000 tasks)</small></h3>
-        <?php $this->view('includes/stars', ['nStars'=>$company->final_rating,'nReviews'=>$company->nReviews]) ?>
-
-
-        Company Description : <?= $company->description ?></br>
-        Location : <?= ucfirst($company->address) ?></br>
-        <?php if (!empty($company->website)) echo "Website : " . $company->website; ?></br>
-        Joined Date: <?= $company->createdAt ?></br>
-
-    </div>
+    <?php $this->view('includes/companyDetail', (array)$company) ?>
 
 </div>
 

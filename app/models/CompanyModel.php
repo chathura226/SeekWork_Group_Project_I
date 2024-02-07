@@ -18,7 +18,10 @@ class CompanyModel extends Model {
         'description',
         'brn',	
         'userID',
-        'companyID',	
+        'companyID',
+        'final_rating',
+        'nReviews',
+        'nTasks',
     ];
 
      
