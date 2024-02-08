@@ -1,17 +1,5 @@
 <?php
 
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'reviews_db';
-
-date_default_timezone_set('Asia/Colombo');
-
-try {
-    $pdo = new PDO('mysql:host=' . $DATABASE_HOST . ';dbname=' . $DATABASE_NAME . ';charset=utf8', $DATABASE_USER, $DATABASE_PASS);
-} catch (PDOException $exception) {
-    exit('Failed to connect to the database!');
-}
 
 function time_elapsed_string($datetime, $full = false)
 {
@@ -42,7 +30,7 @@ if (isset($_GET['page_id'])) {
     }
 
     $limit = isset($_GET['current_pagination_page'], $_GET['review_per_pagination_page']) ? 'LIMIT :current_pagination_page, :review_per_pagination_page' : '';
-    
+
     $sort_by = 'ORDER BY rating  DESC';
     if (isset($_GET['sort_by'])) {
         switch ($_GET['sort_by']) {
@@ -85,10 +73,17 @@ if (isset($_GET['page_id'])) {
 <div class="con">
     <label for="sort_by">Sort By</label>
     <select class="sort_by" id="sort_by">
-        <option value="newest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'newest' ? 'selected ' : '' ?>>Newest</option>
-        <option value="oldest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'oldest' ? 'selected' : '' ?>>Oldest</option>
-        <option value="rating_highest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'rating_highest' ? 'selected' : '' ?>>Rating-High to Low</option>
-        <option value="rating_lowest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'rating_lowest' ? 'selected' : '' ?>>Rating-Low to High</option>
+        <option value="newest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'newest' ? 'selected ' : '' ?>>
+            Newest
+        </option>
+        <option value="oldest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'oldest' ? 'selected' : '' ?>>Oldest
+        </option>
+        <option value="rating_highest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'rating_highest' ? 'selected' : '' ?>>
+            Rating-High to Low
+        </option>
+        <option value="rating_lowest" <?= isset($_GET['sort_by']) && $_GET['sort_by'] == 'rating_lowest' ? 'selected' : '' ?>>
+            Rating-Low to High
+        </option>
     </select>
 </div>
 
@@ -106,7 +101,8 @@ if (isset($_GET['page_id'])) {
 <?php if ($limit): ?>
     <div class="pagination">
         <?php if (isset($_GET['current_pagination_page']) && $_GET['current_pagination_page'] > 1): ?>
-            <a href="#" data-pagination_page="<?= $_GET['current_pagination_page'] + 1 ?>" data-recodes_per_page="<?= $_GET['review_per_pagination_page'] ?>">Next</a>
+            <a href="#" data-pagination_page="<?= $_GET['current_pagination_page'] + 1 ?>"
+               data-recodes_per_page="<?= $_GET['review_per_pagination_page'] ?>">Next</a>
         <?php endif; ?>
     </div>
 <?php endif; ?>
