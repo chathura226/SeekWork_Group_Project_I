@@ -35,29 +35,29 @@
   <div class="nstars"><h4>No. of Stars: &nbsp</h4>  
     <div class="rating">
       <label>
-        <input type="radio" name="nStars" value="1" <?php if($review->nStars===1) echo "checked";?> diabled/>
+        <input type="radio" name="nStars" value="1" <?php if($review->nStars===1) echo "checked";?> disabled/>
         <span class="icon">★</span>
       </label>
       <label>
-        <input type="radio" name="nStars" value="2" <?php if($review->nStars===2) echo "checked";?> diabled/>
+        <input type="radio" name="nStars" value="2" <?php if($review->nStars===2) echo "checked";?> disabled/>
         <span class="icon">★</span>
         <span class="icon">★</span>
       </label>
       <label>
-        <input type="radio" name="nStars" value="3" <?php if($review->nStars===3) echo "checked";?> diabled/>
+        <input type="radio" name="nStars" value="3" <?php if($review->nStars===3) echo "checked";?> disabled/>
         <span class="icon">★</span>
         <span class="icon">★</span>
         <span class="icon">★</span>   
       </label>
       <label>
-        <input type="radio" name="nStars" value="4" <?php if($review->nStars===4) echo "checked";?> diabled/>
+        <input type="radio" name="nStars" value="4" <?php if($review->nStars===4) echo "checked";?> disabled/>
         <span class="icon">★</span>
         <span class="icon">★</span>
         <span class="icon">★</span>
         <span class="icon">★</span>
       </label>
       <label>
-        <input type="radio" name="stars" value="5" <?php if($review->nStars===5) echo "checked";?> diabled/>
+        <input type="radio" name="stars" value="5" <?php if($review->nStars===5) echo "checked";?> disabled/>
         <span class="icon">★</span>
         <span class="icon">★</span>
         <span class="icon">★</span>
