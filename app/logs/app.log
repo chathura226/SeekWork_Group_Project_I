@@ -38,5 +38,9 @@
 [2024-02-07T12:41:15.459910+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.21.0.1"} []
 [2024-02-07T12:46:15.943548+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.21.0.1"} []
 [2024-02-07T12:53:12.779092+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.21.0.1"} []
+<<<<<<< HEAD
 [2024-02-10T15:15:47.454275+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.18.0.1"} []
 [2024-02-10T15:15:55.948933+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.18.0.1"} []
+=======
+[2024-02-08T00:49:07.887705+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.18.0.1"} []
+>>>>>>> f74c369 (rating changes)
