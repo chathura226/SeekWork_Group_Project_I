@@ -5,96 +5,201 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-      /* Basic styles for the Bootstrap dropdown */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
 
-.dropdown-toggle::after {
-  content: '\25BC'; /* Downward arrow character */
-  margin-left: 5px;
-}
 
-/* Dropdown menu styles */
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
-  min-width: 160px;
-  z-index: 1000;
-}
+        .centerbox {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 676px;
+            min-height: 52px;
+            z-index: 2
+        }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-menu {
-  display: block;
-}
+        .centerbox h1 {
+            margin-bottom: 25px;
+            font-size: 36px;
+            font-weight: normal;
+            text-align: center;
+        }
 
-/* Style for individual dropdown items */
-.dropdown-item {
-  display: block;
-  padding: 8px 12px;
-  color: #333;
-  text-decoration: none;
-  transition: background-color 0.3s;
-}
+        .centerbox p.description {
+            margin-bottom: 40px;
+            text-align: center;
+        }
 
-/* Hover effect on dropdown items */
-.dropdown-item:hover {
-  background-color: #f8f9fa;
-}
+        .description a {
+            text-decoration: none;
+        }
 
-/* Active state for selected item */
-.dropdown-item.active {
-  background-color: #007bff;
-  color: #fff;
-}
+        .main-input {
+            background: #fff;
+            height: 50px;
+            width: 327px;
+            color: #a7b1ab;
+            border: 1px solid #cccccc;
+            margin-bottom: 0px;
+            border-radius: 4px 0px 0px 4px;
+            display: inline-block;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 0px 0px 0px 57px;
+            font-size: 16px;
+            border-right: 0px;
+            background: #ffffff url("http://seodesigns.com/projects/TD/images/search.png") 18px 15px no-repeat;
+            background-size: 18px 18px;
+            float: left;
+        }
 
-/* Additional styling for disabled items */
-.dropdown-item:disabled {
-  color: #6c757d;
-  background-color: #f8f9fa;
-}
+        .main-location {
+            display: none;
+        }
 
-/* Optional: Style the dropdown toggle button */
-.dropdown-toggle {
-  cursor: pointer;
-  padding: 8px 12px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  background-color: #fff;
-}
+        #main-submit {
+            background: #3cb13c;
+            color: #fff;
+            display: inline-block;
+            font-size: 19px;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 0px;
+            border-radius: 0px 4px 4px 0px;
+            width: 141px;
+            height: 50px;
+            border: 0px;
+            padding-top: 0px;
+            float: left;
+        }
+
+        #main-submit:hover {
+            background: #00a221;
+            color: #fff !important;
+        }
+
+        #main-submit-mobile {
+            display: none;
+        }
+
+
+
+        .main-btn {
+            display: inline-block;
+            width: 150px;
+            height: 50px;
+            border: 1px solid #cccccc;
+            padding: 0px;
+            position: relative;
+            float: left;
+            border-right: 0px;
+            background: #ffffff url("http://seodesigns.com/projects/TD/images/main-bullet.png") 122px 23px no-repeat;
+            background-size: 6px 6px;
+            cursor: pointer;
+        }
+
+        .search-small {
+            font-size: 12px;
+            margin: 0px;
+            color: #9B9B9B;
+            position: absolute;
+            top: 6px;
+            left: 16px;
+            display: inline-block;
+            width: 80px;
+            height: 20px;
+            text-align: left;
+        }
+
+        .search-large {
+            font-size: 16px;
+            margin: 0px;
+            color: #4A4A4A;
+            position: absolute;
+            top: 19px;
+            left: 16px;
+            display: inline-block;
+            width: 105px;
+            height: 20px;
+            font-weight: 900;
+            text-align: left;
+        }
+
+        .main-form-container {
+            height: 50px;
+            position: relative;
+        }
+
+        ul.search-description {
+            width: 150px;
+            position: absolute;
+            background: #fff;
+            right: 143px;
+            top: 55px;
+            border-radius: 2px;
+            padding: 14px 0px;
+            border: 1px solid #E5E5E5;
+            display: none;
+            -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);
+            -moz-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-description li {
+            font-size: 16px;
+            color: #4A4A4A;
+            font-weight: 900;
+            padding: 6px 0px;
+            display: block;
+            padding-left: 16px;
+            cursor: pointer;
+        }
+
+        .search-description li:hover {
+            background: #f8f8f8;
+        }
+
 
     </style>
     <title>Notification Dropdown</title>
 </head>
 
 <body>
+<div class="centerbox">
 
-    <div class="dropdown">
-        <a class="me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
-        role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-bell"></i>
-            <span class="badge rounded-pill badge-notification bg-danger">1</span>
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li>
-                <a class="dropdown-item" href="#">Some news</a>
-            </li>
-            <li>
-                <a class="dropdown-item" href="#">Another news</a>
-            </li>
-            <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-        </ul>
+    <div class="main-form-container">
+        <form id="" class="" method="post">
+            <input type="text" class="main-input main-name" name="searchField" placeholder="Search" onfocus="clearText(this)"
+                   onblur="replaceText(this)"/>
+            <input type="text" id="searchType" name="searchType" style="display: none;" />
+
+            <button onclick="toggleDrop()" type="button" class="main-btn"><p class="search-small">SEARCH BY</p>
+                <p class="search-large">Title</p></button>
+            <ul class="search-description">
+                <li onclick="byValue('title')">By Title</li>
+                <li onclick="byValue('skill')">By Skill</li>
+            </ul>
+            <input id="main-submit" class="" type="submit" value="Search"/>
+        </form>
     </div>
-
+</div>
+<button type="button" id="main-submit-mobile">Search</button>
 
 </body>
+<script>
+    searchType='title';
+    document.getElementById('searchType').value=searchType;
 
+    function toggleDrop(){
+        doropM=document.querySelector('.search-description');
+        doropM.style.display==='none'?doropM.style.display='block':doropM.style.display='none';
+    }
+    function byValue(str){
+        toggleDrop();
+        document.querySelector('.search-large').textContent=str.charAt(0).toUpperCase() + str.slice(1);
+        searchType=str;
+        document.getElementById('searchType').value=str;
+    }
+</script>
 </html>
