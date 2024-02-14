@@ -4,15 +4,64 @@
 class Tasks extends Controller
 {
 
+    public function search($searchType,$searchField)
+    {
+        //for search
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            //if search type is skill
+            if($_POST['searchType']=='skill'){
+                redirect('tasks/search/skill/'.$_POST['searchField']);
+            }elseif ($_POST['searchType']=='title'){
+                redirect('tasks/search/title/'.$_POST['searchField']);
+            }
+        }
+
+        $tasksPerPage = TASK_PER_PAGE;
+        if (!empty($_GET['page'])) $data['pageNum'] = $_GET['page'];
+        else $data['pageNum'] = 1;
+
+
+        $task = new Task();
+        if($searchType=='title') {
+            //totalNumber of page count for the tasks
+            $all_rows = "SELECT DISTINCT COUNT(task.taskID) AS all_rows FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' AND task.isDeleted=0 AND task.title LIKE '%$searchField%';";
+            $row4 = $task->query($all_rows, []);
+            $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
+
+            $offset = $tasksPerPage * ($data['pageNum'] - 1);
+            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.title LIKE '%$searchField%' ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset");
+//        $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'",'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
+            $data['tasks'] = $row;// this is for all tasks
+//        show($row);
+        }else{
+            //search type is skill
+
+        }
+        $data['tab'] = "all";//since reusage of original tasks view
+        $data['title'] = "Tasks";
+        $data['searchField']=$searchField;
+        $this->view('searchTasks', $data);
+
+    }
+
     public function index($id = null)
     {
 
+        //for search
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            //if search type is skill
+            if($_POST['searchType']=='skill'){
+                redirect('tasks/search/skill/'.$_POST['searchField']);
+            }elseif ($_POST['searchType']=='title'){
+                redirect('tasks/search/title/'.$_POST['searchField']);
+            }
+        }
 
         if (empty($id)) {
 
 
             // send 24 by 24
-            $tasksPerPage = 1;
+            $tasksPerPage = TASK_PER_PAGE;
             if (!empty($_GET['page'])) $data['pageNum'] = $_GET['page'];
             else $data['pageNum'] = 1;
             if (!empty($_GET['tab'])) $data['tab'] = $_GET['tab'];
