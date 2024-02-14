@@ -4,7 +4,7 @@
 class Tasks extends Controller
 {
 
-    public function search($searchType,$searchField)
+    public function search($searchType=null,$searchField=null)
     {
         //for search
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -35,11 +35,20 @@ class Tasks extends Controller
 //        show($row);
         }else{
             //search type is skill
+            //totalNumber of page count for the tasks
+            $all_rows = "SELECT DISTINCT COUNT(task.taskID) AS all_rows FROM task INNER JOIN task_skill ON task.taskID=task_skill.taskID INNER JOIN skill ON skill.skillID=task_skill.skillID WHERE task.status='active' AND task.isDeleted=0 AND skill.skill LIKE '%$searchField%';";
+            $row4 = $task->query($all_rows, []);
+            $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
 
+            $offset = $tasksPerPage * ($data['pageNum'] - 1);
+            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.taskID IN (SELECT DISTINCT(taskID) FROM task_skill WHERE skillID IN (SELECT skillID FROM skill WHERE skill.skill LIKE '%$searchField%')) ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset ");
+//        $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'",'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
+            $data['tasks'] = $row;// this is for all tasks
         }
         $data['tab'] = "all";//since reusage of original tasks view
         $data['title'] = "Tasks";
         $data['searchField']=$searchField;
+        $data['searchType']=$searchType;
         $this->view('searchTasks', $data);
 
     }

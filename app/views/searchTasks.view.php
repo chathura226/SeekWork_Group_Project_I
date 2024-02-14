@@ -196,12 +196,15 @@
 
         <div class="content-box">
             <div class="content-box-content" id="all">
-                <div style="margin-left:20px "><h2>Search Results for '<?=$searchField?>'</h2></div>
+                <div style="margin-left:20px "><h2>Search By '<?=$searchType?>' </h2></div>
+                <div style="margin-left:20px;margin-bottom: 10px; "><h3>Results for '<?=$searchField?>' </h3></div>
 
                 <div class="task-wrapper column-12">
 
 
-                    <?php foreach ($tasks as $task) : ?>
+                    <?php if(empty($tasks)):?>
+                    <h2 style="color:red;">Nothing found!</h2>
+                    <?php else: foreach ($tasks as $task) : ?>
 
 
                         <div class="post-container" id="$task->taskID">
@@ -252,7 +255,7 @@
                             </div>
                         </div>
 
-                    <?php endforeach; ?>
+                    <?php endforeach; endif; ?>
 
 
                 </div>
