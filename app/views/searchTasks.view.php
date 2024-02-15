@@ -184,6 +184,7 @@
                     <ul class="search-description">
                         <li onclick="byValue('title')">By Title</li>
                         <li onclick="byValue('skill')">By Skill</li>
+                        <li onclick="byValue('category')">By Category</li>
                     </ul>
                     <input id="main-submit" class="" type="submit" value="Search"/>
                 </form>
