@@ -45,3 +45,5 @@
 [2024-02-08T00:49:07.887705+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.18.0.1"} []
 >>>>>>> f74c369 (rating changes)
 [2024-02-13T10:10:19.291408+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.18.0.1"} []
+[2024-02-15T04:53:24.961544+00:00] log.INFO: User Logged in Successfully! {"user_id":26,"IP_Address":"172.18.0.1"} []
+[2024-02-15T05:33:52.592292+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.19.0.1"} []

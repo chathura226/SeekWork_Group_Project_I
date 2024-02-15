@@ -266,11 +266,11 @@ DROP TABLE IF EXISTS `category`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category` (
   `categoryID` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(20) NOT NULL,
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `description` text NOT NULL,
   `tags` text NOT NULL,
   PRIMARY KEY (`categoryID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,7 +279,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'Graphic Design','Work related to graphic designing ','graphic\r\nlogo\r\ndesign'),(2,'Web development','Work associated with web development','php\r\nhtml\r\ncss\r\n'),(3,'Animation','Work associated with animations','anime,video editing,3d,gaming');
+INSERT INTO `category` VALUES (1,'Design','Create visually appealing and impactful designs for digital and physical products.','graphic design,web design,product design,UX/UI design,illustration,animation'),(2,'Web development','Build and maintain websites and web applications with coding expertise.','front-end development,back-end development,full-stack development,WordPress development'),(3,'Animation','Capture visual stories and moments through video and photography, and enhance them with editing and animation.','videography,photography,editing,animation'),(39,'Writing','Craft compelling written content for various purposes, from websites to articles to novels.','content writing,copywriting,technical writing,creative writing,editing,proofreading,grant writing'),(41,'Music & Audio','Bring sound and music to life through composition, editing, and voice acting.','composing music,sound design,audio editing,voice acting'),(43,'Marketing','Develop and execute marketing campaigns to attract and engage customers.','social media marketing,content marketing,email marketing,SEO,PPC,marketing strategy'),(44,'Sales','Help businesses reach and convert leads into paying customers.','lead generation,cold calling,sales presentations,account management'),(45,'Operations','Ensure smooth business operations through organization, support, and data management.','project management,virtual assistance,customer service,data entry'),(46,'Consulting','Provide expert advice and guidance to businesses in various areas.','business consulting,financial consulting,marketing consulting,technology consulting'),(48,'Mobile App Development','Create mobile apps for different platforms, reaching users on their devices.','iOS development,Android development,cross-platform development'),(49,'Software Development','Develop software applications for various needs and platforms.','desktop software development,enterprise software development,cloud-based software development'),(50,'Data Science & Machine Learning','Extract insights from data and build intelligent systems using advanced techniques.','data analysis,machine learning,artificial intelligence'),(51,'Translation & Localization','Bridge language barriers by translating and adapting content for specific audiences.','translation,localization'),(52,'Education & Training','Share your knowledge and expertise by creating or delivering educational content.','online tutoring,teaching online courses,educational materials'),(53,'Legal','Provide legal support and services in various areas.','paralegal work,legal research,contract drafting'),(54,'Accounting & Finance','Manage financial matters for individuals or businesses with accuracy and expertise.','bookkeeping,tax preparation,financial analysis');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1905,4 +1905,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-07 12:56:30
+-- Dump completed on 2024-02-15  5:14:17

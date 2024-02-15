@@ -56,7 +56,7 @@
         padding: 0px 0px 0px 57px;
         font-size: 16px;
         border-right: 0px;
-        background: #ffffff url("http://seodesigns.com/projects/TD/images/search.png") 18px 15px no-repeat;
+        background: #ffffff url("<?=ROOT?>/assets/images/search.png") 18px 15px no-repeat;
         background-size: 18px 18px;
         float: left;
     }
@@ -102,7 +102,7 @@
         position: relative;
         float: left;
         border-right: 0px;
-        background: #ffffff url("http://seodesigns.com/projects/TD/images/main-bullet.png") 122px 23px no-repeat;
+        background: #ffffff url("<?=ROOT?>/assets/images/main-bullet.png") 122px 23px no-repeat;
         background-size: 6px 6px;
         cursor: pointer;
     }
@@ -168,8 +168,33 @@
         background: #f8f8f8;
     }
 
+    .category_tabs{
+        display: flex;
+        background-color: white;
+        justify-content: center;
+        align-items: center;
+        height:auto ;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        text-align: center;
+        border-bottom: solid thick transparent;
 
+    }
+
+    .category_tabs:hover{
+        border-bottom: solid thick var(--primary-color-dark);
+        cursor: pointer;
+    }
 </style>
+    <div class="c-s-1 c-e-13 row-1" style="margin-top: 0;display: grid;grid-template-columns: repeat(8,1fr);grid-auto-rows: minmax(40px,auto);
+    ">
+        <?php foreach ($categoriesForBar as $category):?>
+        <div class="category_tabs" onclick="categorySearch(<?=$category->categoryID?>)"><?=$category->title?></div>
+<?php endforeach;?>
+    </div>
+
     <div class="c-s-1 c-e-13 row-1" style="margin-top: 20px;">
         <div class="centerbox">
 
@@ -184,6 +209,7 @@
                     <ul class="search-description">
                         <li onclick="byValue('title')">By Title</li>
                         <li onclick="byValue('skill')">By Skill</li>
+                        <li onclick="byValue('category')">By Category</li>
                     </ul>
                     <input id="main-submit" class="" type="submit" value="Search"/>
                 </form>
@@ -519,6 +545,11 @@
             document.querySelector('.search-large').textContent=str.charAt(0).toUpperCase() + str.slice(1);
             searchType=str;
             document.getElementById('searchType').value=str;
+        }
+
+        function categorySearch(id){
+            window.location.href = "<?=ROOT?>/tasks/category/"+id;
+
         }
     </script>
 <?php $this->view("includes/footer", $data);
