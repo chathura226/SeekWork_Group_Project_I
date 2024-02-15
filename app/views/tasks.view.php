@@ -56,7 +56,7 @@
         padding: 0px 0px 0px 57px;
         font-size: 16px;
         border-right: 0px;
-        background: #ffffff url("http://seodesigns.com/projects/TD/images/search.png") 18px 15px no-repeat;
+        background: #ffffff url("<?=ROOT?>/assets/images/search.png") 18px 15px no-repeat;
         background-size: 18px 18px;
         float: left;
     }
@@ -102,7 +102,7 @@
         position: relative;
         float: left;
         border-right: 0px;
-        background: #ffffff url("http://seodesigns.com/projects/TD/images/main-bullet.png") 122px 23px no-repeat;
+        background: #ffffff url("<?=ROOT?>/assets/images/main-bullet.png") 122px 23px no-repeat;
         background-size: 6px 6px;
         cursor: pointer;
     }
@@ -548,7 +548,7 @@
         }
 
         function categorySearch(id){
-            window.location.href = "<?=ROOT?>/category/"+id;
+            window.location.href = "<?=ROOT?>/tasks/category/"+id;
 
         }
     </script>

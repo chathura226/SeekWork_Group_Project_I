@@ -11,165 +11,190 @@
     <div class="alert alert-danger text-center" id="alert"><?= $errors['email'] ?></div>
 <?php endif; ?>
 
-<!--styles for search-->
-<style>
+    <!--styles for search-->
+    <style>
 
 
-    .centerbox {
-        position: relative;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 676px;
-        min-height: 52px;
-        z-index: 2
-    }
+        .centerbox {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 676px;
+            min-height: 52px;
+            z-index: 2
+        }
 
-    .centerbox h1 {
-        margin-bottom: 25px;
-        font-size: 36px;
-        font-weight: normal;
-        text-align: center;
-    }
+        .centerbox h1 {
+            margin-bottom: 25px;
+            font-size: 36px;
+            font-weight: normal;
+            text-align: center;
+        }
 
-    .centerbox p.description {
-        margin-bottom: 40px;
-        text-align: center;
-    }
+        .centerbox p.description {
+            margin-bottom: 40px;
+            text-align: center;
+        }
 
-    .description a {
-        text-decoration: none;
-    }
+        .description a {
+            text-decoration: none;
+        }
 
-    .main-input {
-        background: #fff;
-        height: 50px;
-        width: 327px;
-        /*color: #a7b1ab;*/
-        border: 1px solid #cccccc;
-        margin-bottom: 0px;
-        border-radius: 4px 0px 0px 4px;
-        display: inline-block;
-        text-align: left;
-        font-size: 16px;
-        font-weight: 500;
-        padding: 0px 0px 0px 57px;
-        font-size: 16px;
-        border-right: 0px;
-        background: #ffffff url("http://seodesigns.com/projects/TD/images/search.png") 18px 15px no-repeat;
-        background-size: 18px 18px;
-        float: left;
-    }
+        .main-input {
+            background: #fff;
+            height: 50px;
+            width: 327px;
+            /*color: #a7b1ab;*/
+            border: 1px solid #cccccc;
+            margin-bottom: 0px;
+            border-radius: 4px 0px 0px 4px;
+            display: inline-block;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 0px 0px 0px 57px;
+            font-size: 16px;
+            border-right: 0px;
+            background: #ffffff url("<?=ROOT?>/assets/images/search.png") 18px 15px no-repeat;
+            background-size: 18px 18px;
+            float: left;
+        }
 
-    .main-location {
-        display: none;
-    }
+        .main-location {
+            display: none;
+        }
 
-    #main-submit {
-        background: #3cb13c;
-        color: #fff;
-        display: inline-block;
-        font-size: 19px;
-        font-weight: 500;
-        text-align: center;
-        cursor: pointer;
-        margin-bottom: 0px;
-        border-radius: 0px 4px 4px 0px;
-        width: 141px;
-        height: 50px;
-        border: 0px;
-        padding-top: 0px;
-        float: left;
-    }
+        #main-submit {
+            background: #3cb13c;
+            color: #fff;
+            display: inline-block;
+            font-size: 19px;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 0px;
+            border-radius: 0px 4px 4px 0px;
+            width: 141px;
+            height: 50px;
+            border: 0px;
+            padding-top: 0px;
+            float: left;
+        }
 
-    #main-submit:hover {
-        background: #00a221;
-        color: #fff !important;
-    }
+        #main-submit:hover {
+            background: #00a221;
+            color: #fff !important;
+        }
 
-    #main-submit-mobile {
-        display: none;
-    }
-
-
-
-    .main-btn {
-        display: inline-block;
-        width: 150px;
-        height: 50px;
-        border: 1px solid #cccccc;
-        padding: 0px;
-        position: relative;
-        float: left;
-        border-right: 0px;
-        background: #ffffff url("http://seodesigns.com/projects/TD/images/main-bullet.png") 122px 23px no-repeat;
-        background-size: 6px 6px;
-        cursor: pointer;
-    }
-
-    .search-small {
-        font-size: 12px;
-        margin: 0px;
-        color: #9B9B9B;
-        position: absolute;
-        top: 6px;
-        left: 16px;
-        display: inline-block;
-        width: 80px;
-        height: 20px;
-        text-align: left;
-    }
-
-    .search-large {
-        font-size: 16px;
-        margin: 0px;
-        color: #4A4A4A;
-        position: absolute;
-        top: 19px;
-        left: 16px;
-        display: inline-block;
-        width: 105px;
-        height: 20px;
-        font-weight: 900;
-        text-align: left;
-    }
-
-    .main-form-container {
-        height: 50px;
-        position: relative;
-    }
-
-    ul.search-description {
-        width: 150px;
-        position: absolute;
-        background: #fff;
-        right: 143px;
-        top: 55px;
-        border-radius: 2px;
-        padding: 14px 0px;
-        border: 1px solid #E5E5E5;
-        display: none;
-        -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);
-        -moz-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);
-        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);
-    }
-
-    .search-description li {
-        font-size: 16px;
-        color: #4A4A4A;
-        font-weight: 900;
-        padding: 6px 0px;
-        display: block;
-        padding-left: 16px;
-        cursor: pointer;
-    }
-
-    .search-description li:hover {
-        background: #f8f8f8;
-    }
+        #main-submit-mobile {
+            display: none;
+        }
 
 
-</style>
+
+        .main-btn {
+            display: inline-block;
+            width: 150px;
+            height: 50px;
+            border: 1px solid #cccccc;
+            padding: 0px;
+            position: relative;
+            float: left;
+            border-right: 0px;
+            background: #ffffff url("<?=ROOT?>/assets/images/main-bullet.png") 122px 23px no-repeat;
+            background-size: 6px 6px;
+            cursor: pointer;
+        }
+
+        .search-small {
+            font-size: 12px;
+            margin: 0px;
+            color: #9B9B9B;
+            position: absolute;
+            top: 6px;
+            left: 16px;
+            display: inline-block;
+            width: 80px;
+            height: 20px;
+            text-align: left;
+        }
+
+        .search-large {
+            font-size: 16px;
+            margin: 0px;
+            color: #4A4A4A;
+            position: absolute;
+            top: 19px;
+            left: 16px;
+            display: inline-block;
+            width: 105px;
+            height: 20px;
+            font-weight: 900;
+            text-align: left;
+        }
+
+        .main-form-container {
+            height: 50px;
+            position: relative;
+        }
+
+        ul.search-description {
+            width: 150px;
+            position: absolute;
+            background: #fff;
+            right: 143px;
+            top: 55px;
+            border-radius: 2px;
+            padding: 14px 0px;
+            border: 1px solid #E5E5E5;
+            display: none;
+            -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);
+            -moz-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-description li {
+            font-size: 16px;
+            color: #4A4A4A;
+            font-weight: 900;
+            padding: 6px 0px;
+            display: block;
+            padding-left: 16px;
+            cursor: pointer;
+        }
+
+        .search-description li:hover {
+            background: #f8f8f8;
+        }
+
+        .category_tabs{
+            display: flex;
+            background-color: white;
+            justify-content: center;
+            align-items: center;
+            height:auto ;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            text-align: center;
+            border-bottom: solid thick transparent;
+
+        }
+
+        .category_tabs:hover{
+            border-bottom: solid thick var(--primary-color-dark);
+            cursor: pointer;
+        }
+    </style>
+    <div class="c-s-1 c-e-13 row-1" style="margin-top: 0;display: grid;grid-template-columns: repeat(8,1fr);grid-auto-rows: minmax(40px,auto);
+    ">
+        <?php foreach ($categoriesForBar as $category):?>
+            <div class="category_tabs" onclick="categorySearch(<?=$category->categoryID?>)"><?=$category->title?></div>
+        <?php endforeach;?>
+    </div>
+
     <div class="c-s-1 c-e-13 row-1" style="margin-top: 20px;">
         <div class="centerbox">
 
@@ -197,9 +222,12 @@
 
         <div class="content-box">
             <div class="content-box-content" id="all">
+                <?php if(empty($isCategoryResult)):?>
                 <div style="margin-left:20px "><h2>Search By '<?=$searchType?>' </h2></div>
                 <div style="margin-left:20px;margin-bottom: 10px; "><h3>Results for '<?=$searchField?>' </h3></div>
-
+                <?php else:?>
+                    <div style="margin-left:20px "><h2>Tasks under '<?=$categoryName?>' </h2></div>
+                <?php endif;?>
                 <div class="task-wrapper column-12">
 
 
@@ -391,7 +419,7 @@
     </script>
 
 
-<!--search field-->
+    <!--search field-->
 
     <script>
         searchType='title';
@@ -406,6 +434,11 @@
             document.querySelector('.search-large').textContent=str.charAt(0).toUpperCase() + str.slice(1);
             searchType=str;
             document.getElementById('searchType').value=str;
+        }
+
+        function categorySearch(id){
+            window.location.href = "<?=ROOT?>/tasks/category/"+id;
+
         }
     </script>
 <?php $this->view("includes/footer", $data);
