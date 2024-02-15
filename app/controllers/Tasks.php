@@ -4,38 +4,6 @@
 class Tasks extends Controller
 {
 
-    public function category($id=null){
-        if(empty($id)){
-            redirect('tasks');
-        }else{
-            $categoryInst=new Category();//for all category bar
-            $data['categoriesForBar']=$categoryInst->query("SELECT title,categoryID FROM category;");
-
-
-            $tasksPerPage = TASK_PER_PAGE;
-            if (!empty($_GET['page'])) $data['pageNum'] = $_GET['page'];
-            else $data['pageNum'] = 1;
-            if (!empty($_GET['tab'])) $data['tab'] = $_GET['tab'];
-            else $data['tab'] = "all";
-
-            $task = new Task();
-            //totalNumber of page count for the tasks
-            $all_rows = "SELECT DISTINCT COUNT(task.taskID) AS all_rows FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' AND task.isDeleted=0 AND task.categoryID=:id;";
-            $row4 = $task->query($all_rows, ['id'=>$id]);
-            $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
-
-            $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'", 'task.isDeleted' => 0,'task.categoryID'=>$id], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
-            $data['tasks'] = $row;// this is for all tasks
-
-            $categoryInst=new Category();
-            $data['title'] = $categoryInst->first(['categoryID'=>$id])->title;
-            $data['categoryName']=$data['title'];
-            $data['isCategoryResult']=1;//to switch in the view for reuse for same code in search
-//            show($row4);
-//            show($data);die;
-            $this->view('searchTasks', $data);
-        }
-    }
 
     public function index($id = null)
     {
@@ -180,6 +148,9 @@ class Tasks extends Controller
         if (!empty($_GET['page'])) $data['pageNum'] = $_GET['page'];
         else $data['pageNum'] = 1;
 
+        $categoryInst=new Category();//for all category bar
+        $data['categoriesForBar']=$categoryInst->query("SELECT title,categoryID FROM category;");
+
 
         $task = new Task();
         if ($searchType == 'title') {
@@ -222,6 +193,51 @@ class Tasks extends Controller
         $data['searchType'] = $searchType;
         $this->view('searchTasks', $data);
 
+    }
+
+    public function category($id=null){
+        //for search
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            //if search type is skill
+            if ($_POST['searchType'] == 'skill') {
+                redirect('tasks/search/skill/' . $_POST['searchField']);
+            } elseif ($_POST['searchType'] == 'title') {
+                redirect('tasks/search/title/' . $_POST['searchField']);
+            }elseif ($_POST['searchType'] == 'category') {
+                redirect('tasks/search/category/' . $_POST['searchField']);
+            }
+        }
+
+        if(empty($id)){
+            redirect('tasks');
+        }else{
+            $categoryInst=new Category();//for all category bar
+            $data['categoriesForBar']=$categoryInst->query("SELECT title,categoryID FROM category;");
+
+
+            $tasksPerPage = TASK_PER_PAGE;
+            if (!empty($_GET['page'])) $data['pageNum'] = $_GET['page'];
+            else $data['pageNum'] = 1;
+            if (!empty($_GET['tab'])) $data['tab'] = $_GET['tab'];
+            else $data['tab'] = "all";
+
+            $task = new Task();
+            //totalNumber of page count for the tasks
+            $all_rows = "SELECT DISTINCT COUNT(task.taskID) AS all_rows FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' AND task.isDeleted=0 AND task.categoryID=:id;";
+            $row4 = $task->query($all_rows, ['id'=>$id]);
+            $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
+
+            $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'", 'task.isDeleted' => 0,'task.categoryID'=>$id], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
+            $data['tasks'] = $row;// this is for all tasks
+
+            $categoryInst=new Category();
+            $data['title'] = $categoryInst->first(['categoryID'=>$id])->title;
+            $data['categoryName']=$data['title'];
+            $data['isCategoryResult']=1;//to switch in the view for reuse for same code in search
+//            show($row4);
+//            show($data);die;
+            $this->view('searchTasks', $data);
+        }
     }
 
     //applying for tasks
