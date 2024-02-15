@@ -7,6 +7,8 @@ class Tasks extends Controller
 
     public function index($id = null)
     {
+        $categoryInst=new Category();
+        $data['categoriesForBar']=$categoryInst->query("SELECT title,categoryID FROM category;");
 
         //for search
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
