@@ -99,21 +99,15 @@
     </div>
 
     <?php if ($submission->status == 'pendingReview'): ?>
-        <div class="price-button c-s-8 c-e-13">
+        <div class="btn-container c-s-8 c-e-13">
+            <div class="btn-effect">
+                <a style="cursor: pointer;" id="acceptBtn" onclick="acceptSubmission(event,<?= $submission->submissionID ?>);"  class="effect" title="Accept">Accept</a>
+                <a style="cursor: pointer;" id="rejectBtn" onclick="rejectSubmission(event,<?= $submission->submissionID ?>);"  class="effect" title="Reject">Reject</a>
 
-            <a>
-                <button id="acceptBtn" class="apply"
-                        onclick="acceptSubmission(event,<?= $submission->submissionID ?>);">Accept
-                </button>
-            </a>
-            &nbsp &nbsp
-            <a>
-                <button id="rejectBtn" class="apply"
-                        onclick="rejectSubmission(event,<?= $submission->submissionID ?>);">Reject
-                </button>
-            </a>
-            &nbsp &nbsp
+            </div>
+
         </div>
+
     <?php else: ?>
         <div class="task-details column-5">
             <h2 style="color: <?=($submission->status=='accepted')?'green':'red'?>;">Submission Review Report</h2>

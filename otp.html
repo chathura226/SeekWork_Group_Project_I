@@ -5,62 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        .btn-container{
+        .btn-container {
             display: flex;
             width: 100%;
         }
+
         .btn-container .btn-effect {
-        padding: 30px 0px;
-    }
-    .btn-container .btn-effect h1 {
-        /*font-size: 20px;*/
-        margin-bottom: 40px;
-    }
-    .btn-container .btn-effect a {
-        background-color: #104547;
-        /*margin-right: 17px;*/
-    }
-    
+            padding: 30px 0px;
+        }
 
-    .effect {
-        text-align: center;
-        display: inline-block;
-        position: relative;
-        text-decoration: none;
-        color: #fff;
-        /*text-transform: capitalize;*/
-        font-size: 18px;
-        padding: 20px 0px;
-        width: 150px;
-        border-radius: 6px;
-        overflow: hidden;
-        transition: all 0.2s linear 0s;
-        margin: 5px;
-    }
+        .btn-container .btn-effect h1 {
+            /*font-size: 20px;*/
+            margin-bottom: 40px;
+        }
 
-    .effect:before {
-        content: ">";
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        top: 0;
-        left: 0px;
-        height: 100%;
-        width: 30px;
-        background-color: rgba(255, 255, 255, 0.3);
-        border-radius: 0 50% 50% 0;
-        transform: scale(0, 1);
-        transform-origin: left center;
-        transition: all 0.2s linear 0s;
-    }
-    /*.effect:hover {*/
-    /*    text-indent: 30px;*/
-    /*}*/
-    /*.effect:hover:before {*/
-    /*    transform: scale(1, 1);*/
-    /*    text-indent: 0;*/
-    /*}*/
+        .btn-container .btn-effect a {
+            background-color: #104547;
+            /*margin-right: 17px;*/
+        }
+
+
+        .effect {
+            text-align: center;
+            display: inline-block;
+            position: relative;
+            text-decoration: none;
+            color: #fff;
+            /*text-transform: capitalize;*/
+            font-size: 18px;
+            padding: 20px 0px;
+            width: 150px;
+            border-radius: 6px;
+            overflow: hidden;
+            transition: all 0.2s linear 0s;
+            margin: 5px;
+        }
+
+        .effect:before {
+            content: ">";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0px;
+            height: 100%;
+            width: 30px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 0 50% 50% 0;
+            transform: scale(0, 1);
+            transform-origin: left center;
+            transition: all 0.2s linear 0s;
+        }
+
+        /*.effect:hover {*/
+        /*    text-indent: 30px;*/
+        /*}*/
+        /*.effect:hover:before {*/
+        /*    transform: scale(1, 1);*/
+        /*    text-indent: 0;*/
+        /*}*/
     </style>
     <title>Notification Dropdown</title>
 </head>
@@ -69,13 +73,18 @@
 <div class="btn-container">
     <h1>Rs.<?= $task->value ?>/=</h1>
     <div class="btn-effect">
-        <a class="effect" href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/view-proposals" title="View Proposals">View Proposals</a>
+        <a class="effect" href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/view-proposals" title="View Proposals">View
+            Proposals</a>
         <a class="effect" href="<?= ROOT ?>/company/modify/<?= $task->taskID ?>" title="Modify Task">Modify Task</a>
-        <a class="effect" href="<?= ROOT ?>/company/delete/<?= $task->taskID ?>" title="Delete Task" id="deleteButton">Delete Task</a>
-        <a style="width: 170px" class="effect" href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/pendingassignments" title="Assignment Invites">Assignment Invites</a>
+        <a class="effect" href="<?= ROOT ?>/company/delete/<?= $task->taskID ?>" title="Delete Task" id="deleteButton">Delete
+            Task</a>
+        <a style="width: 170px" class="effect" href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/pendingassignments"
+           title="Assignment Invites">Assignment Invites</a>
         <a class="effect" href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/submissions" title="Submissions">Submissions</a>
-        <a class="effect" href="<?= ROOT ?>/company/close/<?= $task->taskID ?>" title="Close the Task">Close the Task</a>
-        <a class="effect" href="<?= ROOT ?>/company/review/post/<?= $task->taskID ?>" title="Add a Review">Add a Review</a>
+        <a class="effect" href="<?= ROOT ?>/company/close/<?= $task->taskID ?>" title="Close the Task">Close the
+            Task</a>
+        <a class="effect" href="<?= ROOT ?>/company/review/post/<?= $task->taskID ?>" title="Add a Review">Add a
+            Review</a>
     </div>
 
 </div>

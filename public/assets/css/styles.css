@@ -774,7 +774,7 @@ a.disabled {
     /*margin-bottom: 40px;*/
 }
 .btn-container .btn-effect a {
-    background-color: #104547;
+    background-color: var(--secondary-color);
     /*margin-right: 17px;*/
 }
 
