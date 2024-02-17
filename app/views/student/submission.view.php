@@ -96,20 +96,19 @@
 
 
     <?php if ($submission->status === 'pendingReview'): ?>
-        <div class="price-button c-s-8 c-e-13">
-            <a href="<?= ROOT ?>/student/tasks/<?= $task->taskID ?>/submissions/<?= $submission->submissionID ?>/modify">
-                <button class="apply" > Modify
-                    Submission
-                </button>
-            </a>
-            &nbsp &nbsp
-            <a>
-                <button id="deleteButton"
-                        class="apply" >Delete
-                    Submission
-                </button>
-            </a>
+        <div class="btn-container c-s-8 c-e-13">
+            <div class="btn-effect">
+                <a class="effect" href="<?= ROOT ?>/student/tasks/<?= $task->taskID ?>/submissions/<?= $submission->submissionID ?>/modify">Modify
+                    Submission</a>
+                <a style="cursor: pointer;" id="deleteButton"  class="effect" title="Delete
+                    Submission">Delete
+                    Submission</a>
+
+            </div>
+
         </div>
+
+
     <?php else: ?>
         <div class="task-details column-5">
             <h2 style="color: <?=($submission->status=='accepted')?'green':'red'?>;">Submission Review Report</h2>

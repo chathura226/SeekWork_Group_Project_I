@@ -75,40 +75,26 @@
 
             </div>
         </div>
-        <div class="price-button c-s-8 c-e-13">
+        <div class="btn-container c-s-8 c-e-13">
+            <div class="btn-effect">
 
             <h1>Rs.<?= $task->value ?>/=</h1>
-            <a href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/view-proposals">
-                <button class="apply">View Proposals</button>
-            </a>
-            &nbsp &nbsp
-            <a href="<?= ROOT ?>/company/modify/<?= $task->taskID ?>">
-                <button class="apply">Modify Task</button>
-            </a>
-            &nbsp &nbsp
-            <a href="<?= ROOT ?>/company/delete/<?= $task->taskID ?>">
-                <button id="deleteButton" class="apply">Delete Task</button>
-            </a>
-            &nbsp &nbsp
-            <?php if (!empty($assignments)) : ?><a
-                href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/pendingassignments">
-                    <button class="apply">Assignment Invites</button></a><?php endif; ?>
-            &nbsp &nbsp
-            <?php if (!empty($assignments)) : ?><a href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/submissions">
-                    <button class="apply">Submissions</button></a><?php endif; ?>
-            <a href="<?= ROOT ?>/company/close/<?= $task->taskID ?>">
-                <button class="apply">Close the Task</button>
-            </a>
+                <a class="effect" href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/view-proposals" title="View Proposals">View Proposals</a>
+                <a class="effect" href="<?= ROOT ?>/company/modify/<?= $task->taskID ?>" title="Modify Task">Modify Task</a>
+                <a class="effect" href="<?= ROOT ?>/company/delete/<?= $task->taskID ?>" title="Delete Task" id="deleteButton">Delete Task</a>
+                <?php if (!empty($assignments)) : ?>
+                <a style="width: 170px" class="effect" href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/pendingassignments" title="Assignment Invites">Assignment Invites</a>
+                <a class="effect" href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/submissions" title="Submissions">Submissions</a>
+                <?php endif; ?>
+                <a class="effect" href="<?= ROOT ?>/company/close/<?= $task->taskID ?>" title="Close the Task">Close the Task</a>
+                <?php if ($task->status === 'closed') : ?>
+                <a class="effect" href="<?= ROOT ?>/company/review/post/<?= $task->taskID ?>" title="Add a Review">Add a Review</a>
+                <?php endif; ?>
 
-            <?php if ($task->status === 'closed') : ?>
-                &nbsp &nbsp
-                <a href="<?= ROOT ?>/company/review/post/<?= $task->taskID ?>">
-                    <button class="apply height-50 width-160">Add a Review</button>
-                </a>
-                &nbsp &nbsp
+            </div>
 
-            <?php endif; ?>
         </div>
+
         <?php  $this->view('includes/companyDetail', []) ?>
 
 

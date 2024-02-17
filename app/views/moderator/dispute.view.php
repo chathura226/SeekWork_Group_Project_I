@@ -119,14 +119,14 @@
     </div>
 
     <?php if ($dispute->status != 'resolved'): ?>
-        <div class="price-button c-s-8 c-e-13">
+        <div class="btn-container c-s-8 c-e-13">
+            <div class="btn-effect">
+                <a style="cursor: pointer;" id="acceptBtn" onclick="resolvedDispute(event,<?= $dispute->disputeID ?>);"  class="effect" title="Mark as resolved">Mark as resolved</a>
 
-            <a>
-                <button id="acceptBtn" class="apply"
-                        onclick="resolvedDispute(event,<?= $dispute->disputeID ?>);">Mark as resolved
-                </button>
-            </a>
+            </div>
+
         </div>
+
     <?php else: ?>
         <div class="task-details column-5">
             <h2 style="color: <?= ($dispute->status == 'accepted') ? 'green' : 'red' ?>;">Dispute Review Report</h2>

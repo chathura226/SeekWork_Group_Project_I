@@ -74,20 +74,23 @@
 
         </div>
     </div>
-    <div class="price-button c-s-8 c-e-13">
+    <div class="btn-container c-s-8 c-e-13">
+        <div class="btn-effect">
 
-        <h1>Rs.<?= $task->value ?>/=</h1>
+            <h1>Rs.<?= $task->value ?>/=</h1>
+            <a class="effect" href="<?= ROOT ?>/student/tasks/<?= $task->taskID ?>/submissions" title="Submissions">Submissions</a>
+<?php if ($task->status === 'closed') : ?>
 
-        <a href="<?= ROOT ?>/student/tasks/<?= $task->taskID ?>/submissions"><button class="apply">Submissions</button></a>
-        &nbsp &nbsp
+            <a class="effect" href="<?= ROOT ?>/student/review/post/<?= $task->taskID ?>" title="Add a Review">Add a Review</a>
+<?php endif; ?>
 
-        <?php if ($task->status === 'closed') : ?>
-            &nbsp &nbsp
-            <a href="<?= ROOT ?>/student/review/post/<?= $task->taskID ?>"><button class="apply height-50 width-160">Add a Review</button></a>
-            &nbsp &nbsp
 
-        <?php endif; ?>
+
+        </div>
+
     </div>
+
+
     <?php  $this->view('includes/companyDetail', (array)$company) ?>
 
 </div>

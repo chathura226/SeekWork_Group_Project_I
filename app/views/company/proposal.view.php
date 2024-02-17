@@ -62,15 +62,16 @@
         
     </div>
     </div>
-    <div class="price-button c-s-8 c-e-13">
+    <div class="btn-container c-s-8 c-e-13">
+        <div class="btn-effect">
+            <?=(!empty($task->assignedStudentID))?'<span style="color:red;">You have already assigned a student for this task!</span><br>':''?>
+            <a  class="effect" href="<?=ROOT?>/company/tasks/<?=$task->taskID?>/assign/<?=$proposal->proposalID?>" title="Assign this Student" <?=(!empty($task->assignedStudentID))?'onclick="return false;" style="pointer-event:none; cursor: not-allowed; width: 170px;"':'style="width: 170px;"';?>>Assign this Student</a>
+            <a  style="width: 170px;" class="effect" href="<?=ROOT?>/company/viewstudents/<?=$student->studentID?>" title="Modify Task">View Student Profile</a>
 
+        </div>
 
-                        <a href="<?=ROOT?>/company/tasks/<?=$task->taskID?>/assign/<?=$proposal->proposalID?>"><button class="apply" <?=(!empty($task->assignedStudentID))?'disabled':'';?>>Assign this Student</button></a>
-                        &nbsp &nbsp
-                        <a href="<?=ROOT?>/company/viewstudents/<?=$student->studentID?>"><button class="apply">View Student Profile</button></a>
-                        &nbsp &nbsp
-                       
-                    </div>
+    </div>
+
     <?php $student->university=$university;  $this->view('includes/studentDetail', (array)$student) ?>
 
 

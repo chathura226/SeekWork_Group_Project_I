@@ -105,14 +105,15 @@
     </div>
 
     <?php if ($support->status != 'resolved'): ?>
-        <div class="price-button c-s-8 c-e-13">
+        <div class="btn-container c-s-8 c-e-13">
+            <div class="btn-effect">
+                <a style="cursor: pointer;" id="acceptBtn" onclick="resolvedDispute(event,<?= $support->supportID ?>);"  class="effect" title="Mark as resolved">Mark as resolved</a>
 
-            <a>
-                <button id="acceptBtn" class="apply"
-                        onclick="resolvedDispute(event,<?= $support->supportID ?>);">Mark as resolved
-                </button>
-            </a>
+            </div>
+
         </div>
+
+
     <?php else: ?>
         <div class="task-details column-5">
             <h2 style="color:red;">Support Request Review Report</h2>
