@@ -65,15 +65,18 @@
 
         </div>
     </div>
-    <div class="price-button c-s-8 c-e-13">
 
+    <div class="btn-container c-s-8 c-e-13">
+        <div class="btn-effect">
+            <a class="effect" href="<?= ROOT ?>/tasks/<?= $task->taskID ?>" title="View Task Details">View Task Details</a>
+            <a class="effect" href="<?= ROOT ?>/student/modify/<?= $proposal->proposalID ?>" title="Modify Proposal">Modify Proposal</a>
+            <a style="cursor: pointer;" id="deleteButton"  class="effect" title="Delete Proposal">Delete Proposal</a>
 
-        <a href="<?= ROOT ?>/tasks/<?= $task->taskID ?>"><button class="apply">View Task Details</button></a>
-        &nbsp &nbsp
-        <a href="<?= ROOT ?>/student/modify/<?= $proposal->proposalID ?>"><button class="apply">Modify Proposal</button></a>
-        &nbsp &nbsp
-        <a><button id="deleteButton" class="apply">Delete Proposal</button></a>
+        </div>
+
     </div>
+
+
     <?php  $this->view('includes/companyDetail', (array)$company) ?>
 
 
