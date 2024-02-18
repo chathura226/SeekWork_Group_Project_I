@@ -7,7 +7,7 @@
 
         <label class="dropdown">Sort By
 
-            <div class="dd-button" id="sortByTitle" style="width: 100px;">
+            <div class="dd-button" id="sortByTitle" style="width: 120px;">
                 Title
             </div>
 
