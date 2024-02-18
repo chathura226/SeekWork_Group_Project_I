@@ -6,6 +6,26 @@
 
 
 <div class="pagetitle column-12">
+    <div class="searchAndFilter" style="position:absolute;right: 30px;top: 17px;display: flex;flex-wrap: wrap;gap: 15px">
+
+        <label class="dropdown">Sort By
+
+            <div class="dd-button" id="sortByTitle" style="width: 100px;">
+                Title
+            </div>
+
+            <input type="checkbox" class="dd-input" id="test">
+
+            <ul class="dd-menu">
+                <li onclick="sortByFilter('date')">Invitation Date</li>
+                <li onclick="sortByFilter('title')">Title</li>
+                <li onclick="sortByFilter('value')">Value</li>
+            </ul>
+
+        </label>
+
+        <input class="input-search-new" id="search-bar" name="search-bar" placeholder="Search..." type="search">
+    </div>
       <h1>Pending Assignment Invitations</h1>
       <nav>
 
@@ -149,3 +169,92 @@ function sendActionToCurrentURL(action,id) {
 
 
 <?php $this->view('student/student-footer',$data) ?>
+
+<script type="text/javascript" src="<?= ROOT ?>/assets/js/searchNearBreadCrums.js"></script>
+<!--js for sorting-->
+<script>
+    let AscTitle=0;
+    let AscDate=0;//for toggling sorting direction of date
+    let AscValue=0;//for toggling sorting direction of value
+    function sortByFilter(feature){
+        let str = feature.toLowerCase();
+
+        document.getElementById('sortByTitle').textContent=str.charAt(0).toUpperCase() + str.slice(1);
+
+        let items = document.getElementsByClassName("myreview-review-bttns");
+
+        // Convert NodeList to array
+        let divsArray = Array.from(items);
+
+        //for date sorting
+        if(str==='date') {
+            //togle the asc desc for date
+            if (AscDate === 0) AscDate = 1;
+            else AscDate = 0;
+//todo:change the js according to this above div structure
+
+            // Sort the divs based on their date text
+            divsArray.sort((a, b) => {
+                // Extract the date text from the divs
+                const dateTextA = a.getElementsByTagName('h4')[0].textContent.trim();
+                const dateTextB = b.getElementsByTagName('h4')[0].textContent.trim();
+                // Convert date text to Date objects for comparison
+                const dateA = new Date(dateTextA);
+                const dateB = new Date(dateTextB);
+
+                // Compare the dates
+                if (AscDate) {
+                    return dateA - dateB;
+                } else {
+                    return dateB - dateA;
+                }
+            });
+        }else if(str==='value'){
+            //togle the asc desc for value
+            if (AscValue === 0) AscValue = 1;
+            else AscValue = 0;
+
+            // Sort the divs based on their date text
+            divsArray.sort((a, b) => {
+                // Extract the date text from the divs
+                const valueA = a.querySelector('h4 span').textContent.trim();
+                const valueB = b.querySelector('h4 span').textContent.trim();
+
+                // Convert values text to float for comparison
+                const valA = parseFloat(valueA);
+                const valB = parseFloat(valueB);
+
+                // Compare the values
+                if (AscValue) {
+                    return valA - valB;
+                } else {
+                    return valB - valA;
+                }
+            });
+        }else if(str==='title'){
+            //togle the asc desc for value
+            if (AscTitle === 0) AscTitle = 1;
+            else AscTitle = 0;
+
+            // Sort the divs based on their date text
+            divsArray.sort((a, b) => {
+                // Extract the date text from the divs
+                const textA = a.querySelector('h2').textContent.trim().toLowerCase();
+                const textB = b.querySelector('h2').textContent.trim().toLowerCase();
+
+                if (textA < textB) return (AscTitle === 0)?-1:1;
+                if (textA > textB) return (AscTitle === 0)?1:-1;
+                return 0;
+            });
+        }
+
+        // Clear the container before appending sorted divs
+        const container = document.querySelector('.mytasks-wrapper');
+        container.innerHTML = '';
+
+        // Append sorted divs back to the container
+        divsArray.forEach(div => {
+            container.appendChild(div);
+        });
+    }
+</script>

@@ -64,8 +64,8 @@
     </div>
     <div class="btn-container c-s-8 c-e-13">
         <div class="btn-effect">
-            <?=(!empty($task->assignedStudentID))?'<span style="color:red;">You have already assigned a student for this task!</span><br>':''?>
-            <a  class="effect" href="<?=ROOT?>/company/tasks/<?=$task->taskID?>/assign/<?=$proposal->proposalID?>" title="Assign this Student" <?=(!empty($task->assignedStudentID))?'onclick="return false;" style="pointer-event:none; cursor: not-allowed; width: 170px;"':'style="width: 170px;"';?>>Assign this Student</a>
+            <?=(!empty($task->assignedStudentID))?'<span style="color:red;">You have already assigned a student for this task!</span><br>':((!empty($assignment))?'<span style="color:red;">You have already sent an assignment invitation for this proposal!</span><br>':'')?>
+            <a  class="effect" href="<?=ROOT?>/company/tasks/<?=$task->taskID?>/assign/<?=$proposal->proposalID?>" title="Assign this Student" <?=(!empty($task->assignedStudentID) || !empty($assignment))?'onclick="return false;" style="pointer-event:none; cursor: not-allowed; width: 170px;"':'style="width: 170px;"';?>>Assign this Student</a>
             <a  style="width: 170px;" class="effect" href="<?=ROOT?>/company/viewstudents/<?=$student->studentID?>" title="Modify Task">View Student Profile</a>
 
         </div>
