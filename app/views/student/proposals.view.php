@@ -43,7 +43,12 @@
       <?php if (empty($proposal->proposeAmount)) echo "<h4>Proposal Value: " . $proposal->task->value . "</h4>"; ?>
       <?php if (!empty($proposal->proposeAmount)) echo "<h4>Proposal Value: " . $proposal->proposeAmount . "</h4>"; ?>
       <h4>Task Type: <?= $proposal->task->taskType ?> </h4>
-      <h4>Task Status: <?= ucfirst($proposal->task->status) ?></h4>
+        <div style="    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px;">
+        <h4 >Task Status: <span style="color: <?=($proposal->task->status=='active')?'green':(($proposal->task->status=='closed')?'red':'#d7601b')?>"><?= ucfirst($proposal->task->status) ?></span></h4>
 
       <a href="<?= ROOT ?>/student/proposals/<?= $proposal->proposalID ?>">
         <button class="details-button">
@@ -53,6 +58,7 @@
           </div>
         </button>
       </a>
+        </div>
     </div>
   <?php endforeach; ?>
 

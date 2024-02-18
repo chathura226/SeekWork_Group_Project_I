@@ -60,7 +60,11 @@
                 <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
                     <path d="M152.1 38.2c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 113C-2.3 103.6-2.3 88.4 7 79s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zm0 160c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zM224 96c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zM160 416c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H192c-17.7 0-32-14.3-32-32zM48 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
                 </svg>
-                Task Type : Fixed Price</br>
+                Task Type : <?=ucfirst($task->taskType)?> </br>
+            </div>
+            <div class="about-task-item">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M32 32c17.7 0 32 14.3 32 32V400c0 8.8 7.2 16 16 16H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H80c-44.2 0-80-35.8-80-80V64C0 46.3 14.3 32 32 32zm96 96c0-17.7 14.3-32 32-32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32H160c-17.7 0-32-14.3-32-32zm96 64H352c17.7 0 32 14.3 32 32s-14.3 32-32 32H224c-17.7 0-32-14.3-32-32s14.3-32 32-32zm160 96h64c17.7 0 32 14.3 32 32s-14.3 32-32 32H384c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
+                Task Status : <span style="color: <?=($task->status=='active')?'green':(($task->status=='closed')?'red':'#d7601b')?>"><?=ucfirst($task->status)?></span></br>
             </div>
 
         </div>
@@ -68,14 +72,20 @@
 
     <div class="btn-container c-s-8 c-e-13">
         <div class="btn-effect">
-            <a class="effect" href="<?= ROOT ?>/tasks/<?= $task->taskID ?>" title="View Task Details">View Task Details</a>
+            <?=($task->status!='active')?'<span style="color:red;">This task is already in-progress or closed!</span><br>':''?>
+            <?php if($task->status=='active'):?>
+                <a class="effect" href="<?= ROOT ?>/tasks/<?= $task->taskID ?>" title="View Task Details">View Task Details</a>
             <a class="effect" href="<?= ROOT ?>/student/modify/<?= $proposal->proposalID ?>" title="Modify Proposal">Modify Proposal</a>
             <a style="cursor: pointer;" id="deleteButton"  class="effect" title="Delete Proposal">Delete Proposal</a>
+            <?php else:?>
+                <a class="effect" href="<?= ROOT ?>/tasks/<?= $task->taskID ?>" title="View Task Details">View Task Details</a>
+                <a class="effect" onclick="return false;" style="cursor: not-allowed;" title="Modify Proposal">Modify Proposal</a>
+                <a  onclick="return false;" style="cursor: not-allowed;"  class="effect" title="Delete Proposal">Delete Proposal</a>
+            <?php endif;?>
 
         </div>
 
     </div>
-
 
     <?php  $this->view('includes/companyDetail', (array)$company) ?>
 
