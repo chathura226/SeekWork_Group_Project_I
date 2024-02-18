@@ -79,16 +79,18 @@
 
             </div>
         </div>
-        <div class="price-button c-s-8 c-e-13">
-            <?php if (!empty($proposal)): ?>
-                <span style="color: red">You have already submitted a proposal with the value : Rs. <?= (!empty($proposal->proposeAmount)) ? $proposal->proposeAmount : $task->value; ?></span>
-            <?php endif; ?>
-            <h1>Rs.<?= $task->value ?>/=</h1>
-            <a href="<?= ROOT ?>/tasks/apply/<?= $task->taskID ?>">
-                <button class="apply">Apply</button>
-            </a>
+        <div class="btn-container c-s-8 c-e-13">
+            <div class="btn-effect">
+                <?php if (!empty($proposal)): ?>
+                    <span style="color: red">You have already submitted a proposal with the value : Rs. <?= (!empty($proposal->proposeAmount)) ? $proposal->proposeAmount : $task->value; ?></span>
+                <?php endif; ?>
+                <h1>Rs.<?= $task->value ?>/=</h1>
+                <a class="effect" href="<?= ROOT ?>/tasks/apply/<?= $task->taskID ?>" title="Apply">Apply</a>
+
+            </div>
 
         </div>
+
         <?php  $this->view('includes/companyDetail', (array)$company) ?>
 
     </div>

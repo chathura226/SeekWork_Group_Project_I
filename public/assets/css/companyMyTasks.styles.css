@@ -6,6 +6,7 @@
 }
 
 .pagetitle{
+    position: relative;
   height: 100px;
 }
 .mytask-tasks{
