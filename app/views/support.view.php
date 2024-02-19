@@ -201,11 +201,11 @@
                     <span class="chevron-down"></span>
                 </button>
             </div>
-            <div class="faq">
+            <div class="faq"">
                 <h3 class="faq-title">How do I report a problem with a client or project?</h3>
                 <p class="faq-text">Our dedicated support team is here to help. Use the "Disputes" feature within the
                     platform for prompt assistance.</p>
-                <button class="faq-toggle" onclick="toggleFaq(event)">
+                                                                                                                                                                                                                                                        <button class="faq-toggle" onclick="toggleFaq(event)">
                     <span class="chevron-down"></span>
                 </button>
             </div>
@@ -272,7 +272,12 @@
                 })
             } else {
                 faqs.forEach(item => {
-                    if (item.classList.contains("active")) item.classList.remove("active");
+                    if (item.classList.contains("active")) {
+                        item.classList.remove("active");
+                        item.querySelector('.chevron-down').style.transform = "rotate(45deg)"
+
+                    };
+
                 })
                 e.currentTarget.parentElement.classList.add("active");
                 e.currentTarget.parentElement.querySelector('.chevron-down').style.transform = "rotate(135deg)"

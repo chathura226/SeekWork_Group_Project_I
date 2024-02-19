@@ -17,14 +17,11 @@
                     <button class="button">About Us</button>
                 </div>
             </a>
-            <div class="my-drop-button">
-                <button class="drop-button">Categories &nbsp; ▼</button>
-                <div class="dropdown-content">
-                    <a id="top" href="#">Designing</a>
-                    <a id="middle" href="#">Web Development</a>
-                    <a id="bottom" href="#">Programming</a>
+            <a href="<?= ROOT ?>/support">
+                <div class="my-button">
+                    <button class="button">Help & Support</button>
                 </div>
-            </div>
+            </a>
             <?php if (Auth::logged_in()) : ?>
                 <a href="<?= ROOT ?>/<?= Auth::getrole() ?>">
                     <div class="my-button">
