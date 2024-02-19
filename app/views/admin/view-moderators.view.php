@@ -20,7 +20,7 @@
             <input type="checkbox" class="dd-input" id="test">
 
             <ul class="dd-menu">
-                <li onclick="sortByFilter('title')">Name</li>
+                <li onclick="sortByFilter('name')">Name</li>
             </ul>
 
         </label>
@@ -189,7 +189,7 @@ function sendActionToCurrentURL(action,id) {
         let divsArray = Array.from(items);
 
         //for name sorting
-         if (str === 'title') {
+         if (str === 'name') {
             //togle the asc desc for value
             if (AscTitle === 0) AscTitle = 1;
             else AscTitle = 0;
