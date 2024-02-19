@@ -979,8 +979,8 @@ class Company extends Users
     public function pendingassignments()
     {
         $assignmentInst = new Assignment();
-        $row = $assignmentInst->innerJoin(['task'], ['task.taskID=assignment.taskID'], ['task.companyID' => Auth::getcompanyID()], ['*,task.status AS taskStatus, assignment.status AS assignmentStatus,assignment.createdAt AS assignmentDate,task.createdAt AS taskDate']);
-
+        $row = $assignmentInst->innerJoin(['task'], ['task.taskID=assignment.taskID'], ['task.companyID' => Auth::getcompanyID()], ['*,task.status AS taskStatus, assignment.status AS assignmentStatus,assignment.createdAt AS assignmentDate,task.createdAt AS taskDate,assignment.assignmentID AS assignmentID']);
+//        show($row);die;
         $data['title'] = 'Pending Invitations';
         $data['assignments'] = $row;
         $this->view('company/pendinginvites', $data);

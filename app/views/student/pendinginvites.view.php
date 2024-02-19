@@ -210,7 +210,6 @@
             //togle the asc desc for date
             if (AscDate === 0) AscDate = 1;
             else AscDate = 0;
-//todo:change the js according to this above div structure
 
             // Sort the divs based on their date text
             divsArray.sort((a, b) => {
