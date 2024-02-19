@@ -5,6 +5,34 @@
 
 
 <div class="pagetitle column-12">
+    <div class="searchAndFilter" style="position:absolute;right: 30px;top: 17px;display: flex;flex-wrap: wrap;gap: 15px">
+
+        <label class="dropdown">Sort By
+
+            <div class="dd-button" id="sortByTitle" style="width: 120px;">
+                Title
+            </div>
+
+            <input type="checkbox" class="dd-input" id="test">
+
+            <ul class="dd-menu">
+                <li onclick="sortByFilter('title')">Title</li>
+                <li onclick="sortByFilter('User Count')">User Count</li>
+            </ul>
+
+        </label>
+
+        <input class="input-search-new" id="search-bar" name="search-bar" placeholder="Search..." type="search">
+    </div>
+
+    <a href="<?=ROOT?>/moderator/university/post">
+        <div class="floating-button" style="top:70px;">
+            <button type="button" class="buttonadd">
+                <span class="button__text">Add New University</span>
+                <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
+            </button>
+        </div>
+    </a>
       <h1>Universities</h1>
       <nav>
 
@@ -28,7 +56,7 @@
 <div class="mytask-tasks">
   <h2><?=ucfirst($university->universityName)?></h2>
   <h4>Domain: <?=$university->domain?></h4>
-  <h4>No. of users from <?=ucfirst($university->universityName)?>: <?=$university->userCount?> </h4>
+  <h4>No. of users from <?=ucfirst($university->universityName)?>: <span><?=$university->userCount?></span>  </h4>
 
 <div class="flex justify-between">
   <a href="<?=ROOT?>/moderator/university/modify/<?=$university->universityID?>">
@@ -54,14 +82,7 @@
 
 </div>
 
-<a href="<?=ROOT?>/moderator/university/post">
-    <div class="floating-button">
-        <button type="button" class="buttonadd">
-        <span class="button__text">Add New University</span>
-        <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
-        </button>
-    </div>
-</a>
+
 
 
 
@@ -112,3 +133,71 @@ function sendActionToCurrentURL(action,id) {
 
 
 <?php $this->view('moderator/moderator-footer',$data) ?>
+
+
+<script type="text/javascript" src="<?= ROOT ?>/assets/js/searchNearBreadCrums.js"></script>
+<!--js for sorting-->
+<script>
+    let AscValue=1;
+    let AscDate=1;//for toggling sorting direction of date
+    let AscTitle=1;//for toggling sorting direction of title
+    function sortByFilter(feature){
+        let str = feature.toLowerCase();
+
+        document.getElementById('sortByTitle').textContent=str.charAt(0).toUpperCase() + str.slice(1);
+
+        let items = document.getElementsByClassName("mytask-tasks");
+
+        // Convert NodeList to array
+        let divsArray = Array.from(items);
+console.log(str);
+        //for date sorting
+        if(str==='user count'){
+            //togle the asc desc for value
+            if (AscValue === 0) AscValue = 1;
+            else AscValue = 0;
+
+            // Sort the divs based on their date text
+            divsArray.sort((a, b) => {
+                // Extract the date text from the divs
+                const valueA = a.querySelector('h4:nth-of-type(2) span').textContent.trim();
+                const valueB = b.querySelector('h4:nth-of-type(2) span').textContent.trim();
+console.log(valueA,valueB)
+                // Convert values text to float for comparison
+                const valA = parseFloat(valueA);
+                const valB = parseFloat(valueB);
+
+                // Compare the values
+                if (AscValue) {
+                    return valA - valB;
+                } else {
+                    return valB - valA;
+                }
+            });
+        }else if(str==='title'){
+            //togle the asc desc for value
+            if (AscTitle === 0) AscTitle = 1;
+            else AscTitle = 0;
+
+            // Sort the divs based on their date text
+            divsArray.sort((a, b) => {
+                // Extract the date text from the divs
+                const textA = a.querySelector('h2').textContent.trim().toLowerCase();
+                const textB = b.querySelector('h2').textContent.trim().toLowerCase();
+
+                if (textA < textB) return (AscTitle === 0)?-1:1;
+                if (textA > textB) return (AscTitle === 0)?1:-1;
+                return 0;
+            });
+        }
+
+        // Clear the container before appending sorted divs
+        const container = document.querySelector('.mytasks-wrapper');
+        container.innerHTML = '';
+
+        // Append sorted divs back to the container
+        divsArray.forEach(div => {
+            container.appendChild(div);
+        });
+    }
+</script>

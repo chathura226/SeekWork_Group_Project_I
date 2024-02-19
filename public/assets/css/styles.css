@@ -923,3 +923,9 @@ a.disabled {
 .input-search-new:hover {
     outline: 1px solid lightgrey;
 }
+
+
+.pagetitle{
+    position: relative;
+    height: 100px;
+}

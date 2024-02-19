@@ -16,10 +16,7 @@
   flex-direction: column;
 }
 
-.pagetitle{
-  position: relative;
-  height: 100px;
-}
+
 
 .myreview-review-bttns{
   grid-column: 2/12;

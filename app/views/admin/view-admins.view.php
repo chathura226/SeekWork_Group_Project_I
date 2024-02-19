@@ -9,7 +9,35 @@
 
 <div class="pagetitle column-12">
 
+    <div class="searchAndFilter" style="position:absolute;right: 30px;top: 17px;display: flex;flex-wrap: wrap;gap: 15px">
 
+        <label class="dropdown">Sort By
+
+            <div class="dd-button" id="sortByTitle" style="width: 120px;">
+                Name
+            </div>
+
+            <input type="checkbox" class="dd-input" id="test">
+
+            <ul class="dd-menu">
+                <li onclick="sortByFilter('name')">Name</li>
+            </ul>
+
+        </label>
+
+        <input class="input-search-new" id="search-bar" name="search-bar" placeholder="Search..." type="search">
+    </div>
+    <a href="<?= ROOT ?>/admin/manageadmins/post">
+        <div class="floating-button" style="top: 75px;">
+            <button type="button" class="buttonadd">
+                <span class="button__text">Add New Admin</span>
+                <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
+          <line y2="19" y1="5" x2="12" x1="12"></line>
+          <line y2="12" y1="12" x2="19" x1="5"></line>
+        </svg></span>
+            </button>
+        </div>
+    </a>
 
   <h1>Manage Admins</h1>
   <nav>
@@ -56,17 +84,7 @@
 
 
 
-<a href="<?= ROOT ?>/admin/manageadmins/post">
-  <div class="floating-button">
-    <button type="button" class="buttonadd">
-      <span class="button__text">Add New Admin</span>
-      <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
-          <line y2="19" y1="5" x2="12" x1="12"></line>
-          <line y2="12" y1="12" x2="19" x1="5"></line>
-        </svg></span>
-    </button>
-  </div>
-</a>
+
 
 
 
@@ -144,3 +162,67 @@
 
 
 <?php $this->view('admin/admin-footer', $data) ?>
+
+<!--//script for search-->
+<script>
+    document.getElementById('search-bar').addEventListener('input', function () {
+        let filter = this.value.toLowerCase();
+        let items = document.getElementsByClassName("card");
+
+        for (let i = 0; i < items.length; i++) {
+            let itemName = items[i].querySelectorAll('.card__title')[0].textContent.toLowerCase();
+            console.log(itemName)
+            if (itemName.indexOf(filter) > -1) {
+                items[i].style.display = 'flex';
+            } else {
+                items[i].style.display = 'none';
+            }
+        }
+    });
+</script>
+
+
+
+<!--js for sorting-->
+<script>
+    let AscTitle = 0;
+    let AscDate = 0;//for toggling sorting direction of date
+    let AscValue = 0;//for toggling sorting direction of value
+    function sortByFilter(feature) {
+        let str = feature.toLowerCase();
+
+        document.getElementById('sortByTitle').textContent = str.charAt(0).toUpperCase() + str.slice(1);
+
+        let items = document.getElementsByClassName("card");
+
+        // Convert NodeList to array
+        let divsArray = Array.from(items);
+
+        //for name sorting
+        if (str === 'name') {
+            //togle the asc desc for value
+            if (AscTitle === 0) AscTitle = 1;
+            else AscTitle = 0;
+
+            // Sort the divs based on their date text
+            divsArray.sort((a, b) => {
+                // Extract the date text from the divs
+                const textA = a.querySelectorAll('.card__title')[0].textContent.trim().toLowerCase();
+                const textB = b.querySelectorAll('.card__title')[0].textContent.trim().toLowerCase();
+                // console.log(textA,textB)
+                if (textA < textB) return (AscTitle === 0) ? -1 : 1;
+                if (textA > textB) return (AscTitle === 0) ? 1 : -1;
+                return 0;
+            });
+        }
+
+        // Clear the container before appending sorted divs
+        const container = document.querySelector('.user-wrapper.column-12');
+        container.innerHTML = '';
+
+        // Append sorted divs back to the container
+        divsArray.forEach(div => {
+            container.appendChild(div);
+        });
+    }
+</script>
