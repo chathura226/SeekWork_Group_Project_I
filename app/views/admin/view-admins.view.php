@@ -27,6 +27,17 @@
 
         <input class="input-search-new" id="search-bar" name="search-bar" placeholder="Search..." type="search">
     </div>
+    <a href="<?= ROOT ?>/admin/manageadmins/post">
+        <div class="floating-button" style="top: 75px;">
+            <button type="button" class="buttonadd">
+                <span class="button__text">Add New Admin</span>
+                <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
+          <line y2="19" y1="5" x2="12" x1="12"></line>
+          <line y2="12" y1="12" x2="19" x1="5"></line>
+        </svg></span>
+            </button>
+        </div>
+    </a>
 
   <h1>Manage Admins</h1>
   <nav>
@@ -73,17 +84,7 @@
 
 
 
-<a href="<?= ROOT ?>/admin/manageadmins/post">
-  <div class="floating-button" style="top: 145px;">
-    <button type="button" class="buttonadd">
-      <span class="button__text">Add New Admin</span>
-      <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
-          <line y2="19" y1="5" x2="12" x1="12"></line>
-          <line y2="12" y1="12" x2="19" x1="5"></line>
-        </svg></span>
-    </button>
-  </div>
-</a>
+
 
 
 
