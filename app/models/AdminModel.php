@@ -49,7 +49,6 @@ class AdminModel extends Model {
 
     //validation before deltions
     public function deletionValidation(){
-         //TODO: deletion validation for admin
        return true;
     }
 }

@@ -80,7 +80,6 @@ class CompanyModel extends Model {
 
     //validation before deltions
     public function deletionValidation(){
-        //TODO: deletion validation for company
         $this->errors=[];
         $userID=Auth::getuserID();
         $companyID=Auth::getcompanyID();
@@ -94,7 +93,11 @@ class CompanyModel extends Model {
         }
 
         //check for any payment pendings
-        //TODO: pending payment check before deletion
+        $paymentInst=new PaymentModel();
+        $res=$paymentInst->query("SELECT * FROM payment INNER JOIN task ON payment.taskID = task.taskID WHERE task.companyID=:companyID && payment.paymentStatus='outstanding'",['companyID'=>Auth::getcompanyID()]);
+        if(!empty($res)){
+            $this->errors['payment']="Please settle outstanding payments before deletion!";
+        }
 
         if(empty($this->errors)){
             return true;

@@ -49,7 +49,6 @@ class ModeratorModel extends Model {
 
     //validation before deltions
     public function deletionValidation(){
-        //TODO: deletion validation for moderator
         return true;
     }
 }

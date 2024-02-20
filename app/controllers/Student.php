@@ -93,8 +93,6 @@ class Student extends Users
 
     public function proposals($id = null)
     {
-//TODO: modify proposal uppload and download files
-        //TODO: view proposals upload and download files in both student and company
 
 
         if (empty($id)) {
@@ -240,7 +238,6 @@ class Student extends Users
                     if (!empty($action)) {
                         if ($action === 'submissions') {
 
-                            //TODO: submission stuatus change and blcok mldify after reviews
                             //$id2=submission id
                             if (!empty($id2)) { //if theres an id after submissions => view each submission
                                 $submissionInst = new Submission();

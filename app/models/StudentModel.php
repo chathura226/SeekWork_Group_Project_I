@@ -74,7 +74,11 @@ class StudentModel extends Model {
         }
 
         //check for any payment pendings
-        //TODO: pending payment check before deletion
+        $earningInst=new Earning();
+        $res=$earningInst->query("SELECT * FROM earnings INNER JOIN task ON task.taskID=earnings.taskID WHERE task.assignedStudentID=:studentID && earnings.earningStatus!='withdrawn'",['studentID'=>Auth::getstudentID()]);
+        if(!empty($res)){
+            $this->errors['payment']="Please withdraw earnings before deletion!";
+        }
 
         if(empty($this->errors)){
             return true;

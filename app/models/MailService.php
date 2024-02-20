@@ -310,7 +310,6 @@ class MailService
 
     }
 
-    //TODO: email structures
 
     public static function prepareNewSubmissionEmail($fullName,$task,$submission)
     {

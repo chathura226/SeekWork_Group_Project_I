@@ -161,10 +161,13 @@ class Company extends Users
 
         if (empty($id)) {
 
-            //TODO: implemet number of proposals query for tasks list
 
             $task = new Task();
-            $row = $task->where(['companyID' => Auth::getcompanyID(), 'isDeleted' => 0]);
+            $row=$task->query("SELECT task.*, COUNT(proposal.taskID) AS num_proposals
+FROM task
+LEFT JOIN proposal ON task.taskID = proposal.taskID WHERE task.companyID=:compID && task.isDeleted=0
+GROUP BY task.taskID;",['compID'=>Auth::getcompanyID()]);
+//            $row = $task->where(['companyID' => Auth::getcompanyID(), 'isDeleted' => 0]);
 
             if (empty($row)) {
                 message(['You have no tasks posted!', 'danger']);
