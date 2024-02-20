@@ -243,7 +243,7 @@
                                      src="<?= ROOT ?><?= (!empty($task->profilePic)) ? "/" . $task->profilePic : "/assets/images/noImage.png" ?>"
                                      alt="Profile Picture">
                                 <div class="disc-title">
-                                    <h2><?= $task->title ?></h2>
+                                    <h2><?= limitCharacters($task->title,15) ?></h2>
                                     <div class="comp">
                                         <div class="compName-task">
                                             <h4><?= $task->companyName ?></h4>

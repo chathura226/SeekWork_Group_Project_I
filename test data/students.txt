@@ -1,0 +1,82 @@
+Sure, here's a set of sample student details for testing purposes:
+
+First Name: Nimal
+Last Name: Perera
+Gender: Male
+Address: 123, Galle Road, Colombo, Sri Lanka
+NIC (National Identity Card): 961234567V
+University Email: nimal.perera@stu.ucsc.cmb.ac.lk
+Contact Number: +94 77 123 4567
+Strong Password: Nimal@1234
+
+First Name: Kamala
+Last Name: Silva
+Gender: Female
+Address: 456, Kandy Road, Gampaha, Sri Lanka
+NIC: 875432109M
+University Email: kamala.silva@stu.uoc.cmb.ac.lk
+Contact Number: +94 76 234 5678
+Strong Password: Silva#5678
+
+First Name: Sunil
+Last Name: Fernando
+Gender: Male
+Address: 789, Negombo Road, Wattala, Sri Lanka
+NIC: 753210987V
+University Email: sunil.fernando@stu.fos.cmb.ac.lk
+Contact Number: +94 71 345 6789
+Strong Password: F3rn@ndo789
+
+First Name: Malini
+Last Name: Bandara
+Gender: Female
+Address: 234, Nawala Road, Rajagiriya, Sri Lanka
+NIC: 841234567M
+University Email: malini.bandara@stu.ucsc.cmb.ac.lk
+Contact Number: +94 70 456 7890
+Strong Password: Band@ra456
+
+First Name: Ajith
+Last Name: Rajapakse
+Gender: Male
+Address: 567, Havelock Road, Colombo, Sri Lanka
+NIC: 631098765V
+University Email: ajith.rajapakse@stu.ucsc.cmb.ac.lk
+Contact Number: +94 76 567 8901
+Strong Password: R@j@paks3#123
+
+These details should provide a diverse set of data for testing various functionalities in your system.
+
+
+
+User
+for above students, give desription about them, skills and qualifications
+ChatGPT
+Sure, here's a description of each student along with their skills and qualifications:
+
+Nimal Perera
+
+Description: Nimal is a dedicated and hardworking individual with a passion for computer science. He is known among his peers for his excellent problem-solving skills and his willingness to help others. Nimal is actively involved in extracurricular activities related to programming and has a keen interest in software development.
+Skills: Proficient in Java, Python, and C++, strong problem-solving abilities, experience with web development frameworks such as Django and Flask.
+Qualifications: Currently pursuing a Bachelor's degree in Computer Science at the University of Colombo School of Computing (UCSC). Achieved outstanding grades in courses related to algorithms, data structures, and computer networks.
+Kamala Silva
+
+Description: Kamala is a detail-oriented and organized individual with a passion for mathematics and data analysis. She has a natural talent for understanding complex mathematical concepts and enjoys applying them to real-world problems. Kamala is known for her excellent communication skills and her ability to work well in a team.
+Skills: Proficient in statistical analysis tools such as R and Python's pandas library, experience with machine learning algorithms, strong mathematical background.
+Qualifications: Holds a Bachelor's degree in Statistics from the University of Colombo (UOC). Completed coursework in probability theory, regression analysis, and experimental design with top grades.
+Sunil Fernando
+
+Description: Sunil is a creative and innovative individual with a passion for design and visual arts. He has a keen eye for aesthetics and enjoys creating visually appealing graphics and multimedia content. Sunil is known for his attention to detail and his ability to think outside the box.
+Skills: Proficient in Adobe Creative Suite (Photoshop, Illustrator, InDesign), experience with 3D modeling software such as Blender, strong understanding of design principles.
+Qualifications: Completed a Diploma in Multimedia Design at the Faculty of Science (FOS), University of Colombo. Received awards for his outstanding design projects during his studies.
+Malini Bandara
+
+Description: Malini is a driven and ambitious individual with a passion for business and entrepreneurship. She is known for her leadership qualities and her ability to take initiative. Malini is actively involved in entrepreneurial activities and is always seeking opportunities to learn and grow.
+Skills: Proficient in business analysis, financial modeling, and project management, strong leadership abilities, excellent presentation skills.
+Qualifications: Currently pursuing a Bachelor's degree in Business Administration at the University of Colombo School of Computing (UCSC). Completed coursework in accounting, marketing, and strategic management with distinction.
+Ajith Rajapakse
+
+Description: Ajith is a confident and articulate individual with a passion for public speaking and advocacy. He is known for his persuasive communication skills and his ability to articulate complex ideas effectively. Ajith is actively involved in student politics and community service initiatives.
+Skills: Proficient in public speaking, debate, and negotiation, strong leadership abilities, experience in event management.
+Qualifications: Holds a Bachelor's degree in Law from the University of Colombo (UOC). Actively involved in moot court competitions and legal aid clinics during his studies.
+These descriptions, along with their skills and qualifications, provide a comprehensive overview of each student's background and capabilities.
