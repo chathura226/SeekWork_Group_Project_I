@@ -1,0 +1,60 @@
+Set 1:
+
+Company Name: BetaSoft Innovations Inc.
+Address: 456 Oak Avenue, Springfield, CA, USA
+Website: www.betasoftinnovations.com
+BRN: 0987654321
+First Name of Contact Person: Michael
+Last Name of Contact Person: Smith
+Gender: Male
+Contact Number: 555-123-4567
+Company Email: contact@betasoftinnovations.com
+Strong Password: Innovate@123
+Set 2:
+
+Company Name: TechNex Solutions LLC
+Address: 789 Pine Street, Metroville, NY, USA
+Website: www.technexsolutions.net
+BRN: 5432109876
+First Name of Contact Person: Sarah
+Last Name of Contact Person: Lee
+Gender: Female
+Contact Number: 555-987-6543
+Company Email: sarah.lee@technexsolutions.net
+Strong Password: NexTech2023!
+Set 3:
+
+Company Name: Quantum Dynamics Corp.
+Address: 101 Quantum Street, Innovatown, CA, USA
+Website: www.quantumdynamicscorp.com
+BRN: 1357902468
+First Name of Contact Person: David
+Last Name of Contact Person: Chang
+Gender: Male
+Contact Number: 555-789-0123
+Company Email: david.chang@quantumdynamicscorp.com
+Strong Password: QDC@2023Launch
+Set 4:
+
+Company Name: InfinitiTech Solutions Ltd.
+Address: 246 Elm Road, Techville, TX, USA
+Website: www.infinititechsolutions.com
+BRN: 9876543210
+First Name of Contact Person: Jennifer
+Last Name of Contact Person: Williams
+Gender: Female
+Contact Number: 555-234-5678
+Company Email: jennifer.williams@infinititechsolutions.com
+Strong Password: Inf1n1titech#2023
+Set 5:
+
+Company Name: Phoenix Innovations Group
+Address: 369 Maple Avenue, Innovia, FL, USA
+Website: www.phoenixinnovationsgroup.net
+BRN: 2468013579
+First Name of Contact Person: Daniel
+Last Name of Contact Person: Rodriguez
+Gender: Male
+Contact Number: 555-345-6789
+Company Email: daniel.rodriguez@phoenixinnovationsgroup.net
+Strong Password: Ph03n1x@Innov8
