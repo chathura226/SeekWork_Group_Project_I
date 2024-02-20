@@ -1,5 +1,9 @@
 <div class="comp-details c-s-8 c-e-13">
-    <h2>About the Student</h2>
+    <?php if(!empty($assigned)):?>
+        <h2>About the Assigned Student</h2>
+    <?php else:?>
+        <h2>About the Student</h2>
+    <?php endif;?>
     <div class="comp-img">
         <img src="<?= ROOT ?><?= (!empty($profilePic)) ? "/" . $profilePic : "/assets/images/noImage.png" ?>" alt="Profile Picture">
     </div>

@@ -85,17 +85,27 @@
                 <?php if (!empty($assignments)) : ?>
                 <a style="width: 170px" class="effect" href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/pendingassignments" title="Assignment Invites">Assignment Invites</a>
                 <a class="effect" href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/submissions" title="Submissions">Submissions</a>
+
                 <?php endif; ?>
                 <a class="effect" href="<?= ROOT ?>/company/close/<?= $task->taskID ?>" title="Close the Task">Close the Task</a>
                 <?php if ($task->status === 'closed') : ?>
                 <a class="effect" href="<?= ROOT ?>/company/review/post/<?= $task->taskID ?>" title="Add a Review">Add a Review</a>
+                <?php endif; ?>
+                <?php if (!empty($student)) : ?>
+                    <a class="effect" href="<?= ROOT ?>/company/chats/<?= $student->userID ?>" title="Chat now">Chat Now</a>
+
                 <?php endif; ?>
 
             </div>
 
         </div>
 
-        <?php  $this->view('includes/companyDetail', []) ?>
+        <?php if (!empty($student)) : ?>
+            <?php $obj = new stdClass();
+            $obj->universityName=$student->universityName;
+            $student->university=$obj;  $student->assigned='1'; $this->view('includes/studentDetail', (array)$student) ?>
+
+        <?php endif; ?>
 
 
     </div>
