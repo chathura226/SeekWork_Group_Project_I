@@ -635,6 +635,12 @@ class Student extends Users
                             $currentDateTime = date('Y-m-d H:i:s');
                             $assignmentInst->update(['status' => 'accepted', 'replyDate' => $currentDateTime], $assignment->assignmentID);
 
+                            //deleting other assignment invites
+                            $assignmentInst->query("DELETE FROM assignment
+WHERE taskID = :taskID
+AND assignmentID != :assignmentID;",['taskID'=>$assignment->taskID,'assignmentID'=>$assignment->assignmentID]);
+
+
                             //sending invitation acceptance email
                             $row = $taskInst->innerJoin(['company', 'user'], ['task.companyID=company.companyID', 'user.userID=company.userID'], ['taskID' => $assignment->taskID], ['task.title AS title', 'task.value AS value', 'user.email AS email', 'company.firstName AS firstName', 'company.lastName AS lastName', 'user.userID as userID'])[0];
                             $fullName = $row->firstName . ' ' . $row->lastName;
