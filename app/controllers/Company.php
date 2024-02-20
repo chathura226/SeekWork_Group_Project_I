@@ -331,7 +331,6 @@ class Company extends Users
                 }
 
 
-                //TODO: implemet uploaded file view
 
                 if ($row->companyID === Auth::getcompanyID()) {
                     $assignmentInst = new Assignment();
@@ -346,10 +345,16 @@ class Company extends Users
                     $taskSkillInst = new Task_Skill();
                     $data['skills'] = $taskSkillInst->innerJoin(['skill'], ['skill.skillID=task_skill.skillID'], ['taskID' => $id]);
 
+                    //if assined to a student , get student details
+                    if(!empty($row->assignedStudentID)){
+                        $studentInst = new StudentModel();
+                        $student = $studentInst->innerJoin(['university'],['university.universityID=student.universityID'],['student.studentID' => $row->assignedStudentID])[0];
+                        $data['student'] = $student;
+                    }
 
                     $data['task'] = $row;
                     $data['title'] = $row->title;
-
+//                    show($data);die;
                     $this->view('company/task', $data);
                 } else {
                     message(['Unauthorized', 'danger']);
