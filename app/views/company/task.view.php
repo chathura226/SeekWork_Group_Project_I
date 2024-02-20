@@ -87,9 +87,11 @@
                 <a class="effect" href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/submissions" title="Submissions">Submissions</a>
 
                 <?php endif; ?>
-                <a class="effect" href="<?= ROOT ?>/company/close/<?= $task->taskID ?>" title="Close the Task">Close the Task</a>
                 <?php if ($task->status === 'closed') : ?>
                 <a class="effect" href="<?= ROOT ?>/company/review/post/<?= $task->taskID ?>" title="Add a Review">Add a Review</a>
+                <?php endif; ?>
+                <?php if ($task->status === 'inProgress') : ?>
+                    <a class="effect" href="<?= ROOT ?>/company/close/<?= $task->taskID ?>" title="Close the Task">Close the Task</a>
                 <?php endif; ?>
                 <?php if (!empty($student)) : ?>
                     <a class="effect" href="<?= ROOT ?>/company/chats/<?= $student->userID ?>" title="Chat now">Chat Now</a>
