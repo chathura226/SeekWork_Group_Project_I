@@ -65,14 +65,22 @@
         </svg>
         <h2>Profile Details</h2>
       </div>
-      <div>User ID : <?=ucfirst($user->userID)?></div>
-      <div><?=ucfirst($user->role)?> ID : <?php $attr=$user->role.'ID'; echo $user->$attr;?></div>
-      <div>Email Address: <?=$user->email?></div>
-      <div>First Name : <?=ucfirst($user->firstName)?></div>
-      <div>Last Name : <?=ucfirst($user->lastName)?></div>
-      <div>Contact Number : <?=$user->contactNo?></div>
-      <div>Address : <?=ucfirst($user->address)?></div>
-      <div>Joined Date : <?=$user->createdAt?></div>
+        User ID :<hr>
+        <div><?=ucfirst($user->userID)?></div>
+        <?=ucfirst($user->role)?> ID :<hr>
+        <div><?php $attr=$user->role.'ID'; echo $user->$attr;?></div>
+        Email Address:<hr>
+        <div><?=$user->email?></div>
+        First Name :<hr>
+        <div><?=ucfirst($user->firstName)?></div>
+        Last Name :<hr>
+        <div><?=ucfirst($user->lastName)?></div>
+        Contact Number :<hr>
+        <div><?=$user->contactNo?></div>
+        Address :<hr>
+        <div><?=ucfirst($user->address)?></div>
+        Joined Date :<hr>
+        <div><?=$user->createdAt?></div>
 
     </div>
 

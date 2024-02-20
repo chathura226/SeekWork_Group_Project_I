@@ -929,5 +929,14 @@ a.disabled {
     position: relative;
     height: 100px;
 }
+a.linkForStudent{
+    color: var(--secondary-color) !important;
+}
 
+a.linkForStudent:visited{
+    color: var(--secondary-color) !important;
+}
 
+.tab-form .tab-body > div.active1{
+    background-color: white !important;
+}

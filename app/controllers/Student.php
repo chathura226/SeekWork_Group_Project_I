@@ -854,5 +854,29 @@ class Student extends Users
         $this->view('student/earnings', $data);
     }
 
+//to check others profiles
+    public function viewcompany($id = null)
+    {
 
+
+        if (!empty($id)) {
+
+            $companyInst = new CompanyModel();
+
+
+            $companyDetails = $companyInst->innerJoin(['user'], ['company.userID=user.userID'], ['company.companyID' => $id])[0];
+
+
+            $data['user'] = $companyDetails;
+
+
+            $data['title'] = "Other User Profiles";
+
+            $this->view('student/otherCompanyProfile', $data);
+            return;
+        }
+
+        message(['Invalid company ID!', 'danger']);
+        redirect('student');
+    }
 }

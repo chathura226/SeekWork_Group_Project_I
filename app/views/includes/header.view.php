@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/loader.styles.css">
 
 <div class="loader-container">
+    <img src="<?=ROOT?>/assets/images/logo.png" alt="">
 		<div class="loader">
 			<div class="circle">
 			  <div class="dot"></div>

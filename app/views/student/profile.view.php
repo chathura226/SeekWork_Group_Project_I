@@ -46,15 +46,22 @@
         </svg>
         <h2>Profile Details</h2>
     </div>
-    <div>User ID : <?= ucfirst(Auth::getuserID()) ?></div>
-    <div><?= ucfirst(Auth::getrole()) ?> ID : <?php $funcName = 'get' . Auth::getrole() . 'ID';
+    User ID :<hr>
+    <div><?= ucfirst(Auth::getuserID()) ?></div>
+    <?= ucfirst(Auth::getrole()) ?> ID :<hr>
+    <div><?php $funcName = 'get' . Auth::getrole() . 'ID';
         echo Auth::$funcName() ?></div>
-    <div>Email Address: <?= Auth::getemail() ?></div>
-    <div>University: <?= Auth::getuniversityName() ?></div>
-    <div>Status: <?= ucfirst(Auth::getstatus()) ?></div>
-    <div>First Name : <?= ucfirst(Auth::getfirstName()) ?></div>
-    <div>Last Name : <?= ucfirst(Auth::getlastName()) ?></div>
-    <div>Skills :</div>
+    Email Address:<hr>
+    <div><?= Auth::getemail() ?></div>
+    University:<hr>
+    <div><?= Auth::getuniversityName() ?></div>
+    Status:<hr>
+    <div><?= ucfirst(Auth::getstatus()) ?></div>
+    First Name :<hr>
+    <div><?= ucfirst(Auth::getfirstName()) ?></div>
+    Last Name :<hr>
+    <div><?= ucfirst(Auth::getlastName()) ?></div>
+    Skills :<hr>
     <div class="skill-wrapper" style="padding: 0px !important; margin-top: 0px !important;">
         <?php if (!empty(Auth::getskills())): foreach (Auth::getskills() as $skill): ?>
             <div class="skill"><?= $skill->skill ?>
@@ -63,12 +70,18 @@
             No Skills added!
         <?php endif; ?>
     </div>
-    <div>Contact Number : <?= ucfirst(Auth::getcontactNo()) ?></div>
-    <div>Address : <?= ucfirst(Auth::getaddress()) ?></div>
-    <div>NIC : <?= Auth::getNIC() ?></div>
-    <div>Description : <?= Auth::getdescription() ?></div>
-    <div>Qualifications : <?= Auth::getqualifications() ?></div>
-    <div>Joined Date : <?= ucfirst(Auth::getcreatedAt()) ?></div>
+    Contact Number :<hr>
+    <div><?= ucfirst(Auth::getcontactNo()) ?></div>
+    Address :<hr>
+    <div><?= ucfirst(Auth::getaddress()) ?></div>
+    NIC :<hr>
+    <div><?= Auth::getNIC() ?></div>
+    Description :<hr>
+    <div><?= Auth::getdescription() ?></div>
+    Qualifications :<hr>
+    <div><?= Auth::getqualifications() ?></div>
+    Joined Date :<hr>
+    <div><?= ucfirst(Auth::getcreatedAt()) ?></div>
 
 </div>
 

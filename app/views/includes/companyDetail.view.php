@@ -8,7 +8,7 @@
     <?php if(Auth::logged_in()):?>
         <style>
             a.linkForStudent:visited{
-                color: var(--secondary-color);
+                color: var(--secondary-color) !important;
             }
 
             .rateNew .half:before{
