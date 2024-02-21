@@ -16,6 +16,9 @@ class Earning extends Model {
         'taskID',
         'amount',
         'createdAt',
+        'bankName',
+        'branch',
+        'accNo',
     ];
 
 }

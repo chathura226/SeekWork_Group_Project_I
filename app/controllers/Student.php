@@ -20,26 +20,26 @@ class Student extends Users
         $completedTasksCount = 0;
         $latestDeadline = 'N/A';
 
-        $taskInst=new Task();
-        $ongoing=$taskInst->query("SELECT COUNT(*) as count FROM task WHERE assignedStudentID=:studentID AND status=:status;",['studentID'=>Auth::getstudentID(),'status'=>'inProgress'])[0]->count;
-        $completedTasksCount=$taskInst->query("SELECT COUNT(*) as count FROM task WHERE assignedStudentID=:studentID AND status=:status ORDER BY deadline DESC limit 1;",['studentID'=>Auth::getstudentID(),'status'=>'closed'])[0]->count;
-        $row=$taskInst->query("SELECT * FROM task WHERE assignedStudentID=:studentID AND status=:status ORDER BY deadline DESC limit 1;",['studentID'=>Auth::getstudentID(),'status'=>'inProgress']);
-        if(!empty($row)){
-            $latestDeadline=$row[0]->deadline;
-        }else{
-            $latestDeadline="N/A";
+        $taskInst = new Task();
+        $ongoing = $taskInst->query("SELECT COUNT(*) as count FROM task WHERE assignedStudentID=:studentID AND status=:status;", ['studentID' => Auth::getstudentID(), 'status' => 'inProgress'])[0]->count;
+        $completedTasksCount = $taskInst->query("SELECT COUNT(*) as count FROM task WHERE assignedStudentID=:studentID AND status=:status ORDER BY deadline DESC limit 1;", ['studentID' => Auth::getstudentID(), 'status' => 'closed'])[0]->count;
+        $row = $taskInst->query("SELECT * FROM task WHERE assignedStudentID=:studentID AND status=:status ORDER BY deadline DESC limit 1;", ['studentID' => Auth::getstudentID(), 'status' => 'inProgress']);
+        if (!empty($row)) {
+            $latestDeadline = $row[0]->deadline;
+        } else {
+            $latestDeadline = "N/A";
         }
 
 
-        $earningInst=new Earning();
-        $accBalance=$earningInst->query("SELECT sum(earnings.amount) as sum FROM earnings INNER JOIN task on task.taskID=earnings.taskID WHERE task.assignedStudentID=:studentID AND earnings.earningStatus=:status; ",['studentID'=>Auth::getstudentID(),'status'=>'available'])[0]->sum;
+        $earningInst = new Earning();
+        $accBalance = $earningInst->query("SELECT sum(earnings.amount) as sum FROM earnings INNER JOIN task on task.taskID=earnings.taskID WHERE task.assignedStudentID=:studentID AND earnings.earningStatus=:status; ", ['studentID' => Auth::getstudentID(), 'status' => 'available'])[0]->sum;
 
-        $data['accBalance']=$accBalance;
-        $data['latestDeadline']=$latestDeadline;
-        $data['completedTasksCount']=$completedTasksCount;
-        $data['ongoing']=$ongoing;
+        $data['accBalance'] = $accBalance;
+        $data['latestDeadline'] = $latestDeadline;
+        $data['completedTasksCount'] = $completedTasksCount;
+        $data['ongoing'] = $ongoing;
         $data['title'] = "Dashboard";
-        $this->view( 'student/dashboard', $data);
+        $this->view('student/dashboard', $data);
     }
 
     public function verification()
@@ -638,7 +638,7 @@ class Student extends Users
                             //deleting other assignment invites
                             $assignmentInst->query("DELETE FROM assignment
 WHERE taskID = :taskID
-AND assignmentID != :assignmentID;",['taskID'=>$assignment->taskID,'assignmentID'=>$assignment->assignmentID]);
+AND assignmentID != :assignmentID;", ['taskID' => $assignment->taskID, 'assignmentID' => $assignment->assignmentID]);
 
 
                             //sending invitation acceptance email
@@ -846,6 +846,20 @@ AND assignmentID != :assignmentID;",['taskID'=>$assignment->taskID,'assignmentID
     public function earnings()
     {
         $earningInst = new Earning();
+
+        //if post req-> withdrawal req
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            $row=$earningInst->first(['transactionID'=>$_POST['transactionID']]);
+            if(empty($row) || $row->earningStatus!=='available'){
+                message(['You have already requested or withdrawn!','danger']);
+                redirect('student/earnings');
+            }
+
+            $_POST['earningStatus']='requested';
+            $earningInst->update($_POST,$_POST['transactionID']);
+            message('Withdrawal Requested Successfully!');
+        }
+
         $row = $earningInst->innerJoin(['task'], ['task.taskID=earnings.taskID'], ['assignedStudentID' => Auth::getstudentID()]);
 
 

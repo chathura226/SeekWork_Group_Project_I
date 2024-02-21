@@ -653,6 +653,9 @@ CREATE TABLE `earnings` (
   `taskID` int NOT NULL,
   `amount` double NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `bankName` text,
+  `branch` text,
+  `accNo` text,
   PRIMARY KEY (`transactionID`),
   KEY `earning-task` (`taskID`),
   CONSTRAINT `earning-task` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`)
@@ -665,7 +668,7 @@ CREATE TABLE `earnings` (
 
 LOCK TABLES `earnings` WRITE;
 /*!40000 ALTER TABLE `earnings` DISABLE KEYS */;
-INSERT INTO `earnings` VALUES ('','xss','available',NULL,3,100000,'2023-12-04 15:22:02'),('65d4cce236ad5','Earning by the Task - Writing','available',NULL,14,6000,'2024-02-20 16:01:38'),('65d52fedbf248','Earning by the Task - Design','available',NULL,15,31000,'2024-02-20 23:04:13'),('m','ws`','available',NULL,6,2222,'2024-01-17 15:26:04');
+INSERT INTO `earnings` VALUES ('','xss','requested',NULL,3,100000,'2023-12-04 15:22:02','Peoples','kiribathgoda','1234567890'),('65d4cce236ad5','Earning by the Task - Writing','available',NULL,14,6000,'2024-02-20 16:01:38',NULL,NULL,NULL),('65d52fedbf248','Earning by the Task - Design','available',NULL,15,31000,'2024-02-20 23:04:13',NULL,NULL,NULL),('m','ws`','available',NULL,6,2222,'2024-01-17 15:26:04',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `earnings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1906,4 +1909,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-20 23:43:30
+-- Dump completed on 2024-02-21  8:00:08

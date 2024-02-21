@@ -4,6 +4,7 @@
     <link href="<?= ROOT ?>/assets/css/passwordStrengthForChangePass.styles.css" rel="stylesheet">
     <link href="<?= ROOT ?>/assets/css/tab-containers.styles.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/tables.styles.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/popup.styles.css">
 
 
     <div class="pagetitle column-12">
@@ -54,6 +55,7 @@
                     <tr>
                         <th>TransactionID</th>
                         <th>Earning Description</th>
+                        <th>Amount</th>
                         <th>Status</th>
                         <th>Transaction Date</th>
                         <th>Link</th>
@@ -65,6 +67,7 @@
                         <tr style="height: 70px">
                             <th><?= $earning->transactionID ?></th>
                             <td><?= limitCharacters($earning->earningDescription, 25) ?></td>
+                                <td>Rs. <?= $earning->amount ?></td>
                             <!--                            <td>-->
                             <?php //=ucfirst($earning->earningStatus)?><!--</td>-->
                             <?php $statusColor = 'yellow';
@@ -92,8 +95,8 @@
                                 <td>
                                     <div class="flex"
                                          style="margin: auto;justify-content: center;align-items: center;gap: 20px">
-                                        <a href=""
-                                           style="text-decoration: none;">
+                                        <a href="" class="popouplink"
+                                           style="text-decoration: none;"  data-id="<?=$earning->transactionID?>">
                                             <button class="status-btn-working">Withdraw</button>
                                         </a>
                                         <a href="<?= ROOT ?>/student/tasks/<?= $earning->taskID ?>"
@@ -123,6 +126,7 @@
                     <tr>
                         <th>TransactionID</th>
                         <th>Earning Description</th>
+                        <th>Amount</th>
                         <th>Status</th>
                         <th>Transaction Date</th>
                         <th>Link</th>
@@ -135,6 +139,7 @@
                             <tr style="height: 70px">
                                 <th><?= $earning->transactionID ?></th>
                                 <td><?= limitCharacters($earning->earningDescription, 25) ?></td>
+                                <td>Rs. <?= $earning->amount ?></td>
                                 <!--                            <td>-->
                                 <?php //=ucfirst($earning->earningStatus)?><!--</td>-->
                                 <?php $statusColor = 'yellow';
@@ -162,8 +167,8 @@
                                     <td>
                                         <div class="flex"
                                              style="margin: auto;justify-content: center;align-items: center;gap: 20px">
-                                            <a href=""
-                                               style="text-decoration: none;">
+                                            <a href="" class="popouplink"
+                                               style="text-decoration: none;"  data-id="<?=$earning->transactionID?>">
                                                 <button class="status-btn-working">Withdraw</button>
                                             </a>
                                             <a href="<?= ROOT ?>/student/tasks/<?= $earning->taskID ?>"
@@ -195,6 +200,7 @@
                     <tr>
                         <th>TransactionID</th>
                         <th>Earning Description</th>
+                        <th>Amount</th>
                         <th>Status</th>
                         <th>Transaction Date</th>
                         <th>Link</th>
@@ -207,6 +213,7 @@
                             <tr style="height: 70px">
                                 <th><?= $earning->transactionID ?></th>
                                 <td><?= limitCharacters($earning->earningDescription, 25) ?></td>
+                                <td>Rs. <?= $earning->amount ?></td>
                                 <!--                            <td>-->
                                 <?php //=ucfirst($earning->earningStatus)?><!--</td>-->
                                 <?php $statusColor = 'yellow';
@@ -234,8 +241,8 @@
                                     <td>
                                         <div class="flex"
                                              style="margin: auto;justify-content: center;align-items: center;gap: 20px">
-                                            <a href=""
-                                               style="text-decoration: none;">
+                                            <a href="" class="popouplink"
+                                               style="text-decoration: none;"  data-id="<?=$earning->transactionID?>">
                                                 <button class="status-btn-working">Withdraw</button>
                                             </a>
                                             <a href="<?= ROOT ?>/student/tasks/<?= $earning->taskID ?>"
@@ -268,6 +275,7 @@
                     <tr>
                         <th>TransactionID</th>
                         <th>Earning Description</th>
+                        <th>Amount</th>
                         <th>Status</th>
                         <th>Transaction Date</th>
                         <th>Link</th>
@@ -280,6 +288,7 @@
                             <tr style="height: 70px">
                                 <th><?= $earning->transactionID ?></th>
                                 <td><?= limitCharacters($earning->earningDescription, 25) ?></td>
+                                <td>Rs. <?= $earning->amount ?></td>
                                 <!--                            <td>-->
                                 <?php //=ucfirst($earning->earningStatus)?><!--</td>-->
                                 <?php $statusColor = 'yellow';
@@ -307,8 +316,8 @@
                                     <td>
                                         <div class="flex"
                                              style="margin: auto;justify-content: center;align-items: center;gap: 20px">
-                                            <a href=""
-                                               style="text-decoration: none;">
+                                            <a href="" class="popouplink"
+                                               style="text-decoration: none;"  data-id="<?=$earning->transactionID?>">
                                                 <button class="status-btn-working">Withdraw</button>
                                             </a>
                                             <a href="<?= ROOT ?>/student/tasks/<?= $earning->taskID ?>"
@@ -334,6 +343,58 @@
             </div>
 
 
+        </div>
+    </div>
+
+
+    <div id="popup1" class="popup">
+        <div class="popup-content" style="background-color: transparent;border: none;">
+            <div class="wrapper">
+                <div class="form-wrap column-12 row-6">
+                    <div class="tab-form row-">
+                        <div class="myheader">
+                            <div class="active-login"><h2>Earning Withdrawal Request</h2></div>
+                            <span class="close">&times;</span>
+                        </div>
+                        <div class="tab-body ">
+                            <div class="active1">
+                                <form method="post">
+                                    </br>
+
+                                    <input value="" name="transactionID" id="transactionID" hidden>
+
+                                    <div class="form-input">
+                                        <label>Bank Name</label>
+                                        <input value=""
+                                               type="text"
+                                               name="bankName" id="bankName" placeholder="Enter the name of your bank">
+                                    </div>
+                                    <div class="form-input">
+                                        <label>Branch</label>
+                                        <input value=""
+                                               type="text"
+                                               name="branch" id="branch" placeholder="Enter your branch name">
+                                    </div>
+                                    <div class="form-input">
+                                        <label>Account Number</label>
+                                        <input value=""
+                                                type="text"
+                                               name="accNo" id="accNo" placeholder="Enter your bank account number">
+                                    </div>
+
+
+
+                                    <div class="form-input">
+                                        <button>Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -368,6 +429,39 @@
             }
         }
 
+    </script>
+
+
+<!--for popup-->
+
+    <script>
+
+        var modal = document.getElementById('popup1');
+
+        var link = document.getElementsByClassName('popouplink');
+        var linkArray=[...link]
+        var closeBtn = document.getElementsByClassName('close')[0];
+
+        var verificationIDInput=document.getElementById('transactionID');
+        linkArray.forEach(function (item){
+            item.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default action of the link
+                modal.style.display = 'block';
+                verificationIDInput.value=item.getAttribute('data-id')
+                // console.log(item.getAttribute('data-id'))
+            });
+        })
+
+
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
     </script>
 
 <?php $this->view('student/student-footer', $data) ?>
