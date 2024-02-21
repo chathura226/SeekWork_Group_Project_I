@@ -869,6 +869,7 @@ a.disabled {
     box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
     background-color: #ffffff;
     list-style-type: none;
+    z-index: 4;
 }
 
 .dd-input + .dd-menu {

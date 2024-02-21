@@ -423,6 +423,10 @@ GROUP BY
     }
 
     public function tasks(){
+        $taskInst=new Task();
+        $row=$taskInst->where(['isDeleted'=>0]);
+        $data['tasks'] = $row;
+
         $data['title'] = "Tasks";
         $this->view('moderator/tasks', $data);
     }

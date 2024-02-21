@@ -8,6 +8,26 @@
 
 
 <div class="pagetitle column-12">
+    <div class="searchAndFilter" style="position:absolute;right: 30px;top: 17px;display: flex;flex-wrap: wrap;gap: 15px">
+
+        <label class="dropdown">Sort By
+
+            <div class="dd-button" id="sortByTitle" style="width: 120px;">
+                TaskID
+            </div>
+
+            <input type="checkbox" class="dd-input" id="test">
+
+            <ul class="dd-menu">
+                <li onclick="sortByFilter('title')">Title</li>
+                <li onclick="sortByFilter('company id')">CompanyID</li>
+                <li onclick="sortByFilter('task ID')">TaskID</li>
+            </ul>
+
+        </label>
+
+        <input class="input-search-new" id="search-bar" name="search-bar" placeholder="Search by title" type="search">
+    </div>
     <h1>Tasks</h1>
     <nav>
 
@@ -68,17 +88,21 @@
                 <tbody>
 
                 <?php if (!empty($tasks)): foreach ($tasks as $task): ?>
-                    <tr style="height: 70px">
+                    <tr class="tableRow" style="height: 70px">
                         <th><?= $task->taskID ?></th>
-                        <td><?= limitCharacters($task->title,28) ?></td>
+                        <td><?= limitCharacters($task->title,50) ?></td>
                         <?php $statusColor = 'yellow';
-                        switch ($earning->earningStatus) {
-                            case 'withdrawn':
+                        switch ($task->status) {
+                            case 'active':
                                 $statusColor = 'green';
                                 $textColor = 'whitesmoke';
                                 break;
-                            case 'requested':
+                            case 'inProgress':
                                 $statusColor = 'yellow';
+                                $textColor = 'var(--text-color)';
+                                break;
+                            case 'closed':
+                                $statusColor = 'orange';
                                 $textColor = 'var(--text-color)';
                                 break;
                             default:
@@ -89,51 +113,271 @@
                         }; ?>
                         <td>
                             <div class="status-btn-like"
-                                 style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($earning->earningStatus) ?></div>
+                                 style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($task->status) ?></div>
                         </td>
-                        <td><?= (!empty($earning->transactionDate)) ? $earning->transactionDate : 'N/A' ?></td>
-                        <?php if ($earning->earningStatus == 'requested'): ?>
-                            <td>
-                                <div class="flex"
-                                     style="margin: auto;justify-content: center;align-items: center;gap: 20px">
-                                    <a href="" class="popouplink"
-                                       style="text-decoration: none;" data-id="<?= $earning->transactionID ?>" data-details='<?php
-                                    $dataNew=[];
-                                    $dataNew['bankName']=$earning->bankName;
-                                    $dataNew['branch']=$earning->branch;
-                                    $dataNew['accNo']=$earning->accNo;
-                                    echo json_encode($dataNew);
-                                    ?>'>
-                                        <button class="status-btn-working">Change Status</button>
-                                    </a>
+                        <td><?=$task->companyID?></td>
+                        <td>
+                            <div class="flex"
+                                 style="margin: auto;justify-content: center;align-items: center;gap: 20px">
 
-                                    <a href="<?= ROOT ?>/moderator/tasks/<?= $earning->taskID ?>"
-                                       style="text-decoration: none;">
-                                        <button class="status-btn-working">Go to Task</button>
-                                    </a>
-                                    <a href="<?= ROOT ?>/moderator/profile/<?= $earning->userID ?>"
-                                       style="text-decoration: none;">
-                                        <button class="status-btn-working">View Student</button>
-                                    </a>
-                                </div>
-                            </td>
-                        <?php else: ?>
-                            <td>
-                                <div class="flex"
-                                     style="margin: auto;justify-content: center;align-items: center;gap: 20px"><a
-                                        href="<?= ROOT ?>/moderator/tasks/<?= $earning->taskID ?>"
-                                        style="text-decoration: none;">
-                                        <button class="status-btn-working">Go to Task</button>
-                                    </a>
-                                    <a href="<?= ROOT ?>/moderator/profile/<?= $earning->userID ?>"
-                                       style="text-decoration: none;">
-                                        <button class="status-btn-working">View Student</button>
-                                    </a></div>
-                            </td>
-                        <?php endif; ?>
+                                <a href="<?= ROOT ?>/moderator/tasks/<?= $task->taskID ?>"
+                                   style="text-decoration: none;">
+                                    <button class="status-btn-working">Go to Task</button>
+                                </a>
+                            </div>
+                        </td>
+
                     </tr>
                 <?php endforeach; else: ?>
-                    <h3>No Requests available!</h3>
+                    <h3>No Tasks available!</h3>
+                <?php endif; ?>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="content-box-content" id="active">
+            <h2>Active Tasks</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>TaskID</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>CompanyID</th>
+                    <th>Link</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <?php if (!empty($tasks)): foreach ($tasks as $task): if($task->status=='active'): ?>
+                    <tr class="tableRow" style="height: 70px">
+                        <th><?= $task->taskID ?></th>
+                        <td><?= limitCharacters($task->title,50) ?></td>
+                        <?php $statusColor = 'yellow';
+                        switch ($task->status) {
+                            case 'active':
+                                $statusColor = 'green';
+                                $textColor = 'whitesmoke';
+                                break;
+                            case 'inProgress':
+                                $statusColor = 'yellow';
+                                $textColor = 'var(--text-color)';
+                                break;
+                            case 'closed':
+                                $statusColor = 'orange';
+                                $textColor = 'var(--text-color)';
+                                break;
+                            default:
+                                $statusColor = 'red';
+                                $textColor = 'whitesmoke';
+                                break;
+
+                        }; ?>
+                        <td>
+                            <div class="status-btn-like"
+                                 style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($task->status) ?></div>
+                        </td>
+                        <td><?=$task->companyID?></td>
+                        <td>
+                            <div class="flex"
+                                 style="margin: auto;justify-content: center;align-items: center;gap: 20px">
+
+                                <a href="<?= ROOT ?>/moderator/tasks/<?= $task->taskID ?>"
+                                   style="text-decoration: none;">
+                                    <button class="status-btn-working">Go to Task</button>
+                                </a>
+                            </div>
+                        </td>
+
+                    </tr>
+                <?php endif; endforeach; else: ?>
+                    <h3>No Tasks available!</h3>
+                <?php endif; ?>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="content-box-content" id="inProgress">
+            <h2>Tasks inProgress</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>TaskID</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>CompanyID</th>
+                    <th>Link</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <?php if (!empty($tasks)): foreach ($tasks as $task): if($task->status=='inProgress'): ?>
+                    <tr class="tableRow" style="height: 70px">
+                        <th><?= $task->taskID ?></th>
+                        <td><?= limitCharacters($task->title,50) ?></td>
+                        <?php $statusColor = 'yellow';
+                        switch ($task->status) {
+                            case 'active':
+                                $statusColor = 'green';
+                                $textColor = 'whitesmoke';
+                                break;
+                            case 'inProgress':
+                                $statusColor = 'yellow';
+                                $textColor = 'var(--text-color)';
+                                break;
+                            case 'closed':
+                                $statusColor = 'orange';
+                                $textColor = 'var(--text-color)';
+                                break;
+                            default:
+                                $statusColor = 'red';
+                                $textColor = 'whitesmoke';
+                                break;
+
+                        }; ?>
+                        <td>
+                            <div class="status-btn-like"
+                                 style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($task->status) ?></div>
+                        </td>
+                        <td><?=$task->companyID?></td>
+                        <td>
+                            <div class="flex"
+                                 style="margin: auto;justify-content: center;align-items: center;gap: 20px">
+
+                                <a href="<?= ROOT ?>/moderator/tasks/<?= $task->taskID ?>"
+                                   style="text-decoration: none;">
+                                    <button class="status-btn-working">Go to Task</button>
+                                </a>
+                            </div>
+                        </td>
+
+                    </tr>
+                <?php endif; endforeach; else: ?>
+                    <h3>No Tasks available!</h3>
+                <?php endif; ?>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="content-box-content" id="closed">
+            <h2>Closed Tasks</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>TaskID</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>CompanyID</th>
+                    <th>Link</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <?php if (!empty($tasks)): foreach ($tasks as $task): if($task->status=='closed'): ?>
+                    <tr class="tableRow" style="height: 70px">
+                        <th><?= $task->taskID ?></th>
+                        <td><?= limitCharacters($task->title,50) ?></td>
+                        <?php $statusColor = 'yellow';
+                        switch ($task->status) {
+                            case 'active':
+                                $statusColor = 'green';
+                                $textColor = 'whitesmoke';
+                                break;
+                            case 'inProgress':
+                                $statusColor = 'yellow';
+                                $textColor = 'var(--text-color)';
+                                break;
+                            case 'closed':
+                                $statusColor = 'orange';
+                                $textColor = 'var(--text-color)';
+                                break;
+                            default:
+                                $statusColor = 'red';
+                                $textColor = 'whitesmoke';
+                                break;
+
+                        }; ?>
+                        <td>
+                            <div class="status-btn-like"
+                                 style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($task->status) ?></div>
+                        </td>
+                        <td><?=$task->companyID?></td>
+                        <td>
+                            <div class="flex"
+                                 style="margin: auto;justify-content: center;align-items: center;gap: 20px">
+
+                                <a href="<?= ROOT ?>/moderator/tasks/<?= $task->taskID ?>"
+                                   style="text-decoration: none;">
+                                    <button class="status-btn-working">Go to Task</button>
+                                </a>
+                            </div>
+                        </td>
+
+                    </tr>
+                <?php endif; endforeach; else: ?>
+                    <h3>No Tasks available!</h3>
+                <?php endif; ?>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="content-box-content" id="disabled">
+            <h2>Disabled Tasks</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>TaskID</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>CompanyID</th>
+                    <th>Link</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <?php if (!empty($tasks)): foreach ($tasks as $task): if($task->status=='disabled'): ?>
+                    <tr class="tableRow" style="height: 70px">
+                        <th><?= $task->taskID ?></th>
+                        <td><?= limitCharacters($task->title,50) ?></td>
+                        <?php $statusColor = 'yellow';
+                        switch ($task->status) {
+                            case 'active':
+                                $statusColor = 'green';
+                                $textColor = 'whitesmoke';
+                                break;
+                            case 'inProgress':
+                                $statusColor = 'yellow';
+                                $textColor = 'var(--text-color)';
+                                break;
+                            case 'closed':
+                                $statusColor = 'orange';
+                                $textColor = 'var(--text-color)';
+                                break;
+                            default:
+                                $statusColor = 'red';
+                                $textColor = 'whitesmoke';
+                                break;
+
+                        }; ?>
+                        <td>
+                            <div class="status-btn-like"
+                                 style="background-color: <?= $statusColor ?>;color: <?= $textColor ?>"> <?= ucfirst($task->status) ?></div>
+                        </td>
+                        <td><?=$task->companyID?></td>
+                        <td>
+                            <div class="flex"
+                                 style="margin: auto;justify-content: center;align-items: center;gap: 20px">
+
+                                <a href="<?= ROOT ?>/moderator/tasks/<?= $task->taskID ?>"
+                                   style="text-decoration: none;">
+                                    <button class="status-btn-working">Go to Task</button>
+                                </a>
+                            </div>
+                        </td>
+
+                    </tr>
+                <?php endif; endforeach; else: ?>
+                    <h3>No Tasks available!</h3>
                 <?php endif; ?>
 
                 </tbody>
@@ -217,3 +461,117 @@
 </script>
 
 <?php $this->view('moderator/moderator-footer', $data) ?>
+
+<!--search and sort-->
+<script>
+    let allTask=document.querySelector('.content-box-content#all');
+    let activeTask=document.querySelector('.content-box-content#active');
+    let inProgressTask=document.querySelector('.content-box-content#inProgress');
+    let closedTask=document.querySelector('.content-box-content#closed');
+
+    tabArray=[allTask,activeTask,inProgressTask,closedTask];
+
+    document.getElementById('search-bar').addEventListener('input', function () {
+        let filter = this.value.toLowerCase();
+
+        console.log(tabArray)
+        tabArray.forEach((tab)=>{
+            //below code must run for each tab
+            let items = tab.getElementsByClassName('tableRow');
+
+            for (let i = 0; i < items.length; i++) {
+                let itemName = items[i].getElementsByTagName('td')[0].textContent.toLowerCase();
+                if (itemName.indexOf(filter) > -1) {
+                    items[i].style.display = 'table-row';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+        })
+
+    });
+
+
+
+    //sorting.....................
+    let AscTaskID=1;//for toggling sorting direction of date
+    let AscTitle=1;//for toggling sorting direction of title
+    let AscCompID=1;
+    function sortByFilter(feature){
+        let str = feature.toLowerCase();
+        document.getElementById('sortByTitle').textContent=str.charAt(0).toUpperCase() + str.slice(1);
+        if(str==='title') {
+            //togle the asc desc for value
+            if (AscTitle === 0) AscTitle = 1;
+            else AscTitle = 0;
+        }else if(str==='task id') {
+            //togle the asc desc for value
+            if (AscTaskID === 0) AscTaskID = 1;
+            else AscTaskID = 0;
+        }else{
+            if (AscCompID === 0) AscCompID = 1;
+            else AscCompID = 0;
+        }
+        tabArray.forEach((tab)=>{
+
+            let items = tab.getElementsByClassName('tableRow');
+
+
+            // Convert NodeList to array
+            let divsArray = Array.from(items);
+
+            //for date sorting
+            if(str==='title'){
+
+                // Sort the divs based on their date text
+                divsArray.sort((a, b) => {
+                    // Extract the title text from the divs
+                    const textA = a.getElementsByTagName('td')[0].textContent.trim().toLowerCase();
+                    const textB = b.getElementsByTagName('td')[0].textContent.trim().toLowerCase();
+
+                    if (textA < textB) return (AscTitle === 0)?-1:1;
+                    if (textA > textB) return (AscTitle === 0)?1:-1;
+                    return 0;
+                });
+            }else if(str==='task id'){
+                // Sort the divs based on their date text
+                divsArray.sort((a, b) => {
+                    // Extract the title text from the divs
+                    const textA = a.getElementsByTagName('th')[0].textContent.trim().toLowerCase();
+                    const textB = b.getElementsByTagName('th')[0].textContent.trim().toLowerCase();
+                    valueA=parseInt(textA)
+                    valueB=parseInt(textB)
+                    console.log(valueA,valueB)
+
+                    if (valueA < valueB) return (AscTaskID === 0)?-1:1;
+                    if (valueA > valueB) return (AscTaskID === 0)?1:-1;
+                    return 0;
+                });
+            }else if(str==='company id'){
+                // Sort the divs based on their date text
+                divsArray.sort((a, b) => {
+                    // Extract the title text from the divs
+                    const textA = a.getElementsByTagName('td')[2].textContent.trim().toLowerCase();
+                    const textB = b.getElementsByTagName('td')[2].textContent.trim().toLowerCase();
+                    valueA=parseInt(textA)
+                    valueB=parseInt(textB)
+                    console.log(valueA,valueB)
+
+                    if (valueA < valueB) return (AscCompID === 0)?-1:1;
+                    if (valueA > valueB) return (AscCompID === 0)?1:-1;
+                    return 0;
+                });
+            }
+
+            // Clear the container before appending sorted divs
+            const container = tab.getElementsByTagName('tbody')[0];
+            container.innerHTML = '';
+// console.log(container)
+            // Append sorted divs back to the container
+            divsArray.forEach(div => {
+                container.appendChild(div);
+            });
+        });
+
+    }
+</script>
