@@ -422,4 +422,8 @@ GROUP BY
         $this->view('moderator/earningReq', $data);
     }
 
+    public function tasks(){
+        $data['title'] = "Tasks";
+        $this->view('moderator/tasks', $data);
+    }
 }
