@@ -66,7 +66,7 @@
           <span class="icon">★</span>
         </label>
         <label>
-          <input style="cursor: default !important;" type="radio" name="stars" value="5" <?php if($review->nStars===5) echo "checked";?> disabled/>
+          <input style="cursor: default !important;" type="radio" name="nStars" value="5" <?php if($review->nStars===5) echo "checked";?> disabled/>
           <span class="icon">★</span>
           <span class="icon">★</span>
           <span class="icon">★</span>
