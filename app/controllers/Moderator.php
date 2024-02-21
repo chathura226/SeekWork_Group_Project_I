@@ -391,5 +391,35 @@ GROUP BY
         $this->view('moderator/supports', $data);
     }
 
+    //processing students earning withdrawl request
+    public function payments()
+    {
+
+        $earningInst=new Earning();
+
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            $row=$earningInst->first(['transactionID'=>$_POST['transactionID']]);
+            if(empty($row) || $row->earningStatus!=='requested'){
+                message(['You have already processed!','danger']);
+                redirect('moderator/payments');
+            }
+            $_POST['transactionDate']=date("Y-m-d H:i:s");
+            $earningInst->update($_POST,$_POST['transactionID']);
+            message("Updated Successfully!");
+        }
+
+
+
+        $row = $earningInst->query("SELECT * FROM earnings INNER JOIN task ON task.taskID=earnings.taskID  INNER JOIN student ON task.assignedStudentID=student.studentID WHERE earningStatus!='available';");
+
+        $data['earnings'] = $row;
+
+//        show($data);die;
+
+
+
+        $data['title'] = "Payment Requests";
+        $this->view('moderator/earningReq', $data);
+    }
 
 }
