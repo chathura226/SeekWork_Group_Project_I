@@ -122,7 +122,12 @@ class Company extends Users
                 $data['country'] = "Sri Lanka";
 
                 $data['commission'] = $row1->commission;
-                $data['taskVal'] = $row1->value;
+                if($row1->taskType=='auction'){
+                    $proposalInst=new Proposal();
+                    $data['taskVal']=$proposalInst->innerJoin(['assignment'],['assignment.proposalID=proposal.proposalID'],['assignment.assignmentID'=>$row1->assignmentID],['proposal.proposeAmount as value'])[0]->value;
+                }else{
+                    $data['taskVal'] = $row1->value;
+                }
 
                 $hash = strtoupper(
                     md5(
