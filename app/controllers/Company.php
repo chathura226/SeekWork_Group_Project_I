@@ -412,6 +412,43 @@ GROUP BY task.taskID;",['compID'=>Auth::getcompanyID()]);
 
             $data['user'] = $studentDetails;
 
+            //calculating star ratings for each star
+            $reviewInst=new Review();
+            $res=$reviewInst->query("SELECT nStars, COUNT(*) as rCount
+FROM review
+WHERE studentID=:studentID AND reviewType='companyTOstudent'
+GROUP BY nStars;
+",['studentID'=>$id]);
+            $starCount=array(0,0,0,0,0);
+
+            if(!empty($res)) {
+                $length = count($res);
+
+                for ($i = 0; $i < $length; $i++) {
+                    $starCount[$res[$i]->nStars-1]=$res[$i]->rCount;
+                }
+
+}
+
+            // Find the maximum value in the array
+            $maxValue = max($starCount);
+            if($maxValue!=0){
+                // Calculate the percentage for each value
+                $percentages = [];
+                foreach ($starCount as $value) {
+                    $percentage = ($value / $maxValue) * 100;
+                    $percentages[] = $percentage;
+                }
+            }else{
+                //if max value is zero
+                $percentages = $starCount;
+
+            }
+
+
+
+            $data['starCount']=$starCount;
+            $data['percentages']=$percentages;
 
             $data['title'] = "Other User Profiles";
 
