@@ -22,6 +22,91 @@
         </ul>
     </nav>
 </div><!-- End Page Title -->
+
+
+<style>
+    <style>
+
+    .cards-review {
+        margin-top: 2.5rem;
+    }
+
+    .cards-review .card-review {
+        width: 100%;
+        margin-bottom: .7rem;
+        background: rgb(243, 240, 240);
+        border-radius: 5px;
+    }
+
+    .card-review>* {
+        padding: 1rem 1.2rem;
+    }
+
+    .card-review-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .img {
+        width: 50px;
+        height: 50px;
+        background: purple;
+        border-radius: 50%;
+        outline: none;
+    }
+
+    .cls-name .one {
+        background: orange;
+    }
+
+    .cls-name,
+    .cls-name .img {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .cls-name .img {
+        justify-content: center;
+    }
+
+
+
+    .card-review-content {
+        margin: 0;
+        padding-top: 0;
+    }
+
+    .card-review-content p {
+        font-size: .8rem;
+        color: rgb(152, 152, 165);
+    }
+
+    .card-review-action {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-review-action span {
+        font-size: .8rem;
+        color: RGB(101, 101, 114);
+    }
+
+    .card-review-action .btn {
+        padding: .3rem .7rem;
+        background: transparent;
+        border: 1px solid #000;
+        border-radius: 2px;
+        color: #8C8C9F;
+        cursor: pointer;
+        transition: .2s ease-in-out;
+    }
+</style>
+</style>
 <div class="profile-details-reviews c-s-1 c-e-13 row-6" style="background-color: white;
   border-radius: 15px;
   color: var(--text-color);
@@ -32,10 +117,11 @@
   box-shadow: 0px 2px 5px 2px rgba(0,0,0,0.1);
   height: fit-content;">
     <div style="display:flex; align-items: center">
-        <svg xmlns="http://www.w3.org/2000/svg" style="fill: var(--primary-color-low);" height="3em" viewBox="0 0 512 512">
+        <svg xmlns="http://www.w3.org/2000/svg" style="fill: var(--primary-color-low);" height="3em"
+             viewBox="0 0 512 512">
             <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
         </svg>
-        <h2 style="margin-left: 5px;">Reviews</h2>
+        <h2 style="margin-left: 5px;">Rating & Reviews</h2>
     </div>
     <div style="display: flex;">
         <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;flex: 1;">
@@ -52,9 +138,9 @@
                     <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
                 </svg>
                 <div class="rating-progress-loader">
-                    <div class="rating-progress" style="width: <?=$percentages[4]?>%;"></div>
+                    <div class="rating-progress" style="width: <?= $percentages[4] ?>%;"></div>
                 </div>
-                <span style="margin-top: 4px;margin-right:5px;font-size: 1rem;"><?=$starCount[4]?> </span>
+                <span style="margin-top: 4px;margin-right:5px;font-size: 1rem;"><?= $starCount[4] ?> </span>
             </div>
             <div style="display: grid;grid-template-columns: 1fr 1fr 4fr 1fr;width: 500px;align-items: center">
                 <span style="margin-top: 6px;margin-right:5px;font-size: 1.2rem;text-align: right">4 </span>
@@ -64,9 +150,9 @@
                     <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
                 </svg>
                 <div class="rating-progress-loader">
-                    <div class="rating-progress" style="width: <?=$percentages[3]?>%;"></div>
+                    <div class="rating-progress" style="width: <?= $percentages[3] ?>%;"></div>
                 </div>
-                <span style="margin-top: 4px;margin-right:5px;font-size: 1rem;"><?=$starCount[3]?> </span>
+                <span style="margin-top: 4px;margin-right:5px;font-size: 1rem;"><?= $starCount[3] ?> </span>
             </div>
             <div style="display: grid;grid-template-columns: 1fr 1fr 4fr 1fr;width: 500px;align-items: center">
                 <span style="margin-top: 6px;margin-right:5px;font-size: 1.2rem;text-align: right">3 </span>
@@ -76,9 +162,9 @@
                     <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
                 </svg>
                 <div class="rating-progress-loader">
-                    <div class="rating-progress" style="width: <?=$percentages[2]?>%;"></div>
+                    <div class="rating-progress" style="width: <?= $percentages[2] ?>%;"></div>
                 </div>
-                <span style="margin-top: 4px;margin-right:5px;font-size: 1rem;"><?=$starCount[2]?> </span>
+                <span style="margin-top: 4px;margin-right:5px;font-size: 1rem;"><?= $starCount[2] ?> </span>
             </div>
 
             <div style="display: grid;grid-template-columns: 1fr 1fr 4fr 1fr;width: 500px;align-items: center">
@@ -89,9 +175,9 @@
                     <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
                 </svg>
                 <div class="rating-progress-loader">
-                    <div class="rating-progress" style="width: <?=$percentages[1]?>%;"></div>
+                    <div class="rating-progress" style="width: <?= $percentages[1] ?>%;"></div>
                 </div>
-                <span style="margin-top: 4px;margin-right:5px;font-size: 1rem;"><?=$starCount[1]?> </span>
+                <span style="margin-top: 4px;margin-right:5px;font-size: 1rem;"><?= $starCount[1] ?> </span>
             </div>
             <div style="display: grid;grid-template-columns: 1fr 1fr 4fr 1fr;width: 500px;align-items: center">
                 <span style="margin-top: 6px;margin-right:5px;font-size: 1.2rem;text-align: right">1 </span>
@@ -101,9 +187,114 @@
                     <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
                 </svg>
                 <div class="rating-progress-loader">
-                    <div class="rating-progress" style="width: <?=$percentages[0]?>%;"></div>
+                    <div class="rating-progress" style="width: <?= $percentages[0] ?>%;"></div>
                 </div>
-                <span style="margin-top: 4px;margin-right:5px;font-size: 1rem;"><?=$starCount[0]?> </span>
+                <span style="margin-top: 4px;margin-right:5px;font-size: 1rem;"><?= $starCount[0] ?> </span>
+            </div>
+        </div>
+    </div>
+    <hr style="margin-top: 25px;margin-bottom: 25px;">
+
+    <div style="display:flex;flex-direction: column; width: 100%">
+        <h2 style="margin-left: 5px;">Reviews</h2>
+        <div style="display: flex;flex-direction: column;">
+            <div class="cards-review">
+                <div class="card-review">
+                    <div class="card-review-top">
+                        <div class="cls-name">
+                            <div class="img one" alt="">NF</div>
+                            <p>Full cls-name</p>
+                        </div>
+                        <div class="rate">
+                            <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
+                                 fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
+                                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
+                                 fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
+                                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
+                                 fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
+                                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
+                                 fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
+                                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
+                                 fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
+                                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                            </svg>
+
+                        </div>
+                    </div>
+
+                    <div class="card-review-content">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem consequuntur, impedit ullam provident deserunt repellendus fuga totam exercitationem minima molestias?</p>
+                    </div>
+
+                    <div class="card-review-action">
+                        <span>13 Feb, 2021</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="cards-review">
+                <div class="card-review">
+                    <div class="card-review-top">
+                        <div class="cls-name">
+                            <div class="img one" alt="">NF</div>
+                            <p>Full cls-name</p>
+                        </div>
+                        <div class="rate">
+                            <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
+                                 fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
+                                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
+                                 fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
+                                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
+                                 fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
+                                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
+                                 fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
+                                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
+                                 fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
+                                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                            </svg>
+
+                        </div>
+                    </div>
+
+                    <div class="card-review-content">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem consequuntur, impedit ullam provident deserunt repellendus fuga totam exercitationem minima molestias?</p>
+                    </div>
+
+                    <div class="card-review-action">
+                        <span>13 Feb, 2021</span>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </div>

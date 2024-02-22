@@ -27,6 +27,8 @@ define('ROOT','http://localhost/public');
 
 }else{
 //database config for live server
+    define('SERVERNAME','db');
+    define('PORT','3306');
 define('DBHOST','localhost');
 define('DBNAME','SeekWorkDB');
 define('DBUSER','admin');

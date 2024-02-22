@@ -103,7 +103,7 @@
     }
 
     function handleResult(result, type) {
-        // console.log(result);
+        console.log(result);
         if (result.trim() != "") {
             let obj = JSON.parse(result);
 
