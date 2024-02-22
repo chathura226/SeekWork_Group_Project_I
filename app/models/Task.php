@@ -25,7 +25,8 @@ class Task extends Model {
         'categoryID',
         'finishedDate',
         'createdAt',
-        'isDeleted'
+        'isDeleted',
+        'enableDisableReason',
     ];
 
 

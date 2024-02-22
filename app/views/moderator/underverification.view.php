@@ -1,8 +1,8 @@
 <?php $this->view('moderator/moderator-header', $data) ?>
 
 <link rel="stylesheet" href="<?= ROOT ?>/assets/css/companyMyTasks.styles.css"/>
-<link rel="stylesheet" href="<?=ROOT?>/assets/css/tables.styles.css">
-<link rel="stylesheet" href="<?=ROOT?>/assets/css/popup.styles.css">
+<link rel="stylesheet" href="<?= ROOT ?>/assets/css/tables.styles.css">
+<link rel="stylesheet" href="<?= ROOT ?>/assets/css/popup.styles.css">
 <link href="<?= ROOT ?>/assets/css/company-verification.styles.css" rel="stylesheet">
 
 <style>
@@ -35,85 +35,87 @@
 <div id="popup1" class="popup">
     <div class="popup-content">
         <span class="close">&times;</span>
-<div class="wrapper">
-        <div class="form-wrap column-12 row-6">
-            <div class="tab-form row-">
-                <div class="myheader">
-                    <div class="active-login"><h2>Change Verification Status</h2></div>
-                </div>
-                <div class="tab-body ">
-                    <div class="active1">
-                        <form method="post">
-                            </br>
+        <div class="wrapper">
+            <div class="form-wrap column-12 row-6">
+                <div class="tab-form row-">
+                    <div class="myheader">
+                        <div class="active-login"><h2>Change Verification Status</h2></div>
+                    </div>
+                    <div class="tab-body ">
+                        <div class="active1">
+                            <form method="post">
+                                </br>
 
                                 <input value="" name="verificationID" id="verificationID" hidden>
 
 
-                            <div class="form-input">
-                                <label>Comments</label>
-                                <textarea rows="10" cols="45" id="comments" name="comments"
-                                          placeholder="Enter  Comments about the verification review" required></textarea>
-                                <br>
+                                <div class="form-input">
+                                    <label>Comments</label>
+                                    <textarea rows="10" cols="45" id="comments" name="comments"
+                                              placeholder="Enter  Comments about the verification review"
+                                              required></textarea>
+                                    <br>
 
-                            </div>
+                                </div>
 
-                            <div class="form-input">
-                                <label>Status</label>
-                                <select id="status" name="status" required>
+                                <div class="form-input">
+                                    <label>Status</label>
+                                    <select id="status" name="status" required>
                                         <option value="underReview" selected>Under Review</option>
-                                        <option value="reviewed" >Reviewed</option>
-                                </select>
-                            </div>
+                                        <option value="reviewed">Reviewed</option>
+                                    </select>
+                                </div>
 
 
+                                <div class="form-input">
+                                    <button>Submit for Approval</button>
+                                </div>
+                            </form>
+                        </div>
 
-
-                            <div class="form-input">
-                                <button>Submit for Approval</button>
-                            </div>
-                        </form>
                     </div>
 
                 </div>
-
             </div>
         </div>
-</div>
     </div>
 </div>
 <?php if (!empty($underReviews)): ?>
-<div class="c-s-1 c-e-13">
+    <div class="c-s-1 c-e-13">
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Company Name</th>
-            <th>Company Profile</th>
-            <th>Verification Document</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php for ($i = 0; $i < sizeof($underReviews); $i++): ?>
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <th><?= $i + 1 ?></th>
-                <td> <?= $underReviews[$i]->companyName ?></td>
-                <td>
-                    <a href="<?= ROOT ?>/moderator/profile/<?=$underReviews[$i]->userID  ?>">See Profile</a>
-                </td>
-                <td><a href="<?= ROOT ?>/download/verification/<?=$underReviews[$i]->userID  ?>/<?=$underReviews[$i]->verificationID?>">Download Document</a></td>
-                <td> <?= ($underReviews[$i]->status=='underReview')?'Under Review':'Reviewed' ?></td>
-
-                <td><a class="popouplink" href="#" data-id="<?=$underReviews[$i]->verificationID?>">Change Status</a></td>
-
+                <th>#</th>
+                <th>Company Name</th>
+                <th>Company Profile</th>
+                <th>Verification Document</th>
+                <th>Status</th>
+                <th>Action</th>
             </tr>
-        <?php endfor; ?>
+            </thead>
+            <tbody>
+            <?php for ($i = 0; $i < sizeof($underReviews); $i++): ?>
+                <tr>
+                    <th><?= $i + 1 ?></th>
+                    <td> <?= $underReviews[$i]->companyName ?></td>
+                    <td>
+                        <a href="<?= ROOT ?>/moderator/profile/<?= $underReviews[$i]->userID ?>">See Profile</a>
+                    </td>
+                    <td>
+                        <a href="<?= ROOT ?>/download/verification/<?= $underReviews[$i]->userID ?>/<?= $underReviews[$i]->verificationID ?>">Download
+                            Document</a></td>
+                    <td> <?= ($underReviews[$i]->status == 'underReview') ? 'Under Review' : 'Reviewed' ?></td>
 
-        </tbody>
-    </table>
-</div>
+                    <td><a class="popouplink" href="#" data-id="<?= $underReviews[$i]->verificationID ?>">Change
+                            Status</a></td>
+
+                </tr>
+            <?php endfor; ?>
+
+            </tbody>
+        </table>
+    </div>
 
 <?php else: ?>
     <div class="c-s-1 c-e-13">
@@ -127,25 +129,25 @@
     var modal = document.getElementById('popup1');
 
     var link = document.getElementsByClassName('popouplink');
-    var linkArray=[...link]
+    var linkArray = [...link]
     var closeBtn = document.getElementsByClassName('close')[0];
 
-    var verificationIDInput=document.getElementById('verificationID');
-    linkArray.forEach(function (item){
-        item.addEventListener('click', function(event) {
+    var verificationIDInput = document.getElementById('verificationID');
+    linkArray.forEach(function (item) {
+        item.addEventListener('click', function (event) {
             event.preventDefault(); // Prevent the default action of the link
             modal.style.display = 'block';
-            verificationIDInput.value=item.getAttribute('data-id')
+            verificationIDInput.value = item.getAttribute('data-id')
             // console.log(item.getAttribute('data-id'))
         });
     })
 
 
-    closeBtn.addEventListener('click', function() {
+    closeBtn.addEventListener('click', function () {
         modal.style.display = 'none';
     });
 
-    window.addEventListener('click', function(event) {
+    window.addEventListener('click', function (event) {
         if (event.target === modal) {
             modal.style.display = 'none';
         }

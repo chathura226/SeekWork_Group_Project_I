@@ -243,4 +243,71 @@ GROUP BY
 
         $this->view('admin/view-admins', $data);
     }
+
+    public function tasks($id = null)
+    {
+        $taskInst = new Task();
+
+
+        if (!empty($id)) {
+            $row = $taskInst->first(['taskID' => $id]);
+
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+                if($_POST['action']=='disable'){
+                    $_POST['status']='disabled';
+                    if($row->status!='active'){
+                        message(["Cannot perform the operation on this stage!",'danger']);
+                        redirect('admin/tasks/'.$id);
+                        return;
+                    }
+                }else{
+                    $_POST['status']='active';
+                }
+                $taskInst->update($_POST,$_POST['taskID']);
+
+                message("Updated Successfully!");
+                redirect('admin/tasks/'.$id);
+                return;
+            }
+
+
+            $assignmentInst = new Assignment();
+            $submissionInst = new Submission();
+            $data['assignments'] = $assignmentInst->where(['taskID' => $id]);
+            $data['submissions'] = $submissionInst->where(['taskID' => $id]);
+            //taking number of proposals
+            $proposalInst = new Proposal();
+            $nProposals = $proposalInst->count(['taskID' => $row->taskID])[0]->{"COUNT(*)"};
+            $row->nProposals = $nProposals;
+
+            $taskSkillInst = new Task_Skill();
+            $data['skills'] = $taskSkillInst->innerJoin(['skill'], ['skill.skillID=task_skill.skillID'], ['taskID' => $id]);
+
+            //companyDetails
+            $companyInst = new CompanyModel();
+            $data['company'] = $companyInst->first(['companyID' => $row->companyID]);
+
+            //if assined to a student , get student details
+            if (!empty($row->assignedStudentID)) {
+                $studentInst = new StudentModel();
+                $student = $studentInst->innerJoin(['university'], ['university.universityID=student.universityID'], ['student.studentID' => $row->assignedStudentID])[0];
+                $data['student'] = $student;
+            }
+
+            $data['task'] = $row;
+            $data['title'] = $row->title;
+//                    show($data);die;
+            $this->view('admin/task', $data);
+
+            return;
+        }
+        $row = $taskInst->where(['isDeleted' => 0]);
+        $data['tasks'] = $row;
+
+        $data['title'] = "Tasks";
+        $this->view('admin/tasks', $data);
+    }
+
+
 }
