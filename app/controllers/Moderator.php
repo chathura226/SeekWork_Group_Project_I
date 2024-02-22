@@ -422,12 +422,86 @@ GROUP BY
         $this->view('moderator/earningReq', $data);
     }
 
-    public function tasks(){
+    public function tasks($id=null){
         $taskInst=new Task();
+
+        if(!empty($id)){
+
+            $row=$taskInst->first(['taskID'=>$id]);
+            $assignmentInst = new Assignment();
+            $submissionInst = new Submission();
+            $data['assignments'] = $assignmentInst->where(['taskID' => $id]);
+            $data['submissions'] = $submissionInst->where(['taskID' => $id]);
+            //taking number of proposals
+            $proposalInst = new Proposal();
+            $nProposals = $proposalInst->count(['taskID' => $row->taskID])[0]->{"COUNT(*)"};
+            $row->nProposals = $nProposals;
+
+            $taskSkillInst = new Task_Skill();
+            $data['skills'] = $taskSkillInst->innerJoin(['skill'], ['skill.skillID=task_skill.skillID'], ['taskID' => $id]);
+
+            //companyDetails
+            $companyInst=new CompanyModel();
+            $data['company'] = $companyInst->first(['companyID'=>$row->companyID]);
+
+            //if assined to a student , get student details
+            if(!empty($row->assignedStudentID)){
+                $studentInst = new StudentModel();
+                $student = $studentInst->innerJoin(['university'],['university.universityID=student.universityID'],['student.studentID' => $row->assignedStudentID])[0];
+                $data['student'] = $student;
+            }
+
+            $data['task'] = $row;
+            $data['title'] = $row->title;
+//                    show($data);die;
+            $this->view('moderator/task', $data);
+
+            return;
+        }
         $row=$taskInst->where(['isDeleted'=>0]);
         $data['tasks'] = $row;
 
         $data['title'] = "Tasks";
         $this->view('moderator/tasks', $data);
+    }
+
+
+    //to check others profiles
+    public function viewcompany($id = null)
+    {
+
+
+        if (!empty($id)) {
+
+            $companyInst = new CompanyModel();
+
+
+            $companyDetails = $companyInst->innerJoin(['user'], ['company.userID=user.userID'], ['company.companyID' => $id])[0];
+            if(!empty($companyDetails)){
+                redirect('moderator/profile/'.$companyDetails->userID);
+            }
+        }
+
+        message(['Invalid company ID!', 'danger']);
+        redirect('moderator');
+    }
+    //to check others profiles
+    public function viewstudents($id = null)
+    {
+
+
+        if (!empty($id)) {
+
+            $studentInst = new StudentModel();
+
+
+            $std = $studentInst->innerJoin(['user'], ['student.userID=user.userID'], ['student.studentID' => $id])[0];
+            if(!empty($std)){
+                redirect('moderator/profile/'.$std->userID);
+            }
+        }
+
+        message(['Invalid student ID!', 'danger']);
+        redirect('moderator');
     }
 }
