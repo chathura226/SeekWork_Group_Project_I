@@ -12,6 +12,7 @@ class Moderator extends Users
     {
         parent::__construct('moderator');
     }
+
     public function index()
     {
         $taskInst = new Task();
@@ -299,35 +300,35 @@ GROUP BY
                 } else {
                     message(['Error occurred!', 'danger']);
                 }
-                redirect('moderator/disputes/' . $id );
+                redirect('moderator/disputes/' . $id);
             }
 
 
             $res = $disputeInst->first(['disputeID' => $id]);
 
             if (!empty($res)) {
-                $taskInst=new Task();
+                $taskInst = new Task();
 
-                $task=$taskInst->first(['taskID'=>$res->taskID]);
-                $res->task=$task;
+                $task = $taskInst->first(['taskID' => $res->taskID]);
+                $res->task = $task;
 
                 //geting details of users
-                $compinst=new CompanyModel();
-                $detailsOfCompany=$compinst->innerJoin(['user'],['company.userID=user.userID'],['company.companyID'=>$res->task->companyID])[0];
-                $studentInst=new StudentModel();
-                $detailsOfStudent=$studentInst->innerJoin(['user'],['student.userID=user.userID'],['student.studentID'=>$res->task->assignedStudentID])[0];
+                $compinst = new CompanyModel();
+                $detailsOfCompany = $compinst->innerJoin(['user'], ['company.userID=user.userID'], ['company.companyID' => $res->task->companyID])[0];
+                $studentInst = new StudentModel();
+                $detailsOfStudent = $studentInst->innerJoin(['user'], ['student.userID=user.userID'], ['student.studentID' => $res->task->assignedStudentID])[0];
 
                 //getting initiated party data and set res accordignly
-                if($res->initiatedParty=='company'){
+                if ($res->initiatedParty == 'company') {
                     //when initiated party is company
 
-                    $res->complainer=$detailsOfCompany;
-                    $res->target=$detailsOfStudent;
+                    $res->complainer = $detailsOfCompany;
+                    $res->target = $detailsOfStudent;
 
-                }else{
+                } else {
                     //when initiated party is student
-                    $res->complainer=$detailsOfStudent;
-                    $res->target=$detailsOfCompany;
+                    $res->complainer = $detailsOfStudent;
+                    $res->target = $detailsOfCompany;
                 }
 
                 $data['dispute'] = $res;
@@ -364,7 +365,7 @@ GROUP BY
                 } else {
                     message(['Error occurred!', 'danger']);
                 }
-                redirect('moderator/support/' . $id );
+                redirect('moderator/support/' . $id);
             }
 
 
@@ -395,19 +396,18 @@ GROUP BY
     public function payments()
     {
 
-        $earningInst=new Earning();
+        $earningInst = new Earning();
 
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            $row=$earningInst->first(['transactionID'=>$_POST['transactionID']]);
-            if(empty($row) || $row->earningStatus!=='requested'){
-                message(['You have already processed!','danger']);
+            $row = $earningInst->first(['transactionID' => $_POST['transactionID']]);
+            if (empty($row) || $row->earningStatus !== 'requested') {
+                message(['You have already processed!', 'danger']);
                 redirect('moderator/payments');
             }
-            $_POST['transactionDate']=date("Y-m-d H:i:s");
-            $earningInst->update($_POST,$_POST['transactionID']);
+            $_POST['transactionDate'] = date("Y-m-d H:i:s");
+            $earningInst->update($_POST, $_POST['transactionID']);
             message("Updated Successfully!");
         }
-
 
 
         $row = $earningInst->query("SELECT * FROM earnings INNER JOIN task ON task.taskID=earnings.taskID  INNER JOIN student ON task.assignedStudentID=student.studentID WHERE earningStatus!='available';");
@@ -417,17 +417,38 @@ GROUP BY
 //        show($data);die;
 
 
-
         $data['title'] = "Payment Requests";
         $this->view('moderator/earningReq', $data);
     }
 
-    public function tasks($id=null){
-        $taskInst=new Task();
+    public function tasks($id = null)
+    {
+        $taskInst = new Task();
 
-        if(!empty($id)){
 
-            $row=$taskInst->first(['taskID'=>$id]);
+        if (!empty($id)) {
+            $row = $taskInst->first(['taskID' => $id]);
+
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+                if($_POST['action']=='disable'){
+                    $_POST['status']='disabled';
+                    if($row->status!='active'){
+                        message(["Cannot perform the operation on this stage!",'danger']);
+                        redirect('moderator/tasks/'.$id);
+                        return;
+                    }
+                }else{
+                    $_POST['status']='active';
+                }
+                $taskInst->update($_POST,$_POST['taskID']);
+
+                message("Updated Successfully!");
+                redirect('moderator/tasks/'.$id);
+                return;
+            }
+
+
             $assignmentInst = new Assignment();
             $submissionInst = new Submission();
             $data['assignments'] = $assignmentInst->where(['taskID' => $id]);
@@ -441,13 +462,13 @@ GROUP BY
             $data['skills'] = $taskSkillInst->innerJoin(['skill'], ['skill.skillID=task_skill.skillID'], ['taskID' => $id]);
 
             //companyDetails
-            $companyInst=new CompanyModel();
-            $data['company'] = $companyInst->first(['companyID'=>$row->companyID]);
+            $companyInst = new CompanyModel();
+            $data['company'] = $companyInst->first(['companyID' => $row->companyID]);
 
             //if assined to a student , get student details
-            if(!empty($row->assignedStudentID)){
+            if (!empty($row->assignedStudentID)) {
                 $studentInst = new StudentModel();
-                $student = $studentInst->innerJoin(['university'],['university.universityID=student.universityID'],['student.studentID' => $row->assignedStudentID])[0];
+                $student = $studentInst->innerJoin(['university'], ['university.universityID=student.universityID'], ['student.studentID' => $row->assignedStudentID])[0];
                 $data['student'] = $student;
             }
 
@@ -458,7 +479,7 @@ GROUP BY
 
             return;
         }
-        $row=$taskInst->where(['isDeleted'=>0]);
+        $row = $taskInst->where(['isDeleted' => 0]);
         $data['tasks'] = $row;
 
         $data['title'] = "Tasks";
@@ -477,14 +498,15 @@ GROUP BY
 
 
             $companyDetails = $companyInst->innerJoin(['user'], ['company.userID=user.userID'], ['company.companyID' => $id])[0];
-            if(!empty($companyDetails)){
-                redirect('moderator/profile/'.$companyDetails->userID);
+            if (!empty($companyDetails)) {
+                redirect('moderator/profile/' . $companyDetails->userID);
             }
         }
 
         message(['Invalid company ID!', 'danger']);
         redirect('moderator');
     }
+
     //to check others profiles
     public function viewstudents($id = null)
     {
@@ -496,8 +518,8 @@ GROUP BY
 
 
             $std = $studentInst->innerJoin(['user'], ['student.userID=user.userID'], ['student.studentID' => $id])[0];
-            if(!empty($std)){
-                redirect('moderator/profile/'.$std->userID);
+            if (!empty($std)) {
+                redirect('moderator/profile/' . $std->userID);
             }
         }
 
