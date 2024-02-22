@@ -48,7 +48,7 @@
         <h2><?= ucfirst($task->title) ?></h2>
         <h4>Deadline: <?=($task->deadline)?$task->deadline:"No deadline"?></h4>
         <h4>Number of proposals: <?=$task->num_proposals?></h4>
-        <h4>Status: <?=($task->status==='closed')?'<span style="color: red;">Closed</span>':'<span style="color: green;">'.ucfirst($task->status).'</span>'?></h4>
+        <h4>Status: <?=($task->status==='closed' || $task->status==='disabled')?'<span style="color: red;">'.ucfirst($task->status).'</span>':'<span style="color: green;">'.ucfirst($task->status).'</span>'?></h4>
         <h4>Assignment status: <?= empty($task->assignmentID) ? '<span style="color: red;">Not Assigned</span>' : '<span style="color: green;">Assigned</span>' ?></h4>
 
         <a href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>">

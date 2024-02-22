@@ -77,7 +77,9 @@
         </div>
         <div class="btn-container c-s-8 c-e-13">
             <div class="btn-effect">
-
+                <?php if ($task->status=='disabled'): ?>
+                    <span style="color: red">Your task has been disabled : <?= $task->enableDisableReason?>.<br>Please contact for support</span>
+                <?php endif; ?>
             <h1>Rs.<?= $task->value ?>/=</h1>
                 <a class="effect" href="<?= ROOT ?>/company/tasks/<?= $task->taskID ?>/view-proposals" title="View Proposals">View Proposals</a>
                 <a class="effect" href="<?= ROOT ?>/company/modify/<?= $task->taskID ?>" title="Modify Task">Modify Task</a>
