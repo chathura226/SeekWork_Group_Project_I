@@ -382,6 +382,21 @@ GROUP BY task.taskID;",['compID'=>Auth::getcompanyID()]);
 
 
         if (!empty($id)) {
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                if(empty($_POST['taskID'])){
+                    message(['Invalid ID','danger']);
+                    redirect('company/tasks');
+                }
+                $taskInst=new Task();
+                $res=$taskInst->first(['taskID'=>$_POST['taskID']]);
+                if(empty($res) || $res->companyID!=Auth::getcompanyID()){
+                    message(['Invalid ID','danger']);
+                    redirect('company/tasks');
+                }
+                //post req=> new review
+                redirect('company/review/post/'.$_POST['taskID']);
+            }
+
 
             $studentInst = new StudentModel();
 
@@ -453,6 +468,12 @@ GROUP BY nStars;
             //get the reviews
             $reviews=$reviewInst->innerJoin(['company'],['company.companyID=review.companyID'],['review.studentID'=>$id,'review.reviewType'=>'"companyTOstudent"']);
             $data['reviews']=$reviews;
+
+
+            //sending old closed tasks which are not reviewd
+            $taskInst=new Task();
+            $oldTasks=$taskInst->query("SELECT task.taskID,task.title FROM task LEFT JOIN (SELECT * FROM review WHERE review.reviewType='companyTOstudent') as x ON task.taskID=x.taskID WHERE task.companyID=:companyID AND task.status='closed' AND task.assignedStudentID=:studentID AND reviewID IS NULL;",['companyID'=>Auth::getcompanyID(),'studentID'=>$id]);
+            $data['oldTasks']=$oldTasks;
 
             $data['title'] = "Other User Profiles";
 
