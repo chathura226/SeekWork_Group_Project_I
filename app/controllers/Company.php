@@ -382,36 +382,78 @@ GROUP BY task.taskID;",['compID'=>Auth::getcompanyID()]);
 
 
         if (!empty($id)) {
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                if(empty($_POST['taskID'])){
+                    message(['Invalid ID','danger']);
+                    redirect('company/tasks');
+                }
+                $taskInst=new Task();
+                $res=$taskInst->first(['taskID'=>$_POST['taskID']]);
+                if(empty($res) || $res->companyID!=Auth::getcompanyID()){
+                    message(['Invalid ID','danger']);
+                    redirect('company/tasks');
+                }
+                //post req=> new review
+                redirect('company/review/post/'.$_POST['taskID']);
+            }
+
 
             $studentInst = new StudentModel();
 
 
             $studentDetails = $studentInst->innerJoin(['user', 'university'], ['student.userID=user.userID', 'student.universityID=university.universityID'], ['student.studentID' => $id])[0];
 
-            // $student = $studentInst->first((['studentID' => $id])); //get user details corresponding to the user id
-            // if (!empty($student)) {
-            //     $userInst = new User();
-            //     $user = $userInst->first((['userID' => $student->userID]));
-            //     $universityInst = new University();
-            //     $university = $universityInst->first((['universityID' => $student->universityID]));
 
-            //     //get details of user from relevant table and make a combined object 
-            //     $combinedObject = (object)array_merge((array)$student, (array)$user);
-            //     $combinedObject2 = (object)array_merge((array)$combinedObject, (array)$university);
-
-            //     //pass the combined object to the view
-            //     $data['user'] = $combinedObject2;
-            //     // show($combinedObject2);
-            //     // die;
-
-            //     $data['title'] = "Other User Profiles";
-
-            //     $this->view('company/otherProfile', $data);
-            //     return;
-            // }
 
             $data['user'] = $studentDetails;
 
+            //calculating star ratings for each star
+            $reviewInst=new Review();
+            $res=$reviewInst->query("SELECT nStars, COUNT(*) as rCount
+FROM review
+WHERE studentID=:studentID AND reviewType='companyTOstudent'
+GROUP BY nStars;
+",['studentID'=>$id]);
+            $starCount=array(0,0,0,0,0);
+
+            if(!empty($res)) {
+                $length = count($res);
+
+                for ($i = 0; $i < $length; $i++) {
+                    $starCount[$res[$i]->nStars-1]=$res[$i]->rCount;
+                }
+
+}
+
+            // Find the maximum value in the array
+            $maxValue = max($starCount);
+            if($maxValue!=0){
+                // Calculate the percentage for each value
+                $percentages = [];
+                foreach ($starCount as $value) {
+                    $percentage = ($value / $maxValue) * 100;
+                    $percentages[] = $percentage;
+                }
+            }else{
+                //if max value is zero
+                $percentages = $starCount;
+
+            }
+
+
+
+            $data['starCount']=$starCount;
+            $data['percentages']=$percentages;
+
+            //get the reviews
+            $reviews=$reviewInst->innerJoin(['company'],['company.companyID=review.companyID'],['review.studentID'=>$id,'review.reviewType'=>'"companyTOstudent"']);
+            $data['reviews']=$reviews;
+
+
+            //sending old closed tasks which are not reviewd
+            $taskInst=new Task();
+            $oldTasks=$taskInst->query("SELECT task.taskID,task.title FROM task LEFT JOIN (SELECT * FROM review WHERE review.reviewType='companyTOstudent') as x ON task.taskID=x.taskID WHERE task.companyID=:companyID AND task.status='closed' AND task.assignedStudentID=:studentID AND reviewID IS NULL;",['companyID'=>Auth::getcompanyID(),'studentID'=>$id]);
+            $data['oldTasks']=$oldTasks;
 
             $data['title'] = "Other User Profiles";
 
@@ -423,6 +465,73 @@ GROUP BY task.taskID;",['compID'=>Auth::getcompanyID()]);
         redirect('company');
     }
 
+    //to check others profiles
+    public function viewcompany($id = null)
+    {
+
+
+        if (!empty($id)) {
+
+            $companyInst = new CompanyModel();
+
+
+            $companyDetails = $companyInst->innerJoin(['user'], ['company.userID=user.userID'], ['company.companyID' => $id])[0];
+
+
+            $data['user'] = $companyDetails;
+
+
+            //calculating star ratings for each star
+            $reviewInst=new Review();
+            $res=$reviewInst->query("SELECT nStars, COUNT(*) as rCount
+FROM review
+WHERE companyID=:companyID AND reviewType='studentTOcompany'
+GROUP BY nStars;
+",['companyID'=>$id]);
+            $starCount=array(0,0,0,0,0);
+
+            if(!empty($res)) {
+                $length = count($res);
+
+                for ($i = 0; $i < $length; $i++) {
+                    $starCount[$res[$i]->nStars-1]=$res[$i]->rCount;
+                }
+
+            }
+
+            // Find the maximum value in the array
+            $maxValue = max($starCount);
+            if($maxValue!=0){
+                // Calculate the percentage for each value
+                $percentages = [];
+                foreach ($starCount as $value) {
+                    $percentage = ($value / $maxValue) * 100;
+                    $percentages[] = $percentage;
+                }
+            }else{
+                //if max value is zero
+                $percentages = $starCount;
+
+            }
+
+
+
+            $data['starCount']=$starCount;
+            $data['percentages']=$percentages;
+
+            //get the reviews
+            $reviews=$reviewInst->innerJoin(['student'],['student.studentID=review.studentID'],['review.companyID'=>$id,'review.reviewType'=>'"studentTOcompany"']);
+            $data['reviews']=$reviews;
+
+            $data['title'] = "Other User Profiles";
+
+            $this->view('company/otherCompanyProfile', $data);
+            return;
+        }
+
+        message(['Invalid company ID!', 'danger']);
+        redirect('company');
+    }
     //post tasks
     public function post()
     {

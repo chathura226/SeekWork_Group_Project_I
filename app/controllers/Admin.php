@@ -309,5 +309,144 @@ GROUP BY
         $this->view('admin/tasks', $data);
     }
 
+    //to check others profiles
+    public function viewcompany($id = null)
+    {
+
+
+        if (!empty($id)) {
+
+            $companyInst = new CompanyModel();
+
+
+            $companyDetails = $companyInst->innerJoin(['user'], ['company.userID=user.userID'], ['company.companyID' => $id])[0];
+
+
+            $data['user'] = $companyDetails;
+
+
+            //calculating star ratings for each star
+            $reviewInst=new Review();
+            $res=$reviewInst->query("SELECT nStars, COUNT(*) as rCount
+FROM review
+WHERE companyID=:companyID AND reviewType='studentTOcompany'
+GROUP BY nStars;
+",['companyID'=>$id]);
+            $starCount=array(0,0,0,0,0);
+
+            if(!empty($res)) {
+                $length = count($res);
+
+                for ($i = 0; $i < $length; $i++) {
+                    $starCount[$res[$i]->nStars-1]=$res[$i]->rCount;
+                }
+
+            }
+
+            // Find the maximum value in the array
+            $maxValue = max($starCount);
+            if($maxValue!=0){
+                // Calculate the percentage for each value
+                $percentages = [];
+                foreach ($starCount as $value) {
+                    $percentage = ($value / $maxValue) * 100;
+                    $percentages[] = $percentage;
+                }
+            }else{
+                //if max value is zero
+                $percentages = $starCount;
+
+            }
+
+
+
+            $data['starCount']=$starCount;
+            $data['percentages']=$percentages;
+
+            //get the reviews
+            $reviews=$reviewInst->innerJoin(['student'],['student.studentID=review.studentID'],['review.companyID'=>$id,'review.reviewType'=>'"studentTOcompany"']);
+            $data['reviews']=$reviews;
+
+            $data['title'] = "Other User Profiles";
+
+            $this->view('admin/otherCompanyProfile', $data);
+            return;
+        }
+
+        message(['Invalid company ID!', 'danger']);
+        redirect('admin');
+    }
+    //to check others profiles
+    public function viewstudents($id = null)
+    {
+
+
+        if (!empty($id)) {
+
+
+
+            $studentInst = new StudentModel();
+
+
+            $studentDetails = $studentInst->innerJoin(['user', 'university'], ['student.userID=user.userID', 'student.universityID=university.universityID'], ['student.studentID' => $id])[0];
+
+
+
+            $data['user'] = $studentDetails;
+
+            //calculating star ratings for each star
+            $reviewInst=new Review();
+            $res=$reviewInst->query("SELECT nStars, COUNT(*) as rCount
+FROM review
+WHERE studentID=:studentID AND reviewType='companyTOstudent'
+GROUP BY nStars;
+",['studentID'=>$id]);
+            $starCount=array(0,0,0,0,0);
+
+            if(!empty($res)) {
+                $length = count($res);
+
+                for ($i = 0; $i < $length; $i++) {
+                    $starCount[$res[$i]->nStars-1]=$res[$i]->rCount;
+                }
+
+            }
+
+            // Find the maximum value in the array
+            $maxValue = max($starCount);
+            if($maxValue!=0){
+                // Calculate the percentage for each value
+                $percentages = [];
+                foreach ($starCount as $value) {
+                    $percentage = ($value / $maxValue) * 100;
+                    $percentages[] = $percentage;
+                }
+            }else{
+                //if max value is zero
+                $percentages = $starCount;
+
+            }
+
+
+
+            $data['starCount']=$starCount;
+            $data['percentages']=$percentages;
+
+            //get the reviews
+            $reviews=$reviewInst->innerJoin(['company'],['company.companyID=review.companyID'],['review.studentID'=>$id,'review.reviewType'=>'"companyTOstudent"']);
+            $data['reviews']=$reviews;
+
+
+
+
+            $data['title'] = "Other User Profiles";
+
+            $this->view('admin/otherProfile', $data);
+            return;
+        }
+
+        message(['Invalid User ID!', 'danger']);
+        redirect('admin');
+    }
 
 }

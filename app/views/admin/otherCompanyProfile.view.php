@@ -1,8 +1,5 @@
-<?php $this->view('student/student-header',$data) ?>
+<?php $this->view('admin/admin-header',$data) ?>
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/profile.styles.css"/>
-<link rel="stylesheet" href="<?= ROOT ?>/assets/css/popup.styles.css">
-<link rel="stylesheet" href="<?=ROOT?>/assets/css/floating-button.styles.css"/>
-<link href="<?= ROOT ?>/assets/css/changepassword.styles.css" rel="stylesheet">
 
 <div class="pagetitle column-12">
       <h1>View - Company</h1>
@@ -24,6 +21,7 @@
         </ul>
       </nav>
 </div><!-- End Page Title -->
+
 <!--stylefor reviews-->
 <style>
     <
@@ -114,6 +112,7 @@
         transition: .2s ease-in-out;
     }
 </style>
+
 
     <div class="card c-s-1 row-4">
       <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
@@ -262,14 +261,6 @@
 
         </div>
     <?php endif;?>
-    <a href="#" class="popouplink"  style="margin-top: 10px;align-self:end;text-decoration: none !important;">
-        <div class="floating-button-for-review" style="top:25px;">
-            <button type="button" class="buttonadd">
-                <span class="button__text">Add New Review</span>
-                <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
-            </button>
-        </div>
-    </a>
     <div style="display:flex;flex-direction: column; width: 100%">
         <h2 style="margin-left: 5px;">Reviews</h2>
         <div class="reviewContainerDiv" style="display: flex;flex-direction: column;">
@@ -310,61 +301,7 @@
 
 </div>
 
-<div id="popup1" class="popup">
-    <style>
-        .form-input select{
-            width: 100%;
-            margin-top: 5px;
-            font-size: 15px;
-            padding: 8px;
-        }
-    </style>
-    <div class="popup-content" style="background-color: transparent;border: none;">
-        <div class="wrapper">
-            <div class="form-wrap column-12 row-6">
-                <div class="tab-form row-" style="padding-left: 9px;">
-                    <div class="myheader">
-                        <div class="active-login"><h2>New Review</h2></div>
-                        <span class="close">&times;</span>
-                    </div>
-                    <div class="tab-body " style="height: 235px">
-                        <div class="active1">
-                            <form method="post">
-                                </br>
-
-
-                                <?php if(!empty($oldTasks)):?>
-                                    <h3>Select the task that you want to make a review on</h3>
-                                    <div class="form-input">
-                                        <label>Task</label>
-                                        <select id="taskID" name="taskID" required>
-                                            <?php foreach ($oldTasks as $task):?>
-                                                <option value="<?=$task->taskID?>"><?=$task->title?></option>
-                                            <?php endforeach;?>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-input">
-                                        <button>Review</button>
-                                    </div>
-                                <?php else:?>
-                                    <h2>You have no closed previous tasks with this company!</h2>
-                                <?php endif;?>
-
-
-                            </form>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<?php $this->view('student/student-footer', $data) ?>
+<?php $this->view('admin/admin-footer',$data) ?>
 
 <!--js for sorting-->
 <script>
@@ -431,37 +368,5 @@
             container.appendChild(div);
         });
     }
-</script>
-
-
-<!--for popup-->
-
-<script>
-
-    var modal = document.getElementById('popup1');
-
-    var link = document.getElementsByClassName('popouplink');
-    var linkArray = [...link]
-    var closeBtn = document.getElementsByClassName('close')[0];
-
-    var verificationIDInput = document.getElementById('transactionID');
-    linkArray.forEach(function (item) {
-        item.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent the default action of the link
-            modal.style.display = 'block';
-            // console.log(item.getAttribute('data-id'))
-        });
-    })
-
-
-    closeBtn.addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
 </script>
 

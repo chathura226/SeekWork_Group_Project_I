@@ -114,7 +114,13 @@
       <div class="card__subtitle"><?= ucfirst($user->role) ?> <small><?= ($user->status === 'active') ? '&#x1F7E2;' : '&#x1F534;' ?></small></div>
       <div class="card__wrapper">
 
-        <a href="<?= ROOT ?>/<?= Auth::getrole() ?>/profile/<?= $user->userID ?>"> <button class="card__btn">Details</button></a>
+          <?php if($user->role=='company'):?>
+              <a href="<?= ROOT ?>/<?= Auth::getrole() ?>/viewcompany/<?= $user->companyID ?>"> <button class="card__btn">Details</button></a>
+          <?php elseif ($user->role=='student'):?>
+              <a href="<?= ROOT ?>/<?= Auth::getrole() ?>/viewstudents/<?= $user->studentID ?>"> <button class="card__btn">Details</button></a>
+          <?php else:?>
+              <a href="<?= ROOT ?>/<?= Auth::getrole() ?>/profile/<?= $user->userID ?>"> <button class="card__btn">Details</button></a>
+          <?php endif;?>
         <?php if ($user->role !== 'admin' && $user->role !== 'moderator') : ?>
           <?= ($user->status === 'active') ?
             '<button data-id=' . $user->userID . ' class="card__btn card__btn-solid disableBtn" >Disable</button>'

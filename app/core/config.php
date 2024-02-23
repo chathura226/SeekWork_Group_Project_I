@@ -36,7 +36,7 @@ if($_SERVER['SERVER_NAME']=='localhost'){
     define('DBDRIVER','mysql');
 
     //rootpath for live server : http://www.myweb.com/
-    define('ROOT','http://localhost/public') ;   
+    define('ROOT','http://localhost/public') ;
 }
 
 

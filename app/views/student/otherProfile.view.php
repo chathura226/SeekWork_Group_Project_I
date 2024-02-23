@@ -1,29 +1,31 @@
-<?php $this->view('student/student-header',$data) ?>
-<link rel="stylesheet" href="<?=ROOT?>/assets/css/profile.styles.css"/>
-<link rel="stylesheet" href="<?= ROOT ?>/assets/css/popup.styles.css">
+<?php $this->view('student/student-header', $data) ?>
+<link rel="stylesheet" href="<?= ROOT ?>/assets/css/profile.styles.css"/>
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/floating-button.styles.css"/>
+<link rel="stylesheet" href="<?= ROOT ?>/assets/css/popup.styles.css">
 <link href="<?= ROOT ?>/assets/css/changepassword.styles.css" rel="stylesheet">
 
 <div class="pagetitle column-12">
-      <h1>View - Company</h1>
-      <nav>
+    <h1>View - Student</h1>
+    <nav>
 
         <ul class="breadcrumbs">
-          <li class="breadcrumbs__item">
-            <a href="<?=ROOT?>" class="breadcrumbs__link">Home</a>
-          </li>
-          <li class="breadcrumbs__item">
-            <a href="<?=ROOT?>/<?=Auth::getrole()?>" class="breadcrumbs__link">Dashboard</a>
-          </li>
-          <li class="breadcrumbs__item">
-            <a href="" class="breadcrumbs__link">View - Company </a>
-          </li>
-          <li class="breadcrumbs__item">
-            <a href="" class="breadcrumbs__link breadcrumbs__link--active"><?=ucfirst($user->companyName)?></a>
-          </li>
+            <li class="breadcrumbs__item">
+                <a href="<?= ROOT ?>" class="breadcrumbs__link">Home</a>
+            </li>
+            <li class="breadcrumbs__item">
+                <a href="<?= ROOT ?>/<?= Auth::getrole() ?>" class="breadcrumbs__link">Dashboard</a>
+            </li>
+            <li class="breadcrumbs__item">
+                <a href="" class="breadcrumbs__link">View - Student </a>
+            </li>
+            <li class="breadcrumbs__item">
+                <a href=""
+                   class="breadcrumbs__link breadcrumbs__link--active"><?= ucfirst($user->firstName) . " " . ucfirst($user->lastName) ?></a>
+            </li>
         </ul>
-      </nav>
+    </nav>
 </div><!-- End Page Title -->
+
 <!--stylefor reviews-->
 <style>
     <
@@ -115,45 +117,59 @@
     }
 </style>
 
-    <div class="card c-s-1 row-4">
-      <div class="card__img"><img src="<?=ROOT?>/assets/images/logo.png" alt="Profile Picture"></div>
-      <div class="card__avatar"><img src="<?= ROOT ?><?= (!empty($user->profilePic)) ? "/" . $user->profilePic : "/assets/images/noImage.png" ?>" alt="Profile Picture"></div>
-        <div class="card__title"><?=ucfirst($user->companyName)?></div>
-      <div class="card__subtitle"><?=ucfirst($user->role)?> </div>
 
-    </div>
+<div class="card c-s-1 row-4">
+    <div class="card__img"><img src="<?= ROOT ?>/assets/images/logo.png" alt="Profile Picture"></div>
+    <div class="card__avatar"><img
+                src="<?= ROOT ?><?= (!empty($user->profilePic)) ? "/" . $user->profilePic : "/assets/images/noImage.png" ?>"
+                alt="Profile Picture"></div>
+    <div class="card__title"><?= ucfirst($user->firstName) ?> <?= ucfirst($user->lastName) ?> </div>
+    <div class="card__subtitle"><?= ucfirst($user->role) ?> </div>
 
-    <div class="profile-details c-s-2 c-e-13 row-6" >
-      <div>
+</div>
+
+<div class="profile-details c-s-2 c-e-13 row-6">
+    <div>
         <svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512">
-          <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
+            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
         </svg>
-        <h2>Profile Details</h2>
-      </div>
-        <?=ucfirst($user->role)?> ID :<hr>
-        <div><?=$user->companyID?></div>
-        Status:<hr>
-        <div><?=ucfirst($user->status)?></div>
-        Joined Date :<hr>
-        <div><?=ucfirst($user->createdAt)?></div>
-        Company Description :<hr>
-        <div><?=$user->description?></div>
-        Company Website :<hr>
-        <div><?=(!empty($user->website))?$user->website:'N/A'?></div>
-        Contact Person Details:
-        <hr>
-      <div>First Name: <?=ucfirst($user->firstName)?></div>
-      <div>Last Name: <?=ucfirst($user->lastName)?></div>
-        <div class="btn-container" style="margin: 0;padding: 0;">
-            <div class="btn-effect" style="margin: 0;padding: 0;">
-                <a style="font-size:15px;background-color:black;padding: 5px 0px;width:155px" class="effect" href="<?=ROOT?>/<?=Auth::getrole()?>/chats/<?=$user->userID?>" title="Contact"><svg xmlns="http://www.w3.org/2000/svg" style="fill: white !important;" fill="white" height="1em" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M208 352c114.9 0 208-78.8 208-176S322.9 0 208 0S0 78.8 0 176c0 38.6 14.7 74.3 39.6 103.4c-3.5 9.4-8.7 17.7-14.2 24.7c-4.8 6.2-9.7 11-13.3 14.3c-1.8 1.6-3.3 2.9-4.3 3.7c-.5 .4-.9 .7-1.1 .8l-.2 .2 0 0 0 0C1 327.2-1.4 334.4 .8 340.9S9.1 352 16 352c21.8 0 43.8-5.6 62.1-12.5c9.2-3.5 17.8-7.4 25.3-11.4C134.1 343.3 169.8 352 208 352zM448 176c0 112.3-99.1 196.9-216.5 207C255.8 457.4 336.4 512 432 512c38.2 0 73.9-8.7 104.7-23.9c7.5 4 16 7.9 25.2 11.4c18.3 6.9 40.3 12.5 62.1 12.5c6.9 0 13.1-4.5 15.2-11.1c2.1-6.6-.2-13.8-5.8-17.9l0 0 0 0-.2-.2c-.2-.2-.6-.4-1.1-.8c-1-.8-2.5-2-4.3-3.7c-3.6-3.3-8.5-8.1-13.3-14.3c-5.5-7-10.7-15.4-14.2-24.7c24.9-29 39.6-64.7 39.6-103.4c0-92.8-84.9-168.9-192.6-175.5c.4 5.1 .6 10.3 .6 15.5z"/></svg>
-                    Chat Now </a>
-            </div>
-
-        </div>
+        <h2 style="margin-left: 5px;">Profile Details</h2>
     </div>
+    <?= ucfirst($user->role) ?> ID :
+    <hr>
+    <div><?= $user->studentID ?></div>
+    First Name:
+    <hr>
+    <div><?= ucfirst($user->firstName) ?></div>
+    Last Name:
+    <hr>
+    <div><?= ucfirst($user->lastName) ?></div>
+    University:
+    <hr>
+    <div><?= ucfirst($user->universityName) ?></div>
+    Status:
+    <hr>
+    <div><?= ucfirst($user->status) ?></div>
+    Student Description :
+    <hr>
+    <div><?= $user->description ?></div>
+    Joined Date :
+    <hr>
+    <div><?= ucfirst($user->createdAt) ?></div>
+    <div class="btn-container" style="margin: 0;padding: 0;">
+        <div class="btn-effect" style="margin: 0;padding: 0;">
+            <a style="font-size:15px;background-color:black;padding: 5px 0px;width:155px" class="effect"
+               href="<?= ROOT ?>/<?= Auth::getrole() ?>/chats/<?= $user->userID ?>" title="Contact">
+                <svg xmlns="http://www.w3.org/2000/svg" style="fill: white !important;" fill="white" height="1em"
+                     viewBox="0 0 640 512">
+                    <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                    <path d="M208 352c114.9 0 208-78.8 208-176S322.9 0 208 0S0 78.8 0 176c0 38.6 14.7 74.3 39.6 103.4c-3.5 9.4-8.7 17.7-14.2 24.7c-4.8 6.2-9.7 11-13.3 14.3c-1.8 1.6-3.3 2.9-4.3 3.7c-.5 .4-.9 .7-1.1 .8l-.2 .2 0 0 0 0C1 327.2-1.4 334.4 .8 340.9S9.1 352 16 352c21.8 0 43.8-5.6 62.1-12.5c9.2-3.5 17.8-7.4 25.3-11.4C134.1 343.3 169.8 352 208 352zM448 176c0 112.3-99.1 196.9-216.5 207C255.8 457.4 336.4 512 432 512c38.2 0 73.9-8.7 104.7-23.9c7.5 4 16 7.9 25.2 11.4c18.3 6.9 40.3 12.5 62.1 12.5c6.9 0 13.1-4.5 15.2-11.1c2.1-6.6-.2-13.8-5.8-17.9l0 0 0 0-.2-.2c-.2-.2-.6-.4-1.1-.8c-1-.8-2.5-2-4.3-3.7c-3.6-3.3-8.5-8.1-13.3-14.3c-5.5-7-10.7-15.4-14.2-24.7c24.9-29 39.6-64.7 39.6-103.4c0-92.8-84.9-168.9-192.6-175.5c.4 5.1 .6 10.3 .6 15.5z"/>
+                </svg>
+                Chat Now </a>
+        </div>
 
-
+    </div>
+</div>
 <div class="profile-details-reviews c-s-1 c-e-13 row-6" style="background-color: white;
   border-radius: 15px;
   color: var(--text-color);
@@ -243,33 +259,26 @@
 
     <hr style="margin-top: 25px;margin-bottom: 25px;">
     <?php if (!empty($reviews)): ?>
-        <div class="searchAndFilter" style="align-self:end;display: flex;flex-wrap: wrap;gap: 15px">
+    <div class="searchAndFilter" style="align-self:end;display: flex;flex-wrap: wrap;gap: 15px">
 
-            <label class="dropdown">Sort By
+        <label class="dropdown">Sort By
 
-                <div class="dd-button" id="sortByTitle" style="width: 120px;">
-                    Date
-                </div>
+            <div class="dd-button" id="sortByTitle" style="width: 120px;">
+                Date
+            </div>
 
-                <input type="checkbox" class="dd-input" id="test">
+            <input type="checkbox" class="dd-input" id="test">
 
-                <ul class="dd-menu">
-                    <li onclick="sortByFilter('date')">Date</li>
-                    <li onclick="sortByFilter('No. Stars')">No. Stars</li>
-                </ul>
+            <ul class="dd-menu">
+                <li onclick="sortByFilter('date')">Date</li>
+                <li onclick="sortByFilter('No. Stars')">No. Stars</li>
+            </ul>
 
-            </label>
+        </label>
 
-        </div>
-    <?php endif;?>
-    <a href="#" class="popouplink"  style="margin-top: 10px;align-self:end;text-decoration: none !important;">
-        <div class="floating-button-for-review" style="top:25px;">
-            <button type="button" class="buttonadd">
-                <span class="button__text">Add New Review</span>
-                <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
-            </button>
-        </div>
-    </a>
+    </div>
+<?php endif;?>
+
     <div style="display:flex;flex-direction: column; width: 100%">
         <h2 style="margin-left: 5px;">Reviews</h2>
         <div class="reviewContainerDiv" style="display: flex;flex-direction: column;">
@@ -280,7 +289,7 @@
                             <div class="card-review-top">
                                 <div class="cls-name">
                                     <div class="img one" alt=""><img src="<?=ROOT.'/'.$review->profilePic?>"></div>
-                                    <p><a class="linkForStudent" style="text-decoration: none" href="<?=ROOT?>/<?=Auth::getrole()?>/viewstudents/<?=$review->studentID?>"><?= ucfirst($review->firstName).' '.ucfirst($review->lastName) ?></a></p>
+                                    <p><a class="linkForStudent" style="text-decoration: none" href="<?=ROOT?>/<?=Auth::getrole()?>/viewcompany/<?=$review->companyID?>"><?= $review->companyName ?></a></p>
                                 </div>
                                 <div class="rate" data-id="<?=$review->nStars?>">
                                     <?php $this->view('includes/stars', ['nStars' => $review->nStars]) ?>
@@ -310,58 +319,6 @@
 
 </div>
 
-<div id="popup1" class="popup">
-    <style>
-        .form-input select{
-            width: 100%;
-            margin-top: 5px;
-            font-size: 15px;
-            padding: 8px;
-        }
-    </style>
-    <div class="popup-content" style="background-color: transparent;border: none;">
-        <div class="wrapper">
-            <div class="form-wrap column-12 row-6">
-                <div class="tab-form row-" style="padding-left: 9px;">
-                    <div class="myheader">
-                        <div class="active-login"><h2>New Review</h2></div>
-                        <span class="close">&times;</span>
-                    </div>
-                    <div class="tab-body " style="height: 235px">
-                        <div class="active1">
-                            <form method="post">
-                                </br>
-
-
-                                <?php if(!empty($oldTasks)):?>
-                                    <h3>Select the task that you want to make a review on</h3>
-                                    <div class="form-input">
-                                        <label>Task</label>
-                                        <select id="taskID" name="taskID" required>
-                                            <?php foreach ($oldTasks as $task):?>
-                                                <option value="<?=$task->taskID?>"><?=$task->title?></option>
-                                            <?php endforeach;?>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-input">
-                                        <button>Review</button>
-                                    </div>
-                                <?php else:?>
-                                    <h2>You have no closed previous tasks with this company!</h2>
-                                <?php endif;?>
-
-
-                            </form>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <?php $this->view('student/student-footer', $data) ?>
@@ -433,35 +390,4 @@
     }
 </script>
 
-
-<!--for popup-->
-
-<script>
-
-    var modal = document.getElementById('popup1');
-
-    var link = document.getElementsByClassName('popouplink');
-    var linkArray = [...link]
-    var closeBtn = document.getElementsByClassName('close')[0];
-
-    var verificationIDInput = document.getElementById('transactionID');
-    linkArray.forEach(function (item) {
-        item.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent the default action of the link
-            modal.style.display = 'block';
-            // console.log(item.getAttribute('data-id'))
-        });
-    })
-
-
-    closeBtn.addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
-</script>
 

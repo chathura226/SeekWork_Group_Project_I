@@ -941,3 +941,28 @@ a.linkForStudent:visited{
 .tab-form .tab-body > div.active1{
     background-color: white !important;
 }
+
+
+
+.rating-progress-loader {
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*position: absolute;*/
+    /*transform: translate(-50%, -50%);*/
+    width: 350px;
+    background: rgba(150, 150, 150, 0.25);
+    height: 10px;
+    border-radius: 7px;
+    margin: 8px;
+}
+
+.rating-progress {
+    width: 50%;
+    height: 10px;
+    border-radius: 7px;
+    background: rgb(255, 123, 0);
+    transition: 0.5s;
+
+}
+
+

@@ -14,6 +14,16 @@
     flex-wrap: wrap; 
 }
 
+.floating-button-for-review {
+    background-color: #34974d;
+    border-radius: 5%;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-wrap: wrap;
+    width: 210px;
+}
+
 .floating-button button {
     font-size: 15px !important;
 
