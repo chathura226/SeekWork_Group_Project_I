@@ -1,4 +1,4 @@
-<?php $this->view('company/company-header',$data) ?>
+<?php $this->view('student/student-header',$data) ?>
 <link rel="stylesheet" href="<?=ROOT?>/assets/css/profile.styles.css"/>
 
 <div class="pagetitle column-12">
@@ -61,4 +61,4 @@
         </div>
     </div>
 
-<?php $this->view('company/company-footer',$data) ?>
+<?php $this->view('student/student-footer',$data) ?>
