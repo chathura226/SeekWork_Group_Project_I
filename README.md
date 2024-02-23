@@ -22,3 +22,8 @@ Features :
  inner joins using function
  Auditing using triggers
  Revalidation using events (every 6 month)
+
+
+
+When deploying:
+change the root in main app and chat app config files

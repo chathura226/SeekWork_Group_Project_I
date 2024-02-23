@@ -450,6 +450,10 @@ GROUP BY nStars;
             $data['starCount']=$starCount;
             $data['percentages']=$percentages;
 
+            //get the reviews
+            $reviews=$reviewInst->innerJoin(['company'],['company.companyID=review.companyID'],['review.studentID'=>$id,'review.reviewType'=>'"companyTOstudent"']);
+            $data['reviews']=$reviews;
+
             $data['title'] = "Other User Profiles";
 
             $this->view('company/otherProfile', $data);
