@@ -403,27 +403,7 @@ GROUP BY task.taskID;",['compID'=>Auth::getcompanyID()]);
 
             $studentDetails = $studentInst->innerJoin(['user', 'university'], ['student.userID=user.userID', 'student.universityID=university.universityID'], ['student.studentID' => $id])[0];
 
-            // $student = $studentInst->first((['studentID' => $id])); //get user details corresponding to the user id
-            // if (!empty($student)) {
-            //     $userInst = new User();
-            //     $user = $userInst->first((['userID' => $student->userID]));
-            //     $universityInst = new University();
-            //     $university = $universityInst->first((['universityID' => $student->universityID]));
 
-            //     //get details of user from relevant table and make a combined object 
-            //     $combinedObject = (object)array_merge((array)$student, (array)$user);
-            //     $combinedObject2 = (object)array_merge((array)$combinedObject, (array)$university);
-
-            //     //pass the combined object to the view
-            //     $data['user'] = $combinedObject2;
-            //     // show($combinedObject2);
-            //     // die;
-
-            //     $data['title'] = "Other User Profiles";
-
-            //     $this->view('company/otherProfile', $data);
-            //     return;
-            // }
 
             $data['user'] = $studentDetails;
 

@@ -296,7 +296,7 @@
                             <div class="card-review-top">
                                 <div class="cls-name">
                                     <div class="img one" alt=""><img src="<?=ROOT.'/'.$review->profilePic?>"></div>
-                                    <p><?= $review->companyName ?></p>
+                                    <p><a class="linkForStudent" style="text-decoration: none" href="<?=ROOT?>/<?=Auth::getrole()?>/viewcompany/<?=$review->companyID?>"><?= $review->companyName ?></a></p>
                                 </div>
                                 <div class="rate" data-id="<?=$review->nStars?>">
                                     <?php $this->view('includes/stars', ['nStars' => $review->nStars]) ?>

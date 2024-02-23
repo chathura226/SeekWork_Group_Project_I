@@ -271,7 +271,7 @@
                             <div class="card-review-top">
                                 <div class="cls-name">
                                     <div class="img one" alt=""><img src="<?=ROOT.'/'.$review->profilePic?>"></div>
-                                    <p><?= ucfirst($review->firstName).' '.ucfirst($review->lastName) ?></p>
+                                    <p><a class="linkForStudent" style="text-decoration: none" href="<?=ROOT?>/<?=Auth::getrole()?>/viewstudents/<?=$review->studentID?>"><?= ucfirst($review->firstName).' '.ucfirst($review->lastName) ?></a></p>
                                 </div>
                                 <div class="rate" data-id="<?=$review->nStars?>">
                                     <?php $this->view('includes/stars', ['nStars' => $review->nStars]) ?>
