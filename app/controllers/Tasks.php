@@ -61,6 +61,9 @@ class Tasks extends Controller
                 $data['recommendedTasksPageCount'] = ceil($row3[0]->total_rows_before_limit / $tasksPerPage); //recommended  tasks total page count
 //                  show($data['recommendedTasksPageCount']);
 //                  die;
+                if($data['recommendedTasksPageCount']==0){//if no recommended tasks
+                    $data['recommendedTasksPageCount']=1;
+                }
 
                 $query = "SELECT DISTINCT t.`taskID`, `title`, `taskType`, `description`, `deadline`, `value`, `status`, `documents`, `companyID`, `assignedStudentID`, `assignmentID`, `categoryID`, `finishedDate`, `createdAt` FROM task t JOIN task_skill ts ON t.taskID = ts.taskID WHERE t.isDeleted=0 AND ts.skillID IN ( SELECT student_skill.skillID FROM student_skill WHERE student_skill.studentID = :studentID )  ORDER BY t.createdAt ASC LIMIT " . $tasksPerPage . " OFFSET " . $tasksPerPage * ($data['pageNum'] - 1) . ";";
                 $row2 = $task->query($query, ['studentID' => Auth::getstudentID()]);
