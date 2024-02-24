@@ -40,42 +40,12 @@
     <h2><?=ucfirst($review->reviewTitle)?></h2>
     <h4>Review Date: <?=ucfirst($review->reviewDate)?></h4>
     <h4>For Task: <?=ucfirst($review->task->title)?></h4>
-    <h4>For Company:  <?=ucfirst($review->company->companyName)?></h4>
-    <div class="nstars"><h4>No. of Stars: &nbsp</h4>  
-      <div class="rating">
-        <label>
-          <input style="cursor: default !important;" type="radio" name="nStars" value="1" <?php if($review->nStars===1) echo "checked";?> disabled/>
-          <span class="icon">★</span>
-        </label>
-        <label>
-          <input style="cursor: default !important;" type="radio" name="nStars" value="2" <?php if($review->nStars===2) echo "checked";?> disabled/>
-          <span class="icon">★</span>
-          <span class="icon">★</span>
-        </label>
-        <label>
-          <input style="cursor: default !important;" type="radio" name="nStars" value="3" <?php if($review->nStars===3) echo "checked";?> disabled/>
-          <span class="icon">★</span>
-          <span class="icon">★</span>
-          <span class="icon">★</span>   
-        </label>
-        <label>
-          <input style="cursor: default !important;" type="radio" name="nStars" value="4" <?php if($review->nStars===4) echo "checked";?> disabled/>
-          <span class="icon">★</span>
-          <span class="icon">★</span>
-          <span class="icon">★</span>
-          <span class="icon">★</span>
-        </label>
-        <label>
-          <input style="cursor: default !important;" type="radio" name="nStars" value="5" <?php if($review->nStars===5) echo "checked";?> disabled/>
-          <span class="icon">★</span>
-          <span class="icon">★</span>
-          <span class="icon">★</span>
-          <span class="icon">★</span>
-          <span class="icon">★</span>
-        </label>
+      <h4>For Company:  <a class="linkForStudent" style="text-decoration: none" href="<?=ROOT?>/<?=Auth::getrole()?>/viewcompany/<?=$review->company->companyID?>"> <?=ucfirst($review->company->companyName)?></a></h4>
+      <div class="nstars"><h4 style="margin-top: 5px;">No. of Stars: &nbsp</h4>
+          <div class="rating" style="">
+              <?php $this->view('includes/stars', ['nStars'=>$review->nStars]) ?>
+          </div>
       </div>
-    
-    </div>
     <h4>Review:</h4><div class="review-disc">  <?=ucfirst($review->reviewDescription)?></div>
 
     </div>
