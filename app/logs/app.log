@@ -154,3 +154,4 @@
 [2024-02-23T13:08:51.157466+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.22.0.1"} []
 [2024-02-23T15:02:43.387152+00:00] log.INFO: User Logged in Successfully! {"user_id":28,"IP_Address":"172.22.0.1"} []
 [2024-02-23T15:31:17.161192+00:00] log.INFO: User Logged in Successfully! {"user_id":25,"IP_Address":"172.22.0.1"} []
+[2024-02-24T00:04:15.635484+00:00] log.INFO: User Logged in Successfully! {"user_id":27,"IP_Address":"172.18.0.1"} []
