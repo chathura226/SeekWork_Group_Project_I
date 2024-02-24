@@ -264,7 +264,7 @@ GROUP BY task.taskID;",['compID'=>Auth::getcompanyID()]);
                         return;
                     } else if ($action === 'view-proposals') { //view all proposals relavant to given task id
                         $proposal = new Proposal();
-                        $proposals = $proposal->where(['taskID' => $id]);
+                        $proposals = $proposal->innerJoin(['student'],['proposal.studentID=student.studentID'],['taskID' => $id]);
                         $data['title'] = "Proposals";
                         $data['task'] = $row;
                         $data['proposals'] = $proposals;
