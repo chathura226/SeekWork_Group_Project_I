@@ -38,7 +38,7 @@ class Tasks extends Controller
             $row4 = $task->query($all_rows, []);
             $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
 
-            $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'", 'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
+            $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'", 'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus,task.description AS description'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
             $data['tasks'] = $row;// this is for all tasks
 
 
@@ -61,6 +61,9 @@ class Tasks extends Controller
                 $data['recommendedTasksPageCount'] = ceil($row3[0]->total_rows_before_limit / $tasksPerPage); //recommended  tasks total page count
 //                  show($data['recommendedTasksPageCount']);
 //                  die;
+                if($data['recommendedTasksPageCount']==0){//if no recommended tasks
+                    $data['recommendedTasksPageCount']=1;
+                }
 
                 $query = "SELECT DISTINCT t.`taskID`, `title`, `taskType`, `description`, `deadline`, `value`, `status`, `documents`, `companyID`, `assignedStudentID`, `assignmentID`, `categoryID`, `finishedDate`, `createdAt` FROM task t JOIN task_skill ts ON t.taskID = ts.taskID WHERE t.isDeleted=0 AND ts.skillID IN ( SELECT student_skill.skillID FROM student_skill WHERE student_skill.studentID = :studentID )  ORDER BY t.createdAt ASC LIMIT " . $tasksPerPage . " OFFSET " . $tasksPerPage * ($data['pageNum'] - 1) . ";";
                 $row2 = $task->query($query, ['studentID' => Auth::getstudentID()]);
@@ -160,7 +163,7 @@ class Tasks extends Controller
             $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
 
             $offset = $tasksPerPage * ($data['pageNum'] - 1);
-            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.title LIKE '%$searchField%' ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset");
+            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus, task.description AS description FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.title LIKE '%$searchField%' ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset");
 //        $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'",'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
             $data['tasks'] = $row;// this is for all tasks
 //        show($row);
@@ -172,7 +175,7 @@ class Tasks extends Controller
             $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
 
             $offset = $tasksPerPage * ($data['pageNum'] - 1);
-            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.taskID IN (SELECT DISTINCT(taskID) FROM task_skill WHERE skillID IN (SELECT skillID FROM skill WHERE skill.skill LIKE '%$searchField%')) ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset ");
+            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus, task.description AS description FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.taskID IN (SELECT DISTINCT(taskID) FROM task_skill WHERE skillID IN (SELECT skillID FROM skill WHERE skill.skill LIKE '%$searchField%')) ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset ");
 //        $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'",'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
             $data['tasks'] = $row;// this is for all tasks
         }else{
@@ -183,7 +186,7 @@ class Tasks extends Controller
             $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
 
             $offset = $tasksPerPage * ($data['pageNum'] - 1);
-            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.taskID IN (SELECT DISTINCT(taskID) FROM task WHERE categoryID IN (SELECT categoryID FROM category WHERE category.title LIKE '%$searchField%' OR category.tags LIKE '%$searchField%')) ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset ");
+            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus, task.description AS description FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.taskID IN (SELECT DISTINCT(taskID) FROM task WHERE categoryID IN (SELECT categoryID FROM category WHERE category.title LIKE '%$searchField%' OR category.tags LIKE '%$searchField%')) ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset ");
 //        $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'",'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
             $data['tasks'] = $row;// this is for all tasks
         }
@@ -227,7 +230,7 @@ class Tasks extends Controller
             $row4 = $task->query($all_rows, ['id'=>$id]);
             $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
 
-            $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'", 'task.isDeleted' => 0,'task.categoryID'=>$id], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
+            $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'", 'task.isDeleted' => 0,'task.categoryID'=>$id], ['*,task.status AS status , company.status AS companyStatus,task.description AS description'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
             $data['tasks'] = $row;// this is for all tasks
 
             $categoryInst=new Category();
