@@ -38,7 +38,7 @@ class Tasks extends Controller
             $row4 = $task->query($all_rows, []);
             $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
 
-            $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'", 'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
+            $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'", 'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus,task.description AS description'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
             $data['tasks'] = $row;// this is for all tasks
 
 
@@ -160,7 +160,7 @@ class Tasks extends Controller
             $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
 
             $offset = $tasksPerPage * ($data['pageNum'] - 1);
-            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.title LIKE '%$searchField%' ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset");
+            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus, task.description AS description FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.title LIKE '%$searchField%' ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset");
 //        $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'",'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
             $data['tasks'] = $row;// this is for all tasks
 //        show($row);
@@ -172,7 +172,7 @@ class Tasks extends Controller
             $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
 
             $offset = $tasksPerPage * ($data['pageNum'] - 1);
-            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.taskID IN (SELECT DISTINCT(taskID) FROM task_skill WHERE skillID IN (SELECT skillID FROM skill WHERE skill.skill LIKE '%$searchField%')) ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset ");
+            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus, task.description AS description FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.taskID IN (SELECT DISTINCT(taskID) FROM task_skill WHERE skillID IN (SELECT skillID FROM skill WHERE skill.skill LIKE '%$searchField%')) ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset ");
 //        $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'",'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
             $data['tasks'] = $row;// this is for all tasks
         }else{
@@ -183,7 +183,7 @@ class Tasks extends Controller
             $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
 
             $offset = $tasksPerPage * ($data['pageNum'] - 1);
-            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.taskID IN (SELECT DISTINCT(taskID) FROM task WHERE categoryID IN (SELECT categoryID FROM category WHERE category.title LIKE '%$searchField%' OR category.tags LIKE '%$searchField%')) ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset ");
+            $row = $task->query("SELECT *,task.status AS status , company.status AS companyStatus, task.description AS description FROM task INNER JOIN company ON task.companyID=company.companyID WHERE task.status='active' && task.isDeleted=0 && task.taskID IN (SELECT DISTINCT(taskID) FROM task WHERE categoryID IN (SELECT categoryID FROM category WHERE category.title LIKE '%$searchField%' OR category.tags LIKE '%$searchField%')) ORDER BY task.createdAt ASC LIMIT $tasksPerPage OFFSET $offset ");
 //        $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'",'task.isDeleted' => 0], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
             $data['tasks'] = $row;// this is for all tasks
         }
@@ -227,7 +227,7 @@ class Tasks extends Controller
             $row4 = $task->query($all_rows, ['id'=>$id]);
             $data['allTasksPageCount'] = ceil($row4[0]->all_rows / $tasksPerPage); //all  tasks total page count
 
-            $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'", 'task.isDeleted' => 0,'task.categoryID'=>$id], ['*,task.status AS status , company.status AS companyStatus'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
+            $row = $task->innerJoin(['company'], ['task.companyID=company.companyID'], ['task.status' => "'active'", 'task.isDeleted' => 0,'task.categoryID'=>$id], ['*,task.status AS status , company.status AS companyStatus,task.description AS description'], ['task.createdAt', 'ASC'], $tasksPerPage, $tasksPerPage * ($data['pageNum'] - 1));
             $data['tasks'] = $row;// this is for all tasks
 
             $categoryInst=new Category();
