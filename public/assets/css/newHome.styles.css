@@ -52,7 +52,7 @@ header .navbar{
 
 .hero-section{
     height: 100vh;
-    background-position: center;
+    background-position: top;
     background-size: cover;
     display: flex;
     align-items: center;
