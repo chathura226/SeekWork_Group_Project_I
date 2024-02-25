@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/newHome.styles.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/footer.styles.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/loader.styles.css">
-
+    <title><?=$title?> | <?=APP_NAME?></title>
+    <!-- fonts -->
+    <link rel="stylesheet" type="text/css" href="<?=ROOT?>/assets/css/custom-fonts.css">
+    <!-- Favicons -->
+    <link href="<?=ROOT?>/assets/images/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/alerts.styles.css">
 </head>
 
 
@@ -412,6 +417,17 @@
         '<?=ROOT?>/assets/images/newHome/ed6799.jpg',
         '<?=ROOT?>/assets/images/newHome/f828c5.jpg',
     ];
+
+    // preload images
+    function preloadImages() {
+        for (let i = 0; i < images.length; i++) {
+            const img = new Image();
+            img.src = images[i];
+        }
+    }
+    // Preload images before starting transition loop
+    preloadImages();
+
 
     let index = 0;
     const backgroundDiv = document.querySelector('.hero-section');
