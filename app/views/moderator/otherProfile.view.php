@@ -135,6 +135,8 @@
         </svg>
         <h2 style="margin-left: 5px;">Profile Details</h2>
     </div>
+    User ID :<hr>
+    <div><?= $user->userID?></div>
     <?= ucfirst($user->role) ?> ID :
     <hr>
     <div><?= $user->studentID ?></div>
@@ -144,6 +146,14 @@
     Last Name:
     <hr>
     <div><?= ucfirst($user->lastName) ?></div>
+    Email Address:<hr>
+    <div><?=$user->email?></div>
+    Contact Number :<hr>
+    <div><?=$user->contactNo?></div>
+    Address :<hr>
+    <div><?=ucfirst($user->address)?></div>
+    NIC :<hr>
+    <div><?= $user->NIC?></div>
     University:
     <hr>
     <div><?= ucfirst($user->universityName) ?></div>
@@ -153,6 +163,17 @@
     Student Description :
     <hr>
     <div><?= $user->description ?></div>
+    Skills :<hr>
+    <div class="skill-wrapper" style="padding: 0px !important; margin-top: 0px !important;">
+        <?php if (!empty($user->skills)): foreach ($user->skills as $skill): ?>
+            <div class="skill"><?= $skill->skill ?>
+            </div>
+        <?php endforeach; else: ?>
+            No Skills added!
+        <?php endif; ?>
+    </div>
+    Qualifications :<hr>
+    <div><?= $user->qualifications ?></div>
     Joined Date :
     <hr>
     <div><?= ucfirst($user->createdAt) ?></div>
