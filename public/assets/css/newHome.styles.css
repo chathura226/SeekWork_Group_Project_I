@@ -22,6 +22,8 @@ header{
     top: 0;
     width: 100%;
     padding: 20px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
 }
 
 header .navbar{
@@ -37,7 +39,8 @@ header .navbar{
     align-items: center;
     list-style: none;
     gap: 30px;
-
+    font-size:larger;
+    font-weight:600;
 }
 
 .navbar .menu-links a{

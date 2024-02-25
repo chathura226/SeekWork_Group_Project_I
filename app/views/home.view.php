@@ -22,16 +22,16 @@
     .centerbox-cont{
         max-width: 620px;
     }
-    .centerbox {
-        position: relative;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        /*width: 676px;*/
-        min-height: 52px;
-        /*z-index: 2*/
-    }
-
+    /*.centerbox {*/
+    /*    position: relative;*/
+    /*    top: 50%;*/
+    /*    left: 50%;*/
+    /*    transform: translate(-50%, -50%);*/
+    /*    !*width: 676px;*!*/
+    /*    min-height: 52px;*/
+    /*    !*z-index: 2*!*/
+    /*}*/
+    /**/
     .centerbox h1 {
         margin-bottom: 25px;
         font-size: 36px;
@@ -106,7 +106,7 @@
         height: 50px;
         border: 1px solid #cccccc;
         padding: 0px;
-        position: relative;
+        /*position: relative;*/
         float: left;
         border-right: 0px;
         background: #ffffff url("<?=ROOT?>/assets/images/main-bullet.png") 122px 23px no-repeat;
@@ -118,12 +118,12 @@
         font-size: 12px;
         margin: 0px;
         color: #9B9B9B;
-        position: absolute;
+        /*position: relative;*/
         top: 6px;
         left: 16px;
         display: inline-block;
-        width: 80px;
-        height: 20px;
+        width: 105px;
+        /*height: 20px;*/
         text-align: left;
     }
 
@@ -131,27 +131,27 @@
         font-size: 16px;
         margin: 0px;
         color: #4A4A4A;
-        position: absolute;
+        /*position: relative;*/
         top: 19px;
         left: 16px;
         display: inline-block;
         width: 105px;
-        height: 20px;
+        /*height: 20px;*/
         font-weight: 900;
         text-align: left;
     }
 
     .main-form-container {
         height: 50px;
-        position: relative;
+        /*position: relative;*/
     }
 
     ul.search-description {
         width: 150px;
-        position: absolute;
+        position: relative;
         background: #fff;
-        right: 143px;
-        top: 55px;
+        right:-327px;
+        top: 49px;
         border-radius: 2px;
         padding: 14px 0px;
         border: 1px solid #E5E5E5;
@@ -266,12 +266,12 @@
 
                     <button onclick="toggleDrop()" type="button" class="main-btn"><p class="search-small">SEARCH BY</p>
                         <p class="search-large">Title</p></button>
+                    <input id="main-submit" class="" type="submit" value="Search"/>
                     <ul class="search-description">
                         <li onclick="byValue('title')">By Title</li>
                         <li onclick="byValue('skill')">By Skill</li>
                         <li onclick="byValue('category')">By Category</li>
                     </ul>
-                    <input id="main-submit" class="" type="submit" value="Search"/>
                 </form>
 
             </div>
@@ -407,6 +407,22 @@
 
 <!--background image transition-->
 <script>
+    let headerColor="#000";
+
+    //add color to header when scroll
+    window.addEventListener('scroll', function() {
+        var header = document.querySelector('header');
+        var scrollPosition = window.scrollY;
+
+        // Add class to header when scroll position is greater than 100px
+        if (scrollPosition > 100) {
+            header.style.backgroundColor=headerColor;
+        } else {
+            header.style.backgroundColor='transparent';
+        }
+    });
+
+
     // Array of background images
     const images = [
         '<?=ROOT?>/assets/images/newHome/7ab660.jpg',
