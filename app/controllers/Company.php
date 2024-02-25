@@ -402,8 +402,11 @@ GROUP BY task.taskID;",['compID'=>Auth::getcompanyID()]);
 
 
             $studentDetails = $studentInst->innerJoin(['user', 'university'], ['student.userID=user.userID', 'student.universityID=university.universityID'], ['student.studentID' => $id])[0];
-
-
+            //getting skills related to student
+            $skillInst=new Student_Skill();
+            $skills=$skillInst->innerJoin(['skill'],['student_skill.skillID=skill.skillID'],['student_skill.studentID'=>$id]);
+            $studentDetails->skills=$skills;
+//            show($studentDetails);die;
 
             $data['user'] = $studentDetails;
 
