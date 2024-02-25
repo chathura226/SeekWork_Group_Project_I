@@ -1,0 +1,189 @@
+@font-face {
+    font-family: 'URWGeometricRegular'; /* Name of your custom font */
+    src: url('../fonts/URWGeometricRegular.otf'); /* URL to the font file */
+    /* Add additional src lines for other font formats if needed */
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'URWGeometricRegular';
+    scroll-behavior: smooth;
+}
+
+body{
+    background-color: #1B1B1D;
+}
+
+header{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+}
+
+header .navbar{
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar .menu-links{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 30px;
+
+}
+
+.navbar .menu-links a{
+    color: #fff;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.navbar .menu-links a:hover{
+    color: #19a463;
+}
+
+.hero-section{
+    height: 100vh;
+    background-position: top;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    transition: background 2s ease;
+}
+
+.hero-section .content{
+    max-width: 1400px;
+    margin: 0 auto 40px;
+    width: 100%;
+}
+
+.hero-section .content h1{
+    color: #fff;
+    font-size: 3rem;
+    max-width: 630px;
+    margin-bottom: 30px;
+
+}
+
+.hero-section .popular-tag{
+    display: flex;
+    color: #fff;
+    gap: 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.hero-section .popular-tag .tags{
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.hero-section .tags li a{
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 50px;
+    padding: 5px 12px;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.hero-section .tags li a:hover{
+ color: #1b1b1d;
+    background: #fff;
+}
+
+.navbar #hamburger-btn svg{
+    cursor: pointer;
+    fill: #fff;
+    width: 1rem;
+}
+.navbar #hamburger-btn {
+    display: none;
+}
+.navbar #close-btn{
+    display: none;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+.navbar #close-btn svg{
+    cursor: pointer;
+    fill: #000;
+    width: 1rem;
+}
+
+@media screen and (max-width:900px) {
+    header.show-mobile-menu::before{
+        content: "";
+        position: fixed;
+        left: 0;
+        top:0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(5px);
+
+    }
+
+    header{
+        z-index: 2;
+    }
+    .hero-section{
+        background: none;
+    }
+    .hero-section .content :is(h1, .search-form){
+        max-width: 100%;
+    }
+    .hero-section .content h1{
+        text-align: center;
+        font-size: 2.5rem;
+        line-height: 55px;
+
+    }
+
+    .hero-section .popular-tag{
+        display: none;
+    }
+
+    .navbar .menu-links{
+        background: #fff;
+        height: 100vh;
+        max-width: 300px;
+        width: 100%;
+        position: fixed;
+        left: -300px;
+        top:0;
+        display: block;
+        padding: 75px 40px 0;
+        transition: left 0.2s ease;
+    }
+
+    /*for btn hamburger btn click */
+    header.show-mobile-menu .navbar .menu-links{
+        left: 0;
+    }
+
+    .navbar .menu-links li{
+        margin-bottom: 30px;
+    }
+    .navbar .menu-links a{
+        color: #000;
+        font-size: 1.1rem;
+
+    }
+    .navbar :is(#hamburger-btn, #close-btn)  {
+        display: block;
+    }
+
+
+}
