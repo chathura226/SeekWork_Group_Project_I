@@ -14,22 +14,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Deploy to Server 1
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: /home/admin/forDeployment
-
-
-#      - name: Executing remote ssh commands using ssh key
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.HOST_DNS }}
-#          username: ${{ secrets.USERNAME }}
-#          key: ${{ secrets.EC2_SSH_KEY }}
-#          script: |
-#            sudo apt-get -y update
-#            cd home
-#            mkdir xxxxxx
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sudo apt-get -y update
+            cd /home/admin/SeekWork_Group_Project_I/docker
+            sudo bash seekwork.sh down
+            cd /home/admin
+            sudo rm -r SeekWork_Group_Project_I
+            git clone "https://github.com/chathura226/SeekWork_Group_Project_I.git"
+            cd SeekWork_Group_Project_I
+            cd app/
+            sudo chmod 777 -R logs
+            cd core
+            sudo rm config.php
+            sudo cp ../../DeploymentConfig/config.php .
+            cd ../../docker
+            sudo bash seekwork.sh up
