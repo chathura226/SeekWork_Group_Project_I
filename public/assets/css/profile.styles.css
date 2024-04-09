@@ -18,7 +18,7 @@
     height: 192px;
     width: 100%;
     border-bottom: 2px solid var(--secondary-color);
-    background-color: var(--primary-color-low);
+    background-color: #1c452d;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     display: flex;
@@ -27,7 +27,7 @@
   }
   
   .card__img img {
-    
+    width:90%;
   }
   
   .card__avatar {
@@ -118,5 +118,6 @@
   }
 
   .profile-details svg{
-    fill: var(--primary-color-low); 
+    fill: var(--primary-color-low);
+    margin-right: 10px;
 }

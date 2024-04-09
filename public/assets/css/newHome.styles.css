@@ -23,7 +23,7 @@ header{
     width: 100%;
     padding: 20px;
     background-color: transparent;
-    transition: background-color 0.3s ease;
+    transition: background-color 1s ease;
 }
 
 header .navbar{
@@ -50,7 +50,7 @@ header .navbar{
 }
 
 .navbar .menu-links a:hover{
-    color: #19a463;
+    color: #000000;
 }
 
 .hero-section{

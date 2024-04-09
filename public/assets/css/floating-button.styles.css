@@ -3,7 +3,7 @@
     top: 80px;
     right: 50px;
     z-index: 1;
-    background-color: #34974d;
+    background-color: var(--primary-color-low);
     border-radius: 5%;
     /* width: 150px;
     height: 80px; */
@@ -15,7 +15,7 @@
 }
 
 .floating-button-for-review {
-    background-color: #34974d;
+    background-color: var(--primary-color-low);
     border-radius: 5%;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -43,8 +43,8 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    border: 1px solid #34974d;
-    background-color: #3aa856;
+    border: 1px solid var(--primary-color-low);
+    background-color: var(--primary-color-low);
     justify-content: flex-start;
   }
   
@@ -63,7 +63,7 @@
     transform: translateX(170px);
     height: 100%;
     width: 39px;
-    background-color: #34974d;
+    background-color: var(--primary-color-low);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,7 +75,7 @@
   }
   
   .buttonadd:hover {
-    background: #34974d;
+    background: var(--primary-color-low);
   }
   
   .buttonadd:hover .button__text {
