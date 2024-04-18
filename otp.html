@@ -5,143 +5,370 @@
     <meta charset="UTF-8">
     <meta cls-name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-
-        .cards-review {
-            margin-top: 2.5rem;
-        }
-
-        .cards-review .card-review {
-            width: 100%;
-            margin-bottom: .7rem;
-            background: rgb(243, 240, 240);
-            border-radius: 5px;
-        }
-
-        .card-review>* {
-            padding: 1rem 1.2rem;
-        }
-
-        .card-review-top {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .img {
-            width: 50px;
-            height: 50px;
-            background: purple;
-            border-radius: 50%;
-            outline: none;
-        }
-
-        .cls-name .one {
-            background: orange;
-        }
-
-        .cls-name,
-        .cls-name .img {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .cls-name .img {
-            justify-content: center;
-        }
-
-
-
-        .card-review-content {
+        *{
             margin: 0;
-            padding-top: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .card-review-content p {
-            font-size: .8rem;
-            color: rgb(152, 152, 165);
-        }
-
-        .card-review-action {
+        .body-container{
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
+            background-color: #EFEFEF;
+        }
+
+        .slide-content{
+            margin:0 40px;
+        }
+
+        .card{
+            margin: 10px;
+            width: 320px;
+            min-width: 320px;
+            border-radius: 25px;
+            background-color: #fff;
+
+        }
+        .image-content,
+        .card-content{
+            padding:15px 14px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
         }
 
-        .card-review-action span {
-            font-size: .8rem;
-            color: RGB(101, 101, 114);
+        .image-content{
+            position: relative;
+            row-gap: 5px;
+            padding: 25px 0;
         }
 
-        .card-review-action .btn {
-            padding: .3rem .7rem;
-            background: transparent;
-            border: 1px solid #000;
-            border-radius: 2px;
-            color: #8C8C9F;
+        .name{
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+        }
+        .description{
+            font-size: 14px;
+            color: #707070;
+            text-align: center;
+        }
+
+        .button{
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            padding: 8px 16px;
+            background-color: #4070F4;
+            border-radius: 6px;
+            margin: 14px;
             cursor: pointer;
-            transition: .2s ease-in-out;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover{
+            background:#265DF2;
+        }
+        .card-image{
+            position: relative;
+            height: 150px;
+            width: 150px;
+            border-radius: 50%;
+            background: #FFF;
+            padding: 3px;
+        }
+
+        .card-image .card-img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #4070F4;
+        }
+
+        .overlay{
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #4070F4;
+            border-radius: 25px 25px 0 25px;
+        }
+
+        .overlay::before,
+        .overlay::after{
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: -40px;
+            height: 40px;
+            width: 40px;
+            background-color: #4070F4;
+        }
+
+        .overlay::after{
+            border-radius: 0 25px 0 0;
+            background-color: #fff;
+        }
+        .slide-container{
+            /*max-width: 1120px;*/
+            width: 100%;
+            background-color: grey;
+            padding: 40px 0;
+        }
+
+        .card-wrapper{
+            display: flex;
+            /*gap: 20px;*/
+            overflow-x: hidden;
+            /*width: calc(100%/1.3);*/
+            /*flex-wrap: wrap;*/
         }
     </style>
     <title>Notification Dropdown</title>
 </head>
 
 <body>
+<div class="body-container">
+    <div class="slide-container">
+        <div class="slide-content">
+            <div class="card-wrapper">
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
 
-<div class="review-container">
-    
+                    </div>
 
-    <div class="cards-review">
-        <div class="card-review">
-            <div class="card-review-top">
-                <div class="cls-name">
-                    <div class="img one" alt="">NF</div>
-                    <p>Full cls-name</p>
+                    <div class="card-content">
+                        <h2 class="name">1</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
                 </div>
-                <div class="rate">
-                    <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
-                         fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
-                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
-                         fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
-                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
-                         fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
-                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
-                         fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
-                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" style="fill:rgb(255, 123, 0) !important;"
-                         fill="rgb(255, 123, 0)" height="1rem" viewBox="0 0 576 512">
-                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
-                    </svg>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
 
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">2</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
                 </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">3</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">4</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">5</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">David Dell</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">David Dell</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">8</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">9</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">31</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">41</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">5</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">David Dell</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">David Dell</h2>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
+                        <button class="button">View More</button>
+                    </div>
+                </div>
+
             </div>
-
-            <div class="card-review-content">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem consequuntur, impedit ullam provident deserunt repellendus fuga totam exercitationem minima molestias?</p>
-            </div>
-
-            <div class="card-review-action">
-                <span>13 Feb, 2021</span>
-
-            </div>
-
         </div>
-
     </div>
 </div>
+<button onclick="slideRight()">Slide Right</button>
+<button onclick="slideLeft()">Slide Left</button>
+
 </body>
+<script>
+    function slideRight() {
+        var wrapper = document.querySelector('.card-wrapper');
+        var scrollAmount =  wrapper.clientWidth/3;
+        wrapper.scrollLeft += scrollAmount;
+        wrapper.style.transition = 'scroll-left 0.5s ease';
+    }
+
+    function slideLeft() {
+        var wrapper = document.querySelector('.card-wrapper');
+        var scrollAmount =  wrapper.clientWidth/3;
+        wrapper.scrollLeft -= scrollAmount;
+        wrapper.style.transition = 'scroll-right 0.5s ease';
+    }
+</script>
 </html>
