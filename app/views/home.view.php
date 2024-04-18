@@ -249,6 +249,216 @@
         background: #000000;
     }
 
+
+    /*slider*/
+    body-container{
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #EFEFEF;
+    }
+
+    .slide-content{
+        margin:0 40px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .card{
+        margin: 10px;
+        width: 320px;
+        min-width: 320px;
+        border-radius: 25px;
+        background-color: #fff;
+
+    }
+    .image-content,
+    .card-content{
+        padding:15px 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .card-content{
+        height: 200px;
+    }
+
+    .image-content{
+        position: relative;
+        row-gap: 5px;
+        padding: 25px 0;
+    }
+
+    .name{
+        font-size: 18px;
+        font-weight: 500;
+        color: #333;
+    }
+    .description{
+        font-size: 14px;
+        color: #707070;
+        text-align: center;
+    }
+
+    .button{
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        padding: 8px 16px;
+        background-color: #4070F4;
+        border-radius: 6px;
+        margin: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+    }
+
+    .button:hover{
+        background:#265DF2;
+    }
+    .card-image{
+        position: relative;
+        height: 150px;
+        width: 150px;
+        border-radius: 50%;
+        background: #FFF;
+        padding: 3px;
+    }
+
+    .card-image .card-img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid #4070F4;
+    }
+
+    .overlay{
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #4070F4;
+        border-radius: 25px 25px 0 25px;
+    }
+
+    .overlay::before,
+    .overlay::after{
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: -40px;
+        height: 40px;
+        width: 40px;
+        background-color: #4070F4;
+    }
+
+    .overlay::after{
+        border-radius: 0 25px 0 0;
+        background-color: #fff;
+    }
+    .slide-container{
+        /*max-width: 1120px;*/
+        width: 100%;
+        /*background-color: grey;*/
+        padding: 40px 0;
+
+    }
+
+    .card-wrapper{
+        display: flex;
+        /*gap: 20px;*/
+        overflow-x: hidden;
+        width: 100%;
+        /*flex-wr0ap: wrap;*/
+    }
+
+    .button-left {
+        display: block;
+        position: relative;
+        width: 56px;
+        height: 56px;
+        margin: 0;
+        overflow: hidden;
+        outline: none;
+        background-color: transparent;
+        cursor: pointer;
+        border: 0;
+    }
+
+    .button-left:before,
+    .button-left:after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        inset: 7px;
+    }
+
+    .button-left:before {
+        border: 4px solid #96daf0;
+        transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1) 80ms,
+        transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) 80ms;
+    }
+
+    .button-left:after {
+        border: 4px solid #19fc01;
+        transform: scale(1.3);
+        transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+        transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        opacity: 0;
+    }
+
+    .button-left:hover:before,
+    .button-left:focus:before {
+        opacity: 0;
+        transform: scale(0.7);
+        transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+        transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .button-left:hover:after,
+    .button-left:focus:after {
+        opacity: 1;
+        transform: scale(1);
+        transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1) 80ms,
+        transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) 80ms;
+    }
+
+    .button-box {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .button-box-2 {
+        display: flex;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .button-elem {
+        display: block;
+        width: 20px;
+        height: 20px;
+        margin: 17px 18px 0 18px;
+        transform: rotate(180deg);
+        fill: #09a44b !important;
+    }
+
+    .button-left:hover .button-box,
+    .button-left:focus .button-box {
+        transition: 0.4s;
+        transform: translateX(-56px);
+    }
+
+    .button-left:hover .button-box-2,
+    .button-left:focus .button-box-2 {
+        transition: 0.4s;
+        transform: translateX(56px);
+    }
 </style>
 <body>
 
@@ -356,6 +566,187 @@
         </a>
     </div>
 </div>
+<div class="body-container">
+    <div class="slide-container">
+        <h1 style="padding-left: 100px">Popular Services</h1>
+
+        <div class="slide-content">
+            <button onclick="slideLeft()" class="button-left">
+                <div class="button-box">
+    <span class="button-elem">
+      <svg fill="#09a44b" viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
+                                      <style>svg {
+                                              fill: #09a44b !important;
+                                          }</style>
+        <path
+                d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+        ></path>
+      </svg>
+    </span>
+                    <span class="button-elem">
+      <svg fill="#09a44b" viewBox="0 0 46 40">
+        <path
+                d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+        ></path>
+      </svg>
+    </span>
+                </div>
+            </button>
+            <div class="card-wrapper">
+
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="<?=ROOT?>/assets/images/slider/3.jpeg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Animation</h2>
+                        <p class="description">Animate your vision. Bring ideas to life with dynamic and engaging animation.</p>
+                        <a href="<?=ROOT?>/tasks/category/3" style="text-decoration: none"> <button class="button">View More</button></a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="<?=ROOT?>/assets/images/slider/2.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Web Development</h2>
+                        <p class="description">Craft exceptional websites from scratch. Let's bring your online presence to the next level. </p>
+                        <a href="<?=ROOT?>/tasks/category/2" style="text-decoration: none"> <button class="button">View More</button></a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="<?=ROOT?>/assets/images/slider/1.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Design</h2>
+                        <p class="description">Design solutions that are both aesthetically pleasing and user-friendly. </p>
+                        <a href="<?=ROOT?>/tasks/category/1" style="text-decoration: none"> <button class="button">View More</button></a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="<?=ROOT?>/assets/images/slider/39.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Writing</h2>
+                        <p class="description">Craft compelling content. Turn ideas into words that engage, inform, and inspire. </p>
+                        <a href="<?=ROOT?>/tasks/category/39" style="text-decoration: none"> <button class="button">View More</button></a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="<?=ROOT?>/assets/images/slider/41.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Music & Audio</h2>
+                        <p class="description">Set the soundtrack for your brand. Create original music that elevates your message. </p>
+                        <a href="<?=ROOT?>/tasks/category/41" style="text-decoration: none"> <button class="button">View More</button></a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="<?=ROOT?>/assets/images/slider/43.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Marketing</h2>
+                        <p class="description">Tell your story, spread the word. Develop a marketing strategy that gets results.</p>
+                        <a href="<?=ROOT?>/tasks/category/43" style="text-decoration: none"> <button class="button">View More</button></a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="<?=ROOT?>/assets/images/slider/49.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Software Development</h2>
+                        <p class="description">Build the future. Develop innovative software solutions that solve real-world problems. </p>
+                        <a href="<?=ROOT?>/tasks/category/49" style="text-decoration: none"> <button class="button">View More</button></a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="<?=ROOT?>/assets/images/slider/50.jpg" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Machine Learning</h2>
+                        <p class="description">Make it smarter. Leverage machine learning to automate tasks and uncover hidden insights.</p>
+                        <a href="<?=ROOT?>/tasks/category/50" style="text-decoration: none"> <button class="button">View More</button></a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="image-content">
+                        <span class="overlay"></span>
+                        <div class="card-image">
+                            <img src="<?=ROOT?>/assets/images/slider/51.png" alt="" class="card-img">
+                        </div>
+
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="name">Translation</h2>
+                        <p class="description">Bridge the language gap. Deliver flawless translations that resonate with global audiences.</p>
+                        <a href="<?=ROOT?>/tasks/category/51" style="text-decoration: none"> <button class="button">View More</button></a>
+                    </div>
+                </div>
+
+
+            </div>
+            <button onclick="slideRight()" class="button-left">
+                <div class="button-box-2">
+    <span class="button-elem">
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+    </span>
+                    <span class="button-elem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+    </span>
+                </div>
+            </button>
+        </div>
+    </div>
+</div>
+
 <footer style="background-color: #0a2c40">
 
 
@@ -556,4 +947,21 @@
 <script src="<?= ROOT ?>/assets/js/alert.js"></script>
 
 <script src="<?= ROOT ?>/assets/js/loader.js"></script>
+
+<script>
+    // for slider
+    function slideRight() {
+        var wrapper = document.querySelector('.card-wrapper');
+        var scrollAmount =  wrapper.clientWidth/3;
+        wrapper.scrollLeft += scrollAmount;
+        wrapper.style.transition = 'scroll-left 0.5s ease';
+    }
+
+    function slideLeft() {
+        var wrapper = document.querySelector('.card-wrapper');
+        var scrollAmount =  wrapper.clientWidth/3;
+        wrapper.scrollLeft -= scrollAmount;
+        wrapper.style.transition = 'scroll-right 0.5s ease';
+    }
+</script>
 </html>
