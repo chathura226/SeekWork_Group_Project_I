@@ -63,7 +63,7 @@ footer{
 .footer-col ul li a{
   font-size: 16px;
   text-transform: capitalize;
-  color: var(--text-color-secondary);
+  color: white;
   text-decoration: none;
   font-weight: 350;
   display: block;

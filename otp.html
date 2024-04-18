@@ -1,499 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta cls-name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .body-container{
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #EFEFEF;
-        }
-
-        .slide-content{
-            margin:0 40px;
-            display: flex;
-            flex-direction: row;
-           align-items: center;
-        }
-
-        .card{
-            margin: 10px;
-            width: 320px;
-            min-width: 320px;
-            border-radius: 25px;
-            background-color: #fff;
-
-        }
-        .image-content,
-        .card-content{
-            padding:15px 14px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .image-content{
-            position: relative;
-            row-gap: 5px;
-            padding: 25px 0;
-        }
-
-        .name{
-            font-size: 18px;
-            font-weight: 500;
-            color: #333;
-        }
-        .description{
-            font-size: 14px;
-            color: #707070;
-            text-align: center;
-        }
-
-        .button{
-            border: none;
-            color: #fff;
-            font-size: 16px;
-            padding: 8px 16px;
-            background-color: #4070F4;
-            border-radius: 6px;
-            margin: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .button:hover{
-            background:#265DF2;
-        }
-        .card-image{
-            position: relative;
-            height: 150px;
-            width: 150px;
-            border-radius: 50%;
-            background: #FFF;
-            padding: 3px;
-        }
-
-        .card-image .card-img{
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 4px solid #4070F4;
-        }
-
-        .overlay{
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 100%;
-            background-color: #4070F4;
-            border-radius: 25px 25px 0 25px;
-        }
-
-        .overlay::before,
-        .overlay::after{
-            content: '';
-            position: absolute;
-            right: 0;
-            bottom: -40px;
-            height: 40px;
-            width: 40px;
-            background-color: #4070F4;
-        }
-
-        .overlay::after{
-            border-radius: 0 25px 0 0;
-            background-color: #fff;
-        }
-        .slide-container{
-            /*max-width: 1120px;*/
-            width: 100%;
-            background-color: grey;
-            padding: 40px 0;
-
-        }
-
-        .card-wrapper{
-            display: flex;
-            /*gap: 20px;*/
-            overflow-x: hidden;
-            width: 100%;
-            /*flex-wr0ap: wrap;*/
-        }
-
-        .button-left {
-            display: block;
-            position: relative;
-            width: 56px;
-            height: 56px;
-            margin: 0;
-            overflow: hidden;
-            outline: none;
-            background-color: transparent;
-            cursor: pointer;
-            border: 0;
-        }
-
-        .button-left:before,
-        .button-left:after {
-            content: "";
-            position: absolute;
-            border-radius: 50%;
-            inset: 7px;
-        }
-
-        .button-left:before {
-            border: 4px solid #f0eeef;
-            transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1) 80ms,
-            transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) 80ms;
-        }
-
-        .button-left:after {
-            border: 4px solid #96daf0;
-            transform: scale(1.3);
-            transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
-            transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            opacity: 0;
-        }
-
-        .button-left:hover:before,
-        .button-left:focus:before {
-            opacity: 0;
-            transform: scale(0.7);
-            transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
-            transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .button-left:hover:after,
-        .button-left:focus:after {
-            opacity: 1;
-            transform: scale(1);
-            transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1) 80ms,
-            transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) 80ms;
-        }
-
-        .button-box {
-            display: flex;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .button-elem {
-            display: block;
-            width: 20px;
-            height: 20px;
-            margin: 17px 18px 0 18px;
-            transform: rotate(180deg);
-            fill: #f0eeef;
-        }
-
-        .button-left:hover .button-box,
-        .button-left:focus .button-box {
-            transition: 0.4s;
-            transform: translateX(-56px);
-        }
-
-    </style>
-    <title>Notification Dropdown</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-<div class="body-container">
-    <div class="slide-container">
-        <div class="slide-content">
-            <button onclick="slideLeft()" class="button-left">
-                <div class="button-box">
-    <span class="button-elem">
-      <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
-        <path
-                d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
-        ></path>
-      </svg>
-    </span>
-                    <span class="button-elem">
-      <svg viewBox="0 0 46 40">
-        <path
-                d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
-        ></path>
-      </svg>
-    </span>
-                </div>
-            </button>
-            <div class="card-wrapper">
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+<style>
 
-                    </div>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Open Sans', sans-serif;
+    }
 
-                    <div class="card-content">
-                        <h2 class="name">1</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+    .footer {
+        position: relative;
+        bottom: 0;
+        /*top: 50%;*/
+        /*left: 50%;*/
+        /*transform: translate(-50%, -50%);*/
+        /*max-width: 1280px;*/
+        width: 100%;
+        background: #10182F;
+        /*border-radius: 6px;*/
+    }
 
-                    </div>
+    .footer .footer-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 3.5rem;
+        padding: 60px;
+    }
 
-                    <div class="card-content">
-                        <h2 class="name">2</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+    .footer-row .footer-col h4 {
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
 
-                    </div>
+    .footer-col .links {
+        margin-top: 20px;
+    }
 
-                    <div class="card-content">
-                        <h2 class="name">3</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+    .footer-col .links li {
+        list-style: none;
+        margin-bottom: 10px;
+    }
 
-                    </div>
+    .footer-col .links li a {
+        text-decoration: none;
+        color: #bfbfbf;
+    }
 
-                    <div class="card-content">
-                        <h2 class="name">4</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+    .footer-col .links li a:hover {
+        color: #fff;
+    }
 
-                    </div>
+    .footer-col p {
+        margin: 20px 0;
+        color: #bfbfbf;
+        max-width: 300px;
+    }
 
-                    <div class="card-content">
-                        <h2 class="name">5</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+    .footer-col form {
+        display: flex;
+        gap: 5px;
+    }
 
-                    </div>
+    .footer-col input {
+        height: 40px;
+        border-radius: 6px;
+        background: none;
+        width: 100%;
+        outline: none;
+        border: 1px solid #7489C6 ;
+        caret-color: #fff;
+        color: #fff;
+        padding-left: 10px;
+    }
 
-                    <div class="card-content">
-                        <h2 class="name">David Dell</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+    .footer-col input::placeholder {
+        color: #ccc;
+    }
 
-                    </div>
+    .footer-col form button {
+        background: #fff;
+        outline: none;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: 0.2s ease;
+    }
 
-                    <div class="card-content">
-                        <h2 class="name">David Dell</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
+    .footer-col form button:hover {
+        background: #cecccc;
+    }
 
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+    .footer-col .icons {
+        display: flex;
+        margin-top: 30px;
+        gap: 30px;
+        cursor: pointer;
+    }
 
-                    </div>
+    .footer-col .icons i {
+        color: #afb6c7;
+    }
 
-                    <div class="card-content">
-                        <h2 class="name">8</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+    .footer-col .icons i:hover  {
+        color: #fff;
+    }
 
-                    </div>
+    @media (max-width: 768px) {
+        .footer {
+            position: relative;
+            bottom: 0;
+            left: 0;
+            transform: none;
+            width: 100%;
+            border-radius: 0;
+        }
 
-                    <div class="card-content">
-                        <h2 class="name">9</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+        .footer .footer-row {
+            padding: 20px;
+            gap: 1rem;
+        }
 
-                    </div>
+        .footer-col form {
+            display: block;
+        }
 
-                    <div class="card-content">
-                        <h2 class="name">31</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+        .footer-col form :where(input, button) {
+            width: 100%;
+        }
 
-                    </div>
+        .footer-col form button {
+            margin: 10px 0 0 0;
+        }
+    }
+</style>
 
-                    <div class="card-content">
-                        <h2 class="name">41</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+<footer class="footer">
+    <div class="footer-row">
+        <div class="footer-col">
+            <h4>Info</h4>
+            <ul class="links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Compressions</a></li>
+                <li><a href="#">Customers</a></li>
+                <li><a href="#">Service</a></li>
+                <li><a href="#">Collection</a></li>
+            </ul>
+        </div>
 
-                    </div>
+        <div class="footer-col">
+            <h4>Explore</h4>
+            <ul class="links">
+                <li><a href="#">Free Designs</a></li>
+                <li><a href="#">Latest Designs</a></li>
+                <li><a href="#">Themes</a></li>
+                <li><a href="#">Popular Designs</a></li>
+                <li><a href="#">Art Skills</a></li>
+                <li><a href="#">New Uploads</a></li>
+            </ul>
+        </div>
 
-                    <div class="card-content">
-                        <h2 class="name">5</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <ul class="links">
+                <li><a href="#">Customer Agreement</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">GDPR</a></li>
+                <li><a href="#">Security</a></li>
+                <li><a href="#">Testimonials</a></li>
+                <li><a href="#">Media Kit</a></li>
+            </ul>
+        </div>
 
-                    </div>
+        <div class="footer-col">
+            <h4>Newsletter</h4>
+            <p>
+                Subscribe to our newsletter for a weekly dose
+                of news, updates, helpful tips, and
+                exclusive offers.
+            </p>
+            <form action="#">
+                <input type="text" placeholder="Your email" required>
+                <button type="submit">SUBSCRIBE</button>
+            </form>
+            <div class="icons">
+                <!-- facebook -->
+                <a href="#">
+                    <svg height="1.1em" viewBox="0 0 512 512" class="svg-social">
+                        <style>svg {
+                            fill: #ffffff
+                        }</style>
+                        <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/>
+                    </svg>
+                </a>
 
-                    <div class="card-content">
-                        <h2 class="name">David Dell</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-                        <div class="card-image">
-                            <img src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg" alt="" class="card-img">
-                        </div>
+                <!-- twitter x -->
+                <a href="#">
+                    <svg height="1.1em" viewBox="0 0 512 512" class="svg-social">
+                        <style>svg {
+                            fill: #ffffff
+                        }</style>
+                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                    </svg>
+                </a>
 
-                    </div>
+                <!-- insta -->
+                <a href="#">
+                    <svg height="1.1em" viewBox="0 0 448 512" class="svg-social">
+                        <style>svg {
+                            fill: #ffffff
+                        }</style>
+                        <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
+                    </svg>
+                </a>
 
-                    <div class="card-content">
-                        <h2 class="name">David Dell</h2>
-                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut beatae cumque delectus enim eveniet, exercitationem fugiat, ipsa ipsum itaque nobis officiis repellendus sed totam ullam, velit vitae voluptate voluptatibus.</p>
-                        <button class="button">View More</button>
-                    </div>
-                </div>
+                <!-- tiktok -->
+                <a href="#">
+                    <svg height="1.1em" viewBox="0 0 448 512" class="svg-social">
+                        <style>svg {
+                            fill: #ffffff
+                        }</style>
+                        <path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"/>
+                    </svg>
+                </a>
 
             </div>
-            <button onclick="slideRight()" class="button-left">
-                <div class="button-box">
-    <span class="button-elem">
-
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
-    </span>
-                    <span class="button-elem">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
-    </span>
-                </div>
-            </button>
         </div>
     </div>
-</div>
-<button onclick="slideRight()">Slide Right</button>
-<button onclick="slideLeft()">Slide Left</button>
-
-<button onclick="slideRight()" class="button-left">
-    <div class="button-box">
-    <span class="button-elem">
-      <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
-        <path
-                d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
-        ></path>
-      </svg>
-    </span>
-        <span class="button-elem">
-      <svg viewBox="0 0 46 40">
-        <path
-                d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
-        ></path>
-      </svg>
-    </span>
-    </div>
-</button>
+</footer>
 </body>
-<script>
-    function slideRight() {
-        var wrapper = document.querySelector('.card-wrapper');
-        var scrollAmount =  wrapper.clientWidth/3;
-        wrapper.scrollLeft += scrollAmount;
-        wrapper.style.transition = 'scroll-left 0.5s ease';
-    }
-
-    function slideLeft() {
-        var wrapper = document.querySelector('.card-wrapper');
-        var scrollAmount =  wrapper.clientWidth/3;
-        wrapper.scrollLeft -= scrollAmount;
-        wrapper.style.transition = 'scroll-right 0.5s ease';
-    }
-</script>
 </html>
