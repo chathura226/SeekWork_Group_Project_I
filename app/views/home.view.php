@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/newHome.styles.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/footer.styles.css">
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/loader.styles.css">
+
     <title><?= $title ?> | <?= APP_NAME ?></title>
     <!-- fonts -->
     <link rel="stylesheet" type="text/css" href="<?= ROOT ?>/assets/css/custom-fonts.css">
@@ -251,7 +252,7 @@
 
 
     /*slider*/
-    body-container{
+    body-container {
         min-height: 100vh;
         display: flex;
         align-items: center;
@@ -259,14 +260,14 @@
         background-color: #EFEFEF;
     }
 
-    .slide-content{
-        margin:0 40px;
+    .slide-content {
+        margin: 0 40px;
         display: flex;
         flex-direction: row;
         align-items: center;
     }
 
-    .card{
+    .card {
         margin: 10px;
         width: 320px;
         min-width: 320px;
@@ -274,35 +275,38 @@
         background-color: #fff;
 
     }
+
     .image-content,
-    .card-content{
-        padding:15px 14px;
+    .card-content {
+        padding: 15px 14px;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-    .card-content{
-        height: 200px;
+
+    .card-content {
+        height: 150px;
     }
 
-    .image-content{
+    .image-content {
         position: relative;
         row-gap: 5px;
         padding: 25px 0;
     }
 
-    .name{
+    .name {
         font-size: 18px;
         font-weight: 500;
         color: #333;
     }
-    .description{
+
+    .description {
         font-size: 14px;
         color: #707070;
         text-align: center;
     }
 
-    .button{
+    .button {
         border: none;
         color: #fff;
         font-size: 16px;
@@ -315,10 +319,11 @@
 
     }
 
-    .button:hover{
-        background:#265DF2;
+    .button:hover {
+        background: #265DF2;
     }
-    .card-image{
+
+    .card-image {
         position: relative;
         height: 150px;
         width: 150px;
@@ -327,7 +332,7 @@
         padding: 3px;
     }
 
-    .card-image .card-img{
+    .card-image .card-img {
         height: 100%;
         width: 100%;
         object-fit: cover;
@@ -335,7 +340,7 @@
         border: 4px solid #4070F4;
     }
 
-    .overlay{
+    .overlay {
         position: absolute;
         left: 0;
         top: 0;
@@ -346,7 +351,7 @@
     }
 
     .overlay::before,
-    .overlay::after{
+    .overlay::after {
         content: '';
         position: absolute;
         right: 0;
@@ -356,11 +361,12 @@
         background-color: #4070F4;
     }
 
-    .overlay::after{
+    .overlay::after {
         border-radius: 0 25px 0 0;
         background-color: #fff;
     }
-    .slide-container{
+
+    .slide-container {
         /*max-width: 1120px;*/
         width: 100%;
         /*background-color: grey;*/
@@ -368,7 +374,7 @@
 
     }
 
-    .card-wrapper{
+    .card-wrapper {
         display: flex;
         /*gap: 20px;*/
         overflow-x: hidden;
@@ -433,12 +439,14 @@
         top: 0;
         left: 0;
     }
+
     .button-box-2 {
         display: flex;
         position: absolute;
         top: 0;
         right: 0;
     }
+
     .button-elem {
         display: block;
         width: 20px;
@@ -458,6 +466,11 @@
     .button-left:focus .button-box-2 {
         transition: 0.4s;
         transform: translateX(56px);
+    }
+
+    /*for best part para*/
+    .best-part{
+        width: 100%;
     }
 </style>
 <body>
@@ -483,7 +496,7 @@
         </div>
     </div>
 </div>
-<header>
+<header style="z-index: 9999">
     <nav class="navbar">
         <a href="<?= ROOT ?>" class="logo">
             <img style="height: 40px;" src="<?= ROOT ?>/assets/images/newLogo/white text.svg" alt="SeekWork Logo">
@@ -565,6 +578,7 @@
             </button>
         </a>
     </div>
+
 </div>
 <div class="body-container">
     <div class="slide-container">
@@ -598,135 +612,162 @@
                     <div class="image-content">
                         <span class="overlay"></span>
                         <div class="card-image">
-                            <img src="<?=ROOT?>/assets/images/slider/3.jpeg" alt="" class="card-img">
+                            <img src="<?= ROOT ?>/assets/images/slider/3.jpeg" alt="" class="card-img">
                         </div>
 
                     </div>
 
                     <div class="card-content">
                         <h2 class="name">Animation</h2>
-                        <p class="description">Animate your vision. Bring ideas to life with dynamic and engaging animation.</p>
-                        <a href="<?=ROOT?>/tasks/category/3" style="text-decoration: none"> <button class="button">View More</button></a>
+                        <p class="description">Animate your vision. Bring ideas to life with dynamic and engaging
+                            animation.</p>
+                        <a href="<?= ROOT ?>/tasks/category/3" style="text-decoration: none">
+                            <button class="button">View More</button>
+                        </a>
                     </div>
                 </div>
                 <div class="card">
                     <div class="image-content">
                         <span class="overlay"></span>
                         <div class="card-image">
-                            <img src="<?=ROOT?>/assets/images/slider/2.jpg" alt="" class="card-img">
+                            <img src="<?= ROOT ?>/assets/images/slider/2.jpg" alt="" class="card-img">
                         </div>
 
                     </div>
 
                     <div class="card-content">
                         <h2 class="name">Web Development</h2>
-                        <p class="description">Craft exceptional websites from scratch. Let's bring your online presence to the next level. </p>
-                        <a href="<?=ROOT?>/tasks/category/2" style="text-decoration: none"> <button class="button">View More</button></a>
+                        <p class="description">Craft exceptional websites from scratch. Let's bring your online presence
+                            to the next level. </p>
+                        <a href="<?= ROOT ?>/tasks/category/2" style="text-decoration: none">
+                            <button class="button">View More</button>
+                        </a>
                     </div>
                 </div>
                 <div class="card">
                     <div class="image-content">
                         <span class="overlay"></span>
                         <div class="card-image">
-                            <img src="<?=ROOT?>/assets/images/slider/1.jpg" alt="" class="card-img">
+                            <img src="<?= ROOT ?>/assets/images/slider/1.jpg" alt="" class="card-img">
                         </div>
 
                     </div>
 
                     <div class="card-content">
                         <h2 class="name">Design</h2>
-                        <p class="description">Design solutions that are both aesthetically pleasing and user-friendly. </p>
-                        <a href="<?=ROOT?>/tasks/category/1" style="text-decoration: none"> <button class="button">View More</button></a>
+                        <p class="description">Design solutions that are both aesthetically pleasing and
+                            user-friendly. </p>
+                        <a href="<?= ROOT ?>/tasks/category/1" style="text-decoration: none">
+                            <button class="button">View More</button>
+                        </a>
                     </div>
                 </div>
                 <div class="card">
                     <div class="image-content">
                         <span class="overlay"></span>
                         <div class="card-image">
-                            <img src="<?=ROOT?>/assets/images/slider/39.jpg" alt="" class="card-img">
+                            <img src="<?= ROOT ?>/assets/images/slider/39.jpg" alt="" class="card-img">
                         </div>
 
                     </div>
 
                     <div class="card-content">
                         <h2 class="name">Writing</h2>
-                        <p class="description">Craft compelling content. Turn ideas into words that engage, inform, and inspire. </p>
-                        <a href="<?=ROOT?>/tasks/category/39" style="text-decoration: none"> <button class="button">View More</button></a>
+                        <p class="description">Craft compelling content. Turn ideas into words that engage, inform, and
+                            inspire. </p>
+                        <a href="<?= ROOT ?>/tasks/category/39" style="text-decoration: none">
+                            <button class="button">View More</button>
+                        </a>
                     </div>
                 </div>
                 <div class="card">
                     <div class="image-content">
                         <span class="overlay"></span>
                         <div class="card-image">
-                            <img src="<?=ROOT?>/assets/images/slider/41.jpg" alt="" class="card-img">
+                            <img src="<?= ROOT ?>/assets/images/slider/41.jpg" alt="" class="card-img">
                         </div>
 
                     </div>
 
                     <div class="card-content">
                         <h2 class="name">Music & Audio</h2>
-                        <p class="description">Set the soundtrack for your brand. Create original music that elevates your message. </p>
-                        <a href="<?=ROOT?>/tasks/category/41" style="text-decoration: none"> <button class="button">View More</button></a>
+                        <p class="description">Set the soundtrack for your brand. Create original music that elevates
+                            your message. </p>
+                        <a href="<?= ROOT ?>/tasks/category/41" style="text-decoration: none">
+                            <button class="button">View More</button>
+                        </a>
                     </div>
                 </div>
                 <div class="card">
                     <div class="image-content">
                         <span class="overlay"></span>
                         <div class="card-image">
-                            <img src="<?=ROOT?>/assets/images/slider/43.jpg" alt="" class="card-img">
+                            <img src="<?= ROOT ?>/assets/images/slider/43.jpg" alt="" class="card-img">
                         </div>
 
                     </div>
 
                     <div class="card-content">
                         <h2 class="name">Marketing</h2>
-                        <p class="description">Tell your story, spread the word. Develop a marketing strategy that gets results.</p>
-                        <a href="<?=ROOT?>/tasks/category/43" style="text-decoration: none"> <button class="button">View More</button></a>
+                        <p class="description">Tell your story, spread the word. Develop a marketing strategy that gets
+                            results.</p>
+                        <a href="<?= ROOT ?>/tasks/category/43" style="text-decoration: none">
+                            <button class="button">View More</button>
+                        </a>
                     </div>
                 </div>
                 <div class="card">
                     <div class="image-content">
                         <span class="overlay"></span>
                         <div class="card-image">
-                            <img src="<?=ROOT?>/assets/images/slider/49.jpg" alt="" class="card-img">
+                            <img src="<?= ROOT ?>/assets/images/slider/49.jpg" alt="" class="card-img">
                         </div>
 
                     </div>
 
                     <div class="card-content">
                         <h2 class="name">Software Development</h2>
-                        <p class="description">Build the future. Develop innovative software solutions that solve real-world problems. </p>
-                        <a href="<?=ROOT?>/tasks/category/49" style="text-decoration: none"> <button class="button">View More</button></a>
+                        <p class="description">Build the future. Develop innovative software solutions that solve
+                            real-world problems. </p>
+                        <a href="<?= ROOT ?>/tasks/category/49" style="text-decoration: none">
+                            <button class="button">View More</button>
+                        </a>
                     </div>
                 </div>
                 <div class="card">
                     <div class="image-content">
                         <span class="overlay"></span>
                         <div class="card-image">
-                            <img src="<?=ROOT?>/assets/images/slider/50.jpg" alt="" class="card-img">
+                            <img src="<?= ROOT ?>/assets/images/slider/50.jpg" alt="" class="card-img">
                         </div>
 
                     </div>
 
                     <div class="card-content">
                         <h2 class="name">Machine Learning</h2>
-                        <p class="description">Make it smarter. Leverage machine learning to automate tasks and uncover hidden insights.</p>
-                        <a href="<?=ROOT?>/tasks/category/50" style="text-decoration: none"> <button class="button">View More</button></a>
+                        <p class="description">Make it smarter. Leverage machine learning to automate tasks and uncover
+                            hidden insights.</p>
+                        <a href="<?= ROOT ?>/tasks/category/50" style="text-decoration: none">
+                            <button class="button">View More</button>
+                        </a>
                     </div>
                 </div>
                 <div class="card">
                     <div class="image-content">
                         <span class="overlay"></span>
                         <div class="card-image">
-                            <img src="<?=ROOT?>/assets/images/slider/51.png" alt="" class="card-img">
+                            <img src="<?= ROOT ?>/assets/images/slider/51.png" alt="" class="card-img">
                         </div>
 
                     </div>
 
                     <div class="card-content">
                         <h2 class="name">Translation</h2>
-                        <p class="description">Bridge the language gap. Deliver flawless translations that resonate with global audiences.</p>
-                        <a href="<?=ROOT?>/tasks/category/51" style="text-decoration: none"> <button class="button">View More</button></a>
+                        <p class="description">Bridge the language gap. Deliver flawless translations that resonate with
+                            global audiences.</p>
+                        <a href="<?= ROOT ?>/tasks/category/51" style="text-decoration: none">
+                            <button class="button">View More</button>
+                        </a>
                     </div>
                 </div>
 
@@ -736,16 +777,62 @@
                 <div class="button-box-2">
     <span class="button-elem">
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
+            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
     </span>
                     <span class="button-elem">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
+            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
     </span>
                 </div>
             </button>
         </div>
     </div>
 </div>
+<div class="best-part-cont" style="display: flex;width: 80%;margin: auto;align-items: center">
+<div class="best-part" >
+    <h1 style="font-size: 3rem">The best part? Everything.</h1>
+    <ul>
+        <li>
+            <h2 style="font-size: 2rem"><span class="" style="width:24px;height:24px;fill:#7A7D85;margin-right: 10px" aria-hidden="true"><svg
+                            width="22" height="22" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path
+                                d="M8 1.75C4.54822 1.75 1.75 4.54822 1.75 8C1.75 11.4518 4.54822 14.25 8 14.25C11.4518 14.25 14.25 11.4518 14.25 8C14.25 4.54822 11.4518 1.75 8 1.75ZM0.25 8C0.25 3.71979 3.71979 0.25 8 0.25C12.2802 0.25 15.75 3.71979 15.75 8C15.75 12.2802 12.2802 15.75 8 15.75C3.71979 15.75 0.25 12.2802 0.25 8Z"></path><path
+                                d="M11.5303 5.46967C11.8232 5.76256 11.8232 6.23744 11.5303 6.53033L7.53033 10.5303C7.23744 10.8232 6.76256 10.8232 6.46967 10.5303L4.46967 8.53033C4.17678 8.23744 4.17678 7.76256 4.46967 7.46967C4.76256 7.17678 5.23744 7.17678 5.53033 7.46967L7 8.93934L10.4697 5.46967C10.7626 5.17678 11.2374 5.17678 11.5303 5.46967Z"></path></svg></span>Stick
+                to your budget
+            </h2>
+            <p style="margin-left:25px;font-size: 1.2rem">Find the right service for every price point. No hourly rates, just project-based
+                pricing.</p></li>
+        <li>
+            <h2 style="font-size: 2rem"><span class="" style="width:24px;height:24px;fill:#7A7D85;margin-right: 10px" aria-hidden="true"><svg
+                            width="22" height="22" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path
+                                d="M8 1.75C4.54822 1.75 1.75 4.54822 1.75 8C1.75 11.4518 4.54822 14.25 8 14.25C11.4518 14.25 14.25 11.4518 14.25 8C14.25 4.54822 11.4518 1.75 8 1.75ZM0.25 8C0.25 3.71979 3.71979 0.25 8 0.25C12.2802 0.25 15.75 3.71979 15.75 8C15.75 12.2802 12.2802 15.75 8 15.75C3.71979 15.75 0.25 12.2802 0.25 8Z"></path><path
+                                d="M11.5303 5.46967C11.8232 5.76256 11.8232 6.23744 11.5303 6.53033L7.53033 10.5303C7.23744 10.8232 6.76256 10.8232 6.46967 10.5303L4.46967 8.53033C4.17678 8.23744 4.17678 7.76256 4.46967 7.46967C4.76256 7.17678 5.23744 7.17678 5.53033 7.46967L7 8.93934L10.4697 5.46967C10.7626 5.17678 11.2374 5.17678 11.5303 5.46967Z"></path></svg></span>Get
+                quality work done quickly
+            </h2>
+            <p style="margin-left:25px;font-size: 1.2rem">Hand your project over to a talented freelancer in minutes, get long-lasting results.</p>
+        </li>
+        <li>
+            <h2 style="font-size: 2rem"><span class="" style="width:24px;height:24px;fill:#7A7D85;margin-right: 10px" aria-hidden="true"><svg
+                            width="22" height="22" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path
+                                d="M8 1.75C4.54822 1.75 1.75 4.54822 1.75 8C1.75 11.4518 4.54822 14.25 8 14.25C11.4518 14.25 14.25 11.4518 14.25 8C14.25 4.54822 11.4518 1.75 8 1.75ZM0.25 8C0.25 3.71979 3.71979 0.25 8 0.25C12.2802 0.25 15.75 3.71979 15.75 8C15.75 12.2802 12.2802 15.75 8 15.75C3.71979 15.75 0.25 12.2802 0.25 8Z"></path><path
+                                d="M11.5303 5.46967C11.8232 5.76256 11.8232 6.23744 11.5303 6.53033L7.53033 10.5303C7.23744 10.8232 6.76256 10.8232 6.46967 10.5303L4.46967 8.53033C4.17678 8.23744 4.17678 7.76256 4.46967 7.46967C4.76256 7.17678 5.23744 7.17678 5.53033 7.46967L7 8.93934L10.4697 5.46967C10.7626 5.17678 11.2374 5.17678 11.5303 5.46967Z"></path></svg></span>Pay
+                when you're happy
+            </h2>
+            <p style="margin-left:25px;font-size: 1.2rem">Upfront quotes mean no surprises. Payments only get released when you approve.</p></li>
+        <li>
+            <h2 style="font-size: 2rem"><span class="" style="width:24px;height:24px;fill:#7A7D85;margin-right: 10px" aria-hidden="true"><svg
+                            width="22" height="22" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path
+                                d="M8 1.75C4.54822 1.75 1.75 4.54822 1.75 8C1.75 11.4518 4.54822 14.25 8 14.25C11.4518 14.25 14.25 11.4518 14.25 8C14.25 4.54822 11.4518 1.75 8 1.75ZM0.25 8C0.25 3.71979 3.71979 0.25 8 0.25C12.2802 0.25 15.75 3.71979 15.75 8C15.75 12.2802 12.2802 15.75 8 15.75C3.71979 15.75 0.25 12.2802 0.25 8Z"></path><path
+                                d="M11.5303 5.46967C11.8232 5.76256 11.8232 6.23744 11.5303 6.53033L7.53033 10.5303C7.23744 10.8232 6.76256 10.8232 6.46967 10.5303L4.46967 8.53033C4.17678 8.23744 4.17678 7.76256 4.46967 7.46967C4.76256 7.17678 5.23744 7.17678 5.53033 7.46967L7 8.93934L10.4697 5.46967C10.7626 5.17678 11.2374 5.17678 11.5303 5.46967Z"></path></svg></span>Count
+                on 24/7 support
+            </h2>
+            <p style="margin-left:25px;font-size: 1.2rem">Our round-the-clock support team is available to help anytime, anywhere.</p></li>
+    </ul>
+</div>
+        <img style="object-fit: contain;width: 60%" src="<?=ROOT?>/assets/images/slider/bestpart.jpg" >
+</div>
+
+
 
 <footer style="background-color: #0a2c40">
 
@@ -952,14 +1039,14 @@
     // for slider
     function slideRight() {
         var wrapper = document.querySelector('.card-wrapper');
-        var scrollAmount =  wrapper.clientWidth/3;
+        var scrollAmount = wrapper.clientWidth / 3;
         wrapper.scrollLeft += scrollAmount;
         wrapper.style.transition = 'scroll-left 0.5s ease';
     }
 
     function slideLeft() {
         var wrapper = document.querySelector('.card-wrapper');
-        var scrollAmount =  wrapper.clientWidth/3;
+        var scrollAmount = wrapper.clientWidth / 3;
         wrapper.scrollLeft -= scrollAmount;
         wrapper.style.transition = 'scroll-right 0.5s ease';
     }
