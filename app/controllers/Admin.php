@@ -453,4 +453,23 @@ GROUP BY nStars;
         redirect('admin');
     }
 
+    //for report gen
+    public function reports()
+    {
+        $tasksInst=new Task();
+        $data['allTasks']=$tasksInst->query("SELECT taskID,title,taskType,value,status,companyID,assignedStudentID,createdAt,Deadline FROM task where isDeleted=0");
+        $data['allTasks']=json_encode($data['allTasks']);
+
+        $companyInst=new CompanyModel();
+        $data['allCompanies']=$companyInst->query("SELECT user.userID,companyID,companyName,company.status as companyStatus,firstName,lastName,address,website FROM user JOIN company ON company.userID=user.userID");
+        $data['allCompanies']=json_encode($data['allCompanies']);
+
+        $studentInst=new StudentModel();
+        $data['allStudents']=$studentInst->query("SELECT user.userID,studentID,user.status,firstName,lastName,address,universityName FROM user JOIN student ON student.userID=user.userID JOIN university ON student.universityID = university.universityID");
+        $data['allStudents']=json_encode($data['allStudents']);
+
+//        show($data);die;
+        $data['title'] = "Reports";
+        $this->view('admin/reports', $data);
+    }
 }
