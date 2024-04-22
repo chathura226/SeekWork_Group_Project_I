@@ -161,14 +161,14 @@
     }
 
     .alert {
-        background-color: #f8d7da;
-        color: #721c24;
         padding: 20px;
         border: 1px solid #d4edda;
         border-radius: 10px;
         font-size: 18px;
         margin: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: fixed;
+        top:150px
     }
 
     /*.alert-danger {*/
@@ -183,19 +183,24 @@
     /*}*/
 
 
-    .alert-success {
-        background-color: #198754;
-        color: #fff;
-        border: 1px solid #198754;
-        border-radius: 5px;
-        padding: 15px;
-        font-size: 16px;
-        margin-bottom: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
+    /*.alert-success {*/
+    /*    background-color: #198754;*/
+    /*    color: #fff;*/
+    /*    border: 1px solid #198754;*/
+    /*    border-radius: 5px;*/
+    /*    padding: 15px;*/
+    /*    font-size: 16px;*/
+    /*    margin-bottom: 10px;*/
+    /*    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);*/
+    /*}*/
 </style>
 
 <body>
+<?php if (message()) : ?>
+    <div class=" alert <?= (message()[1] == 'success') ? 'alert-success' : 'alert-danger'; ?> " id="alert">
+        <h3><?= message([], true)[0] ?></h3>
+    </div>
+<?php endif; ?>
 <header style="z-index: 9999;background-color: #1c452d">
     <nav class="navbar">
         <a href="<?= ROOT ?>" class="logo">
