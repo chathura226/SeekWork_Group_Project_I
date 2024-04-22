@@ -25,34 +25,34 @@ function getPasswordStrength(password){
         });
         
 
-        document.querySelector(".student .pw-display-toggle-button").addEventListener("click",function(){
-            let el=document.querySelector(".student .pw-display-toggle-button");
+        document.querySelector(".studentSignup .pw-display-toggle-button").addEventListener("click",function(){
+            let el=document.querySelector(".studentSignup .pw-display-toggle-button");
             if(el.classList.contains("active")){
-                document.querySelector(".student #password").setAttribute("type","password");
+                document.querySelector(".studentSignup #password").setAttribute("type","password");
                 el.classList.remove("active");
             }else{
-                document.querySelector(".student #password").setAttribute("type","text");
+                document.querySelector(".studentSignup #password").setAttribute("type","text");
                 el.classList.add("active");
             }
         });
 
 
-        document.querySelector(".company .pw-display-toggle-button").addEventListener("click",function(){
-            let el=document.querySelector(".company .pw-display-toggle-button");
+        document.querySelector(".companySignup .pw-display-toggle-button").addEventListener("click",function(){
+            let el=document.querySelector(".companySignup .pw-display-toggle-button");
             if(el.classList.contains("active")){
-                document.querySelector(".company #password").setAttribute("type","password");
+                document.querySelector(".companySignup #password").setAttribute("type","password");
                 el.classList.remove("active");
             }else{
-                document.querySelector(".company #password").setAttribute("type","text");
+                document.querySelector(".companySignup #password").setAttribute("type","text");
                 el.classList.add("active");
             }
         });
 
 
-        document.querySelector(".student #password").addEventListener("keyup",function(e){
+        document.querySelector(".studentSignup #password").addEventListener("keyup",function(e){
             let password=e.target.value;
             let strength=getPasswordStrength(password);
-            let passwordStrengthSpans=document.querySelectorAll(".student .pw-strength span");
+            let passwordStrengthSpans=document.querySelectorAll(".studentSignup .pw-strength span");
             strength=Math.max(strength,1);
             passwordStrengthSpans[1].style.width=strength*20 + "%";
             if(strength<2){
@@ -70,10 +70,10 @@ function getPasswordStrength(password){
             }
         })
 
-        document.querySelector(".company #password").addEventListener("keyup",function(e){
+        document.querySelector(".companySignup #password").addEventListener("keyup",function(e){
             let password=e.target.value;
             let strength=getPasswordStrength(password);
-            let passwordStrengthSpans=document.querySelectorAll(".company .pw-strength span");
+            let passwordStrengthSpans=document.querySelectorAll(".companySignup .pw-strength span");
             strength=Math.max(strength,1);
             passwordStrengthSpans[1].style.width=strength*20 + "%";
             if(strength<2){
