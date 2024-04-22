@@ -1,371 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login|Seekwork</title>
+
+
 
 </head>
-<script src="https://unpkg.com/jspdf-invoice-template@1.4.0/dist/index.js"></script>
-
-<body>
 <style>
-
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: 'Open Sans', sans-serif;
+        color: black;
+
     }
 
-    .footer {
+    body {
+        background: url("background.jpeg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: top;
+        background-attachment: fixed;
+        display: flex;
+        justify-content: left;
+        margin-left: 200px;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .container {
+        height: 500px;
+        width: 450px;
+        border: 2px;
+        border-color: rgb(5, 5, 5);
+        border-radius: 10px;
+        background: rgba(133, 86, 86, 0.063);
+        backdrop-filter: blur(4px);
+        box-shadow: 0 0 5px rgba(0, 0, 0, .2),
+        0 0 15px rgba(0, 0, 0, .2),
+        0 0 30px rgba(0, 0, 0, .2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container h2 {
+        text-align: center;
+        letter-spacing: 1px;
+        font-size: 50px;
+    }
+
+    .container .input-box {
+        margin: 35px 0;
+        width: 330px;
+        border-bottom: 2px solid rgba(255, 255, 255, .4);
         position: relative;
-        bottom: 0;
-        /*top: 50%;*/
-        /*left: 50%;*/
-        /*transform: translate(-50%, -50%);*/
-        /*max-width: 1280px;*/
-        width: 100%;
-        background: #10182F;
-        /*border-radius: 6px;*/
     }
 
-    .footer .footer-row {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 3.5rem;
-        padding: 60px;
-    }
-
-    .footer-row .footer-col h4 {
-        color: #fff;
-        font-size: 1.2rem;
-        font-weight: 400;
-    }
-
-    .footer-col .links {
-        margin-top: 20px;
-    }
-
-    .footer-col .links li {
-        list-style: none;
-        margin-bottom: 10px;
-    }
-
-    .footer-col .links li a {
-        text-decoration: none;
-        color: #bfbfbf;
-    }
-
-    .footer-col .links li a:hover {
-        color: #fff;
-    }
-
-    .footer-col p {
-        margin: 20px 0;
-        color: #bfbfbf;
-        max-width: 300px;
-    }
-
-    .footer-col form {
-        display: flex;
-        gap: 5px;
-    }
-
-    .footer-col input {
-        height: 40px;
-        border-radius: 6px;
-        background: none;
-        width: 100%;
-        outline: none;
-        border: 1px solid #7489C6 ;
-        caret-color: #fff;
-        color: #fff;
-        padding-left: 10px;
-    }
-
-    .footer-col input::placeholder {
-        color: #ccc;
-    }
-
-    .footer-col form button {
-        background: #fff;
-        outline: none;
+    .container .input-box input {
+        background: transparent;
         border: none;
-        padding: 10px 15px;
-        border-radius: 6px;
-        cursor: pointer;
+        outline: none;
+        width: 100%;
+        height: 40px;
+        padding: 0 35px 0 5px;
+    }
+
+    .container .input-box label {
         font-weight: 500;
-        transition: 0.2s ease;
+        letter-spacing: 1px;
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: .5s ease;
     }
 
-    .footer-col form button:hover {
-        background: #cecccc;
+    .input-box input:focus~label,
+    .input-box input:valid~label {
+        top: -5px;
     }
 
-    .footer-col .icons {
+    .input-box i {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+    }
+
+    .forget-section {
         display: flex;
-        margin-top: 30px;
-        gap: 30px;
+        justify-content: right;
+        font-size: 15px;
+        margin: -15px 0 15px;
+        text-decoration: none;
+    }
+
+    .forget-section a {
+        text-decoration: none;
+    }
+
+    .forget-section a:hover {
+        text-decoration: underline;
+    }
+
+
+    .btn {
+        height: 45px;
+        width: 100%;
+        border-radius: 50px;
+        color: black;
+        background: #BEB8B2;
+        border: 2px solid 435760;
+        box-shadow: none;
+        outline: none;
+        font-size: 16px;
         cursor: pointer;
+        letter-spacing: 1px;
+
     }
 
-    .footer-col .icons i {
-        color: #afb6c7;
+    .account-creation {
+        text-align: center;
+        margin: 25px 0 10px;
+        font-weight: 400;
+        font-size: 16px;
     }
 
-    .footer-col .icons i:hover  {
-        color: #fff;
+    .account-creation span a {
+        text-decoration: none;
+
     }
 
-    @media (max-width: 768px) {
-        .footer {
-            position: relative;
-            bottom: 0;
-            left: 0;
-            transform: none;
-            width: 100%;
-            border-radius: 0;
-        }
-
-        .footer .footer-row {
-            padding: 20px;
-            gap: 1rem;
-        }
-
-        .footer-col form {
-            display: block;
-        }
-
-        .footer-col form :where(input, button) {
-            width: 100%;
-        }
-
-        .footer-col form button {
-            margin: 10px 0 0 0;
-        }
+    .account-creation a:hover {
+        text-decoration: underline;
     }
 </style>
-<button onclick="generatePDF()">gen</button>
-<footer class="footer">
-    <div class="footer-row">
-        <div class="footer-col">
-            <h4>Info</h4>
-            <ul class="links">
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Compressions</a></li>
-                <li><a href="#">Customers</a></li>
-                <li><a href="#">Service</a></li>
-                <li><a href="#">Collection</a></li>
-            </ul>
+<body>
+<div class="container">
+    <form action="#" >
+        <h2>Login</h2>
+        <div class="input-box">
+            <input type="email" required>
+            <label style="width: 100%;">Email
+                <svg style="position: relative;left: 260px" xmlns="http://www.w3.org/2000/svg"  height="1em" viewBox="0 0 512 512"><path d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"/></svg>
+            </label>
         </div>
-
-        <div class="footer-col">
-            <h4>Explore</h4>
-            <ul class="links">
-                <li><a href="#">Free Designs</a></li>
-                <li><a href="#">Latest Designs</a></li>
-                <li><a href="#">Themes</a></li>
-                <li><a href="#">Popular Designs</a></li>
-                <li><a href="#">Art Skills</a></li>
-                <li><a href="#">New Uploads</a></li>
-            </ul>
+        <div class="input-box">
+            <input type="password" required>
+            <label style="width: 100%;">Password<svg style="position: relative;left: 240px" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z"/></svg></label>
         </div>
-
-        <div class="footer-col">
-            <h4>Legal</h4>
-            <ul class="links">
-                <li><a href="#">Customer Agreement</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">GDPR</a></li>
-                <li><a href="#">Security</a></li>
-                <li><a href="#">Testimonials</a></li>
-                <li><a href="#">Media Kit</a></li>
-            </ul>
+        <div class="forget-section">
+            <a href="#" >Forgot Password?</a>
         </div>
+        <button class="btn">Sign in</button>
 
-        <div class="footer-col">
-            <h4>Newsletter</h4>
-            <p>
-                Subscribe to our newsletter for a weekly dose
-                of news, updates, helpful tips, and
-                exclusive offers.
-            </p>
-            <form action="#">
-                <input type="text" placeholder="Your email" required>
-                <button type="submit">SUBSCRIBE</button>
-            </form>
-            <div class="icons">
-                <!-- facebook -->
-                <a href="#">
-                    <svg height="1.1em" viewBox="0 0 512 512" class="svg-social">
-                        <style>svg {
-                            fill: #ffffff
-                        }</style>
-                        <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/>
-                    </svg>
-                </a>
+        <div class="account-creation">
+            <span>Don't have an account? <a href="#">Sign Up</a></span>
 
-                <!-- twitter x -->
-                <a href="#">
-                    <svg height="1.1em" viewBox="0 0 512 512" class="svg-social">
-                        <style>svg {
-                            fill: #ffffff
-                        }</style>
-                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
-                    </svg>
-                </a>
-
-                <!-- insta -->
-                <a href="#">
-                    <svg height="1.1em" viewBox="0 0 448 512" class="svg-social">
-                        <style>svg {
-                            fill: #ffffff
-                        }</style>
-                        <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
-                    </svg>
-                </a>
-
-                <!-- tiktok -->
-                <a href="#">
-                    <svg height="1.1em" viewBox="0 0 448 512" class="svg-social">
-                        <style>svg {
-                            fill: #ffffff
-                        }</style>
-                        <path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"/>
-                    </svg>
-                </a>
-
-            </div>
         </div>
-    </div>
-</footer>
+    </form>
+</div>
 </body>
-<script>
-    function generatePDF() {
-        var pdfObject = jsPDFInvoiceTemplate.default(props); //returns number of pages created
-        console.log("object created ",pdfObject)
-    }
-
-    var props = {
-        outputType: jsPDFInvoiceTemplate.OutputType.Save,
-        returnJsPDFDocObject: true,
-        fileName: "Invoice 2021",
-        orientationLandscape: false,
-        compress: true,
-        // logo: {
-        //     src: "https://ibb.co/xHQWQvw",
-        //     type: 'PNG', //optional, when src= data:uri (nodejs case)
-        //     width: 53.33, //aspect ratio = width/height
-        //     height: 26.66,
-        //     margin: {
-        //         top: 0, //negative or positive num, from the current position
-        //         left: 0 //negative or positive num, from the current position
-        //     }
-        // },
-        stamp: {
-            inAllPages: true, //by default = false, just in the last page
-            src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
-            type: 'JPG', //optional, when src= data:uri (nodejs case)
-            width: 20, //aspect ratio = width/height
-            height: 20,
-            margin: {
-                top: 0, //negative or positive num, from the current position
-                left: 0 //negative or positive num, from the current position
-            }
-        },
-        business: {
-            name: "SeekWork",
-            address: "123, Colombo Road, Colombo",
-            phone: "(+94) 111 11 11 111",
-            email: "seekwork@seekwork.com",
-            email_1: "info@example.al",
-            website: "www.seekwork.com",
-        },
-        contact: {
-            label: "Report issued for:",
-            name: "Chathura Lakshan",
-            address: "Albania, Tirane, Astir",
-            phone: "(+355) 069 22 22 222",
-            email: "client@website.al",
-            otherInfo: "www.website.al",
-        },
-        invoice: {
-            label: "Report #: ",
-            num: 19,
-            invDate: "Report Date: 01/01/2021 18:12",
-            invGenDate: "",
-            headerBorder: false,
-            tableBodyBorder: false,
-            header: [
-                {
-                    title: "#",
-                    style: {
-                        width: 10
-                    }
-                },
-                {
-                    title: "Title",
-                    style: {
-                        width: 30
-                    }
-                },
-                {
-                    title: "Description",
-                    style: {
-                        width: 80
-                    }
-                },
-                { title: "Price"},
-                { title: "Quantity"},
-                { title: "Unit"},
-                { title: "Total"}
-            ],
-            table: Array.from(Array(10), (item, index)=>([
-                index + 1,
-                "There are many variations ",
-                "Lorem Ipsum is simply dummy text dummy text ",
-                200.5,
-                4.5,
-                "m2",
-                400.5
-            ])),
-            additionalRows: [{
-                col1: 'Total:',
-                col2: '145,250.50',
-                col3: 'ALL',
-                style: {
-                    fontSize: 14 //optional, default 12
-                }
-            },
-                {
-                    col1: 'VAT:',
-                    col2: '20',
-                    col3: '%',
-                    style: {
-                        fontSize: 10 //optional, default 12
-                    }
-                },
-                {
-                    col1: 'SubTotal:',
-                    col2: '116,199.90',
-                    col3: 'ALL',
-                    style: {
-                        fontSize: 10 //optional, default 12
-                    }
-                }],
-            invDescLabel: "Invoice Note",
-            invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
-        },
-        footer: {
-            text: "The invoice is created on a computer and is valid without the signature and stamp.",
-        },
-        pageEnable: true,
-        pageLabel: "Page ",
-    };
-
-</script>
-
 </html>
