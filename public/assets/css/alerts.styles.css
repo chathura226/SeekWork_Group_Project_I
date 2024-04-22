@@ -61,9 +61,9 @@
   }
   
   .alert-success {
-    background-color: #dff0d8;
+    background-color: #dff0d8 !important;
     border-color: #d6e9c6;
-    color: #3c763d;
+    color: #3c763d !important;
   }
   
   .alert-success hr {

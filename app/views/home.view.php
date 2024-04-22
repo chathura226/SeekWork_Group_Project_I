@@ -16,7 +16,24 @@
     <link rel="stylesheet" href="<?= ROOT ?>/assets/css/alerts.styles.css">
 </head>
 
+<!--styles for alert-->
+<style>
+    .error-border{
+        border-color: crimson !important;
 
+    }
+
+    .alert{
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 20px;
+        border: 1px solid #d4edda;
+        border-radius: 10px;
+        font-size: 18px;
+        margin: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+</style>
 <!--styles for search-->
 <style>
 
@@ -474,7 +491,13 @@
     }
 </style>
 <body>
+<div class="msg" style="position: fixed;margin: auto; top: 60px">
 
+
+    <?php if (!empty($errors['email'])): ?>
+        <div class="alert alert-danger text-center" id="alert"><?= $errors['email'] ?></div>
+    <?php endif; ?>
+</div>
 <div class="loader-container">
     <img src="<?= ROOT ?>/assets/images/logo.png" alt="">
     <div class="loader">
