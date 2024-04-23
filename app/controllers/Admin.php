@@ -468,8 +468,27 @@ GROUP BY nStars;
         $data['allStudents']=$studentInst->query("SELECT user.userID,studentID,user.status,firstName,lastName,address,universityName FROM user JOIN student ON student.userID=user.userID JOIN university ON student.universityID = university.universityID");
         $data['allStudents']=json_encode($data['allStudents']);
 
+        $paymentInst=new PaymentModel();
+        $data['allPayments']=$paymentInst->query("SELECT paymentID,paymentDescription,paymentStatus,amount,taskID,createdAt,paidDate,commission FROM payment ");
+        $data['allPayments']=json_encode($data['allPayments']);
+
+
+
 //        show($data);die;
         $data['title'] = "Reports";
         $this->view('admin/reports', $data);
+    }
+
+    public function commissionByMonth($data)
+    {
+        list($year, $month) = explode("-", $data);
+        $paymentInst=new PaymentModel();
+        $res=$paymentInst->query("SELECT paymentID,commission,paymentStatus,taskID,createdAt,paidDate FROM payment WHERE MONTH(paidDate) = :month AND YEAR(paidDate) = :year;",['month'=>$month,'year'=>$year]);
+        if($res){
+            echo json_encode($res);
+        }else{
+            echo json_encode([]);
+        }
+        die;
     }
 }

@@ -70,6 +70,39 @@
             </a>
         </div>
 
+        <div class="mytask-tasks height-150">
+            <h2>Payment Report</h2>
+            <h4>Report about all the payments through the site.</h4>
+            <h4>PaymentID,discription,status and related tasks</h4>
+            <h4>Along with the summary of each payment</h4>
+
+            <a href="">
+                <button onclick="allpaymentreport()" class="details-button">
+                    Generate
+                    <div class="arrow-wrapper">
+                        <div class="arrow"></div>
+                    </div>
+                </button>
+            </a>
+        </div>
+
+
+        <div class="mytask-tasks height-150">
+            <h2>Commission Report</h2>
+            <h4>Report about all the commissions in a particular month.</h4>
+            <h4>PaymentID,description,commission,paidDate</h4>
+            <label for="monthPicker">Select a month:</label>
+            <input type="month" id="monthPicker" name="monthPicker" required>
+
+                <button onclick="allcommissionmonthreport()" class="details-button">
+                    Generate
+                    <div class="arrow-wrapper">
+                        <div class="arrow"></div>
+                    </div>
+                </button>
+        </div>
+
+
     </div>
 
 
@@ -99,8 +132,124 @@
         allstudentArr = allstudentArr.map(innerArray => replaceNullsWithEmptyStrings(innerArray));
 
 
+        var allpaymentArr = <?=$allPayments?>;
+        allpaymentArr = allpaymentArr.map(obj => Object.values(obj));
+        allpaymentArr = allpaymentArr.map(innerArray => replaceNullsWithEmptyStrings(innerArray));
 
 
+        var allCommissionArr = [];
+
+
+
+        console.log(allpaymentArr)
+
+        function allpaymentreport() {
+            console.log("cdds")
+            let props = {
+                outputType: jsPDFInvoiceTemplate.OutputType.Save,
+                returnJsPDFDocObject: true,
+                fileName: "All Payment Report",
+                orientationLandscape: false,
+                compress: true,
+                // logo: {
+                //     src: "https://ibb.co/xHQWQvw",
+                //     type: 'PNG', //optional, when src= data:uri (nodejs case)
+                //     width: 53.33, //aspect ratio = width/height
+                //     height: 26.66,
+                //     margin: {
+                //         top: 0, //negative or positive num, from the current position
+                //         left: 0 //negative or positive num, from the current position
+                //     }
+                // },
+                stamp: {
+                    inAllPages: true, //by default = false, just in the last page
+                    src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
+                    type: 'JPG', //optional, when src= data:uri (nodejs case)
+                    width: 20, //aspect ratio = width/height
+                    height: 20,
+                    margin: {
+                        top: 0, //negative or positive num, from the current position
+                        left: 0 //negative or positive num, from the current position
+                    }
+                },
+                business: {
+                    name: "SeekWork",
+                    address: "123, Colombo Road, Colombo",
+                    phone: "(+94) 111 11 11 111",
+                    email: "seekwork@seekwork.com",
+                    email_1: "info@example.al",
+                    website: "www.seekwork.com",
+                },
+                contact: {
+                    label: "Report issued for:",
+                    name: "<?=Auth::getfirstName()?> <?=Auth::getlastName()?>",
+                    address: "<?=Auth::getaddress()?>",
+                    phone: "<?=Auth::getcontactNo()?>",
+                    email: "<?=Auth::getemail()?>",
+                },
+                invoice: {
+                    label: "Report #: ",
+                    num: 19,
+                    invDate: "Report Date: <?=date("Y-m-d H:i:s")?>",
+                    invGenDate: "",
+                    headerBorder: false,
+                    tableBodyBorder: false,
+                    header: [
+                        {
+                            title: "PaymentID",
+
+                        },
+                        {
+                            title: "Description"
+                        },
+                        {
+                            title: "Status"
+                        },
+                        {title: "Amount (Rs.)"},
+                        {title: "TaskID"},
+                        {title: "CreatedAt"},
+                        {title: "PaidDate"},
+                        {title: "Commission (Rs.)"}
+                    ],
+                    table: allpaymentArr,
+                    additionalRows: [{
+                        col1: 'Total:',
+                        col2: '145,250.50',
+                        col3: 'ALL',
+                        style: {
+                            fontSize: 14 //optional, default 12
+                        }
+                    },
+                        {
+                            col1: 'VAT:',
+                            col2: '20',
+                            col3: '%',
+                            style: {
+                                fontSize: 10 //optional, default 12
+                            }
+                        },
+                        {
+                            col1: 'SubTotal:',
+                            col2: '116,199.90',
+                            col3: 'ALL',
+                            style: {
+                                fontSize: 10 //optional, default 12
+                            }
+                        }],
+                    invDescLabel: "",
+                    invDesc: "",
+                },
+                footer: {
+                    text: "The invoice is created on a computer and is valid without the signature and stamp.",
+                },
+                pageEnable: true,
+                pageLabel: "Page ",
+            };
+
+
+            var pdfObject = jsPDFInvoiceTemplate.default(props); //returns number of pages created
+            console.log("object created ", pdfObject)
+        }
         function alltaskreport() {
             let props = {
                 outputType: jsPDFInvoiceTemplate.OutputType.Save,
@@ -419,6 +568,131 @@
 
             var pdfObject = jsPDFInvoiceTemplate.default(props); //returns number of pages created
             console.log("object created ", pdfObject)
+        }
+
+        function allcommissionmonthreport(){
+            let month=document.getElementById("monthPicker").value;
+            console.log(month)
+            if (!month){
+            alert("Please select a month to generate the report!")
+            }else{
+                    console.log(month)
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            allCommissionArr = JSON.parse(this.responseText);
+                            allCommissionArr = allCommissionArr.map(obj => Object.values(obj));
+                            allCommissionArr = allCommissionArr.map(innerArray => replaceNullsWithEmptyStrings(innerArray));
+
+                            let props = {
+                                outputType: jsPDFInvoiceTemplate.OutputType.Save,
+                                returnJsPDFDocObject: true,
+                                fileName: "All Commission for "+month,
+                                orientationLandscape: false,
+                                compress: true,
+                                // logo: {
+                                //     src: "https://ibb.co/xHQWQvw",
+                                //     type: 'PNG', //optional, when src= data:uri (nodejs case)
+                                //     width: 53.33, //aspect ratio = width/height
+                                //     height: 26.66,
+                                //     margin: {
+                                //         top: 0, //negative or positive num, from the current position
+                                //         left: 0 //negative or positive num, from the current position
+                                //     }
+                                // },
+                                stamp: {
+                                    inAllPages: true, //by default = false, just in the last page
+                                    src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
+                                    type: 'JPG', //optional, when src= data:uri (nodejs case)
+                                    width: 20, //aspect ratio = width/height
+                                    height: 20,
+                                    margin: {
+                                        top: 0, //negative or positive num, from the current position
+                                        left: 0 //negative or positive num, from the current position
+                                    }
+                                },
+                                business: {
+                                    name: "SeekWork",
+                                    address: "123, Colombo Road, Colombo",
+                                    phone: "(+94) 111 11 11 111",
+                                    email: "seekwork@seekwork.com",
+                                    email_1: "info@example.al",
+                                    website: "www.seekwork.com",
+                                },
+                                contact: {
+                                    label: "Report issued for:",
+                                    name: "<?=Auth::getfirstName()?> <?=Auth::getlastName()?>",
+                                    address: "<?=Auth::getaddress()?>",
+                                    phone: "<?=Auth::getcontactNo()?>",
+                                    email: "<?=Auth::getemail()?>",
+                                },
+                                invoice: {
+                                    label: "Report #: ",
+                                    num: 19,
+                                    invDate: "Report Date: <?=date("Y-m-d H:i:s")?>",
+                                    invGenDate: "",
+                                    headerBorder: false,
+                                    tableBodyBorder: false,
+                                    header: [
+                                        {
+                                            title: "PaymentID",
+
+                                        },
+                                        {
+                                            title: "Commission (Rs.)"
+                                        },
+                                        {title: "Status"},
+                                        {title: "TaskID"},
+                                        {title: "CreatedAt"},
+                                        {title: "PaidDate"},
+                                    ],
+                                    table: allCommissionArr,
+                                    additionalRows: [{
+                                        col1: 'Total:',
+                                        col2: '145,250.50',
+                                        col3: 'ALL',
+                                        style: {
+                                            fontSize: 14 //optional, default 12
+                                        }
+                                    },
+                                        {
+                                            col1: 'VAT:',
+                                            col2: '20',
+                                            col3: '%',
+                                            style: {
+                                                fontSize: 10 //optional, default 12
+                                            }
+                                        },
+                                        {
+                                            col1: 'SubTotal:',
+                                            col2: '116,199.90',
+                                            col3: 'ALL',
+                                            style: {
+                                                fontSize: 10 //optional, default 12
+                                            }
+                                        }],
+                                    invDescLabel: "",
+                                    invDesc: "",
+                                },
+                                footer: {
+                                    text: "The invoice is created on a computer and is valid without the signature and stamp.",
+                                },
+                                pageEnable: true,
+                                pageLabel: "Page ",
+                            };
+
+
+                            var pdfObject = jsPDFInvoiceTemplate.default(props); //returns number of pages created
+                            console.log("object created ", pdfObject)
+
+                        } else if (this.readyState == 4) {
+                            console.error("Error fetching data. Status code: " + this.status);
+                        }
+                    };
+                    url1="<?=ROOT?>/admin/commissionByMonth/"+month
+                    xhttp.open("GET", url1, true);
+                    xhttp.send();
+            }
         }
 
     </script>
