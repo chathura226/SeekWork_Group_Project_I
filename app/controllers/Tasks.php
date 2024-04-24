@@ -65,10 +65,10 @@ class Tasks extends Controller
                     $data['recommendedTasksPageCount']=1;
                 }
 
-                $query = "SELECT DISTINCT t.`taskID`, `title`, `taskType`, `description`, `deadline`, `value`, `status`, `documents`, `companyID`, `assignedStudentID`, `assignmentID`, `categoryID`, `finishedDate`, `createdAt` FROM task t JOIN task_skill ts ON t.taskID = ts.taskID WHERE t.isDeleted=0 AND ts.skillID IN ( SELECT student_skill.skillID FROM student_skill WHERE student_skill.studentID = :studentID )  ORDER BY t.createdAt ASC LIMIT " . $tasksPerPage . " OFFSET " . $tasksPerPage * ($data['pageNum'] - 1) . ";";
+                $query = "SELECT DISTINCT t.`taskID`, `title`, `taskType`, t.`description`, `deadline`, `value`, t.`status`, `documents`, t.`companyID`, `assignedStudentID`, `assignmentID`, `categoryID`, `finishedDate`, `createdAt`,c.final_rating,c.companyName,c.nReviews,c.nTasks,c.profilePic,c.userID,c.website FROM task t JOIN task_skill ts ON t.taskID = ts.taskID JOIN company c ON c.companyID=t.companyID  WHERE t.isDeleted=0 AND ts.skillID IN ( SELECT student_skill.skillID FROM student_skill WHERE student_skill.studentID = :studentID )  ORDER BY t.createdAt ASC LIMIT " . $tasksPerPage . " OFFSET " . $tasksPerPage * ($data['pageNum'] - 1) . ";";
                 $row2 = $task->query($query, ['studentID' => Auth::getstudentID()]);
                 $data['recommendedTasks'] = $row2;
-//                  show($row2);
+//                  show($data);
 //                  die;
             } else {//if not a student
                 $data['recommendedTasksPageCount'] = 1;
@@ -253,7 +253,7 @@ class Tasks extends Controller
         }
         if (!Auth::is_student()) {///if not a student, redirect to home
             message(['Only students can apply for tasks!', 'danger']);
-            redirect('home');
+            redirect('tasks');
         }
         if (empty($id)) {
             redirect('tasks');
