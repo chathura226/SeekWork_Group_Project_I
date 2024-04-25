@@ -73,6 +73,7 @@
         width: 100%;
         height: 40px;
         padding: 0 35px 0 5px;
+        font-size: 1em;
     }
 
     .container .input-box label {

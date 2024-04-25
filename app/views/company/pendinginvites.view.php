@@ -61,7 +61,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($assignments as $assignment):?>
+                    <?php if(!empty($assignments)): foreach ($assignments as $assignment):?>
                         <tr style="height: 70px">
                             <th><?=$assignment->assignmentID?></th>
                             <td><?=limitCharacters($assignment->title,13)?></td>
@@ -87,7 +87,7 @@
                             <td><a href="<?=ROOT?>/company/tasks/<?=$assignment->taskID?>" style="text-decoration: none;"><button class="status-btn-working">Go to task</button></a></td>
 
                         </tr>
-                    <?php endforeach;?>
+                    <?php endforeach;endif;?>
 
                     </tbody>
                 </table>
@@ -106,7 +106,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($assignments as $assignment): if($assignment->assignmentStatus=='accepted'):?>
+                    <?php if(!empty($assignments)): foreach ($assignments as $assignment): if($assignment->assignmentStatus=='accepted'):?>
                         <tr style="height: 70px">
                             <th><?=$assignment->assignmentID?></th>
                             <td><?=limitCharacters($assignment->title,13)?></td>
@@ -132,7 +132,7 @@
                             <td><a href="<?=ROOT?>/company/tasks/<?=$assignment->taskID?>" style="text-decoration: none;"><button class="status-btn-working">Go to task</button></a></td>
 
                         </tr>
-                    <?php endif;endforeach;?>
+                    <?php endif;endforeach;endif;?>
 
                     </tbody>
                 </table>
@@ -151,7 +151,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($assignments as $assignment): if($assignment->assignmentStatus=='declined'):?>
+                    <?php if(!empty($assignments)): foreach ($assignments as $assignment): if($assignment->assignmentStatus=='declined'):?>
                         <tr style="height: 70px">
                             <th><?=$assignment->assignmentID?></th>
                             <td><?=limitCharacters($assignment->title,13)?></td>
@@ -177,7 +177,7 @@
                             <td><a href="<?=ROOT?>/company/tasks/<?=$assignment->taskID?>" style="text-decoration: none;"><button class="status-btn-working">Go to task</button></a></td>
 
                         </tr>
-                    <?php endif;endforeach;?>
+                    <?php endif;endforeach;endif;?>
 
                     </tbody>
                 </table>
@@ -196,7 +196,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($assignments as $assignment): if($assignment->assignmentStatus=='pending'):?>
+                    <?php if(!empty($assignments)): foreach ($assignments as $assignment): if($assignment->assignmentStatus=='pending'):?>
                         <tr style="height: 70px">
                             <th><?=$assignment->assignmentID?></th>
                             <td><?=limitCharacters($assignment->title,13)?></td>
@@ -222,7 +222,7 @@
                             <td><a href="<?=ROOT?>/company/tasks/<?=$assignment->taskID?>" style="text-decoration: none;"><button class="status-btn-working">Go to task</button></a></td>
 
                         </tr>
-                    <?php endif;endforeach;?>
+                    <?php endif;endforeach;endif;?>
 
                     </tbody>
                 </table>
