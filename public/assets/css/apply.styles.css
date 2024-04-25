@@ -98,7 +98,7 @@
     border: none;
     outline: none;
     cursor: pointer;
-    background:var(--primary-color);
+    background:var(--primary-color-low);
     font-weight: 600;
   }
   

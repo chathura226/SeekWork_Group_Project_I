@@ -24,34 +24,34 @@
     left: 0;
     bottom: 0;
     /* right: auto; */
-    /* width: 240px; */
-    width: 100px;
+     width: 240px;
+    /*width: 100px;*/
     height:100%;
     padding: 0 1rem;
     color: var(--text-color-white);
     overflow: hidden;
     transition: all 0.5s linear;
     background: var(--secondary-color);
-    animation: initialWidth 5s ease-in-out; /* Animation for initial full width */
+    /*animation: initialWidth 5s ease-in-out; !* Animation for initial full width *!*/
     flex-shrink: 0;
 }
 
-.sidebar:hover{
-    width: 240px;
-    transition: 0.5s ;
-}
+/*.sidebar:hover{*/
+/*    width: 240px;*/
+/*    transition: 0.5s ;*/
+/*}*/
 
-@keyframes initialWidth {
-    0% {
-      width: 246px;
-    }
-    50% {
-        width: 245px;
-      }
-    100% {
-      width: 100px;
-    }
-  }
+/*@keyframes initialWidth {*/
+/*    0% {*/
+/*      width: 246px;*/
+/*    }*/
+/*    50% {*/
+/*        width: 245px;*/
+/*      }*/
+/*    100% {*/
+/*      width: 100px;*/
+/*    }*/
+/*  }*/
   
 .logo{
     height: 80px;
