@@ -42,6 +42,7 @@
   
   </div>
 <div class="flex justify-between">
+    <?php if($dispute->status!='resolved'):?>
   <a href="<?=ROOT?>/student/disputes/modify/<?=$dispute->disputeID?>">
     <button class="details-button margin-5">
       Modify
@@ -57,7 +58,10 @@
           <div class="arrow"></div>
       </div>
     </button>
-
+<?php else:?>
+    <h3 style="color: green">Resolved &#x2713;
+     </h3>
+    <?php endif;?>
   </div>
   </div>
 

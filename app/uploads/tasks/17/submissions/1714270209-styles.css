@@ -1,0 +1,216 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: black;
+}
+
+body {
+    background: url("images/background.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: right;
+    margin-right: 75px;
+    align-items: center;
+    min-height: 110vh;
+}
+
+.container {
+    height: 700px;
+    width: 750px;
+    border: 2px;
+    border-color: rgb(5, 5, 5);
+    border-radius: 10px;
+    background: rgba(133, 86, 86, 0.063);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2),
+        0 0 15px rgba(0, 0, 0, .2),
+        0 0 30px rgba(0, 0, 0, .2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.form-box {
+    display: flex;
+}
+
+.form-box .studentSignup {
+    position: absolute;
+    transform: translateX(0px);
+    transition: .5s ease;
+    transition-delay: .4s;
+}
+
+.form-box .studentSignup.active {
+    transform: translateX(-900px);
+    transition-delay: .2s;
+
+}
+
+.form-box .companySignup {
+    transform: translateX(900px);
+    transition: .5s ease;
+    transition-delay: .2s;
+
+}
+
+.form-box .companySignup.active {
+    transform: translateX(0px);
+    transition-delay: .4s;
+
+}
+
+.container h2 {
+    text-align: center;
+    letter-spacing: 1px;
+    font-size: 30px;
+    margin-top: 20px;
+}
+
+.studentSignup h2 {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.container .input-box {
+    margin: 25px 0;
+    width: 350px;
+    border-bottom: 2px solid rgba(255, 255, 255, .4);
+    position: relative;
+}
+
+
+.container .input-box input {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 30px;
+    padding: 0 35px 0 5px;
+}
+
+.container .input-box label {
+    font-weight: 500;
+    letter-spacing: 1px;
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: .5s ease;
+}
+
+.container .input-box input:focus~label,
+.container .input-box input:valid~label {
+    top: -5px;
+}
+
+.personal-details1 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.personal-details2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.personal-details3 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.company-details1 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.company-details2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.company-details3 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.company-details4 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.password {
+    display: flex;
+    justify-content: space-between;
+}
+
+.gender {
+    margin: 10px 0;
+    padding: 10px;
+    transform: scale(1);
+}
+
+.gender select {
+    background-color: rgba(133, 86, 86, 0.063);
+}
+
+.gender label {
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.input-box i {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.terms {
+    margin: 20px;
+}
+
+.terms span a {
+    text-decoration: none;
+}
+
+.terms span a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    height: 45px;
+    width: 100%;
+    border-radius: 50px;
+    color: black;
+    background: rgba(133, 86, 86, 0.063);
+    border: 2px solid 435760;
+    box-shadow: none;
+    outline: none;
+    font-size: 16px;
+    cursor: pointer;
+    letter-spacing: 1px;
+
+}
+
+.account-signin-and-change-signup-type {
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.account-signin-and-change-signup-type span a {
+    text-decoration: none;
+
+}
+
+.account-signin-and-change-signup-type a:hover {
+    text-decoration: underline;
+}

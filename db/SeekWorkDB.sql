@@ -998,7 +998,7 @@ CREATE TABLE `proposal` (
   KEY `student-proposal` (`studentID`),
   CONSTRAINT `student-proposal` FOREIGN KEY (`studentID`) REFERENCES `student` (`studentID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `task-proposal` FOREIGN KEY (`taskID`) REFERENCES `task` (`taskID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1007,7 +1007,7 @@ CREATE TABLE `proposal` (
 
 LOCK TABLES `proposal` WRITE;
 /*!40000 ALTER TABLE `proposal` DISABLE KEYS */;
-INSERT INTO `proposal` VALUES (2,'ffwewcdcdc',NULL,NULL,'2023-09-26 07:35:47',9,14),(3,'dede',NULL,2,'2023-09-26 07:44:40',9,14),(5,'proposla',NULL,NULL,'2023-10-31 12:56:37',3,14),(6,'proposal for task 10',NULL,9000,'2023-11-01 01:17:12',10,14),(7,'vrvr',NULL,45,'2024-01-11 14:55:34',6,14),(8,'fcerfe',NULL,NULL,'2024-02-06 10:48:34',4,14),(9,'my proposal . i am nimal',NULL,6000,'2024-02-20 15:47:57',14,22),(10,'I am writing to express my keen interest in the 3D Artist position to create a detailed 3D model of a residential building as advertised. As a student with a strong passion for 3D modeling and design, I am eager to contribute my skills and creativity to bring your vision to life.\r\n\r\nBackground:\r\nI am currently pursuing a Bachelor\'s degree in Computer Graphics and Animation with a focus on 3D modeling and rendering. Throughout my academic journey, I have gained hands-on experience with industry-standard software such as Autodesk Maya, Blender, and Substance Painter. My coursework has equipped me with a solid understanding of modeling techniques, texture mapping, lighting, and rendering.\r\n\r\nSkills and Qualifications:\r\n\r\nProficiency in Autodesk Maya, Blender, and Substance Painter.\r\nStrong understanding of modeling, texturing, lighting, and rendering techniques.\r\nAbility to interpret architectural plans and references to create accurate 3D models.\r\nAttention to detail and dedication to achieving realistic and high-quality renders.\r\nExcellent communication and teamwork skills, with a proactive approach to feedback and collaboration.',NULL,31000,'2024-02-20 23:00:11',15,22);
+INSERT INTO `proposal` VALUES (2,'ffwewcdcdc',NULL,NULL,'2023-09-26 07:35:47',9,14),(3,'dede',NULL,2,'2023-09-26 07:44:40',9,14),(5,'proposla',NULL,NULL,'2023-10-31 12:56:37',3,14),(6,'proposal for task 10',NULL,9000,'2023-11-01 01:17:12',10,14),(7,'vrvr',NULL,45,'2024-01-11 14:55:34',6,14),(8,'fcerfe',NULL,NULL,'2024-02-06 10:48:34',4,14),(9,'my proposal . i am nimal',NULL,6000,'2024-02-20 15:47:57',14,22),(10,'I am writing to express my keen interest in the 3D Artist position to create a detailed 3D model of a residential building as advertised. As a student with a strong passion for 3D modeling and design, I am eager to contribute my skills and creativity to bring your vision to life.\r\n\r\nBackground:\r\nI am currently pursuing a Bachelor\'s degree in Computer Graphics and Animation with a focus on 3D modeling and rendering. Throughout my academic journey, I have gained hands-on experience with industry-standard software such as Autodesk Maya, Blender, and Substance Painter. My coursework has equipped me with a solid understanding of modeling techniques, texture mapping, lighting, and rendering.\r\n\r\nSkills and Qualifications:\r\n\r\nProficiency in Autodesk Maya, Blender, and Substance Painter.\r\nStrong understanding of modeling, texturing, lighting, and rendering techniques.\r\nAbility to interpret architectural plans and references to create accurate 3D models.\r\nAttention to detail and dedication to achieving realistic and high-quality renders.\r\nExcellent communication and teamwork skills, with a proactive approach to feedback and collaboration.',NULL,31000,'2024-02-20 23:00:11',15,22),(11,'Hi, I have voice over for some kid shows before. With the experience I have, I can make some great clips for you as needed',NULL,32000,'2024-04-28 12:59:59',17,26),(12,'Hi, I really like to work on this project. Although I have no professional experience in this field, I have done announcing and stuff in college and university. I believe I would be able to finish your work with great voice over. Thank you. Contact me if needed!',NULL,34000,'2024-04-28 13:02:36',17,25);
 /*!40000 ALTER TABLE `proposal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1910,4 +1910,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-24  8:43:09
+-- Dump completed on 2024-04-28 13:07:51
