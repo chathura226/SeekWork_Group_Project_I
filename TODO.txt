@@ -1,4 +1,0 @@
-password strength checker
-colosr scheme (too bright green)
-check update profiles of moderator admin and company
-task like mechanism
