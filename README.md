@@ -114,3 +114,22 @@ These bash files and bat files contains docker-compose and docker commands that 
  - All secrets and app passwords are revoked. So use your own keys when necessary
 
 ## Some Screenshots
+![Screenshot from 2024-05-06 14-32-22](https://github.com/chathura226/SeekWork_Group_Project_I/assets/85506006/02f97fdd-1fae-473b-8229-03e7e3e82a61)
+![Screenshot from 2024-05-06 14-32-32](https://github.com/chathura226/SeekWork_Group_Project_I/assets/85506006/f02af02b-1148-427d-b9dc-ea3d7e5bb7c8)
+
+
+![Screenshot from 2024-05-06 14-32-42](https://github.com/chathura226/SeekWork_Group_Project_I/assets/85506006/468fe1bd-c697-4483-b19b-7061d3abb496)
+
+![Screenshot from 2024-05-06 14-32-51](https://github.com/chathura226/SeekWork_Group_Project_I/assets/85506006/7aad0149-e847-4b3e-9dc3-e284edcffb32)
+
+![Screenshot from 2024-05-06 14-32-57](https://github.com/chathura226/SeekWork_Group_Project_I/assets/85506006/d5d36861-ec6e-41f5-83aa-2d69c8f85929)
+
+![Screenshot from 2024-05-06 14-33-14](https://github.com/chathura226/SeekWork_Group_Project_I/assets/85506006/f116fc4a-ad9f-417e-b547-c336a286d688)
+
+![Screenshot from 2024-05-06 14-38-28](https://github.com/chathura226/SeekWork_Group_Project_I/assets/85506006/3a469c2c-a773-4e4b-8619-adb728ccd1d2)
+
+
+![Screenshot from 2024-05-06 14-39-32](https://github.com/chathura226/SeekWork_Group_Project_I/assets/85506006/0ed79f00-ac5d-471b-8b2b-4bced4c4e604)
+![Screenshot from 2024-05-06 14-42-34](https://github.com/chathura226/SeekWork_Group_Project_I/assets/85506006/476077c2-2d92-4618-bd3d-a69d5b92b01c)
+![Screenshot from 2024-05-06 14-42-51](https://github.com/chathura226/SeekWork_Group_Project_I/assets/85506006/84b514e6-4522-4c5b-9d12-f15895cf4a78)
+![Screenshot from 2024-05-06 14-42-51](https://github.com/chathura226/SeekWork_Group_Project_I/assets/85506006/5ef14a92-9d3d-4a08-9940-cd382fb6f481)
